@@ -133,3 +133,31 @@
     background-color: var(--srv8);
     height: 400px;
 }
+/*Configurações Gerais*/
+/*Extra-small*/
+@media screen and (max-width: 480px){
+    .login{
+        width: 80vh;
+        padding: 30px;
+    }
+    .card-login{
+        width: 100vw;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+}
+/*Small*/
+@media screen and (min-width: 481px) and (max-width: 768px){
+    
+} 
+/*Medium*/
+/* @media screen and (min-width: 769px) and (max-width: 1199px){
+ 
+} */
+
+/*Large*/
+/* @media screen and (min-width: 1200px){
+} */ 

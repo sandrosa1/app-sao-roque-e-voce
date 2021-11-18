@@ -1,32 +1,40 @@
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html lang="pt-br">
 
 <head>
-  <!-- Required meta tags -->
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-
-  <!-- CSS -->
-  <link rel='stylesheet' href='{{URL}}/app/assets/styles.min.css'>
-
-  <title>{{title}}</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>{{title}}</title>
+    <!-- Compiled and minified CSS -->
+  
+    <link rel='stylesheet' href='{{URL}}/app/assets/styles.min.css'>
 </head>
 
 <body>
-  <div class="container-fluid" id="content">
 
     {{header}}
-
-
-
+    
     {{content}}
-
-
-
+    
     {{footer}}
-
-  </div>
-  <script src='https://www.google.com/recaptcha/api.js?render=6LfHswQdAAAAAPuerl_eJ6d2NPw7Ognc5OaIwNE4'></script>
+    
+    
+    <!-- Compiled and minified JavaScript -->
+   
+    <script src='https://www.google.com/recaptcha/api.js?render=6LfHswQdAAAAAPuerl_eJ6d2NPw7Ognc5OaIwNE4'></script>
   <script src='{{URL}}/app/assets/javascripts.min.js'></script>
+<script>    
+// Navbar
+const elemsDropdown = document.querySelectorAll(".dropdown-trigger");
+const instancesDropdown = M.Dropdown.init(elemsDropdown, {
+    coverTrigger: false
+});
+const elemsSidenav = document.querySelectorAll(".sidenav");
+const instancesSidenav = M.Sidenav.init(elemsSidenav, {
+    edge: "left"
+});
+    </script>
 </body>
+
 </html>

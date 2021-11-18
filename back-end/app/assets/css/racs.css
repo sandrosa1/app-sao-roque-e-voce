@@ -37,4 +37,24 @@
 .card{ min-width: 200px;}
 .footer-racs{background-color: var(--racs3);}
 .nav-racs{ background-color: var(--racs3);}
+/*Configurações Gerais*/
+/*Extra-small*/
+@media screen and (max-width: 480px){
+    .img-sobre{
+       width: 60px;
+    }
+}
+/*Small*/
+@media screen and (min-width: 481px) and (max-width: 768px){
+    .img-sobre{
+        width: 70px;
+    }
+} 
+/*Medium*/
+/* @media screen and (min-width: 769px) and (max-width: 1199px){
+ 
+} */
 
+/*Large*/
+/* @media screen and (min-width: 1200px){
+} */ 
