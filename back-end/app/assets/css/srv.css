@@ -1,0 +1,135 @@
+/* SISTEMA DE COR SÃO ROQUE E VOCẼ */
+:root {
+    --srv1: #920046;
+    --srv2: #FF3434;
+    --srv3: #0CB664;
+    --srv4: #00812d;
+    --srv5: #FF3434;
+    --srv6: #CCCCCC;
+    --srv7: #E8AA0B;
+    --srv8: #ffffff;
+    --srv9: #000;
+    --srv10: #e1bee7;
+
+  }
+/* CLASSE DE CORES*/
+.srv-c-1{color: var(--srv1);}
+.srv-c-2{color: var(--srv2);}
+.srv-c-3{color: var(--srv3);}
+.srv-c-4{color: var(--srv4);}
+.srv-c-5{color: var(--srv5);}
+.srv-c-6{color: var(--srv6);}
+.srv-c-7{color: var(--srv7);}
+.srv-c-8{color: var(--srv8);}
+.srv-c-9{color: var(--srv9);}
+.srv-c-10{color: var(--srv10);}
+/* CLASSE BACKGROUND */
+.srv-bkg-1{background-color: var(--srv1);}
+.srv-bkg-2{background-color: var(--srv2);}
+.srv-bkg-3{background-color: var(--srv3);}
+.srv-bkg-4{background-color: var(--srv4);}
+.srv-bkg-5{background-color: var(--srv5);}
+.srv-bkg-6{background-color: var(--srv6);}
+.srv-bkg-7{background-color: var(--srv7);}
+.srv-bkg-8{background-color: var(--srv8);}
+.srv-bkg-9{background-color: var(--srv9);}
+.srv-bkg-10{background-color: var(--srv10);}
+
+/* CLASSES PARA CARD LOGIN */
+.fwb{font-weight: bold;}
+.fwm{font-weight: 500;}
+.dibl{display: block;}
+
+.card-login{
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+.z-depth-3{
+    background-color: #fff;
+    opacity: .9;
+}
+.login{
+    width: 400px;
+    height: 300px;
+    padding: 30px;
+}
+.div-button{
+    background-color: #fff;
+    opacity: 0.7;
+}
+.background-login{
+    position:absolute; 
+    top: 0; left: 0; 
+    width: 100%; 
+    height: 100%; 
+    background: url('http://www.racsstudios.com/img/background-login-1300.jpg') no-repeat; background-size: auto;
+    opacity: 0.9;
+}
+.gif{
+    width: 80px;
+}
+/*------- Painel de configurações do cliente ------ */
+.gridContainerSrv{
+    display: grid;
+    height: 100vh;
+
+}
+.painelSrv{
+    grid-template:
+    "status-srv status-srv status-srv status-srv" 15vh
+    "nav-srv content-srv content-srv content-srv" 
+    /1fr 3fr 2fr 1fr
+}
+.itemNav{
+    grid-area: nav-srv;
+    background-color: var(--srv1);
+ }
+ .itemGreen{
+    grid-area: status-srv;
+    background-color: var(--srv1);
+}
+.itemRed
+{
+    grid-area: content-srv;
+    background-color: var(--srv6);
+}
+/*----------------- Nav lateral--------------- */
+.nav-collection{ 
+    display: flex;
+    flex-direction: column;
+    /* Precisa de uma altura maxima */
+    height: 300px;
+}
+.nav-collection-item{
+    width: 100%;
+    height: 50px;
+    padding-left: 25px;
+    font-size: 1.3rem;
+    color: var(--srv8);
+    margin-right: 20px;
+}
+.nav-collection-item:hover{
+    background-color: var(--srv6);
+    font-weight: 900;
+    color: var(--srv1);
+}
+.active{
+    background-color: var(--srv6);
+    color: var(--srv1);
+    font-weight: 900;
+}
+#btn-logout-svr{
+    background-color: var(--srv4);
+}
+#btn-logout-svr:hover{
+    background-color: var(--srv2);
+}
+/* tutorial */
+.detalhes-tutorial{
+    background-color: var(--srv8);
+    height: 400px;
+}

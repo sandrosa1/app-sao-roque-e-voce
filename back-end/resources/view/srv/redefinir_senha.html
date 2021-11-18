@@ -1,0 +1,27 @@
+<div class="container-fluid background-login">
+  <li><a class="float m-3 waves-effect waves-light btn-large" href="{{URL}}/">Voltar <i
+    class="material-icons right">home</i></a></li>
+<div class="col 12 vc">
+  <div class="card-login ">
+    <form class="z-depth-3 " name="formRedefinePassword" id="formRedefinePassword" method="post">
+      <div class="login">
+        <div class="loginLogomarca mb-3 center" id="root">
+          <img src="{{URL}}/img/logo-srv-200.png" alt="Logomarca da WEF">
+        </div>
+        <div class="float w100 center m-1 srv-c-2"><h4>Redefinir Senha</h4></div>
+        <div class="resultadoForm float w100 center m-1 srv-c-2">{{status}}</div>
+        <div class="loginFormulario float w100">
+          <span>Digite o email cadastrado</span>
+          <input class="float" type="email" name="email" id="email" placeholder="Email:" required>
+          <input class="float" type="hidden" id="g-recaptcha-response" name="g-recaptcha-response" required>
+          <button class="float m-3 waves-effect waves-light btn-large" value="Enviar" type="submit" name="action">Enviar
+            <i class="material-icons right">touch_app</i>
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+</div>
+
+
