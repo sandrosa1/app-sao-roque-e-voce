@@ -69,10 +69,10 @@ class Login extends Page{
             return self:: responseError($validate, $objRACS);
         }
         
-        // if(!$validate->validateCaptcha($gRecaptchaResponse)){
+        if(!$validate->validateCaptcha($gRecaptchaResponse)){
 
-        //     return self:: responseError($validate, $objRACS);
-        // }
+            return self:: responseError($validate, $objRACS);
+        }
 
         if(!$validate->validateAttemptLogin($objRACS)){
 
