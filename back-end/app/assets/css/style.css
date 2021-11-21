@@ -112,6 +112,7 @@ a{text-decoration: none; color: #333;}
 .vc{display: flex; align-items: center; justify-content: center;}
 .vl{display: flex; align-items: center; justify-content: flex-start;}
 .vsa{display: flex; align-items: center; justify-content: space-around;}
+.vse{display: flex; align-items: center; justify-content: end;}
 
 
 /*Configurações Gerais*/
