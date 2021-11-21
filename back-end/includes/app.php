@@ -45,7 +45,9 @@ View::init([
 MiddlewareQueue::setMap([
     'maintenance'           => \App\Http\Middleware\Maintenance::class,
     'required-srv-logout'   => \App\Http\Middleware\RequireSrvLogoutCustomer::class,
-    'required-srv-login'    => \App\Http\Middleware\RequireSrvLoginCustomer::class
+    'required-srv-login'    => \App\Http\Middleware\RequireSrvLoginCustomer::class,
+    'required-racs-logout'   => \App\Http\Middleware\RequireLogoutRACS::class,
+    'required-racs-login'    => \App\Http\Middleware\RequireLoginRACS::class
 ]);
 
 //Define o mapeamento de middlewares padrões (Executa em todas as rotas)
