@@ -5,7 +5,9 @@ use App\Controller\RACS;
 
 //Rota de clientes
 $objRouter->get('/racs/customer',[
-    'middlewares' => [],
+    'middlewares' => [
+        'required-racs-login',
+    ],
     function($request){
         return new Response(200, RACS\Customer::getCustomers($request));
     }

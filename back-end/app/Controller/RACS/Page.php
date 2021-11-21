@@ -58,7 +58,7 @@ class Page{
             $links .= View::render('racs/menu/link',[
                 'label'   => $module['label'],
                 'link'    => $module['link'],
-                'current' => $hash == $currentModule ? 'active' : '',
+                'current' => $hash == $currentModule ? 'active-racs' : '',
                 'icon'    => $module['icon']
             ]);
         }

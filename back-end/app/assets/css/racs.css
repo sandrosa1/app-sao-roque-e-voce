@@ -39,6 +39,66 @@
 .nav-racs{ background-color: var(--racs3);}
 /*Configurações Gerais*/
 /*Extra-small*/
+
+
+/*------- Painel de configurações do Racs ------ */
+.gridContainerRacs{
+    display: grid;
+    height: 100vh;
+}
+.painelRacs{
+    grid-template:
+    "status-racs status-racs status-racs status-racs" 15vh
+    "nav-racs content-racs content-racs content-racs" 
+    /1fr 3fr 2fr 1fr
+}
+.itemNavRacs{
+    grid-area: nav-racs;
+    background-color: var(--racs2);
+ }
+ .itemGreenRacs{
+    grid-area: status-racs;
+    background-color: var(--racs2);
+}
+.itemRedRacs
+{
+    grid-area: content-racs;
+    background-color: var(--racs5);
+}
+
+/*----------------- Nav lateral--------------- */
+.nav-collection-racs{ 
+    display: flex;
+    flex-direction: column;
+    /* Precisa de uma altura maxima */
+    height: 300px;
+}
+.nav-collection-item-racs{
+    width: 100%;
+    height: 50px;
+    padding-left: 25px;
+    font-size: 1.3rem;
+    color: var(--srv8);
+    margin-right: 20px;
+}
+.nav-collection-item-racs:hover{
+    background-color: var(--racs5);
+    font-weight: 900;
+    color: var(--racs2);
+}
+.active-racs{
+    background-color: var(--racs5);
+    color: var(--racs2);
+    font-weight: 900;
+}
+#btn-logout-racs{
+    background-color: var(--racs2);
+}
+#btn-logout-racs:hover{
+    background-color: var(--racs2);
+}
+
+
 @media screen and (max-width: 480px){
     .img-sobre{
        width: 60px;

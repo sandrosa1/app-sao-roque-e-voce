@@ -6,13 +6,13 @@ const urlRedefinePassword = urlName+'/srv/redefinir_senha';
 const urlNewPassword = urlName+'/srv/nova_senha';
 const urlLoginRcas = urlName+'/racs/login';
 
-
 //Pega o local 
 function getRoot(url)
 {
     var root = "http://"+document.location.hostname+"/"+url;
     return root;
 }
+
 //Sistema de loadind
 const gif = getRoot(urlName+'/img/anime.gif')
 const logoSrv =  getRoot(urlName+'/img/logo-srv-200.png')
@@ -32,6 +32,7 @@ $('#cpf , #birthDate, #phone').on('focus', function () {
     if(id == "phone"){VMasker(document.querySelector("#phone")).maskPattern("(99)-999999999")};
 
 });
+
 //Para ataques a senha do tipo força bruta
 function getCaptcha()
 {
@@ -41,6 +42,7 @@ function getCaptcha()
         });
     });
 }
+
 //Inicia o captcha
 getCaptcha();
 //Ajax do formulário de cadastro de clientes
@@ -78,6 +80,7 @@ $("#formCadastro").on("submit",function(event){
         }
     });
 });
+
 //CapsLock
 $("#senha").keypress(function(e){
     kc=e.keyCode?e.keyCode:e.which;
@@ -88,6 +91,7 @@ $("#senha").keypress(function(e){
         $(".resultadoForm").empty();
     }
 });
+
 //Formulario de login
 $("#formLogin").on("submit",function(event){
     CarregandoLoading()
@@ -116,6 +120,8 @@ $("#formLogin").on("submit",function(event){
     });
     
 });
+
+
 // Envia o formulario para redefinir a senha
 $("#formRedefinePassword").on("submit",function(event){
     event.preventDefault();
@@ -150,6 +156,7 @@ $("#formRedefinePassword").on("submit",function(event){
         }
     });
 });
+
 //Envia o formulario para criar a nova senha
 $("#formNewPassword").on("submit",function(event){
     event.preventDefault();
@@ -183,37 +190,37 @@ $("#formNewPassword").on("submit",function(event){
               })
             }
             ParandoLoading()
-
         }
     });
 });
 
+//Formulario de login racs
+$("#formLoginRacs").on("submit",function(event){
+    CarregandoLoading()
+    event.preventDefault();
+    var dados=$(this).serialize();
 
-// //Formulario de login racs
-// $("#formLoginRacs").on("submit",function(event){
-//     CarregandoLoading()
-//     event.preventDefault();
-//     var dados=$(this).serialize();
-//     $.ajax({
-//        url: getRoot(urlLogin),
-//         type: 'post',
-//         dataType: 'json',
-//         data: dados,
-//         success: function (response) {
-//           if(response.retorno == 'success'){
-//               window.location.href = response.page;
-//           }else{
-//               getCaptcha();
-//               if(response.tentativas == true){
-//                 $('.loginFormulario').hide();
-//               }
-//               $('.resultadoForm').empty();
-//               $.each(response.erros, function(key, value){
-//                   $('.resultadoForm').append(value + '<br>')
-//               })
-//             }
-//             ParandoLoading()
-//         }
-//     });
+    console.log(dados)
+    $.ajax({
+       url: getRoot(urlLoginRcas),
+        type: 'post',
+        dataType: 'json',
+        data: dados,
+        success: function (response) {
+          if(response.retorno == 'success'){
+              window.location.href = response.page;
+          }else{
+              getCaptcha();
+              if(response.tentativas == true){
+                $('.loginFormulario').hide();
+              }
+              $('.resultadoForm').empty();
+              $.each(response.erros, function(key, value){
+                  $('.resultadoForm').append(value + '<br>')
+              })
+            }
+            ParandoLoading()
+        }
+    });
     
-// });
+});

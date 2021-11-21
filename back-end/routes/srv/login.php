@@ -9,8 +9,7 @@ $objRouter->get('/srv/login',[
     'middlewares' => [
         'required-srv-logout',
     ],
-    function($request){
-        
+    function($request){ 
         return new Response(200, Srv\Login::getLogin($request));
     }
 ]);

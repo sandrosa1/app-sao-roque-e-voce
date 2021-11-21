@@ -6,7 +6,9 @@ use App\Controller\RACS;
 
 //Rota de login
 $objRouter->get('/racs/login',[
-    'middlewares' => [],
+    'middlewares' => [
+     'required-racs-logout',
+    ],
     function($request){
         
         return new Response(200, RACS\Login::getLogin($request));
@@ -15,19 +17,19 @@ $objRouter->get('/racs/login',[
 
 //Rota de login (POST)
 $objRouter->post('/racs/login',[
-    'middlewares' => [],
+    'middlewares' => [
+        'required-racs-logout',
+    ],
     function($request){
-        // echo '<pre>';
-        // print_r('p1');
-        // echo '</pre>';
-        // exit;
         return new Response(200, RACS\Login::setLogin($request));
     }
 ]);
 
 //Rota de logout
 $objRouter->get('/racs/logout',[
-    'middlewares' => [],
+    'middlewares' => [
+        'required-racs-login',
+    ],
     function($request){
         return new Response(200, RACS\Login::setLogout($request));
     }

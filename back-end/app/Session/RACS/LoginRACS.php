@@ -30,8 +30,8 @@ class LoginRACS{
         self::init();
         
         //Define a sessão do usuário
-        $_SESSION['admin']['racs'] = [
-          'idRoot'     =>$objRACS->idRoot,
+        $_SESSION['root']['racs'] = [
+          'idRoot'     => $objRACS->idRoot,
           'name'       => $objRACS->name,
           'email'      => $objRACS->email,  
           'permission' => $objRACS->permission  
@@ -47,7 +47,7 @@ class LoginRACS{
         //Inicia a sessão
         self::init();
 
-        return isset($_SESSION['admin']['racs']['idRoot']);
+        return isset($_SESSION['root']['racs']['idRoot']);
     } 
 
 
@@ -62,7 +62,7 @@ class LoginRACS{
         self::init();
 
         //Destroi a sessão
-       unset( $_SESSION['admin']['racs']);
+       unset( $_SESSION['root']['racs']);
 
        return true;
 

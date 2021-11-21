@@ -38,6 +38,7 @@ class Login extends Page{
      * @return void
      */
     public static function setLogin($request){
+       
 
         $dadosLogin = [];
         $postVars = $request->getPostVars();
