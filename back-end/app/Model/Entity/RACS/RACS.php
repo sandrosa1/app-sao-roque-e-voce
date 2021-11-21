@@ -1,108 +1,87 @@
 <?php
 
-namespace App\Model\Entity\Customer;
+namespace App\Model\Entity\RACS;
 
 use \SandroAmancio\DatabaseManager\Database;
 
 use App\Traits\TraitGetIp;
 
 
-//CLASSE RESPONSÁVEL PELO CADASTRO DE CLIENTE NO SISTEMA
 
-//RESPONSÁVEL POR UMA INSTÂNCIA DE Cliente
-class Customer{
+
+//RESPONSÁVEL POR UMA INSTÂNCIA DE 
+class RACS{
 
     /**
      * 1)
-     * ID do cliente
+     * ID do colaborador
      *
      * @var integer
      */
-    public $idUser;
-
+    public $idRoot;
     /**
      * 2)
-     * Nome de cliente
+     * Nome de usuário
      *
      * @var string
      */
     public $name;
-
-    
     /**
      * 3)
-     * Define o cpf
+     * Apelido
      *
      * @var string
      */
-    public $cpf;
-
+    public $nickName;
     /**
      * 4)
-     * Email do cliente
+     * Email do usuário
      *
      * @var string
      */
     public $email;
-
     /**
-     * 4)
-     * Telefone do cliente
-     *
-     * @var string
-     */
-    public $phone;
-
-    /**
-     * 6)
-     * Senha do cliente
+     * 5)
+     * Senha do usuário
      *
      * @var string
      */
     public $password;
-
-     /**
-      * 7)
-     * Data do cadastro
-     *
-     * @var string
-     */
-    public $birthDate;
-
-     /**
-      * 8)
-     * Data de nascimento
+    /**
+      * 6)
+     * Data de criação
      *
      * @var date
      */
     public $createDate;
-
-     /**
-      * 9)
+    /**
+      * 7)
      * Define o tipo de permisão do cliénte
      *
      * @var string
      */
     public $permission;
-
     /**
-      * 10)
-     * Define se o cliente confirmou o email
-     *
-     * @var string
-     */
-    public $status;
-
-     /**
-      * 11)
+      * 8)
      * Define um toque para validar o cadastro
      *
      * @var string
      */
     public $token;
-
+    /**
+     * 9)
+     * IP de sessão do usuário
+     *
+     * @var string
+     */
     private $trait;
 
+    /**
+     * 10)
+     * data da atual
+     *
+     * @var string
+     */
     private $dateNow;
     
 
@@ -112,7 +91,7 @@ class Customer{
         $this->dateNow = date("Y-m-d H:i:s");
     }
     /**
-     * Método responsável por inserir uma tentativa de login de cliente
+     * Método responsável por inserir uma tentativa de login de usuário
      *
      * @return void
      */
@@ -124,26 +103,15 @@ class Customer{
             $this->id = (new Database('attempt'))->insert([
                 'ip'       => $this->trait, 
                 'date'  => $this->dateNow,
-             
             ]);
         }
     }
 
-    // #Retorna os dados do usuário
-    public function getDataUser($email)
-    {
-       
-        $b = (new Database('customer'))->select('email = "'.$email.'"');
-    
-        $f=$b->fetch(\PDO::FETCH_ASSOC);
-        $r=$b->rowCount();
-        return $arrData=[
-            "data"=>$f,
-            "rows"=>$r
-        ];
-    }
-
-    #Conta as tentativas
+    /**
+     * Metódo responsável por conta as tentativas de login
+     *
+     * @return integer
+     */
     public function countAttempt()
     {
 
@@ -157,47 +125,41 @@ class Customer{
         }
         return $r;
     }
-
-    
-
-       
-    #Deleta as tentativas
+    /**
+     * Metódo responsável por deleta as tentativas
+     *
+     * @return void
+     */
     public function deleteAttempt()
     {
         return (new Database('attempt'))->delete('ip = "'.$this->trait.'"');
         
     }
-
-    public static function getCustomerToken($email){
+    /**
+     * Metódo responsável por retornar o token pelo email
+     *
+     * @param [type] $email
+     * @return object
+     */
+    public static function getRACSToken($email){
 
         return (new Database('confirmation'))->select('email = "'.$email.'"')->fetchObject(self::class);
     }
-
-    public static function confirmationCad($idUser,$status){
-
-
-        return (new Database('customer'))->update('idUser = '.$idUser,[
-
-            'status'       => $status,
-        ]);
-
-        return true;
-
-    }
-
-
-    public function insertNewCustomer(){
+    /**
+     * Metódo responsável por inserir um novo usuário
+     *
+     * @return void
+     */
+    public function insertNewRACS(){
         
        
-        //Inserio os dados do cliete no banco de dados
-        $this->idUser = (new Database('customer'))->insert([
+        //Inserio os dados do usuario no banco de dados
+        $this->idRoot = (new Database('racs'))->insert([
             
-            'name'         => $this->name, 
-            'cpf'          => $this->cpf, 
+            'name'         => $this->name,  
+            'nickName'     => $this->nickName,  
             'email'        => $this->email,
-            'phone'        => $this->phone,
             'password'     => $this->password,
-            'birthDate'    => $this->birthDate,  
             'createDate'   => $this->createDate,  
             'permission'   => $this->permission,  
             'status'       => $this->status,  
@@ -214,30 +176,22 @@ class Customer{
         return true;
 
     }
-
-
-
     /**
-     * Método reponsável por atualizar o cliente
+     * Método reponsável por atualizar o usuário
      *
      * @return void
      */
-    public function updateCustomer(){
+    public function updateRACS(){
 
         //Inserio os dados do cliete no banco de dados
-        return (new Database('customer'))->update('idUser = '.$this->idUser,[
+        return (new Database('racs'))->update('idRoot = '.$this->idRoot,[
 
             'name'         => $this->name, 
-            'cpf'          => $this->cpf, 
+            'nickName'     => $this->nickName, 
             'email'        => $this->email,
-            'phone'        => $this->phone,
-            'password'     => $this->password,
-            'birthDate'    => $this->birthDate,  
-            'createDate'   => $this->createDate,  
+            'password'     => $this->password,  
             'permission'   => $this->permission,  
             'status'       => $this->status,  
-               
-             
         ]);
         
         //Sucesso
@@ -253,7 +207,7 @@ class Customer{
     public function updatePassword(){
 
         //Inserio os dados do cliete no banco de dados
-        return (new Database('customer'))->update('idUser = '.$this->idUser,[
+        return (new Database('racs'))->update('idRoot = '.$this->idRoot,[
 
             'password'     => $this->password,
           
@@ -266,44 +220,44 @@ class Customer{
 
 
     /**
-     * Método reponsável por deletar um cliente
+     * Método reponsável por deletar um usuário
      *
      * @return void
      */
-    public function deleteCustomer(){
+    public function deleteRACS(){
 
         //Inserio os dados do cliete no banco de dados
-        return (new Database('customer'))->delete('idUser = '.$this->idUser);
+        return (new Database('racs'))->delete('idRoot = '.$this->idRoot);
         
         //Sucesso
         return true;
 
     }
    /**
-     * Método responsável por retornar um cliente pelo idUser
+     * Método responsável por retornar um usuário pelo idRoot
      *
-     * @param Intenger $idUser
-     * @return Customer
+     * @param Intenger $idRoot
+     * @return RACS
      */
-    public static function getCustomerById($idUser){
+    public static function getRACSById($idRoot){
 
-        return self::getcustomer('idUser = '.$idUser)->fetchObject(self::class);
+        return self::getRACS('idRoot = '.$idRoot)->fetchObject(self::class);
     }
    
     /**
-     * Método responsável por retotornar um cliente com base em seu email
+     * Método responsável por retotornar um usuário com base em seu email
      *
      * @param string $email
-     * @return Customer
+     * @return RACS
      */
-    public static function getCustomerByEmail($email){
+    public static function getRACSByEmail($email){
 
       
-        return (new Database('customer'))->select('email = "'.$email.'"')->fetchObject(self::class);
+        return (new Database('racs'))->select('email = "'.$email.'"')->fetchObject(self::class);
     }
 
      /**
-     * Método responsavel por retornar depoimentos
+     * Método responsavel por uma consulta customizada
      *
      * @param string $where
      * @param string $order
@@ -311,9 +265,9 @@ class Customer{
      * @param string $fields
      * @return PDOStatement
      */
-    public static function getcustomer($where = null, $order = null, $limit = null, $fields = '*'){
+    public static function getRACS($where = null, $order = null, $limit = null, $fields = '*'){
 
-        return(new Database('customer'))->select($where, $order, $limit, $fields);
+        return(new Database('racs'))->select($where, $order, $limit, $fields);
     }
 
   
