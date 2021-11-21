@@ -29,12 +29,6 @@ class Login extends Page{
             "erros"   => $validate->getErro(),
             //"tentativas" => $objRACS->countAttempt()
         ];
-
-        echo '<pre>';
-        print_r($arrResponse);
-        echo '</pre>';
-        exit;
-
         return json_encode($arrResponse);
     }
     /**

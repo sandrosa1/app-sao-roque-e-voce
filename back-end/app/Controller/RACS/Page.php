@@ -14,7 +14,7 @@ class Page{
         ],
         'clientes'  =>[
             'label' => 'Clientes',
-            'link'  => URL.'/racs/customers',
+            'link'  => URL.'/racs/customer',
             'icon'  => 'build'
         ],
         'apps' =>[
