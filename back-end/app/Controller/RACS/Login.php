@@ -93,7 +93,7 @@ class Login extends Page{
         }else{
             $validate->objCustomer->deleteAttempt();
             //Busca usuário pelo email
-            $customer = EntityRACS::getCustomerByEmail($email);
+            $customer = EntityRACS::getRACSByEmail($email);
             SessionRACS::login($customer);
         
             $arrResponse=[
