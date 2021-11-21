@@ -3,7 +3,6 @@
 namespace App\Controller\RACS;
 
 use \App\Utils\View;
-use \App\Controller\Password\Password as PasswordHash;
 use \app\Controller\Validate\Validate as Validate;
 use \app\Model\Entity\RACS\RACS as EntityRACS;
 use \app\Session\RACS\LoginRACS as SessionRACS;
