@@ -7,7 +7,7 @@ use App\Controller\RACS;
 $objRouter->get('/racs/admin',[
     'middlewares' => [],
     function($request){
-        return new Response(200, RACS\Admin::getApps($request));
+        return new Response(200, RACS\Admin::getAdmins($request));
     }
     
 ]);
