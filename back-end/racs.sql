@@ -51,3 +51,5 @@ CREATE TABLE IF NOT EXISTS `sistema`.`confirmation` (
   UNIQUE KEY `email` (`email`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 COMMIT;
+
+
