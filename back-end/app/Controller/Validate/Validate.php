@@ -242,9 +242,9 @@ class Validate{
      *
      * @return boolean
      */
-    public function validateAttemptLogin()
+    public function validateAttemptLogin($entity)
     {
-        if($this->objRacs->countAttempt() >= 5){
+        if($entity->countAttempt() >= 5){
             $this->setErro("Você realizou mais de 5 tentativas!");
             $this->tentativas = true;
             return false;

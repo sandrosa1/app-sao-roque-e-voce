@@ -1,9 +1,11 @@
 //----------------Mudar par o dominio
-const urlName = 'cars7.1';
+const urlName = 'app-sao-roque-e-voce/back-end';
 const urlCadastro = urlName+'/cadastro';
 const urlLogin = urlName+'/srv/login';
 const urlRedefinePassword = urlName+'/srv/redefinir_senha';
 const urlNewPassword = urlName+'/srv/nova_senha';
+const urlLoginRcas = urlName+'/racs/login';
+
 
 //Pega o local 
 function getRoot(url)
@@ -185,3 +187,33 @@ $("#formNewPassword").on("submit",function(event){
         }
     });
 });
+
+
+// //Formulario de login racs
+// $("#formLoginRacs").on("submit",function(event){
+//     CarregandoLoading()
+//     event.preventDefault();
+//     var dados=$(this).serialize();
+//     $.ajax({
+//        url: getRoot(urlLogin),
+//         type: 'post',
+//         dataType: 'json',
+//         data: dados,
+//         success: function (response) {
+//           if(response.retorno == 'success'){
+//               window.location.href = response.page;
+//           }else{
+//               getCaptcha();
+//               if(response.tentativas == true){
+//                 $('.loginFormulario').hide();
+//               }
+//               $('.resultadoForm').empty();
+//               $.each(response.erros, function(key, value){
+//                   $('.resultadoForm').append(value + '<br>')
+//               })
+//             }
+//             ParandoLoading()
+//         }
+//     });
+    
+// });

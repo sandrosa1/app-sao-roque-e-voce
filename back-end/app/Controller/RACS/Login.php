@@ -3,21 +3,20 @@
 namespace App\Controller\RACS;
 
 use \App\Utils\View;
-use \app\Controller\Validate\Validate as Validate;
-use \app\Model\Entity\RACS\RACS as EntityRACS;
-use \app\Session\RACS\LoginRACS as SessionRACS;
-
+use \App\Model\Entity\RACS\RACS as EntityRACS;
+use \App\Controller\Validate\Validate as Validate;
+use \App\Session\RACS\LoginRACS as SessionRACS;
 
 class Login extends Page{
     /**
-     * Guardo os erro da validação
+     * Guardo os erro da validaçao
      *
      * @var array
      */
     private $erro=[];
- 
+   
     /**
-     * Metódo responsável por retonar o erro para o front-end
+     * Metódo responsavel por retonar o erro para o cliente
      *
      * @param objetc $validate
      * @return void
@@ -28,29 +27,37 @@ class Login extends Page{
         $arrResponse=[
             "retorno" => "erro",
             "erros"   => $validate->getErro(),
-            "tentativas" => $objRACS->countAttempt()
+            //"tentativas" => $objRACS->countAttempt()
         ];
+
+        echo '<pre>';
+        print_r($arrResponse);
+        echo '</pre>';
+        exit;
 
         return json_encode($arrResponse);
     }
     /**
-     * Método responsável por definir o login do usuário
+     * Método resposavel por definir o login do usuario
      *
      * @param Request $request
      * @return void
      */
     public static function setLogin($request){
 
-        $dados = [];
+        $dadosLogin = [];
         $postVars = $request->getPostVars();
-        $dados[0] = $email               = $postVars['email'] ?? '';
-        $dados[1] = $password            = $postVars['password'] ?? '';
-        $dados[2] = $gRecaptchaResponse  = $postVars['g-recaptcha-response'] ?? '';
+        $dadosLogin[0] = $email               = $postVars['email'] ?? '';
+        $dadosLogin[1] = $password            = $postVars['password'] ?? '';
+        $dadosLogin[2] = $gRecaptchaResponse  = $postVars['g-recaptcha-response'] ?? '';
 
+    
         $validate = new Validate();
+       
         $objRACS = new EntityRACS();
+       
 
-        if(!$validate->validateFields($dados))
+        if(!$validate->validateFields($dadosLogin))
         {
             return self:: responseError($validate, $objRACS);
         }
@@ -67,42 +74,38 @@ class Login extends Page{
             return self:: responseError($validate, $objRACS);
         }
         
-        if(!$validate->validateCaptcha($gRecaptchaResponse)){
+        // if(!$validate->validateCaptcha($gRecaptchaResponse)){
+
+        //     return self:: responseError($validate, $objRACS);
+        // }
+
+        if(!$validate->validateAttemptLogin($objRACS)){
 
             return self:: responseError($validate, $objRACS);
         }
-
-        if(!$validate->validateUserActive($email)){
-
-            return self:: responseError($validate, $objRACS);
-        }
-        if(!$validate->validateAttemptLogin()){
-
-            return self:: responseError($validate, $objRACS);
-        }
-       
+        
+        
         if(count($validate->getErro()) >0){
-            $validate->objCustomer->insertAttempt();
+            $objRACS->insertAttempt();
             $arrResponse=[
                "retorno" => "erro",
                "erros"   => $validate->getErro(),
-               "tentativas" => $validate->tentativas
+               //"tentativas" => $validate->tentativas
            ];
 
         }else{
-            $validate->objCustomer->deleteAttempt();
-            //Busca usuário pelo email
-            $customer = EntityRACS::getRACSByEmail($email);
-            SessionRACS::login($customer);
+            $objRACS->deleteAttempt();
+            //Busca cliente pelo email
+            $objRacs = EntityRACS::getRACSByEmail($email);
+            SessionRACS::login($objRacs);
         
             $arrResponse=[
                "retorno" => 'success',
                "page" => 'home',
-               "tentativas"   => $validate->tentativas
+               //"tentativas"   => $validate->tentativas
            ];
          
         }
-
         return json_encode($arrResponse);
     }
     /**
@@ -129,12 +132,13 @@ class Login extends Page{
             ]);
 
         }
+        
         //Retona a página completa
         return parent::getPage('RACS - Login',$content);
-        
+       
     }
     /**
-     * Método reponsável por deslogar o usuário
+     * Método reponsável por deslogar o cliente
      *
      * @param Request $request
      * @return void

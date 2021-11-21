@@ -17,6 +17,10 @@ $objRouter->get('/racs/login',[
 $objRouter->post('/racs/login',[
     'middlewares' => [],
     function($request){
+        // echo '<pre>';
+        // print_r('p1');
+        // echo '</pre>';
+        // exit;
         return new Response(200, RACS\Login::setLogin($request));
     }
 ]);
