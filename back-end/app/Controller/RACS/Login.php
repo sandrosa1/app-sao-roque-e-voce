@@ -129,10 +129,9 @@ class Login extends Page{
             ]);
 
         }
-        
         //Retona a página completa
         return parent::getPage('RACS - Login',$content);
-       
+        
     }
     /**
      * Método reponsável por deslogar o usuário
