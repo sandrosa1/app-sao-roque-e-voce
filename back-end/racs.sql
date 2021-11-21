@@ -35,3 +35,19 @@ CREATE TABLE IF NOT EXISTS `sistema`.`confirmation` (
   `token` text NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+--///////////////////////////////////////////RACS////////////////////////////////////////////////////
+
+  CREATE TABLE IF NOT EXISTS `sistema`.`racs` (
+  `idRoot` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(90) NOT NULL,
+  `nickName` varchar(90) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `password` varchar(90) NOT NULL,
+  `createDate` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `permission` varchar(20) NOT NULL,
+  `status` varchar(20) NOT NULL,
+  PRIMARY KEY (`idRoot`),
+  UNIQUE KEY `email` (`email`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+COMMIT;
