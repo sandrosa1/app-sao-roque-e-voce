@@ -7,7 +7,6 @@ use App\Controller\RACS;
 $objRouter->get('/racs/home',[
     'middlewares' => [],
     function($request){
-      
         return new Response(200, RACS\Home::getHome($request));
     }
     
