@@ -210,5 +210,50 @@ class Validate{
         }
     }
 
+        /**
+     *Método de validação de confirmação de email
+     *
+     * @param string $email
+     * @return boolean
+     */
+    public function validateUserActive($email)
+    {
+        $IsCustomerActive = $this->objRacs->getDataUser($email);
+
+        if($IsCustomerActive ["data"]["status"] == "confirmation"){
+
+            if(strtotime($IsCustomerActive ["data"]["dataCriacao"])<= strtotime(date("Y-m-d H:i:s"))-432000){
+
+                $this->setErro("Ative seu cadastro pelo link do email");
+
+                return false;
+            }else{
+
+                return true;
+            }
+        }else{
+
+            return true;
+        }
+    }
+
+       /**
+     * Validação das tentativas
+     *
+     * @return boolean
+     */
+    public function validateAttemptLogin()
+    {
+        if($this->objRacs->countAttempt() >= 5){
+            $this->setErro("Você realizou mais de 5 tentativas!");
+            $this->tentativas = true;
+            return false;
+        }else{
+            $this->tentativas = false;
+            return true;
+        }
+    }
+
+
 
 }
