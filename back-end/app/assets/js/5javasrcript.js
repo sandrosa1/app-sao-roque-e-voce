@@ -4,7 +4,7 @@ const urlCadastro = urlName+'/cadastro';
 const urlLogin = urlName+'/srv/login';
 const urlRedefinePassword = urlName+'/srv/redefinir_senha';
 const urlNewPassword = urlName+'/srv/nova_senha';
-const urlLoginRcas = urlName+'/racs/login';
+const urlLoginRacs = urlName+'/racs/login';
 
 //Pega o local 
 function getRoot(url)
@@ -200,9 +200,8 @@ $("#formLoginRacs").on("submit",function(event){
     event.preventDefault();
     var dados=$(this).serialize();
 
-    console.log(dados)
     $.ajax({
-       url: getRoot(urlLoginRcas),
+       url: getRoot(urlLoginRacs),
         type: 'post',
         dataType: 'json',
         data: dados,

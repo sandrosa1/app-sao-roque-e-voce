@@ -53,3 +53,5 @@ CREATE TABLE IF NOT EXISTS `sistema`.`confirmation` (
 COMMIT;
 
 
+ INSERT INTO `racs` (`name`, `nickName`, `email`,`password`, `createDate`, `permission`, `status`) VALUES
+            ('Sandro Amancio', 'Sandro-Sa', 'mueuemail@gmail.com','minhahashsenha','2021-10-24 22:28:18', 'admin', 'active');
