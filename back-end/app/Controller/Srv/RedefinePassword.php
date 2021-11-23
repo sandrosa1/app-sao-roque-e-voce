@@ -63,7 +63,7 @@ class RedefinePassword extends Page{
         $subject = 'Redefinir senha';
         $body = "<b>Acesse esse link para criar uma nova senha.<b><br><br>
         <a href='http://www.racsstudios.com/srv/nova_senha?email={$email}&token={$token}'> click aqui</a><br><br>
-        <img src='http://www.racsstudios.com/img/assinatura-racs.jpeg' alt='Logomarca da WEF'>";
+        <img src='http://www.racsstudios.com/img/assinatura-400.png' alt='Logomarca da WEF'>";
 
 
         if(!$validate->validateSendEmail($address,$subject,$body)){
@@ -84,6 +84,7 @@ class RedefinePassword extends Page{
             $arrResponse=[
                "retorno" => 'success',
                "tentativas"   => $validate->tentativas,
+               "page"   => 'login',
                "success" => ["Email enviado com sucesso.","Você recebera um email para redefinir sua senha.","Verifique na caixa de span ou lixo eletronico."]
            ];
          

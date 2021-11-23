@@ -108,7 +108,7 @@ $("#formLogin").on("submit",function(event){
           }else{
               getCaptcha();
               if(response.tentativas == true){
-                $('.loginFormulario').hide();
+                //$('.loginFormulario').hide();
               }
               $('.resultadoForm').empty();
               $.each(response.erros, function(key, value){
@@ -134,7 +134,7 @@ $("#formRedefinePassword").on("submit",function(event){
         data: dados,
         success: function (response) {
           if(response.retorno == 'success'){
-            $('.loginFormulario').hide();
+            //$('.loginFormulario').hide();
             $.each(response.success,function(key,value){
                 M.toast({   html: `<span>${value}</span><button class="btn-flat toast-action"><i class="material-icons green-text">thumb_up</i></button>`,
                     classes: 'rounded',
@@ -142,10 +142,12 @@ $("#formRedefinePassword").on("submit",function(event){
                     outDuration:5000,
                 });
             });   
+            window.location.href = response.page;
+
           }else{
               getCaptcha();
               if(response.tentativas == true){
-                $('.loginFormulario').hide();
+               // $('.loginFormulario').hide();
               }
               $('.resultadoForm').empty();
               $.each(response.erros, function(key, value){
@@ -182,7 +184,7 @@ $("#formNewPassword").on("submit",function(event){
           }else{
               getCaptcha();
               if(response.tentativas == true){
-                $('.loginFormulario').hide();
+                //$('.loginFormulario').hide();
               }
               $('.resultadoForm').empty();
               $.each(response.erros, function(key, value){
@@ -211,7 +213,7 @@ $("#formLoginRacs").on("submit",function(event){
           }else{
               getCaptcha();
               if(response.tentativas == true){
-                $('.loginFormulario').hide();
+               // $('.loginFormulario').hide();
               }
               $('.resultadoForm').empty();
               $.each(response.erros, function(key, value){

@@ -234,7 +234,7 @@ class Cadastro extends Page{
         $subject = 'Confirmação de cadastro';
         $body = "<b>Sejá bem vindo ao São Roque e Vocẽ {$name}.<b><br><br>
         <b>Para finalizar seu cadastro</b><a href='http://www.racsstudios.com/srv/confirmation?email={$email}&token={$token}'> click aqui</a><br><br>
-        <img src='http://www.racsstudios.com/img/assinatura-racs.jpeg' alt='Logomarca da WEF'>";
+        <img src='http://www.racsstudios.com/img/assinatura-400.png' alt='Logomarca da WEF'>";
 
         $objEmail = new Email;
         $sucess = $objEmail->sendEmail($address,$subject,$body);
