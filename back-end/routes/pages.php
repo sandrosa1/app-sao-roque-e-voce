@@ -10,7 +10,6 @@ $objRouter->get('/',[
         'maintenance'
     ],
     function(){
-
         return new Response(200,Pages\Home::getHome());
     }
 ]);
@@ -38,8 +37,6 @@ $objRouter->post('/cadastro',[
         return new Response(200,Pages\Cadastro::insertRegistration($request));
     }
 ]);
-
-
 
 
 
