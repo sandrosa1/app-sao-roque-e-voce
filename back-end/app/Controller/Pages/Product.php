@@ -6,7 +6,6 @@ use \App\Utils\View;
 use \App\Model\Entity\Organization;
 
 class Product extends Page{
-
     /**
      * Metódo respónsavel por retornar a view de produtos
      *
@@ -19,7 +18,6 @@ class Product extends Page{
         $content = View::render('pages/products',[
 
         ]);
-
         return parent::getPage('Produtos - RACS',$content);
     }
 }

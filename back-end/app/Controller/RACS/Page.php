@@ -127,7 +127,6 @@ class Page{
             'links' => $links,
            
         ]);
-
     }
 
 }

@@ -37,7 +37,7 @@ $('#cpf , #birthDate, #phone').on('focus', function () {
 function getCaptcha()
 {
     grecaptcha.ready(function() {
-        grecaptcha.execute('6LfHswQdAAAAAPuerl_eJ6d2NPw7Ognc5OaIwNE4', {action: 'homepage'}).then(function(token) {
+        grecaptcha.execute( sitekey, {action: 'homepage'}).then(function(token) {
           const gRecaptchaResponse=document.querySelector("#g-recaptcha-response").value=token;
         });
     });

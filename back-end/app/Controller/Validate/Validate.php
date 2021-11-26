@@ -214,15 +214,16 @@ class Validate{
      *Método de validação de confirmação de email
      *
      * @param string $email
+     * @param entity $entity
      * @return boolean
      */
-    public function validateUserActive($email)
+    public function validateUserActive($email,$entity)
     {
-        $IsCustomerActive = $this->objRacs->getDataUser($email);
+        $IsActive = $entity->getDataUser($email);
 
-        if($IsCustomerActive ["data"]["status"] == "confirmation"){
+        if($IsActive ["data"]["status"] == "confirmation"){
 
-            if(strtotime($IsCustomerActive ["data"]["dataCriacao"])<= strtotime(date("Y-m-d H:i:s"))-432000){
+            if(strtotime($IsActive ["data"]["dataCriacao"])<= strtotime(date("Y-m-d H:i:s"))-432000){
 
                 $this->setErro("Ative seu cadastro pelo link do email");
 
@@ -254,6 +255,61 @@ class Validate{
         }
     }
 
+     //https://gist.github.com/rafael-neri/ab3e58803a08cb4def059fce4e3c0e40
+    /**
+     * Validação se é um cpf real
+     *
+     * @param string $cpf
+     * @return boolean
+     */
+    function validateCPF($cpf) {
+    
+        // Extrai somente os números
+        $cpf = preg_replace( '/[^0-9]/is', '', $cpf );
+        
+        // Verifica se foi informado todos os digitos corretamente
+        if (strlen($cpf) != 11) {
+            $this->setErro("Cpf Inválido!");
+            return false;
+        }
 
+        // Verifica se foi informada uma sequência de digitos repetidos. Ex: 111.111.111-11
+        if (preg_match('/(\d)\1{10}/', $cpf)) {
+            $this->setErro("Cpf Inválido!");
+            return false;
+        }
+
+        // Faz o calculo para validar o CPF
+        //https://campuscode.com.br/conteudos/o-calculo-do-digito-verificador-do-cpf-e-do-cnpj
+        for ($t = 9; $t < 11; $t++) {
+            for ($d = 0, $c = 0; $c < $t; $c++) {
+                $d += $cpf[$c] * (($t + 1) - $c);
+            }
+            $d = ((10 * $d) % 11) % 10;
+            if ($cpf[$c] != $d) {
+                $this->setErro("Cpf Inválido!");
+                return false;
+            }
+        }
+        return true;
+
+    }
+
+      /**
+     * #Validação se o dado é uma data
+     *
+     * @param date $par
+     * @return boolean
+     */
+    public function validateData($par)
+    {
+        $data=\DateTime::createFromFormat("d/m/Y",$par);
+        if(($data) && ($data->format("d/m/Y") === $par)){
+            return true;
+        }else{
+            $this->setErro("Data inválida!");
+            return false;
+        }
+    }
 
 }

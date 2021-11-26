@@ -126,10 +126,10 @@ class Login extends Page{
                 'status' => ''
             ]);
 
-        }
-        
+        }  
         //Retona a página completa
         return parent::getPage('RACS - Login',$content);
+        
        
     }
     /**

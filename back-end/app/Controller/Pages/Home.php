@@ -20,7 +20,7 @@ class Home extends Page{
             'name' =>   $obOrganization->name
            
         ]);
-
         return parent::getPage('HOME - RACS',$content, null);
+        
     }
 }

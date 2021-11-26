@@ -129,7 +129,12 @@ class Customer{
         }
     }
 
-    // #Retorna os dados do usuário
+    /**
+     * Retorna o numero de linhas e o usuario
+     *
+     * @param string $email
+     * @return array
+     */
     public function getDataUser($email)
     {
        
@@ -143,7 +148,11 @@ class Customer{
         ];
     }
 
-    #Conta as tentativas
+    /**
+     * Conta as tentativas
+     *
+     * @return integer
+     */
     public function countAttempt()
     {
 
@@ -161,7 +170,11 @@ class Customer{
     
 
        
-    #Deleta as tentativas
+    /**
+     * Deleta as tentativas
+     *
+     * @return void
+     */
     public function deleteAttempt()
     {
         return (new Database('attempt'))->delete('ip = "'.$this->trait.'"');
@@ -245,7 +258,7 @@ class Customer{
 
     }
 
-       /**
+    /**
      * Método reponsável por atualizar o password
      *
      * @return void

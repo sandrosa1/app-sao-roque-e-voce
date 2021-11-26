@@ -6,7 +6,7 @@ use App\Controller\Srv;
 //Rota de detalhes
 $objRouter->get('/srv/detalhes',[
     'middlewares' => [  
-        'required-srv-login'
+         'required-srv-login'
     ],
     function($request){
        

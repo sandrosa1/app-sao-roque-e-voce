@@ -42,6 +42,11 @@ class LoginRACS{
 
     }
 
+    /**
+     * Verifica se esta logado
+     *
+     * @return boolean
+     */
     public static function isLogged(){
 
         //Inicia a sessão

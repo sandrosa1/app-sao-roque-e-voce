@@ -32,13 +32,16 @@ define('EMAIL_FROM_NAME',getenv('EMAIL_FROM_NAME'));
 //Defini uma url (Será provisoria)
 define('URL', getenv('URL'));
 
+define('SITEKEY', getenv('SITEKEY'));
+
 //Define o dominio
 define("DOMAIN",$_SERVER["HTTP_HOST"]);
 
 //Envia os parametros para view
 View::init([
     'URL' => URL,
-    'DOMAIN' => DOMAIN
+    'DOMAIN' => DOMAIN,
+    'SITEKEY' => SITEKEY
 ]);
 
 //Define o mapeamento de middlewares

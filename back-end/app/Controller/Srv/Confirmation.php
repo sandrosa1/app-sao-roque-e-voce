@@ -44,13 +44,11 @@ class Confirmation extends Page {
             'status' => '<span class="srv-c-4 m-3">Token invalido</span>'
 
         ]);
-
         return parent::getPage('SRV - Login',$content);
+        
     }
-
     //Confima o cadastro
     $confirmation->confirmationCad($objCustomer->idUser, $status );
-
     //Conteúde da pagina de login
     $content = View::render('srv/login',[
 
