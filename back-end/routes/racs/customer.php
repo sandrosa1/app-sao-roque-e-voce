@@ -9,7 +9,7 @@ $objRouter->get('/racs/customer',[
         'required-racs-login',
     ],
     function($request){
-        return new Response(200, RACS\Customer::getCustomers($request));
+        return new Response(200, RACS\CustomerRacs::getCustomers($request));
     }
     
 ]);

@@ -10,7 +10,7 @@ $objRouter->get('/srv/detalhes',[
     ],
     function($request){
        
-        return new Response(200, Srv\Setting::getSetting($request));
+        return new Response(200, Srv\SettingSrv::getSetting($request));
     }
     
 ]);

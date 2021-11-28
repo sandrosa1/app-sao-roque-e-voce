@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Middleware;
 
+use \Closure;
 
 class Queue {
 
@@ -57,7 +58,7 @@ class Queue {
      * Método responsável pelo mapeamento de middlewaares
      *
      * @param array $map
-     * @return void
+     * @return self
      */
     public static function setMap($map){
         self::$map = $map;
@@ -67,7 +68,7 @@ class Queue {
      * Método responsável pelo mapeamento de middlewares padrões
      *
      * @param array $map
-     * @return void
+     * @return self
      */
     public static function setDefault($default){
         self::$default = $default;
@@ -80,13 +81,7 @@ class Queue {
      * @return Response
      */
     public function next($request){
-        // echo '<pre>';
-        // print_r(self::$map);
-        // echo '</pre>';
-        // echo '<pre>';
-        // print_r($this);
-        // echo '</pre>';
-        // exit;
+       
       //Verfica se a fila esta vazia
       if(empty($this->middlewares)) return call_user_func_array($this->controller, $this->controllerArgs);
       //die('middlewares');
@@ -95,36 +90,16 @@ class Queue {
       //Middleware
       $middleware = array_shift($this->middlewares);
       
-        // echo '<pre>';
-        // print_r($middleware);
-        // echo '</pre>';
-        // exit;
-        
       //Verifica o mapeamento não existe
       if(!isset(self::$map[$middleware])){
           throw new \Exception("Problemas ao processar o middleware da requisição", 500);
       }
 
-        // echo '<pre>';
-        // print_r($middleware);
-        // echo '</pre>';
-        // exit;
-      
       //Next
       $queue = $this;
       $next = function($request) use ($queue){
           return $queue->next($request);
         };
-
-        // echo '<pre>';
-        // print_r($next);
-        // echo '</pre>';
-        // exit;
-
-        // echo '<pre>';
-        // print_r(self::$map[$middleware]);
-        // echo '</pre>';
-        // exit;
 
         //Executa o middleware
         return (new self::$map[$middleware])->handle($request, $next);

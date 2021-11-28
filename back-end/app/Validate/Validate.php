@@ -1,8 +1,8 @@
 <?php
-namespace App\Controller\Validate;
+namespace App\Validate;
 
 use \App\Model\Entity\Customer\Customer as EntityCustomer;
-use \App\Controller\Password\Password as PasswordHash;
+use \App\Password\Password as PasswordHash;
 use ZxcvbnPhp\Zxcvbn;
 use \App\Communication\Email;
 
@@ -39,18 +39,18 @@ class Validate{
     /**
      * Validar se os campos desejados foram preenchidos
      *
-     * @param Post $par
+     * @param Post $parameters
      * @return boolean
      */
-    public function validateFields($par)
+    public function validateFields($parameters)
     {
-        $i=0;
-        foreach ($par as $key => $value){
+        $i = 0;
+        foreach ($parameters as $key => $value){
             if(empty($value)){
                 $i++;
             }
         }
-        if($i==0){
+        if($i == 0){
             return true;
         }else{
             $this->setErro("Preencha todos os dados!");
@@ -61,21 +61,19 @@ class Validate{
      /**
      *  Validação se o dado é um email
      *
-     * @param string $par
+     * @param string $email
      * @return boolean
      */
-    public function validateEmail($par)
+    public function validateEmail($email)
     {
-        if(filter_var($par, FILTER_VALIDATE_EMAIL)){
+        if(filter_var($email, FILTER_VALIDATE_EMAIL)){
             return true;
         }else{
             $this->setErro("Email inválido!");
             return false;
         }
     }
-
-
-      /**
+    /**
      * #Validar se o email existe no banco de dados (action null para cadastro)
      *
      * @param string $email
@@ -155,11 +153,31 @@ class Validate{
      * @param string $password
      * @return boolean
      */
-    public function validateSenha($email,$password)
+    public function validateSenhaCustomer($email,$password)
     {
         $hash = new PasswordHash();
 
         if($hash->verifyHashCustomer($email,$password)){
+            return true;
+
+        }else{
+
+            $this->setErro("Usuário ou Senha Inválidos!");
+            return false;
+        }
+    }
+    /**
+     * Verificação da password digitada com o hash no banco de dados
+     *
+     * @param string $email
+     * @param string $password
+     * @return boolean
+     */
+    public function validateSenhaRacs($email,$password)
+    {
+        $hash = new PasswordHash();
+
+        if($hash->verifyHashRacs($email,$password)){
             return true;
 
         }else{
@@ -301,10 +319,10 @@ class Validate{
      * @param date $par
      * @return boolean
      */
-    public function validateData($par)
+    public function validateData($date)
     {
-        $data=\DateTime::createFromFormat("d/m/Y",$par);
-        if(($data) && ($data->format("d/m/Y") === $par)){
+        $dateFormat = \DateTime::createFromFormat("d/m/Y",$date);
+        if(($dateFormat) && ($dateFormat->format("d/m/Y") === $date)){
             return true;
         }else{
             $this->setErro("Data inválida!");

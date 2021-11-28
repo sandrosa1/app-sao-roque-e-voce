@@ -10,7 +10,7 @@ $objRouter->get('/srv/tela',[
     ],
     function($request){
       
-        return new Response(200, Srv\Screen::getScreen($request));
+        return new Response(200, Srv\ScreenSrv::getScreen($request));
     }
     
 ]);

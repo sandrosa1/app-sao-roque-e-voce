@@ -10,7 +10,7 @@ $objRouter->get('/srv/login',[
         'required-srv-logout',
     ],
     function($request){ 
-        return new Response(200, Srv\Login::getLogin($request));
+        return new Response(200, Srv\LoginSrv::getLogin($request));
     }
 ]);
 
@@ -20,7 +20,7 @@ $objRouter->post('/srv/login',[
         'required-srv-logout',
     ],
     function($request){
-        return new Response(200, Srv\Login::setLogin($request));
+        return new Response(200, Srv\LoginSrv::setLogin($request));
     }
 ]);
 
@@ -30,7 +30,7 @@ $objRouter->get('/srv/logout',[
         'required-srv-login',
     ],
     function($request){
-        return new Response(200, Srv\Login::setLogout($request));
+        return new Response(200, Srv\LoginSrv::setLogout($request));
     }
 ]);
 

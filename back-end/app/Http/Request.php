@@ -1,127 +1,158 @@
-<?php 
+<?php
 
 namespace App\Http;
 
-Class Request{
+class Request {
 
+    /**
+     * Instancia do Router
+     *
+     * @var Router
+     */
     private $router;
 
+    /**
+     * Método HTTP da requisão
+     *
+     * @var string
+     */
     private $httpMethod;
 
+    /**
+     * URI da página
+     *
+     * @var string
+     */
     private $uri;
 
-    private $queryParams;
+    /**
+     * Parametros da URL
+     *
+     * @var array
+     */
+    private $queryParams = [];
 
-    private $postVars;
+    /**
+     * Variáveis recebisdas no POST da página ($$_POST)
+     *
+     * @var array
+     */
+    private $postVars = [];
 
-    private $headers;
+    /**
+     * Cabeçãlho da requisição
+     *
+     * @var array
+     */
+    private $headers = [];
 
-
+    /**
+     * Construtor da classe
+     */
     public function __construct($router){
-        $this->router = $router;
+        $this->router      = $router;
         $this->queryParams = $_GET ?? [];
-        $this->postVars = $_POST ?? [];
-        $this->headers = getallheaders();
-        $this->httpMethod = $_SERVER['REQUEST_METHOD'] ?? '';
+        $this->headers     = getallheaders();
+        $this->httpMethod  = $_SERVER['REQUEST_METHOD'] ?? '';
         $this->setUri();
+        $this->setPostVars();
     }
 
+
+    /**
+     * Metódo respónsavel por definir as variaveis de post
+     *
+     * @return void
+     */
+    private function setPostVars(){
+
+        //Verifica o método da requisição
+        if($this->httpMethod == 'GET') return false;
+
+        //POST padrão
+        $this->postVars = $_POST ?? [];
+
+        //POST VARS
+        $inputRaw = file_get_contents('php://input');
+
+        $this->postVars = strlen($inputRaw and empty($_POST)) ? json_decode($inputRaw,true) : $this->postVars;
+
+
+    }
+
+    /**
+     * Método responsável por definir a URI
+     *
+     * @return void
+     */
     private function setUri(){
-        //URI completas (COM GETS)
+        //URI COMPLETA (COM GETS)
         $this->uri = $_SERVER['REQUEST_URI'] ?? '';
 
-        //Remove gets da uri
-        $xUri = explode('?',$this->uri);
-        $this->uri = $xUri[0];
+        //REMOVE GETS DA URI
+        $xURI = explode('?',$this->uri);
+        $this->uri = $xURI[0];
 
     }
 
-    public function getRouter(){
+    /**
+     * Método reponsável por retornar a instancia de Router
+     *
+     * @return  Router
+     */ 
+    public function getRouter()
+    {
         return $this->router;
     }
 
-
     /**
-     * Get the value of headers
-     */
-    public function getHeaders()
-    {
-        return $this->headers;
-    }
-
-    /**
-     * Set the value of headers
-     */
-    public function setHeaders($headers): self
-    {
-        $this->headers = $headers;
-
-        return $this;
-    }
-
-    /**
-     * Get the value of httpMethod
-     */
+     * Retorna o método HTTP da requisão
+     *
+     * @return  string
+     */ 
     public function getHttpMethod()
     {
         return $this->httpMethod;
     }
 
     /**
-     * Set the value of httpMethod
-     */
-    public function setHttpMethod($httpMethod): self
-    {
-        $this->httpMethod = $httpMethod;
-
-        return $this;
-    }
-
-    /**
-     * Get the value of uri
-     */
+     * Retorna URI da página retorna URI
+     *
+     * @return  string
+     */ 
     public function getUri()
     {
         return $this->uri;
     }
 
- 
     /**
-     * Get the value of queryParams
-     */
+     * Retorna cabeçãlho da requisição
+     *
+     * @return  array
+     */ 
+    public function getHeaders()
+    {
+        return $this->headers;
+    }
+
+    /**
+     *Retorna parametros da URL
+     *
+     * @return  array
+     */ 
     public function getQueryParams()
     {
         return $this->queryParams;
     }
 
     /**
-     * Set the value of queryParams
-     */
-    public function setQueryParams($queryParams): self
-    {
-        $this->queryParams = $queryParams;
-
-        return $this;
-    }
-
-
-    /**
-     * Set the value of postVars
-     */
-    public function setPostVars($postVars): self
-    {
-        $this->postVars = $postVars;
-
-        return $this;
-    }
-
-    /**
-     * Get the value of postVars
-     */
+     * Retorna as variáveis recebidas no POST da página ($_POST)
+     *
+     * @return  array
+     */ 
     public function getPostVars()
     {
         return $this->postVars;
     }
 
-  
 }

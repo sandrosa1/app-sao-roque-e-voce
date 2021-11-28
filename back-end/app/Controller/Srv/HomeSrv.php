@@ -4,7 +4,7 @@ namespace App\Controller\Srv;
 
 use \App\Utils\View;
 
-class Home extends Page{
+class HomeSrv extends PageSrv{
 
     /**
      * Renderiza o conteúdo da Home Administradora do cliente

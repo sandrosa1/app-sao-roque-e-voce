@@ -11,7 +11,7 @@ $objRouter->get('/racs/login',[
     ],
     function($request){
         
-        return new Response(200, RACS\Login::getLogin($request));
+        return new Response(200, RACS\LoginRacs::getLogin($request));
     }
 ]);
 
@@ -21,7 +21,7 @@ $objRouter->post('/racs/login',[
         'required-racs-logout',
     ],
     function($request){
-        return new Response(200, RACS\Login::setLogin($request));
+        return new Response(200, RACS\LoginRacs::setLogin($request));
     }
 ]);
 
@@ -31,7 +31,7 @@ $objRouter->get('/racs/logout',[
         'required-racs-login',
     ],
     function($request){
-        return new Response(200, RACS\Login::setLogout($request));
+        return new Response(200, RACS\LoginRacs::setLogout($request));
     }
 ]);
 

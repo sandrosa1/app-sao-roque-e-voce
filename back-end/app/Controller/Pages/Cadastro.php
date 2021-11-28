@@ -4,8 +4,8 @@ namespace App\Controller\Pages;
 
 use \App\Utils\View;
 use \App\Model\Entity\Customer\Customer as EntityCustomer;
-use \App\Controller\Validate\Validate as Validate;
-use \App\Controller\Password\Password as PasswordHash;
+use \App\Validate\Validate as Validate;
+use \App\Password\Password as PasswordHash;
 
 
 class Cadastro extends Page{
@@ -13,7 +13,7 @@ class Cadastro extends Page{
      * Metódo responsavel por inserir um novo cliente;
      *
      * @param Request $request
-     * @return void
+     * @return Response
      */
     public static function insertRegistration($request){ 
     

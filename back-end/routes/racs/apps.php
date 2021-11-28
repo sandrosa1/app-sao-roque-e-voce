@@ -9,7 +9,7 @@ $objRouter->get('/racs/apps',[
         'required-racs-login',
     ],
     function($request){
-        return new Response(200, RACS\App::getApps($request));
+        return new Response(200, RACS\AppRacs::getApps($request));
     }
     
 ]);

@@ -1,35 +1,35 @@
 <?php
 
-namespace App\Controller\Srv;
+namespace App\Controller\RACS;
 
 use \App\Utils\View;
 
-class Page{
+class PageRacs{
 
     private static $modules = [
         'home'  =>[
             'label' => 'Home',
-            'link'  => URL.'/srv/home',
+            'link'  => URL.'/racs/home',
             'icon'  => 'home'
         ],
-        'detalhes'  =>[
-            'label' => 'Detalhes',
-            'link'  => URL.'/srv/detalhes',
+        'clientes'  =>[
+            'label' => 'Clientes',
+            'link'  => URL.'/racs/customer',
             'icon'  => 'build'
         ],
-        'tela' =>[
-            'label' => 'Tela',
-            'link'  => URL.'/srv/tela',
+        'apps' =>[
+            'label' => 'APPs',
+            'link'  => URL.'/racs/apps',
             'icon'  => 'stay_current_portrait'
         ],
-        'depoimentos' =>[
-            'label'   => 'Depoimentos',
-            'link'    => URL.'/srv/depoimentos',
+        'admin' =>[
+            'label'   => 'Administradores',
+            'link'    => URL.'/racs/admin',
             'icon'    => 'comment'
         ],
     ];
     /**
-     * Método resposável por retornar o conteúdo (view) da estrutura genérica de página do paineil
+     * Método resposável por retornar o conteúdo (view) da estrutura genérica de página do painel
      *
      * @param  string $title
      * @param  string $content
@@ -37,15 +37,13 @@ class Page{
      */
     public static function getPage($title, $content ){
        
-        return View::render('srv/page',[
+        return View::render('racs/page',[
 
             'title'   => $title,
             'content' => $content,
           
-         
         ]);
     }
-
     /**
      *Renderiza a view do menu
      *
@@ -57,15 +55,15 @@ class Page{
         $links = '';
         //Itera os links do menu e compara modulo atual
         foreach(self::$modules as $hash=>$module){
-            $links .= View::render('srv/menu/link',[
+            $links .= View::render('racs/menu/link',[
                 'label'   => $module['label'],
                 'link'    => $module['link'],
-                'current' => $hash == $currentModule ? 'active' : '',
+                'current' => $hash == $currentModule ? 'active-racs' : '',
                 'icon'    => $module['icon']
             ]);
         }
         //Retorna a view do menu
-        return View::render('srv/menu/box',[
+        return View::render('racs/menu/box',[
             'links' => $links
         ]);
     }
@@ -80,14 +78,13 @@ class Page{
     public static function getPanel($title, $content, $currentModule ){
        
         //Renderiza a view do painel
-        $contentPanel = View::render('srv/panel' ,[
+        $contentPanel = View::render('racs/panel' ,[
             'menu'    => self::getMenu($currentModule),
             'content' => $content
         ]);
         //Retorna a pagina renderizada
         return self::getPage($title,$contentPanel);
     }
-
     /**
      * Metodo de apoia para criar paginação
      *
@@ -118,7 +115,7 @@ class Page{
             //Link 
             $link = $url.'?'.http_build_query($queryParams);
             
-            $links .= View::render('srv/pagination/link',[
+            $links .= View::render('racs/pagination/link',[
                 'page' => $pagina['page'],
                 'link' => $link,
                 // 'active' => $pagina['current'] ? 'active' : ''
@@ -126,11 +123,10 @@ class Page{
 
         }
         //Renderiza box de paginação quando for necessario
-        return View::render('srv/pagination/box',[
+        return View::render('racs/pagination/box',[
             'links' => $links,
            
         ]);
-
     }
 
 }

@@ -11,7 +11,7 @@ $objRouter->get('/srv/nova_senha',[
     ],
     function($request){
        
-        return new Response(200, Srv\NewPassword::getNewPassword($request));
+        return new Response(200, Srv\NewPasswordSrv::getNewPassword($request));
     }
 ]);
 
@@ -22,7 +22,7 @@ $objRouter->post('/srv/nova_senha',[
     ],
     function($request){
       
-        return new Response(200, Srv\NewPassword::setNewPassword($request));
+        return new Response(200, Srv\NewPasswordSrv::setNewPassword($request));
     }
 ]);
 

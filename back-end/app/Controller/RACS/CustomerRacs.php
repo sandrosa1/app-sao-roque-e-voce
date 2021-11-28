@@ -4,7 +4,7 @@ namespace App\Controller\RACS;
 
 use \App\Utils\View;
 
-class Customer extends Page{
+class CustomerRacs extends PageRacs{
 
     /**
      * Renderiza o conteúdo da view de clientes 

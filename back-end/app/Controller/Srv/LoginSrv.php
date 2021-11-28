@@ -1,34 +1,74 @@
 <?php
 
-namespace App\Controller\RACS;
+namespace App\Controller\Srv;
 
 use \App\Utils\View;
-use \App\Model\Entity\RACS\RACS as EntityRACS;
-use \App\Controller\Validate\Validate as Validate;
-use \App\Session\RACS\LoginRACS as SessionRACS;
+use \App\Model\Entity\Customer\Customer as EntityCustomer;
+use \App\Validate\Validate as Validate;
+use \App\Session\Srv\LoginCustomer as SessionCustomer;
 
-class Login extends Page{
+class LoginSrv extends PageSrv{
     /**
      * Guardo os erro da validaçao
      *
      * @var array
      */
     private $erro=[];
-   
+    /**
+     * Instancia de login
+     *
+     * @var object
+     */
+    private $objCustomer;
+    /**
+     * Guarda a quantidade de tentativas de login
+     *
+     * @var integer
+     */
+    private $tentativas;
+    /**
+     * Construtor que inicia as Instancias
+     */
+    public function __construct()
+    {
+        $this->objCustomer = new EntityCustomer();
+        
+    }
+    /**
+     * Retorna o erro
+     *
+     * @return array
+     */
+    public function getErro()
+    {
+        return $this->erro;
+    }
+    /**
+     * Guardo 0 erro no array
+     *
+     * @param array $erro
+     * @return void
+     */
+    public function setErro($erro)
+    {
+        array_push($this->erro,$erro);
+    }
+    
     /**
      * Metódo responsavel por retonar o erro para o cliente
      *
      * @param objetc $validate
      * @return void
      */
-    private static function responseError($validate, $objRACS){
+    private static function responseError($validate, $objCustomer){
 
-        $objRACS->insertAttempt();
+        $objCustomer->insertAttempt();
         $arrResponse=[
             "retorno" => "erro",
             "erros"   => $validate->getErro(),
-            //"tentativas" => $objRACS->countAttempt()
+            "tentativas" => $objCustomer->countAttempt()
         ];
+
         return json_encode($arrResponse);
     }
     /**
@@ -38,7 +78,6 @@ class Login extends Page{
      * @return void
      */
     public static function setLogin($request){
-       
 
         $dadosLogin = [];
         $postVars = $request->getPostVars();
@@ -46,61 +85,64 @@ class Login extends Page{
         $dadosLogin[1] = $password            = $postVars['password'] ?? '';
         $dadosLogin[2] = $gRecaptchaResponse  = $postVars['g-recaptcha-response'] ?? '';
 
-    
         $validate = new Validate();
-       
-        $objRACS = new EntityRACS();
-       
+        $objCustomer = new EntityCustomer();
 
         if(!$validate->validateFields($dadosLogin))
         {
-            return self:: responseError($validate, $objRACS);
+          
+            return self:: responseError($validate, $objCustomer);
         }
         if(!$validate->validateEmail($email)){
 
-            return self:: responseError($validate, $objRACS);
+            return self:: responseError($validate, $objCustomer);
         }
         if(!$validate->validateIssetEmail($email,"login")){
 
-            return self:: responseError($validate, $objRACS);
+            return self:: responseError($validate, $objCustomer);
         }
-        if(!$validate->validateSenha($email,$password)){
+        if(!$validate->validateSenhaCustomer($email,$password)){
 
-            return self:: responseError($validate, $objRACS);
+            return self:: responseError($validate, $objCustomer);
         }
         
         if(!$validate->validateCaptcha($gRecaptchaResponse)){
 
-            return self:: responseError($validate, $objRACS);
+            return self:: responseError($validate, $objCustomer);
         }
 
-        if(!$validate->validateAttemptLogin($objRACS)){
+        if(!$validate->validateUserActive($email,$objCustomer)){
 
-            return self:: responseError($validate, $objRACS);
+            return self:: responseError($validate, $objCustomer);
         }
-        
+        if(!$validate->validateAttemptLogin($objCustomer)){
+
+            return self:: responseError($validate, $objCustomer);
+        }
+       
         
         if(count($validate->getErro()) >0){
-            $objRACS->insertAttempt();
+            $validate->objCustomer->insertAttempt();
             $arrResponse=[
                "retorno" => "erro",
                "erros"   => $validate->getErro(),
-               //"tentativas" => $validate->tentativas
+               "tentativas" => $validate->tentativas
            ];
 
         }else{
-            $objRACS->deleteAttempt();
+            $validate->objCustomer->deleteAttempt();
             //Busca cliente pelo email
-            $objRacs = EntityRACS::getRACSByEmail($email);
-            SessionRACS::login($objRacs);
+            $customer = EntityCustomer::getCustomerByEmail($email);
+            SessionCustomer::login($customer);
         
             $arrResponse=[
                "retorno" => 'success',
                "page" => 'home',
-               //"tentativas"   => $validate->tentativas
+               "tentativas"   => $validate->tentativas
            ];
          
         }
+
         return json_encode($arrResponse);
     }
     /**
@@ -117,19 +159,19 @@ class Login extends Page{
         //Status
         if(isset($queryParams['status'])){
 
-            $content = View::render('racs/login',[
+            $content = View::render('srv/login',[
             
             ]);
         }else{
 
-            $content = View::render('racs/login',[
+            $content = View::render('srv/login',[
                 'status' => ''
             ]);
 
-        }  
-        //Retona a página completa
-        return parent::getPage('RACS - Login',$content);
+        }
         
+        //Retona a página completa
+        return parent::getPage('SRV - Login',$content);
        
     }
     /**
@@ -141,10 +183,10 @@ class Login extends Page{
     public static function setLogout($request){
 
         //Destroi a sessão de login
-        SessionRACS::logout();
+        SessionCustomer::logout();
 
         //Redireciona o usuário para a página de login
-        $request->getRouter()->redirect('/racs/login');
+        $request->getRouter()->redirect('/srv/login');
     }
 
 }

@@ -10,7 +10,7 @@ $objRouter->get('/srv/home',[
     ],
     function($request){
       
-        return new Response(200, Srv\Home::getHome($request));
+        return new Response(200, Srv\HomeSrv::getHome($request));
     }
     
 ]);

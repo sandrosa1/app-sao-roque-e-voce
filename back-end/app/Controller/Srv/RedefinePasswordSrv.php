@@ -4,9 +4,9 @@ namespace App\Controller\Srv;
 
 use \App\Utils\View;
 use \App\Model\Entity\Customer\Customer as EntityCustomer;
-use \App\Controller\Validate\Validate as Validate;
+use \App\Validate\Validate as Validate;
 
-class RedefinePassword extends Page{
+class RedefinePassword extends PageSrv{
 
     /**
      * Metódo responsavel por retonar o erro para o cliente

@@ -9,7 +9,7 @@ $objRouter->get('/racs/admin',[
         'required-racs-login', 
     ],
     function($request){
-        return new Response(200, RACS\Admin::getAdmins($request));
+        return new Response(200, RACS\AdminRacs::getAdmins($request));
     }
     
 ]);

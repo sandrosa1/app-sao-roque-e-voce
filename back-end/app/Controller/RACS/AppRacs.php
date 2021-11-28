@@ -4,7 +4,7 @@ namespace App\Controller\RACS;
 
 use \App\Utils\View;
 
-class App extends Page{
+class AppRacs extends PageRacs{
 
     /**
      * Renderiza o conteúdo da view de apps
