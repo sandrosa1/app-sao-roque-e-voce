@@ -4,7 +4,7 @@ namespace App\Controller\Srv;
 
 use \App\Utils\View;
 
-class Screen extends PageSrv{
+class ScreenSrv extends PageSrv{
 
     /**
     * Renderiza o conteúdo da pagina de depoimentos

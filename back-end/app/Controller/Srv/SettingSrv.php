@@ -4,7 +4,7 @@ namespace App\Controller\Srv;
 
 use \App\Utils\View;
 
-class Setting extends PageSrv{
+class SettingSrv extends PageSrv{
 
     /**
     * Renderiza o conteúdo de configurações

@@ -11,7 +11,7 @@ class CustomerRacs extends PageRacs{
      * 
      *
      * @param Request $request
-     * @return String
+     * @return string
      */
     public static function getCustomers(){
 

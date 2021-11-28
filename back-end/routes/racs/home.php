@@ -9,7 +9,7 @@ $objRouter->get('/racs/home',[
         'required-racs-login'
     ],
     function($request){
-        return new Response(200, RACS\Home::getHome($request));
+        return new Response(200, RACS\HomeRacs::getHome($request));
     }
     
 ]);

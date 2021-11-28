@@ -40,9 +40,7 @@ class PageSrv{
         return View::render('srv/page',[
 
             'title'   => $title,
-            'content' => $content,
-          
-         
+            'content' => $content
         ]);
     }
 

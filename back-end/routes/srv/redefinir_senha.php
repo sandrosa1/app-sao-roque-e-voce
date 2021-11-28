@@ -11,7 +11,7 @@ $objRouter->get('/srv/redefinir_senha',[
     ],
     function($request){
        
-        return new Response(200, Srv\RedefinePassword::getRedefinePassword($request));
+        return new Response(200, Srv\RedefinePasswordSrv::getRedefinePassword($request));
     }
 ]);
 
@@ -22,7 +22,7 @@ $objRouter->post('/srv/redefinir_senha',[
     ],
     function($request){
        
-        return new Response(200, Srv\RedefinePassword::setRedefinePassword($request));
+        return new Response(200, Srv\RedefinePasswordSrv::setRedefinePassword($request));
     }
 ]);
 

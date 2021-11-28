@@ -4,7 +4,7 @@ namespace App\Controller\Srv;
 
 use \App\Utils\View;
 
-class Testimony extends PageSrv{
+class TestimonySrv extends PageSrv{
 
     /**
     * Renderiza o conteúdo da pagina de depoimentos

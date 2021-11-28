@@ -6,7 +6,7 @@ use \App\Utils\View;
 use \App\Model\Entity\Customer\Customer as EntityCustomer;
 use \App\Validate\Validate as Validate;
 
-class RedefinePassword extends PageSrv{
+class RedefinePasswordSrv extends PageSrv{
 
     /**
      * Metódo responsavel por retonar o erro para o cliente

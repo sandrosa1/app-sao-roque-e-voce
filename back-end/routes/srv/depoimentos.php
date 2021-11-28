@@ -10,7 +10,7 @@ $objRouter->get('/srv/depoimentos',[
     ],
     function($request){
       
-        return new Response(200, Srv\TestimonySrv::gettesTimonials($request));
+        return new Response(200, Srv\TestimonySrv::getTestimonials($request));
     }
     
 ]);

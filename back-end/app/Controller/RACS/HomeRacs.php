@@ -4,7 +4,7 @@ namespace App\Controller\RACS;
 
 use \App\Utils\View;
 
-class Home extends PageRacs{
+class HomeRacs extends PageRacs{
 
     /**
      * Renderiza o conteúdo da Home Administradora 

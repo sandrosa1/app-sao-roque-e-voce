@@ -70,10 +70,10 @@ class PageRacs{
     /**
      * Método resposável por renderiza a view do paineil com conteúdos dinâmicos
      *
-     * @param  String $title
-     * @param  String $content
-     * @param  String $currentModule 
-     * @return String
+     * @param  string $title
+     * @param  string $content
+     * @param  string $currentModule 
+     * @return string
      */
     public static function getPanel($title, $content, $currentModule ){
        
@@ -90,7 +90,7 @@ class PageRacs{
      *
      * @param Request $request
      * @param Entity $objPagination
-     * @return void
+     * @return string
      */
     public static function getPagination($request, $objPagination){
 

@@ -7,7 +7,7 @@ use \App\Model\Entity\Customer\Customer as EntityCustomer;
 use \App\Validate\Validate as Validate;
 use \App\Password\Password as PasswordHash;
 
-class NewPassword extends PageSrv {
+class NewPasswordSrv extends PageSrv {
 
     /**
      * Metódo responsavel por retonar o erro para o cliente

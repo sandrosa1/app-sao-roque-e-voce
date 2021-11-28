@@ -5,7 +5,7 @@ namespace App\Controller\Srv;
 use \App\Utils\View;
 use \App\Model\Entity\Customer\Customer as EntityCustomer;
 
-class Confirmation extends PageSrv {
+class ConfirmationSrv extends PageSrv {
 
     /**
     * Metodo que verifica a validação do cadastro e retorna para pagina view de login

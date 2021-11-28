@@ -8,51 +8,51 @@ use \App\Validate\Validate as Validate;
 use \App\Session\Srv\LoginCustomer as SessionCustomer;
 
 class LoginSrv extends PageSrv{
-    /**
-     * Guardo os erro da validaçao
-     *
-     * @var array
-     */
-    private $erro=[];
-    /**
-     * Instancia de login
-     *
-     * @var object
-     */
-    private $objCustomer;
-    /**
-     * Guarda a quantidade de tentativas de login
-     *
-     * @var integer
-     */
-    private $tentativas;
-    /**
-     * Construtor que inicia as Instancias
-     */
-    public function __construct()
-    {
-        $this->objCustomer = new EntityCustomer();
+    // /**
+    //  * Guardo os erro da validaçao
+    //  *
+    //  * @var array
+    //  */
+    // private $erro=[];
+    // /**
+    //  * Instancia de login
+    //  *
+    //  * @var object
+    //  */
+    // private $objCustomer;
+    // /**
+    //  * Guarda a quantidade de tentativas de login
+    //  *
+    //  * @var integer
+    //  */
+    // private $tentativas;
+    // /**
+    //  * Construtor que inicia as Instancias
+    //  */
+    // public function __construct()
+    // {
+    //     $this->objCustomer = new EntityCustomer();
         
-    }
-    /**
-     * Retorna o erro
-     *
-     * @return array
-     */
-    public function getErro()
-    {
-        return $this->erro;
-    }
-    /**
-     * Guardo 0 erro no array
-     *
-     * @param array $erro
-     * @return void
-     */
-    public function setErro($erro)
-    {
-        array_push($this->erro,$erro);
-    }
+    // }
+    // /**
+    //  * Retorna o erro
+    //  *
+    //  * @return array
+    //  */
+    // public function getErro()
+    // {
+    //     return $this->erro;
+    // }
+    // /**
+    //  * Guardo 0 erro no array
+    //  *
+    //  * @param array $erro
+    //  * @return void
+    //  */
+    // public function setErro($erro)
+    // {
+    //     array_push($this->erro,$erro);
+    // }
     
     /**
      * Metódo responsavel por retonar o erro para o cliente
@@ -79,6 +79,7 @@ class LoginSrv extends PageSrv{
      */
     public static function setLogin($request){
 
+
         $dadosLogin = [];
         $postVars = $request->getPostVars();
         $dadosLogin[0] = $email               = $postVars['email'] ?? '';
@@ -87,6 +88,7 @@ class LoginSrv extends PageSrv{
 
         $validate = new Validate();
         $objCustomer = new EntityCustomer();
+        
 
         if(!$validate->validateFields($dadosLogin))
         {
@@ -119,10 +121,11 @@ class LoginSrv extends PageSrv{
 
             return self:: responseError($validate, $objCustomer);
         }
-       
+      
         
         if(count($validate->getErro()) >0){
-            $validate->objCustomer->insertAttempt();
+            exit;
+            $objCustomer->insertAttempt();
             $arrResponse=[
                "retorno" => "erro",
                "erros"   => $validate->getErro(),
@@ -130,7 +133,8 @@ class LoginSrv extends PageSrv{
            ];
 
         }else{
-            $validate->objCustomer->deleteAttempt();
+           
+            $objCustomer->deleteAttempt();
             //Busca cliente pelo email
             $customer = EntityCustomer::getCustomerByEmail($email);
             SessionCustomer::login($customer);
@@ -142,7 +146,6 @@ class LoginSrv extends PageSrv{
            ];
          
         }
-
         return json_encode($arrResponse);
     }
     /**
