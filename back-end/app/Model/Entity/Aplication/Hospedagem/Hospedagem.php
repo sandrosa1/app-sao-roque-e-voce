@@ -66,8 +66,62 @@ class Hospedagem extends dbApp{
 
     }
 
+    /**
+     * Método reponsável por atualizar os dados de uma hospedagem
+     *
+     * @return void
+     */
+    public function updateHospedagem(){
+
+        //Atualiza os dados gerais da hospedagem
+        return (new Database('hospedagem'))->update('idApp = '.$this->idApp,[
+
+            'id_app'            => $this->id_app,
+            'estacionamento'    => $this->estacionamento,
+            'briquedos'         => $this->briquedos,
+            'restaurante'       => $this->restaurante,
+            'ar_condicionado'   => $this->ar_condicionado,
+            'wi_fi'             => $this->wi_fi,
+            'academia'          => $this->academia,
+            'piscina'           => $this->piscina,
+            'refeicao'          => $this->refeicao,
+            'emporio'           => $this->emporio,
+            'adega'             => $this->adega,
+            'bebidas'           => $this->bebidas,
+            'sorveteria'        => $this->sorveteria,
+            'whatsapp'          => $this->whatsapp,
+            'semana'            => $this->semana,
+            'sabado'            => $this->sabado,
+            'domigo'            => $this->domigo,
+            'logo'              => $this->logo,
+            'img2'              => $this->img2,
+            'img3'              => $this->img3,
+            'descricao'         => $this->descricao,
+            'feriado'           => $this->feriado,
+            
+        ]);
+        
+        //Sucesso
+        return true;
+
+    }
+
      /**
-     * Método responsável por retornar um cliente pelo idUser
+     * Método reponsável por deletar uma hospedagem
+     *
+     * @return void
+     */
+    public function deleteHospedagem(){
+
+        return (new Database('hospedagem'))->delete('idApp = '.$this->idApp);
+        
+        //Sucesso
+        return true;
+
+    }
+
+     /**
+     * Método responsável por retornar uma hospedagem pelo idApp
      *
      * @param Intenger $id_customer
      * @return Hospedagem
@@ -78,7 +132,7 @@ class Hospedagem extends dbApp{
     }
 
      /**
-     * Método responsavel por retornar depoimentos
+     * Método responsavel por retornar todas as hospedagem
      *
      * @param string $where
      * @param string $order
@@ -94,16 +148,3 @@ class Hospedagem extends dbApp{
 }
 
 
-// 'nomeFantasia'      => $this->nomeFantasia,
-// 'visualizacao'      => $this->visualizacao,
-// 'segmento'          => $this->segmento,
-// 'tipo'              => $this->tipo,
-// 'email'             => $this->email,
-// 'telefone'          => $this->telefone,
-// 'celular'           => $this->celular,
-// 'cep'               => $this->cep,
-// 'localidade'        => $this->localidade,
-// 'numero'            => $this->numero,
-// 'bairro'            => $this->bairro,
-// 'total_custo'       => $this->total_custo,
-// 'total_avaliacao'   => $this->total_avaliacao,

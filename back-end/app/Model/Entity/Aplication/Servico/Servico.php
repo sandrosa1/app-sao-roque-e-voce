@@ -39,22 +39,22 @@ class Servico extends dbApp{
     public function insertNewServico(){
     
         $this->idServico = (new Database('servico'))->insert([
- 
-        'idApp'             => $this->idApp,
-        'estacionamento'    => $this->estacionamento,
-        'acessibilidade'    => $this->acessibilidade,
-        'entrega_domicilio' => $this->entrega_domicilio,
-        'whatsapp'          => $this->whatsapp,
-        'semana'            => $this->semana,
-        'sabado'            => $this->sabado,
-        'domigo'            => $this->domigo,
-        'logo'              => $this->logo,
-        'img1'              => $this->img1,
-        'img2'              => $this->img2,
-        'img3'              => $this->img3,
-        'descricao'         => $this->descricao,
-        'feriado'           => $this->feriado,
-        'complementos'      => $this->complementos, 
+    
+            'idApp'             => $this->idApp,
+            'estacionamento'    => $this->estacionamento,
+            'acessibilidade'    => $this->acessibilidade,
+            'entrega_domicilio' => $this->entrega_domicilio,
+            'whatsapp'          => $this->whatsapp,
+            'semana'            => $this->semana,
+            'sabado'            => $this->sabado,
+            'domigo'            => $this->domigo,
+            'logo'              => $this->logo,
+            'img1'              => $this->img1,
+            'img2'              => $this->img2,
+            'img3'              => $this->img3,
+            'descricao'         => $this->descricao,
+            'feriado'           => $this->feriado,
+            'complementos'      => $this->complementos, 
 
         ]);
 
@@ -68,7 +68,7 @@ class Servico extends dbApp{
      *
      * @return void
      */
-    public function updateApp(){
+    public function updateServico(){
 
         //Atualiza os dados gerais do app
         return (new Database('servico'))->update('idApp = '.$this->idApp,[
@@ -102,7 +102,7 @@ class Servico extends dbApp{
      *
      * @return void
      */
-    public function deleteApp(){
+    public function deleteServico(){
 
         //Deleta os dados App
         return (new Database('servico'))->delete('idApp = '.$this->idApp);
