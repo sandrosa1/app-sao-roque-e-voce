@@ -9,8 +9,8 @@ use \App\Model\Entity\Aplication\App as dbApp;
 class Comercio extends dbApp{
 
 
-    public $id_comercio;
-    public $id_app;
+    public $idComercio;
+    public $idApp;
     public $estacionamento;
     public $acessibilidade;
     public $entrega_domicilio;
@@ -28,10 +28,15 @@ class Comercio extends dbApp{
 
   
 
+    /**
+     * Metódo responsável por inserir um novo comercio
+     *
+     * @return void
+     */
     public function insertNewComercio(){
 
-        $this->id_comercio = (new Database('comercio'))->insert([
-            'id_app'            => $this->id_app,
+        $this->idComercio = (new Database('comercio'))->insert([
+            'idApp'             => $this->idApp,
             'estacionamento'    => $this->estacionamento,
             'acessibilidade'    => $this->acessibilidade,
             'entrega_domicilio' => $this->entrega_domicilio,
@@ -51,20 +56,60 @@ class Comercio extends dbApp{
         return true;
 
     }
-
-     /**
-     * Método responsável por retornar um cliente pelo idUser
+    /**
+     * Método reponsável por atualizar os dados de um comercio
      *
-     * @param Intenger $id_customer
+     * @return void
+     */
+    public function updateComercio(){
+
+  
+        return (new Database('comercio'))->update('idApp = '.$this->idApp,[
+
+            'idApp'             => $this->idApp,
+            'estacionamento'    => $this->estacionamento,
+            'acessibilidade'    => $this->acessibilidade,
+            'entrega_domicilio' => $this->entrega_domicilio,
+            'whatsapp'          => $this->whatsapp,
+            'semana'            => $this->semana,
+            'sabado'            => $this->sabado,
+            'domigo'            => $this->domigo,
+            'logo'              => $this->logo,
+            'img1'              => $this->img1,
+            'img2'              => $this->img2,
+            'img3'              => $this->img3,
+            'descricao'         => $this->descricao,
+            'feriado'           => $this->feriado,
+            'complementos'      => $this->complementos, 
+        ]);
+        
+        return true;
+
+    }
+     /**
+     * Método reponsável por deletar um comercio
+     *
+     * @return void
+     */
+    public function deleteHos(){
+
+        return (new Database('comercio'))->delete('idApp = '.$this->idApp);
+        
+        return true;
+
+    }
+    /**
+     * Método responsável por retornar um comercio peço idApp
+     *
+     * @param Intenger $idAdd
      * @return Comercio
      */
-    public static function getComercioById($id_app){
+    public static function getComercioById($idApp){
 
-        return self::getComercio('id_app = '.$id_app)->fetchObject(self::class);
+        return self::getComercio('idApp = '.$idApp)->fetchObject(self::class);
     }
-
-     /**
-     * Método responsavel por retornar depoimentos
+    /**
+     * Método responsavel por retornar todos comercios
      *
      * @param string $where
      * @param string $order
