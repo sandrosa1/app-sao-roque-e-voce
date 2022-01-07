@@ -133,7 +133,7 @@ class App{
 
 
      /**
-     * Método responsavel por retornar depoimentos
+     * Método responsavel por retornar todos App
      *
      * @param string $where
      * @param string $order

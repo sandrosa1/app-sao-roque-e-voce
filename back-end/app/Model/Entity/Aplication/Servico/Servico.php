@@ -31,6 +31,11 @@ class Servico extends dbApp{
         public $complementos;
 
 
+    /**
+     * Metódo responsável por inserir novo serviço
+     *
+     * @return void
+     */    
     public function insertNewServico(){
     
         $this->idServico = (new Database('servico'))->insert([
@@ -59,9 +64,59 @@ class Servico extends dbApp{
 
 
     /**
+     * Método reponsável por atualizar os dados de serviço
+     *
+     * @return void
+     */
+    public function updateApp(){
+
+        //Atualiza os dados gerais do app
+        return (new Database('servico'))->update('idApp = '.$this->idApp,[
+
+            'idApp'             => $this->idApp,
+            'estacionamento'    => $this->estacionamento,
+            'acessibilidade'    => $this->acessibilidade,
+            'entrega_domicilio' => $this->entrega_domicilio,
+            'whatsapp'          => $this->whatsapp,
+            'semana'            => $this->semana,
+            'sabado'            => $this->sabado,
+            'domigo'            => $this->domigo,
+            'logo'              => $this->logo,
+            'img1'              => $this->img1,
+            'img2'              => $this->img2,
+            'img3'              => $this->img3,
+            'descricao'         => $this->descricao,
+            'feriado'           => $this->feriado,
+            'complementos'      => $this->complementos,   
+                
+             
+        ]);
+        
+        //Sucesso
+        return true;
+
+    }
+
+     /**
+     * Método reponsável por deletar um serviço
+     *
+     * @return void
+     */
+    public function deleteApp(){
+
+        //Deleta os dados App
+        return (new Database('servico'))->delete('idApp = '.$this->idApp);
+        
+        //Sucesso
+        return true;
+
+    }
+
+
+    /**
     * Método responsável por retornar um cliente pelo idUser
     *
-    * @param Intenger $id_App
+    * @param Intenger $idApp
     * @return Servico
     */
     public static function getServicoById($idApp){
@@ -70,7 +125,7 @@ class Servico extends dbApp{
     }
 
     /**
-    * Método responsavel por retornar depoimentos
+    * Método responsavel por retornar todos serviços
     *
     * @param string $where
     * @param string $order
