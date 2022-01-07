@@ -12,8 +12,8 @@ class NewPasswordSrv extends PageSrv {
     /**
      * Metódo responsavel por retonar o erro para o cliente
      *
-     * @param objetc $validate
-     * @return void
+     * @param Validate $validate
+     * @return Response
      */
     private static function responseError($validate, $objCustomer){
 
@@ -31,11 +31,9 @@ class NewPasswordSrv extends PageSrv {
     * Metodo que verifica a validação do cadastro
     *
     * @param Request $request
-    * @return String
+    * @return string
     */
     public static function getNewPassword($request){
-
-       
 
     $getVars = $request->getQueryParams();
 
@@ -74,9 +72,9 @@ class NewPasswordSrv extends PageSrv {
     $content = View::render('srv/nova_senha',[
 
         'status' => $objCustomerId 
-
     ]);
-    return parent::getPage('SRV - Login',$content);
+
+        return parent::getPage('SRV - Login',$content);
 
     }
 

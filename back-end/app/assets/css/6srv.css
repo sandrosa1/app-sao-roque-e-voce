@@ -1,17 +1,5 @@
 /* SISTEMA DE COR SÃO ROQUE E VOCẼ */
-:root {
-    --srv1: #920046;
-    --srv2: #FF3434;
-    --srv3: #0CB664;
-    --srv4: #00812d;
-    --srv5: #FF3434;
-    --srv6: #CCCCCC;
-    --srv7: #E8AA0B;
-    --srv8: #ffffff;
-    --srv9: #000;
-    --srv10: #e1bee7;
 
-  }
 /* CLASSE DE CORES*/
 .srv-c-1{color: var(--srv1);}
 .srv-c-2{color: var(--srv2);}
@@ -107,10 +95,10 @@
 .nav-collection-item{
     width: 100%;
     height: 50px;
-    padding-left: 25px;
+    padding-left: 20px;
     font-size: 1.3rem;
     color: var(--srv8);
-    margin-right: 20px;
+   
 }
 .nav-collection-item:hover{
     background-color: var(--srv6);
@@ -133,6 +121,24 @@
     background-color: var(--srv8);
     height: 400px;
 }
+
+
+/* Detalhes */
+.modal{
+    width: 30%;
+}
+.icon-ajuda{
+    background-color:var(--help);
+    border-radius: 50%;
+    padding: 2px;
+    color: #fff;
+}
+.icons-ajuda-fechar{
+    color: var(--error); 
+}
+
+
+
 /*Configurações Gerais*/
 /*Extra-small*/
 @media screen and (max-width: 480px){

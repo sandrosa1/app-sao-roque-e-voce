@@ -11,7 +11,7 @@ class ConfirmationSrv extends PageSrv {
     * Metodo que verifica a validação do cadastro e retorna para pagina view de login
     *
     * @param Request $request
-    * @return String
+    * @return string
     */
     public static function getConfirmation($request){
 

@@ -4,7 +4,6 @@ namespace App\Http;
 
 use \Closure;
 use \Exception;
-use Reflection;
 use \ReflectionFunction;
 use \App\Http\Middleware\Queue as MiddlewareQueue;
 
@@ -206,19 +205,9 @@ class Router {
     private function getRoute(){
         //URI
         $uri = $this->getUri();
-        // echo '<pre>';
-        // print_r($uri);
-        // echo '</pre>';
-    
-
         //METHOD
         $httpMethod = $this->request->getHttpMethod();
-        // echo '<pre>';
-        // print_r($httpMethod);
-        // echo '</pre>';
-        // exit;
-
-       
+      
         //VALIDA AS ROTAS
         foreach($this->routes as $patternRoute=>$methods){
             //VERIFICA SE A ROTA BATE COM O PADRÃO

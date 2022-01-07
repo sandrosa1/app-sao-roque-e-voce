@@ -1,0 +1,244 @@
+<div class="container">
+    <div class="row">
+        <div class="col s12 hc">
+            <h1 class="srv-c-4 fz-30 fwb">{{h1}}</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col s12 hc">
+            <h6 class="srv-c-4  ">Algumas informações declaradas aqui, estarão disponíveis para os usuários do App São Roque e Você. Clique na ajuda para mais detalhes sobre o campo </h6>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col s12 hc">
+            <h6 class="srv-c-4  ">Informações maliciosas ou inverdades o anúncio será retirado da plataforma.</h6>
+        </div>
+    </div>
+
+    <div class="row">
+        
+        <form class="col s12" method="post" >
+        <!-- Estrutura do modal e input nome fantasia -->
+        <div class="row">
+          
+            <div class="input-field col s12">
+                <div id="modal1" class="modal">
+                    <div class="modal-content">
+                        <h4 class="center srv-c-4 fz-20">Ajuda</h4>
+                        <p>Se você pretende anunciar um comercio, este campo deve conter o nome fantasia do estabelecimento. <b>Ex: Hotel Alpino</b>.</p>
+                        <p>Se você pretende anunciar um evento, este campo deve conter o nome do evento. <b>Ex: Festa da uva</b>.</p>
+                    </div>
+                    <div class="modal-footer">
+                        <a  class="modal-close waves-effect waves-green btn-flat"><i class="material-icons icons-ajuda-fechar">close</i></a>
+                    </div>
+                </div>
+                <a class="waves-effect waves-light btn-ajuda modal-trigger prefix" href="#modal1"><i class="material-icons icon-ajuda">help_outline</i></a>
+                <input  id="nomeFantasia" type="text" name="nomeFantasia" maxlength="100" class="validate" >
+                <label for="nomeFantasia">Nome do estabelecimento, atração ou serviço </label>
+            </div>
+        </div>
+            <!-- Fim de estrutura do modal e input nome fantasia -->
+            <!-- Tipo de negôcio -->
+        <div class="row">
+            <div class="input-field col s6">
+                <div id="modal1.1" class="modal">
+                    <div class="modal-content">
+                        <h4 class="center srv-c-4 fz-20">Ajuda</h4>
+                        <p><b>Hospedagem</b> -> Hotéis, posadas....</p>
+                        <p><b>Gastronomia</b> -> Restaurantes, bistrô, padarias, lanchonetes....</p>
+                        <p><b>Evento</b> -> Baladas, eventos diversos</p>
+                        <p><b>Comércio em geral</b> -> Abrange qualquer tipo de comércio</p>
+                        <p><b>Serviços</b> -> Farmácias, hospitais, Bancos, oficinas, auto-elétrico, borracharia...</p>                     
+                    </div>
+                    <div class="modal-footer">
+                        <a  class="modal-close waves-effect waves-green btn-flat"><i class="material-icons icons-ajuda-fechar">close</i></a>
+                    </div>
+                </div>
+                <a class="waves-effect waves-light btn-ajuda modal-trigger prefix" href="#modal1.1"><i class="material-icons icon-ajuda">help_outline</i></a>
+                <select name='segmento'>
+                    <option value="" disabled selected>Selecione um segmento</option>
+                    <option value="hospedagem">Hospedagem</option>
+                    <option value="gastronomia">Gastronomia</option>
+                    <option value="evento">Evento</option>
+                    <option value="comercio">Comércio geral</option>
+                    <option value="servicos">Serviços</option>
+                </select>
+                <label>Tipo de segmento</label>
+            </div>
+
+            <div class="input-field col s6">
+                <div id="modal9" class="modal">
+                    <div class="modal-content">
+                        <h4 class="center srv-c-4 fz-20">Ajuda</h4>
+                        <p>Nesse campo você  define em uma palavra ou frase curta, seu comércio, evento ou serviço. <b>Exemplos: Livraria, Padaria, Farmácia, Hamburgueria, Festa da uva .....</b>.</p>
+                    </div>
+                    <div class="modal-footer">
+                        <a class="modal-close waves-effect waves-green btn-flat"><i class="material-icons icons-ajuda-fechar">close</i></a>
+                    </div>
+                </div>
+                <a class="waves-effect waves-light btn-ajuda modal-trigger prefix" href="#modal9"><i class="material-icons icon-ajuda" >help_outline</i></a>
+                <input id="tipo" type="text" name="tipo" maxlength="255" class="validate" >
+                <label for="tipo">Tipo </label>   
+            </div>
+
+        </div>
+            <!-- Fim do tipo de negôcio -->
+
+
+
+            <!-- Formulario de e-mail e telefone-->
+            <div class="row">
+                
+                <div class="input-field col s6">
+                    <div id="modal2" class="modal">
+                        <div class="modal-content">
+                            <h4 class="center srv-c-4 fz-20">Ajuda</h4>
+                            <p>E-mail para que os clientes entre em contato com o estabelecimento ou serviço. <b>Obs: E-mail corporativo sempre passa mais segurança, mas não e necessário.</b>.</p>
+                            <hr class="m-3">
+                            <p>Se você está informando um evento, o e-mail declarado e para fins de informações sobre o evento.</p>
+                        </div>
+                        <div class="modal-footer">
+                            <a class="modal-close waves-effect waves-green btn-flat"><i class="material-icons icons-ajuda-fechar">close</i></a>
+                        </div>
+                    </div>
+                    <a class="waves-effect waves-light btn-ajuda modal-trigger prefix" href="#modal2"><i class="material-icons icon-ajuda" >help_outline</i></a>
+                    <input id="email" type="email" name="email" maxlength="255" class="validate" >
+                    <label for="email">Email </label>   
+                </div>
+
+                <div class="input-field col s3">
+                    <div id="modal3" class="modal">
+                        <div class="modal-content">
+                            <h4 class="center srv-c-4 fz-20">Ajuda</h4>
+                            <p>Não é necessário o DDD, pois todos os telefones precisão ser da cidade.</p>
+                            <p>Para empresas ou comércio, fornecer o telefone fixo causa melhor impressão.</p>
+                            <hr class="m-3">
+                            <p>Se você está informando um evento, o número declarado deve ter a finalidade de informações gerais do evento.</p>
+                        </div>
+                        <div class="modal-footer">
+                            <a class="modal-close waves-effect waves-green btn-flat"><i class="material-icons icons-ajuda-fechar">close</i></a>
+                        </div>
+                    </div>
+                    <a class="waves-effect waves-light btn-ajuda modal-trigger prefix" href="#modal3"><i class="material-icons icon-ajuda" >help_outline</i></a>
+                    <input id="email" type="tel" name="telefone" maxlength="9" class="validate">
+                    <label for="email">Telefone </label>
+                    
+                </div>
+                <div class="input-field col s3">
+                    <div id="modal4" class="modal">
+                        <div class="modal-content">
+                            <h4 class="center srv-c-4 fz-20">Ajuda</h4>
+                            <p>Se o campo telefone foi preenchido, este campo não e mais obrigatório. Porém o celular e uma segunda opção caso ocorra algum problema com o telefone fixo.</p>
+                            <hr class="m-3">
+                            <p>Se você é um prestador de serviço, este campo pode ser útil para seus clientes te contactarem com mais facilidade.</p>
+                        </div>
+                        <div class="modal-footer">
+                            <a class="modal-close waves-effect waves-green btn-flat"><i class="material-icons icons-ajuda-fechar">close</i></a>
+                        </div>
+                    </div>
+                    <a class="waves-effect waves-light btn-ajuda modal-trigger prefix" href="#modal4"><i class="material-icons icon-ajuda" >help_outline</i></a>
+                    <input id="email" type="tel" name="celular" maxlength="10" class="validate">
+                    <label for="email">Celular </label>
+                    
+                </div>
+              </div>
+              <!--Fim do formulario de e-mail e telefone-->
+
+              <!-- Formulario endereço-->
+            <div class="row">
+                <div class="input-field col s3">
+                    <div id="modal5" class="modal">
+                        <div class="modal-content">
+                            <h4 class="center srv-c-4 fz-20">Ajuda</h4>
+                            <p>CEP do local do estabelecimento, comercio ou evento.</b>.</p>
+                            <hr class="m-3">
+                            <p>Se você e <b>prestador</b> de serviço, pode fornecer o CEP de seu residência. Ele não será utilizado no anúncio</b>.</p> 
+                        </div>
+                        <div class="modal-footer">
+                            <a class="modal-close waves-effect waves-green btn-flat"><i class="material-icons icons-ajuda-fechar">close</i></a>
+                        </div>
+                    </div>
+                    
+                    <a class="waves-effect waves-light btn-ajuda modal-trigger prefix" href="#modal5"><i class="material-icons icon-ajuda" >help_outline</i></a>
+                    <input id="cep" type="text" name="cep" maxlength="9" class="validate" >
+                    <label for="cep">CEP </label> 
+                    <!-- <input type=submit> -->
+                </div>
+                <div class="input-field col s1" id="loadingCep"></div>
+                <div class="input-field col s7">
+                    <div id="modal6" class="modal">
+                        <div class="modal-content">
+                            <h4 class="center srv-c-4 fz-20">Ajuda</h4>
+                            <p>Informe o endereço.</p>
+                        </div>
+                        <div class="modal-footer">
+                            <a class="modal-close waves-effect waves-green btn-flat"><i class="material-icons icons-ajuda-fechar">close</i></a>
+                        </div>
+                    </div>
+                    <a class="waves-effect waves-light btn-ajuda modal-trigger prefix" href="#modal6"><i class="material-icons icon-ajuda" >help_outline</i></a>
+                    <input id="logradouro" type="text" name="logradouro" maxlength="255" class="validate">
+                    <label for="logradouro">Logradouro </label>
+                </div>
+
+                <div class="input-field col s1">
+                    <input id="numero" type="text" name="numero" maxlength="20" class="validate">
+                    <label for="numero">Número </label>
+                </div>
+              </div>
+
+
+              <div class="row">  
+                <div class="input-field col s3">
+                    <input id="bairro" type="text" name="bairro" maxlength="45" class="validate">
+                    <label for="bairro">Bairro </label>   
+                </div>
+
+                <div class="input-field col s3">
+                    <input id="localidade" type="text" name="localidade" maxlength="9" class="validate">
+                    <label for="localidade">Cidade </label>
+                </div>
+
+                <div class="input-field col s6">
+                    <div id="modal7" class="modal">
+                        <div class="modal-content">
+                            <h4 class="center srv-c-4 fz-20">Ajuda</h4>
+                            <p>Rua ou local para referência.</p>
+                        </div>
+                        <div class="modal-footer">
+                            <a class="modal-close waves-effect waves-green btn-flat"><i class="material-icons icons-ajuda-fechar">close</i></a>
+                        </div>
+                    </div>
+                    <a class="waves-effect waves-light btn-ajuda modal-trigger prefix" href="#modal7"><i class="material-icons icon-ajuda" >help_outline</i></a>
+                    <input id="complementos" type="text" name="complementos" maxlength="255" class="validate">
+                    <label for="complementos">Ponto de referência </label>
+                </div>
+
+                <div class="row">
+                <div class="input-field col s12">
+                    <div id="modal8" class="modal">
+                        <div class="modal-content">
+                            <h4 class="center srv-c-4 fz-20">Ajuda</h4>
+                            <p>Digíte 7 palavras separadas por virgula e espaço, que mais tem haver com seu anúncio.</p> 
+                            <p><b>Exemplos:</b></p> 
+                            <p><b>Padaria:</b> Padaria, Pães, Pão, Café, Doces, Salgados, Bebidas</p> 
+                            <p><b>Evento:</b> Musicas, Comidas tipicas, Diversão, Alegria, Festa, Bebidas</p> 
+                            <p><b>Loja de calçados:</b> Sapatos, tênis, meias, chinelos, botas, moda, calçados</p> 
+                            </div>
+                        <div class="modal-footer">
+                            <a class="modal-close waves-effect waves-green btn-flat"><i class="material-icons icons-ajuda-fechar">close</i></a>
+                        </div>
+                    </div>
+                    
+                    <a class="waves-effect waves-light btn-ajuda modal-trigger prefix" href="#modal8"><i class="material-icons icon-ajuda" >help_outline</i></a>
+                    <textarea id="textarea1"class="materialize-textarea" aria-modal="500" name="chaves"></textarea>
+                    <label for="textarea1">7 Palavras chaves</label>
+                </div>
+                </div>
+                
+                {{botoes}}
+              <!--Fim do formulario dde endereço-->
+
+        </form>
+
+       
+</div>

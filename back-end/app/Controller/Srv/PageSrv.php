@@ -12,6 +12,11 @@ class PageSrv{
             'link'  => URL.'/srv/home',
             'icon'  => 'home'
         ],
+        'configuracao'  =>[
+            'label' => 'Config',
+            'link'  => URL.'/srv/configuracao',
+            'icon'  => 'settings'
+        ],
         'detalhes'  =>[
             'label' => 'Detalhes',
             'link'  => URL.'/srv/detalhes',
@@ -23,7 +28,7 @@ class PageSrv{
             'icon'  => 'stay_current_portrait'
         ],
         'depoimentos' =>[
-            'label'   => 'Depoimentos',
+            'label'   => 'Comentários',
             'link'    => URL.'/srv/depoimentos',
             'icon'    => 'comment'
         ],
@@ -91,7 +96,7 @@ class PageSrv{
      *
      * @param Request $request
      * @param Entity $objPagination
-     * @return void
+     * @return string
      */
     public static function getPagination($request, $objPagination){
 

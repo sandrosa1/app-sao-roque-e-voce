@@ -55,3 +55,67 @@ COMMIT;
 
  INSERT INTO `racs` (`name`, `nickName`, `email`,`password`, `createDate`, `permission`, `status`) VALUES
             ('Sandro Amancio', 'Sandro-Sa', 'mueuemail@gmail.com','minhahashsenha','2021-10-24 22:28:18', 'admin', 'active');
+
+
+
+--/////////////////////////////////////////////APP///////////////////////////////////////////
+
+
+CREATE TABLE `sistema`.`app` (
+  `id_app` INT NOT NULL ,
+  `nomeFantasia` VARCHAR(100) NOT NULL,
+  `segmento` VARCHAR(45) NOT NULL,
+  `tipo` VARCHAR(45) NOT NULL,
+  `email` VARCHAR(145) NOT NULL,
+  `telefone` VARCHAR(13) NULL,
+  `celular` VARCHAR(15) NULL,
+  `cep` VARCHAR(9) NOT NULL,
+  `logradouro` VARCHAR(245) NOT NULL,
+  `numero` VARCHAR(20) NOT NULL,
+  `bairro` VARCHAR(45) NOT NULL,
+  `localidade` VARCHAR(9) NULL,
+  `complementos` VARCHAR(245) NULL,
+  `chaves` VARCHAR(245) NULL,
+  `visualizacao` INT NULL,
+  `total_custo` INT NULL,
+  `total_avaliacao` INT NULL,
+  `custo` INT NULL,
+  `avaliacao` INT NULL,
+  `img1` VARCHAR(255) NULL,
+  PRIMARY KEY (`id_app`),
+  UNIQUE INDEX `id_app_UNIQUE` (`id_app` ASC) VISIBLE,
+  UNIQUE INDEX `email_UNIQUE` (`email` ASC) VISIBLE,
+  UNIQUE INDEX `telefone_UNIQUE` (`telefone` ASC) VISIBLE,
+  UNIQUE INDEX `celular_UNIQUE` (`celular` ASC) VISIBLE);
+
+
+
+
+
+CREATE TABLE `sistema`.`hospedagem` (
+  `id_hospedagem` INT NOT NULL AUTO_INCREMENT,
+  `id_app` INT NOT NULL,
+  `estacionamento` INT(1) NULL,
+  `briquedos` INT(1) NULL,
+  `restaurante` INT(1) NULL,
+  `ar_condicionado` INT(1) NULL,
+  `wi_fi` INT(1) NULL,
+  `academia` INT(1) NULL,
+  `piscina` INT(1) NULL,
+  `refeicao` INT(1) NULL,
+  `emporio` INT(1) NULL,
+  `adega` INT(1) NULL,
+  `bebidas` INT(1) NULL,
+  `sorveteria` INT(1) NULL,
+  `whatsapp` INT(1) NULL,
+  `semana` VARCHAR(14) NULL,
+  `sabado` VARCHAR(14) NULL,
+  `domigo` VARCHAR(14) NULL,
+  `feriado` VARCHAR(14) NULL,
+  `logo` VARCHAR(150) NULL,
+  `img2` VARCHAR(150) NULL,
+  `img3` VARCHAR(150) NULL,
+  `descricao` TEXT(1000) NULL,
+  PRIMARY KEY (`id_hospedagem`));
+      
+            

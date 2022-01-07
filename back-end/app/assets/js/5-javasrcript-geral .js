@@ -1,10 +1,12 @@
-//----------------Mudar par o dominio
+//----------------Mudar par o dominio-------/
+// Esta arquivo contem rotas de configurações de entradas para o sistema e validação dos inputs inicias
 const urlName = 'app-sao-roque-e-voce/back-end';
 const urlCadastro = urlName+'/cadastro';
 const urlLogin = urlName+'/srv/login';
 const urlRedefinePassword = urlName+'/srv/redefinir_senha';
 const urlNewPassword = urlName+'/srv/nova_senha';
 const urlLoginRacs = urlName+'/racs/login';
+
 
 //Pega o local 
 function getRoot(url)

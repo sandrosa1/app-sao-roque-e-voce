@@ -301,6 +301,7 @@ class Customer{
     public static function getCustomerById($idUser){
 
         return self::getcustomer('idUser = '.$idUser)->fetchObject(self::class);
+        
     }
    
     /**

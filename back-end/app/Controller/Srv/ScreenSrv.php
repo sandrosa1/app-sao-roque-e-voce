@@ -10,7 +10,7 @@ class ScreenSrv extends PageSrv{
     * Renderiza o conteúdo da pagina de depoimentos
     *
     * @param Request $request
-    * @return String
+    * @return string
     */
     public static function getScreen(){
 

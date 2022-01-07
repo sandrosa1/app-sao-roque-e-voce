@@ -11,8 +11,8 @@ class RedefinePasswordSrv extends PageSrv{
     /**
      * Metódo responsavel por retonar o erro para o cliente
      *
-     * @param objetc $validate
-     * @return void
+     * @param Validate $validate
+     * @return Response
      */
     private static function responseError($validate, $objCustomer){
 
@@ -27,8 +27,8 @@ class RedefinePasswordSrv extends PageSrv{
     /**
      * Metódo respósavel por validar e enviar email de renomear a senha
      *
-     * @param [type] $request
-     * @return void
+     * @param Request $request
+     * @return Response
      */
     public static function setRedefinePassword($request){
 
@@ -116,11 +116,9 @@ class RedefinePasswordSrv extends PageSrv{
             ]);
 
         }
-        
         //Retona a página completa
         return parent::getPage('SRV - Redefinir Senha',$content);
        
     }
-
 
 }

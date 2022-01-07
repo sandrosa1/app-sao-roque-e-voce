@@ -1,14 +1,4 @@
-/* CORES PADRÃO RACS */
-:root {
-    /* cores racs */
-    --racs1: #6300ff;
-    --racs2: #00b7ff;
-    --racs3: #8faadc;
-    --racs4: #eee;
-    --racs5: #000;
-    --racs6: rgb(100, 226, 69);
 
-}
 /* CLASSE FONTE COLOR */
 .racs-c-1{color: var(--racs1);}
 .racs-c-2{color: var(--racs2);}

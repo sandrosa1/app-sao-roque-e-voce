@@ -8,57 +8,12 @@ use \App\Validate\Validate as Validate;
 use \App\Session\Srv\LoginCustomer as SessionCustomer;
 
 class LoginSrv extends PageSrv{
-    // /**
-    //  * Guardo os erro da validaçao
-    //  *
-    //  * @var array
-    //  */
-    // private $erro=[];
-    // /**
-    //  * Instancia de login
-    //  *
-    //  * @var object
-    //  */
-    // private $objCustomer;
-    // /**
-    //  * Guarda a quantidade de tentativas de login
-    //  *
-    //  * @var integer
-    //  */
-    // private $tentativas;
-    // /**
-    //  * Construtor que inicia as Instancias
-    //  */
-    // public function __construct()
-    // {
-    //     $this->objCustomer = new EntityCustomer();
-        
-    // }
-    // /**
-    //  * Retorna o erro
-    //  *
-    //  * @return array
-    //  */
-    // public function getErro()
-    // {
-    //     return $this->erro;
-    // }
-    // /**
-    //  * Guardo 0 erro no array
-    //  *
-    //  * @param array $erro
-    //  * @return void
-    //  */
-    // public function setErro($erro)
-    // {
-    //     array_push($this->erro,$erro);
-    // }
-    
+   
     /**
      * Metódo responsavel por retonar o erro para o cliente
      *
-     * @param objetc $validate
-     * @return void
+     * @param Validadte $validate
+     * @return Responce
      */
     private static function responseError($validate, $objCustomer){
 
@@ -75,7 +30,7 @@ class LoginSrv extends PageSrv{
      * Método resposavel por definir o login do usuario
      *
      * @param Request $request
-     * @return void
+     * @return Response
      */
     public static function setLogin($request){
 
@@ -124,7 +79,6 @@ class LoginSrv extends PageSrv{
       
         
         if(count($validate->getErro()) >0){
-            exit;
             $objCustomer->insertAttempt();
             $arrResponse=[
                "retorno" => "erro",
@@ -148,13 +102,12 @@ class LoginSrv extends PageSrv{
         }
         return json_encode($arrResponse);
     }
-    /**
-     * Método responsável por retornar a rederização da paǵina de login
-     *
-     * @param Request $request
-     * @param string $errorMessager
-     * @return string
-     */
+   /**
+    *  Método responsável por retornar a rederização da paǵina de login
+    *
+    * @param Request $request
+    * @return void
+    */
     public static function getLogin($request) {
 
         $queryParams = $request->getQueryParams();

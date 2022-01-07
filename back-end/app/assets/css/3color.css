@@ -1,0 +1,29 @@
+
+:root {
+    /* cores racs */
+    --racs1: #6300ff;
+    --racs2: #00b7ff;
+    --racs3: #8faadc;
+    --racs4: #eee;
+    --racs5: #000;
+    --racs6: rgb(100, 226, 69);
+
+    /* cores São Roque e Voce */
+    --srv3: #920046;
+    --srv2: #FF3434;
+    --srv1: #0CB664;
+    --srv4: #00812d;
+    --srv5: #FF3434;
+    --srv6: #f5f5f5;
+    --srv7: #E8AA0B;
+    --srv8: #ffffff;
+    --srv9: #000;
+    --srv10: #e1bee7;
+
+    /* Alertas */
+    --success: #1cf51c;
+    --error: #f10e0e;
+    --alert: #fdf904;
+    --help: #1059c7;
+   
+}
