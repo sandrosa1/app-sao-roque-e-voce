@@ -9,7 +9,7 @@ use \App\Model\Entity\Aplication\App as dbApp;
 class Hospedagem extends dbApp{
 
 
-    public $id_hospedagem;
+    public $idHospedagem;
     public $estacionamento;
     public $briquedos;
     public $restaurante;
@@ -36,9 +36,9 @@ class Hospedagem extends dbApp{
 
     public function insertNewHospedagem(){
 
-        $this->id_hospedagem = (new Database('hospedagem'))->insert([
+        $this->idHospedagem = (new Database('hospedagem'))->insert([
 
-            'id_app'            => $this->id_app,
+            'idApp'             => $this->idApp,
             'estacionamento'    => $this->estacionamento,
             'briquedos'         => $this->briquedos,
             'restaurante'       => $this->restaurante,
@@ -76,7 +76,7 @@ class Hospedagem extends dbApp{
         //Atualiza os dados gerais da hospedagem
         return (new Database('hospedagem'))->update('idApp = '.$this->idApp,[
 
-            'id_app'            => $this->id_app,
+            'idApp'             => $this->idApp,
             'estacionamento'    => $this->estacionamento,
             'briquedos'         => $this->briquedos,
             'restaurante'       => $this->restaurante,
@@ -126,9 +126,9 @@ class Hospedagem extends dbApp{
      * @param Intenger $id_customer
      * @return Hospedagem
      */
-    public static function getHospedagemById($id_app){
+    public static function getHospedagemById($idApp){
 
-        return self::getHospedagem('id_app = '.$id_app)->fetchObject(self::class);
+        return self::getHospedagem('idApp = '.$idApp)->fetchObject(self::class);
     }
 
      /**

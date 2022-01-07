@@ -7,7 +7,7 @@ use \App\Model\Entity\Aplication\App as dbApp;
 
 class Gastronomia extends dbApp{
 
-    public $id_app;
+    public $idApp;
     public $estacionamento;
     public $acessibilidade;
     public $wi_fi;
@@ -31,12 +31,17 @@ class Gastronomia extends dbApp{
     public $complementos;
 
 
+    /**
+     * Metódo responsável por inserir um novo servico gastronomico
+     *
+     * @return void
+     */
     public function insertNewGastronomia(){
 
         
         $this->id_gastronomia = (new Database('gastronomia'))->insert([
 
-            'id_app'            => $this->id_app,
+            'idApp'            => $this->idApp,
             'estacionamento'    => $this->estacionamento,
             'acessibilidade'    => $this->acessibilidade,
             'wi_fi'             => $this->wi_fi,
@@ -64,18 +69,72 @@ class Gastronomia extends dbApp{
     }
 
     /**
-    * Método responsável por retornar um cliente pelo idUser
-    *
-    * @param Intenger $id_customer
-    * @return Hospedagem
-    */
-    public static function getGastronomiaById($id_app){
+     * Método reponsável por atualizar os dados de um serviço gastronomico
+     *
+     * @return void
+     */
+    public function updateGastronomia(){
 
-    return self::getGastronomia('id_app = '.$id_app)->fetchObject(self::class);
+  
+        return (new Database('gastronomia'))->update('idApp = '.$this->idApp,[
+
+            'idApp'            => $this->idApp,
+            'estacionamento'    => $this->estacionamento,
+            'acessibilidade'    => $this->acessibilidade,
+            'wi_fi'             => $this->wi_fi,
+            'briquedos'         => $this->briquedos,
+            'restaurante'       => $this->restaurante,
+            'emporio'           => $this->emporio,
+            'adega'             => $this->adega,
+            'bebidas'           => $this->bebidas,
+            'sorveteria'        => $this->sorveteria,
+            'entrega_domicilio' => $this->entrega_domicilio,
+            'whatsapp'          => $this->whatsapp,
+            'semana'            => $this->semana,
+            'sabado'            => $this->sabado,
+            'domigo'            => $this->domigo,
+            'logo'              => $this->logo,
+            'img1'              => $this->img1,
+            'img2'              => $this->img2,
+            'img3'              => $this->img3,
+            'descricao'         => $this->descricao,
+            'feriado'           => $this->feriado,
+            'complementos'      => $this->complementos, 
+            
+        ]);
+        
+        //Sucesso
+        return true;
+
+    }
+
+     /**
+     * Método reponsável por deletar uma hospedagem
+     *
+     * @return void
+     */
+    public function deleteHospedagem(){
+
+        return (new Database('gastronomia'))->delete('idApp = '.$this->idApp);
+        
+        //Sucesso
+        return true;
+
     }
 
     /**
-    * Método responsavel por retornar depoimentos
+    * Método responsável por retornar um serviço gastronomico pelo idApp
+    *
+    * @param Intenger $idApp
+    * @return Hospedagem
+    */
+    public static function getGastronomiaById($idApp){
+
+    return self::getGastronomia('idApp = '.$idApp)->fetchObject(self::class);
+    }
+
+    /**
+    * Método responsavel por retornar todos serviços gastronomicos
     *
     * @param string $where
     * @param string $order
