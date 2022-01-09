@@ -10,7 +10,7 @@ class Evento extends dbApp{
         public $idApp;
         public $estacionamento;
         public $acessibilidade;
-        public $wi_fi;
+        public $wiFi;
         public $trilhas;
         public $refeicao;
         public $emporio;
@@ -42,7 +42,7 @@ class Evento extends dbApp{
             'idApp'             => $this->idApp,
             'estacionamento'    => $this->estacionamento,
             'acessibilidade'    => $this->acessibilidade,
-            'wi_fi'             => $this->wi_fi,
+            'wiFi'             => $this->wiFi,
             'trilhas'           => $this->trilhas,
             'refeicao'          => $this->refeicao,
             'emporio'           => $this->emporio,
@@ -78,7 +78,7 @@ class Evento extends dbApp{
             'idApp'            => $this->idApp,
             'estacionamento'    => $this->estacionamento,
             'acessibilidade'    => $this->acessibilidade,
-            'wi_fi'             => $this->wi_fi,
+            'wiFi'             => $this->wiFi,
             'trilhas'           => $this->trilhas,
             'refeicao'          => $this->refeicao,
             'emporio'           => $this->emporio,
