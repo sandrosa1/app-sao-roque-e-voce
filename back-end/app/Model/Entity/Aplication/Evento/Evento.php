@@ -22,13 +22,11 @@ class Evento extends dbApp{
         public $semana;
         public $sabado;
         public $domigo;
-        public $logo;
-        public $img1;
+        public $feriado;
         public $img2;
         public $img3;
         public $descricao;
-        public $feriado;
-        public $complementos;
+ 
 
 
     /**
@@ -42,7 +40,7 @@ class Evento extends dbApp{
             'idApp'             => $this->idApp,
             'estacionamento'    => $this->estacionamento,
             'acessibilidade'    => $this->acessibilidade,
-            'wiFi'             => $this->wiFi,
+            'wiFi'              => $this->wiFi,
             'trilhas'           => $this->trilhas,
             'refeicao'          => $this->refeicao,
             'emporio'           => $this->emporio,
@@ -54,13 +52,10 @@ class Evento extends dbApp{
             'semana'            => $this->semana,
             'sabado'            => $this->sabado,
             'domigo'            => $this->domigo,
-            'logo'              => $this->logo,
-            'img1'              => $this->img1,
+            'feriado'           => $this->feriado,
             'img2'              => $this->img2,
             'img3'              => $this->img3,
             'descricao'         => $this->descricao,
-            'feriado'           => $this->feriado,
-            'complementos'      => $this->complementos, 
         ]);
 
         return true;
@@ -78,7 +73,7 @@ class Evento extends dbApp{
             'idApp'            => $this->idApp,
             'estacionamento'    => $this->estacionamento,
             'acessibilidade'    => $this->acessibilidade,
-            'wiFi'             => $this->wiFi,
+            'wiFi'              => $this->wiFi,
             'trilhas'           => $this->trilhas,
             'refeicao'          => $this->refeicao,
             'emporio'           => $this->emporio,
@@ -90,13 +85,10 @@ class Evento extends dbApp{
             'semana'            => $this->semana,
             'sabado'            => $this->sabado,
             'domigo'            => $this->domigo,
-            'logo'              => $this->logo,
-            'img1'              => $this->img1,
+            'feriado'           => $this->feriado,
             'img2'              => $this->img2,
             'img3'              => $this->img3,
             'descricao'         => $this->descricao,
-            'feriado'           => $this->feriado,
-            'complementos'      => $this->complementos, 
         ]);
         
         return true;

@@ -22,11 +22,12 @@ class App{
     public $complementos;
     public $chaves;
     public $visualizacao;
-    public $total_custo;
-    public $total_avaliacao;
+    public $totalCusto;
+    public $totalAvaliacao;
     public $custo;
     public $avaliacao;
     public $img1;
+    public $adicionais;
    
 
 
@@ -36,7 +37,7 @@ class App{
     //Inserio os dados no banco de dados
    (new Database('app'))->insert([
     
-        'idApp'          => $this->idApp, 
+        'idApp'           => $this->idApp, 
         'nomeFantasia'    => $this->nomeFantasia,
         'segmento'        => $this->segmento,
         'tipo'            => $this->tipo,
@@ -51,11 +52,12 @@ class App{
         'complementos'    => $this->complementos,
         'chaves'          => $this->chaves,
         'visualizacao'    => $this->visualizacao,
-        'total_custo'     => $this->total_custo,
-        'total_avaliacao' => $this->total_avaliacao,
+        'totalCusto'      => $this->totalCusto,
+        'totalAvaliacao'  => $this->totalAvaliacao,
         'custo'           => $this->custo,
         'avaliacao'       => $this->avaliacao,
         'img1'            => $this->img1,
+        'adicionais'      => $this->adicionais,  
 
          ]); 
 
@@ -74,7 +76,7 @@ class App{
         //Atualiza os dados gerais do app
         return (new Database('app'))->update('idApp = '.$this->idApp,[
 
-            'idApp'          => $this->idApp, 
+            'idApp'           => $this->idApp, 
             'nomeFantasia'    => $this->nomeFantasia,
             'segmento'        => $this->segmento,
             'tipo'            => $this->tipo,
@@ -89,11 +91,12 @@ class App{
             'complementos'    => $this->complementos,
             'chaves'          => $this->chaves,
             'visualizacao'    => $this->visualizacao,
-            'total_custo'     => $this->total_custo,
-            'total_avaliacao' => $this->total_avaliacao,
+            'totalCusto'      => $this->totalCusto,
+            'totalAvaliacao'  => $this->totalAvaliacao,
             'custo'           => $this->custo,
             'avaliacao'       => $this->avaliacao,
             'img1'            => $this->img1,  
+            'adicionais'      => $this->adicionais,  
                
              
         ]);

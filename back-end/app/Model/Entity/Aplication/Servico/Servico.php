@@ -10,25 +10,17 @@ class Servico extends dbApp{
         public $idApp;
         public $estacionamento;
         public $acessibilidade;
-        public $wi_fi;
-        public $trilhas;
-        public $refeicao;
-        public $emporio;
-        public $adega;
-        public $bebidas;
-        public $sorveteria;
-        public $show;
+        public $entregaDomicilio;
         public $whatsapp;
         public $semana;
         public $sabado;
         public $domigo;
+        public $feriado;
         public $logo;
-        public $img1;
         public $img2;
         public $img3;
         public $descricao;
-        public $feriado;
-        public $complementos;
+
 
 
     /**
@@ -43,18 +35,16 @@ class Servico extends dbApp{
             'idApp'             => $this->idApp,
             'estacionamento'    => $this->estacionamento,
             'acessibilidade'    => $this->acessibilidade,
-            'entrega_domicilio' => $this->entrega_domicilio,
+            'entregaDomicilio'  => $this->entregaDomicilio,
             'whatsapp'          => $this->whatsapp,
             'semana'            => $this->semana,
             'sabado'            => $this->sabado,
             'domigo'            => $this->domigo,
+            'feriado'           => $this->feriado,
             'logo'              => $this->logo,
-            'img1'              => $this->img1,
             'img2'              => $this->img2,
             'img3'              => $this->img3,
             'descricao'         => $this->descricao,
-            'feriado'           => $this->feriado,
-            'complementos'      => $this->complementos, 
 
         ]);
 
@@ -76,18 +66,16 @@ class Servico extends dbApp{
             'idApp'             => $this->idApp,
             'estacionamento'    => $this->estacionamento,
             'acessibilidade'    => $this->acessibilidade,
-            'entrega_domicilio' => $this->entrega_domicilio,
+            'entregaDomicilio'  => $this->entregaDomicilio,
             'whatsapp'          => $this->whatsapp,
             'semana'            => $this->semana,
             'sabado'            => $this->sabado,
             'domigo'            => $this->domigo,
+            'feriado'           => $this->feriado,
             'logo'              => $this->logo,
-            'img1'              => $this->img1,
             'img2'              => $this->img2,
             'img3'              => $this->img3,
             'descricao'         => $this->descricao,
-            'feriado'           => $this->feriado,
-            'complementos'      => $this->complementos,   
                 
              
         ]);
