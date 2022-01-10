@@ -63,7 +63,7 @@ CREATE TABLE `sistema`.`app` (
   `tipo` VARCHAR(45) NOT NULL,
   `email` VARCHAR(145) NOT NULL,
   `telefone` VARCHAR(16) NULL,
-  `celular` VARCHAR(75) NULL,
+  `celular` VARCHAR(17) NULL,
   `cep` VARCHAR(9) NOT NULL,
   `logradouro` VARCHAR(245) NOT NULL,
   `numero` VARCHAR(20) NOT NULL,

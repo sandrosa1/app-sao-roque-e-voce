@@ -5,19 +5,16 @@
         </div>
     </div>
     <div class="row">
-        <div class="col s12 hc">
+        <div class="col s12 ">
             <h6 class="srv-c-4  ">Algumas informações declaradas aqui, estarão disponíveis para os usuários do App São Roque e Você. Clique na ajuda para mais detalhes sobre o campo </h6>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col s12 hc">
+            <h6 class="srv-c-4  ">Os campos com o ( <span class="obrigatorio">*</span> ) são obrigatório seu preenchimento.</h6>
             <h6 class="srv-c-4  ">Informações maliciosas ou inverdades o anúncio será retirado da plataforma.</h6>
+
         </div>
     </div>
-
     <div class="row">
         
-        <form class="col s12" method="post" >
+        <form class="col s12" method="{{method}}" >
         <!-- Estrutura do modal e input nome fantasia -->
         <div class="row">
           
@@ -33,8 +30,8 @@
                     </div>
                 </div>
                 <a class="waves-effect waves-light btn-ajuda modal-trigger prefix" href="#modal1"><i class="material-icons icon-ajuda">help_outline</i></a>
-                <input  id="nomeFantasia" type="text" name="nomeFantasia" maxlength="100" class="validate" >
-                <label for="nomeFantasia">Nome do estabelecimento, atração ou serviço </label>
+                <input  id="nomeFantasia" type="text" name="nomeFantasia" maxlength="100" class="validate" required>
+                <label for="nomeFantasia">Nome do estabelecimento, atração ou serviço<span class="obrigatorio"> *</span></label>
             </div>
         </div>
             <!-- Fim de estrutura do modal e input nome fantasia -->
@@ -63,7 +60,7 @@
                     <option value="comercio">Comércio geral</option>
                     <option value="servicos">Serviços</option>
                 </select>
-                <label>Tipo de segmento</label>
+                <label>Tipo de segmento  <span class="obrigatorio">*</span></label>
             </div>
 
             <div class="input-field col s6">
@@ -77,8 +74,8 @@
                     </div>
                 </div>
                 <a class="waves-effect waves-light btn-ajuda modal-trigger prefix" href="#modal9"><i class="material-icons icon-ajuda" >help_outline</i></a>
-                <input id="tipo" type="text" name="tipo" maxlength="255" class="validate" >
-                <label for="tipo">Tipo </label>   
+                <input id="tipo" type="text" name="tipo" maxlength="255" class="validate" required>
+                <label for="tipo">Tipo<span class="obrigatorio"> *</span></label>   
             </div>
 
         </div>
@@ -102,8 +99,8 @@
                         </div>
                     </div>
                     <a class="waves-effect waves-light btn-ajuda modal-trigger prefix" href="#modal2"><i class="material-icons icon-ajuda" >help_outline</i></a>
-                    <input id="email" type="email" name="email" maxlength="255" class="validate" >
-                    <label for="email">Email </label>   
+                    <input id="email" type="email" name="email" maxlength="255" class="validate" required>
+                    <label for="email">Email<span class="obrigatorio"> *</span></label>   
                 </div>
 
                 <div class="input-field col s3">
@@ -120,8 +117,8 @@
                         </div>
                     </div>
                     <a class="waves-effect waves-light btn-ajuda modal-trigger prefix" href="#modal3"><i class="material-icons icon-ajuda" >help_outline</i></a>
-                    <input id="email" type="tel" name="telefone" maxlength="9" class="validate">
-                    <label for="email">Telefone </label>
+                    <input id="telefone" type="tel" name="telefone" maxlength="16" class="validate">
+                    <label for="telefone">Telefone</label>
                     
                 </div>
                 <div class="input-field col s3">
@@ -137,8 +134,8 @@
                         </div>
                     </div>
                     <a class="waves-effect waves-light btn-ajuda modal-trigger prefix" href="#modal4"><i class="material-icons icon-ajuda" >help_outline</i></a>
-                    <input id="email" type="tel" name="celular" maxlength="10" class="validate">
-                    <label for="email">Celular </label>
+                    <input id="celular" type="tel" name="celular" maxlength="17" class="validate" required>
+                    <label for="celular">Celular<span class="obrigatorio"> *</span></label>
                     
                 </div>
               </div>
@@ -160,8 +157,8 @@
                     </div>
                     
                     <a class="waves-effect waves-light btn-ajuda modal-trigger prefix" href="#modal5"><i class="material-icons icon-ajuda" >help_outline</i></a>
-                    <input id="cep" type="text" name="cep" maxlength="9" class="validate" >
-                    <label for="cep">CEP </label> 
+                    <input id="cep" type="text" name="cep" maxlength="9" class="validate" required>
+                    <label for="cep">CEP <span class="obrigatorio"> *</span></label> 
                     <!-- <input type=submit> -->
                 </div>
                 <div class="input-field col s1" id="loadingCep"></div>
@@ -176,41 +173,40 @@
                         </div>
                     </div>
                     <a class="waves-effect waves-light btn-ajuda modal-trigger prefix" href="#modal6"><i class="material-icons icon-ajuda" >help_outline</i></a>
-                    <input id="logradouro" type="text" name="logradouro" maxlength="255" class="validate">
-                    <label for="logradouro">Logradouro </label>
+                    <input id="logradouro" type="text" name="logradouro" maxlength="255" class="validate" required>
+                    <label for="logradouro">Logradouro<span class="obrigatorio">*</span></label>
                 </div>
 
                 <div class="input-field col s1">
-                    <input id="numero" type="text" name="numero" maxlength="20" class="validate">
-                    <label for="numero">Número </label>
+                    <input id="numero" type="text" name="numero" maxlength="20" class="validate" required>
+                    <label for="numero">Número <span class="obrigatorio">*</span></label>
                 </div>
               </div>
-
-
               <div class="row">  
                 <div class="input-field col s3">
-                    <input id="bairro" type="text" name="bairro" maxlength="45" class="validate">
-                    <label for="bairro">Bairro </label>   
+                    <input id="bairro" type="text" name="bairro" maxlength="45" class="validate" required>
+                    <label for="bairro">Bairro <span class="obrigatorio">*</span></label>   
                 </div>
 
                 <div class="input-field col s3">
-                    <input id="localidade" type="text" name="localidade" maxlength="9" class="validate">
-                    <label for="localidade">Cidade </label>
+                    <input id="localidade" type="text" name="localidade" maxlength="9" class="validate" required>
+                    <label for="localidade">Cidade <span class="obrigatorio">*</span></label>
                 </div>
 
                 <div class="input-field col s6">
                     <div id="modal7" class="modal">
                         <div class="modal-content">
                             <h4 class="center srv-c-4 fz-20">Ajuda</h4>
-                            <p>Rua ou local para referência.</p>
+                            <p>Complementos <b>Exemplos: sala1, galeria nome, andar 32</b>.</p>
+                            <p>Rua ou local para referência <b>Exemplos: Proxímo a ígreja matriz, De frente a praça dos mendes</b></p>
                         </div>
                         <div class="modal-footer">
                             <a class="modal-close waves-effect waves-green btn-flat"><i class="material-icons icons-ajuda-fechar">close</i></a>
                         </div>
                     </div>
                     <a class="waves-effect waves-light btn-ajuda modal-trigger prefix" href="#modal7"><i class="material-icons icon-ajuda" >help_outline</i></a>
-                    <input id="complementos" type="text" name="complementos" maxlength="255" class="validate">
-                    <label for="complementos">Ponto de referência </label>
+                    <input id="adicionais" type="text" name="adicionais" maxlength="255" class="validate">
+                    <label for="adicionais">Complemtos e ponto de referência</label>
                 </div>
 
                 <div class="row">
@@ -218,6 +214,7 @@
                     <div id="modal8" class="modal">
                         <div class="modal-content">
                             <h4 class="center srv-c-4 fz-20">Ajuda</h4>
+                            <p>Palavras chaves ajudam aos mecanimos de busca do app a encontrar seu anúncio, facilitando ao cliente chegar até você.</p> 
                             <p>Digíte 7 palavras separadas por virgula e espaço, que mais tem haver com seu anúncio.</p> 
                             <p><b>Exemplos:</b></p> 
                             <p><b>Padaria:</b> Padaria, Pães, Pão, Café, Doces, Salgados, Bebidas</p> 

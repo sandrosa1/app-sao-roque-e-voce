@@ -44,12 +44,16 @@ class Config extends PageSrv
         if ($app instanceof EntityApp) {
             $content = View::render('srv/modules/configuracao/index', [
                 'botoes' => self::getButtonEdit(),
-                'h1'     => 'Atualize ou delete seu dados aqui'
+                'h1'     => 'Atualize ou delete seu dados aqui',
+                'method'     => 'update',
             ]);
         } else {
             $content = View::render('srv/modules/configuracao/index', [
                 'botoes' => self::getButtonRegister(),
-                'h1'     => 'Configurações'
+                'h1'     => 'Configurações',
+                'method'     => 'post',
+
+                
             ]);
         }
 
@@ -87,10 +91,7 @@ class Config extends PageSrv
         $postVars = $request->getPostVars();
 
 
-        //Falta validações
-        //Falta validações
-        //Falta validações
-  
+        
 
         $id_customer = $_SESSION['admin']['customer']['idUser'];
        
@@ -111,19 +112,22 @@ class Config extends PageSrv
         $objApp->localidade   = $postVars['localidade'];
         $objApp->complementos = $postVars['complementos'];
         $objApp->chaves       = $postVars['chaves'];
-        $action               = $postVars['action'];
 
-        $objApp->insertNewApp();
 
-        switch ($objApp->segmento) {
-            case 'hospedagem':
-               self::createHospedagem($id_customer);
-                break;
+
+        // $objApp->insertNewApp();
+
+        // switch ($objApp->segmento) {
+        //     case 'hospedagem':
+        //        self::createHospedagem($id_customer);
+        //         break;
             
-            default:
-                # code...
-                break;
-        }
+        //     default:
+        //         # code...
+        //         break;
+        // }
+
+       
 
         return self::getConfig();
 

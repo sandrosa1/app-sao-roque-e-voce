@@ -136,7 +136,9 @@
 .icons-ajuda-fechar{
     color: var(--error); 
 }
-
+.obrigatorio{
+    color: var(--srv2);
+}
 
 
 /*Configurações Gerais*/
