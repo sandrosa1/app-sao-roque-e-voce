@@ -9,12 +9,13 @@ use \App\Model\Entity\Aplication\App as dbApp;
 class Hospedagem extends dbApp{
 
 
-    public $idHospedagem;
+    public $idAppHospedagem;
+    public $idApp;
     public $estacionamento;
     public $briquedos;
     public $restaurante;
-    public $ar_condicionado;
-    public $wi_fi;
+    public $arCondicionado;
+    public $wiFi;
     public $academia;
     public $piscina;
     public $refeicao;
@@ -26,24 +27,23 @@ class Hospedagem extends dbApp{
     public $semana;
     public $sabado;
     public $domigo;
-    public $logo;
+    public $feriado;
     public $img2;
     public $img3;
     public $descricao;
-    public $feriado;
 
   
 
     public function insertNewHospedagem(){
 
-        $this->idHospedagem = (new Database('hospedagem'))->insert([
+        $this->idAppHospedagem = (new Database('appHospedagem'))->insert([
 
             'idApp'             => $this->idApp,
             'estacionamento'    => $this->estacionamento,
             'briquedos'         => $this->briquedos,
             'restaurante'       => $this->restaurante,
-            'ar_condicionado'   => $this->ar_condicionado,
-            'wi_fi'             => $this->wi_fi,
+            'arCondicionado'    => $this->arCondicionado,
+            'wiFi'              => $this->wiFi,
             'academia'          => $this->academia,
             'piscina'           => $this->piscina,
             'refeicao'          => $this->refeicao,
@@ -55,11 +55,10 @@ class Hospedagem extends dbApp{
             'semana'            => $this->semana,
             'sabado'            => $this->sabado,
             'domigo'            => $this->domigo,
-            'logo'              => $this->logo,
+            'feriado'           => $this->feriado,
             'img2'              => $this->img2,
             'img3'              => $this->img3,
             'descricao'         => $this->descricao,
-            'feriado'           => $this->feriado,
         ]);
 
         return true;
@@ -67,21 +66,21 @@ class Hospedagem extends dbApp{
     }
 
     /**
-     * Método reponsável por atualizar os dados de uma hospedagem
+     * Método reponsável por atualizar os dados de uma appHospedagem
      *
      * @return void
      */
     public function updateHospedagem(){
 
-        //Atualiza os dados gerais da hospedagem
-        return (new Database('hospedagem'))->update('idApp = '.$this->idApp,[
+        //Atualiza os dados gerais da appHospedagem
+        return (new Database('appHospedagem'))->update('idApp = '.$this->idApp,[
 
-            'idApp'             => $this->idApp,
+     
             'estacionamento'    => $this->estacionamento,
             'briquedos'         => $this->briquedos,
             'restaurante'       => $this->restaurante,
-            'ar_condicionado'   => $this->ar_condicionado,
-            'wi_fi'             => $this->wi_fi,
+            'arCondicionado'    => $this->arCondicionado,
+            'wiFi'              => $this->wiFi,
             'academia'          => $this->academia,
             'piscina'           => $this->piscina,
             'refeicao'          => $this->refeicao,
@@ -93,11 +92,10 @@ class Hospedagem extends dbApp{
             'semana'            => $this->semana,
             'sabado'            => $this->sabado,
             'domigo'            => $this->domigo,
-            'logo'              => $this->logo,
+            'feriado'           => $this->feriado,
             'img2'              => $this->img2,
             'img3'              => $this->img3,
             'descricao'         => $this->descricao,
-            'feriado'           => $this->feriado,
             
         ]);
         
@@ -107,13 +105,13 @@ class Hospedagem extends dbApp{
     }
 
      /**
-     * Método reponsável por deletar uma hospedagem
+     * Método reponsável por deletar uma appHospedagem
      *
      * @return void
      */
     public function deleteHospedagem(){
 
-        return (new Database('hospedagem'))->delete('idApp = '.$this->idApp);
+        return (new Database('appHospedagem'))->delete('idApp = '.$this->idApp);
         
         //Sucesso
         return true;
@@ -121,7 +119,7 @@ class Hospedagem extends dbApp{
     }
 
      /**
-     * Método responsável por retornar uma hospedagem pelo idApp
+     * Método responsável por retornar uma appHospedagem pelo idApp
      *
      * @param Intenger $id_customer
      * @return Hospedagem
@@ -132,7 +130,7 @@ class Hospedagem extends dbApp{
     }
 
      /**
-     * Método responsavel por retornar todas as hospedagem
+     * Método responsavel por retornar todas as appHospedagem
      *
      * @param string $where
      * @param string $order
@@ -142,7 +140,7 @@ class Hospedagem extends dbApp{
      */
     public static function getHospedagem($where = null, $order = null, $limit = null, $fields = '*'){
 
-        return(new Database('hospedagem'))->select($where, $order, $limit, $fields);
+        return(new Database('appHospedagem'))->select($where, $order, $limit, $fields);
     }
 
 }

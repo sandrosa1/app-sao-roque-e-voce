@@ -19,7 +19,6 @@ class App{
     public $numero;
     public $bairro;
     public $localidade;
-    public $complementos;
     public $chaves;
     public $visualizacao;
     public $totalCusto;
@@ -29,11 +28,8 @@ class App{
     public $img1;
     public $adicionais;
    
-
-
   public function insertNewApp(){
-        
-       
+             
     //Inserio os dados no banco de dados
    (new Database('app'))->insert([
     
@@ -49,7 +45,6 @@ class App{
         'numero'          => $this->numero,
         'bairro'          => $this->bairro,
         'localidade'      => $this->localidade,
-        'complementos'    => $this->complementos,
         'chaves'          => $this->chaves,
         'visualizacao'    => $this->visualizacao,
         'totalCusto'      => $this->totalCusto,
@@ -88,7 +83,6 @@ class App{
             'numero'          => $this->numero,
             'bairro'          => $this->bairro,
             'localidade'      => $this->localidade,
-            'complementos'    => $this->complementos,
             'chaves'          => $this->chaves,
             'visualizacao'    => $this->visualizacao,
             'totalCusto'      => $this->totalCusto,

@@ -30,13 +30,13 @@ class Evento extends dbApp{
 
 
     /**
-     * Metódo responsável por inserir dados de um evento
+     * Metódo responsável por inserir dados de um appEvento
      *
      * @return void
      */    
     public function insertNewEvento(){
     
-        $this->idEvento = (new Database('evento'))->insert([
+        $this->idEvento = (new Database('appEvento'))->insert([
             'idApp'             => $this->idApp,
             'estacionamento'    => $this->estacionamento,
             'acessibilidade'    => $this->acessibilidade,
@@ -61,16 +61,15 @@ class Evento extends dbApp{
         return true;
     }
    /**
-     * Método reponsável por atualizar os dados de um evento
+     * Método reponsável por atualizar os dados de um appEvento
      *
      * @return void
      */
     public function updateEvento(){
 
   
-        return (new Database('evento'))->update('idApp = '.$this->idApp,[
+        return (new Database('appEvento'))->update('idApp = '.$this->idApp,[
 
-            'idApp'            => $this->idApp,
             'estacionamento'    => $this->estacionamento,
             'acessibilidade'    => $this->acessibilidade,
             'wiFi'              => $this->wiFi,
@@ -96,13 +95,13 @@ class Evento extends dbApp{
     }
 
      /**
-     * Método reponsável por deletar um evento
+     * Método reponsável por deletar um appEvento
      *
      * @return void
      */
     public function deleteHospedagem(){
 
-        return (new Database('evento'))->delete('idApp = '.$this->idApp);
+        return (new Database('appEvento'))->delete('idApp = '.$this->idApp);
         
         return true;
 
@@ -120,7 +119,7 @@ class Evento extends dbApp{
     }
 
     /**
-    * Método responsavel por retornar todos os eventos
+    * Método responsavel por retornar todos os appEventos
     *
     * @param string $where
     * @param string $order
@@ -130,7 +129,7 @@ class Evento extends dbApp{
     */
     public static function getEvento($where = null, $order = null, $limit = null, $fields = '*'){
 
-        return(new Database('evento'))->select($where, $order, $limit, $fields);
+        return(new Database('appEvento'))->select($where, $order, $limit, $fields);
     }
 
 }

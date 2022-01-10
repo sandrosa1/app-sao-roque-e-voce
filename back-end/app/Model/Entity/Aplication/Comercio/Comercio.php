@@ -9,7 +9,7 @@ use \App\Model\Entity\Aplication\App as dbApp;
 class Comercio extends dbApp{
 
 
-    public $idComercio;
+    public $idAppComercio;
     public $idApp;
     public $estacionamento;
     public $acessibilidade;
@@ -26,13 +26,13 @@ class Comercio extends dbApp{
   
 
     /**
-     * Metódo responsável por inserir um novo comercio
+     * Metódo responsável por inserir um novo appComercio
      *
      * @return void
      */
     public function insertNewComercio(){
 
-        $this->idComercio = (new Database('comercio'))->insert([
+        $this->idAppComercio = (new Database('appComercio'))->insert([
             'idApp'             => $this->idApp,
             'estacionamento'    => $this->estacionamento,
             'acessibilidade'    => $this->acessibilidade,
@@ -51,16 +51,15 @@ class Comercio extends dbApp{
 
     }
     /**
-     * Método reponsável por atualizar os dados de um comercio
+     * Método reponsável por atualizar os dados de um appComercio
      *
      * @return void
      */
     public function updateComercio(){
 
   
-        return (new Database('comercio'))->update('idApp = '.$this->idApp,[
+        return (new Database('appComercio'))->update('idApp = '.$this->idApp,[
 
-            'idApp'             => $this->idApp,
             'estacionamento'    => $this->estacionamento,
             'acessibilidade'    => $this->acessibilidade,
             'entregaDomicilio'  => $this->entregaDomicilio,
@@ -78,19 +77,19 @@ class Comercio extends dbApp{
 
     }
      /**
-     * Método reponsável por deletar um comercio
+     * Método reponsável por deletar um appComercio
      *
      * @return void
      */
     public function deleteHos(){
 
-        return (new Database('comercio'))->delete('idApp = '.$this->idApp);
+        return (new Database('appComercio'))->delete('idApp = '.$this->idApp);
         
         return true;
 
     }
     /**
-     * Método responsável por retornar um comercio peço idApp
+     * Método responsável por retornar um appComercio peço idApp
      *
      * @param Intenger $idAdd
      * @return Comercio
@@ -100,7 +99,7 @@ class Comercio extends dbApp{
         return self::getComercio('idApp = '.$idApp)->fetchObject(self::class);
     }
     /**
-     * Método responsavel por retornar todos comercios
+     * Método responsavel por retornar todos appComercios
      *
      * @param string $where
      * @param string $order
@@ -110,7 +109,7 @@ class Comercio extends dbApp{
      */
     public static function getComercio($where = null, $order = null, $limit = null, $fields = '*'){
 
-        return(new Database('comercio'))->select($where, $order, $limit, $fields);
+        return(new Database('appComercio'))->select($where, $order, $limit, $fields);
     }
 
 }

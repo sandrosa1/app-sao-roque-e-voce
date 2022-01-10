@@ -73,7 +73,6 @@ class Gastronomia extends dbApp{
   
         return (new Database('gastronomia'))->update('idApp = '.$this->idApp,[
 
-            'idApp'             => $this->idApp,
             'estacionamento'    => $this->estacionamento,
             'acessibilidade'    => $this->acessibilidade,
             'wiFi'              => $this->wiFi,
@@ -88,8 +87,6 @@ class Gastronomia extends dbApp{
             'semana'            => $this->semana,
             'sabado'            => $this->sabado,
             'domigo'            => $this->domigo,
-            'logo'              => $this->logo,
-            'img1'              => $this->img1,
             'img2'              => $this->img2,
             'img3'              => $this->img3,
             'descricao'         => $this->descricao,
