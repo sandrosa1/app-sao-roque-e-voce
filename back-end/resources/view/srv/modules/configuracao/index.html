@@ -14,7 +14,7 @@
     </div>
     <div class="row">
         
-        <form class="col s12" method="{{method}}" >
+        <form class="col s12" method="post" >
         <!-- Estrutura do modal e input nome fantasia -->
         <div class="row">
           
@@ -30,7 +30,7 @@
                     </div>
                 </div>
                 <a class="waves-effect waves-light btn-ajuda modal-trigger prefix" href="#modal1"><i class="material-icons icon-ajuda">help_outline</i></a>
-                <input  id="nomeFantasia" type="text" name="nomeFantasia" maxlength="100" class="validate" required>
+                <input  id="nomeFantasia" type="text" name="nomeFantasia" value="{{nomeFantasia}}" maxlength="100" class="validate" required>
                 <label for="nomeFantasia">Nome do estabelecimento, atração ou serviço<span class="obrigatorio"> *</span></label>
             </div>
         </div>
@@ -53,7 +53,7 @@
                 </div>
                 <a class="waves-effect waves-light btn-ajuda modal-trigger prefix" href="#modal1.1"><i class="material-icons icon-ajuda">help_outline</i></a>
                 <select name='segmento'>
-                    <option value="" disabled selected>Selecione um segmento</option>
+                    <option value="{{segmento}}" >{{segmento}}</option>
                     <option value="hospedagem">Hospedagem</option>
                     <option value="gastronomia">Gastronomia</option>
                     <option value="evento">Evento</option>
@@ -74,7 +74,7 @@
                     </div>
                 </div>
                 <a class="waves-effect waves-light btn-ajuda modal-trigger prefix" href="#modal9"><i class="material-icons icon-ajuda" >help_outline</i></a>
-                <input id="tipo" type="text" name="tipo" maxlength="255" class="validate" required>
+                <input id="tipo" type="text" name="tipo" value="{{tipo}}" maxlength="255" class="validate" required>
                 <label for="tipo">Tipo<span class="obrigatorio"> *</span></label>   
             </div>
 
@@ -99,7 +99,7 @@
                         </div>
                     </div>
                     <a class="waves-effect waves-light btn-ajuda modal-trigger prefix" href="#modal2"><i class="material-icons icon-ajuda" >help_outline</i></a>
-                    <input id="email" type="email" name="email" maxlength="255" class="validate" required>
+                    <input id="email" type="email" name="email" value="{{email}}" maxlength="255" class="validate" required>
                     <label for="email">Email<span class="obrigatorio"> *</span></label>   
                 </div>
 
@@ -117,7 +117,7 @@
                         </div>
                     </div>
                     <a class="waves-effect waves-light btn-ajuda modal-trigger prefix" href="#modal3"><i class="material-icons icon-ajuda" >help_outline</i></a>
-                    <input id="telefone" type="tel" name="telefone" maxlength="16" class="validate">
+                    <input id="telefone" type="tel" name="telefone" value="{{telefone}}" maxlength="16" class="validate">
                     <label for="telefone">Telefone</label>
                     
                 </div>
@@ -134,7 +134,7 @@
                         </div>
                     </div>
                     <a class="waves-effect waves-light btn-ajuda modal-trigger prefix" href="#modal4"><i class="material-icons icon-ajuda" >help_outline</i></a>
-                    <input id="celular" type="tel" name="celular" maxlength="17" class="validate" required>
+                    <input id="celular" type="tel" name="celular" value="{{celular}}" maxlength="17" class="validate" required>
                     <label for="celular">Celular<span class="obrigatorio"> *</span></label>
                     
                 </div>
@@ -157,7 +157,7 @@
                     </div>
                     
                     <a class="waves-effect waves-light btn-ajuda modal-trigger prefix" href="#modal5"><i class="material-icons icon-ajuda" >help_outline</i></a>
-                    <input id="cep" type="text" name="cep" maxlength="9" class="validate" required>
+                    <input id="cep" type="text" name="cep" value="{{cep}}" maxlength="9" class="validate" required>
                     <label for="cep">CEP <span class="obrigatorio"> *</span></label> 
                     <!-- <input type=submit> -->
                 </div>
@@ -173,23 +173,23 @@
                         </div>
                     </div>
                     <a class="waves-effect waves-light btn-ajuda modal-trigger prefix" href="#modal6"><i class="material-icons icon-ajuda" >help_outline</i></a>
-                    <input id="logradouro" type="text" name="logradouro" maxlength="255" class="validate" required>
+                    <input id="logradouro" type="text" name="logradouro" value="{{logradouro}}" maxlength="255" class="validate" required>
                     <label for="logradouro">Logradouro<span class="obrigatorio">*</span></label>
                 </div>
 
                 <div class="input-field col s1">
-                    <input id="numero" type="text" name="numero" maxlength="20" class="validate" required>
+                    <input id="numero" type="text" name="numero" value="{{numero}}" maxlength="20" class="validate" required>
                     <label for="numero">Número <span class="obrigatorio">*</span></label>
                 </div>
               </div>
               <div class="row">  
                 <div class="input-field col s3">
-                    <input id="bairro" type="text" name="bairro" maxlength="45" class="validate" required>
+                    <input id="bairro" type="text" name="bairro" value="{{bairro}}" maxlength="45" class="validate" required>
                     <label for="bairro">Bairro <span class="obrigatorio">*</span></label>   
                 </div>
 
                 <div class="input-field col s3">
-                    <input id="localidade" type="text" name="localidade" maxlength="9" class="validate" required>
+                    <input id="localidade" type="text" name="localidade" value="{{localidade}}" maxlength="9" class="validate" required>
                     <label for="localidade">Cidade <span class="obrigatorio">*</span></label>
                 </div>
 
@@ -205,7 +205,7 @@
                         </div>
                     </div>
                     <a class="waves-effect waves-light btn-ajuda modal-trigger prefix" href="#modal7"><i class="material-icons icon-ajuda" >help_outline</i></a>
-                    <input id="adicionais" type="text" name="adicionais" maxlength="255" class="validate">
+                    <input id="adicionais" type="text" name="adicionais" value="{{adicionais}}" maxlength="255" class="validate">
                     <label for="adicionais">Complemtos e ponto de referência</label>
                 </div>
 
@@ -227,7 +227,7 @@
                     </div>
                     
                     <a class="waves-effect waves-light btn-ajuda modal-trigger prefix" href="#modal8"><i class="material-icons icon-ajuda" >help_outline</i></a>
-                    <textarea id="textarea1"class="materialize-textarea" aria-modal="500" name="chaves"></textarea>
+                    <textarea id="textarea1"class="materialize-textarea" aria-modal="500" name="chaves">{{chaves}}</textarea>
                     <label for="textarea1">7 Palavras chaves</label>
                 </div>
                 </div>

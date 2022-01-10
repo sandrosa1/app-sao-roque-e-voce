@@ -109,9 +109,9 @@ class Hospedagem extends dbApp{
      *
      * @return void
      */
-    public function deleteHospedagem(){
+    public static function deleteHospedagem($idApp){
 
-        return (new Database('appHospedagem'))->delete('idApp = '.$this->idApp);
+        return (new Database('appHospedagem'))->delete('idApp = '.$idApp);
         
         //Sucesso
         return true;

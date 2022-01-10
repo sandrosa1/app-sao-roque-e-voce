@@ -43,15 +43,42 @@ class Config extends PageSrv
 
         if ($app instanceof EntityApp) {
             $content = View::render('srv/modules/configuracao/index', [
-                'botoes' => self::getButtonEdit(),
-                'h1'     => 'Atualize ou delete seu dados aqui',
-                'method'     => 'update',
+                'botoes'       => self::getButtonEdit(),
+                'h1'           => 'Atualize ou delete seu dados aqui',
+                'method'       => 'configuracao/update',
+                'nomeFantasia' => $app->nomeFantasia,
+                'tipo'         => $app->tipo,
+                'segmento'     => $app->segmento,
+                'email'        => $app->email,
+                'telefone'     => $app->telefone,
+                'celular'      => $app->celular,
+                'cep'          => $app->cep,
+                'logradouro'   => $app->logradouro,
+                'numero'       => $app->numero,
+                'bairro'       => $app->bairro,
+                'localidade'   => $app->localidade,
+                'adicionais'   => $app->adicionais,
+                'chaves'       => $app->chaves,
+
             ]);
         } else {
             $content = View::render('srv/modules/configuracao/index', [
-                'botoes' => self::getButtonRegister(),
-                'h1'     => 'Configurações',
-                'method'     => 'post',
+                'botoes'       => self::getButtonRegister(),
+                'h1'           => 'Configurações',
+                'method'       => 'configuracao/insert',
+                'nomeFantasia' => '',
+                'tipo'         => '',
+                'segmento'     => 'Selecione um segmento',
+                'email'        => '',
+                'telefone'     => '',
+                'celular'      => '',
+                'cep'          => '',
+                'logradouro'   => '',
+                'numero'       => '',
+                'bairro'       => '',
+                'localidade'   => '',
+                'adicionais'   => '',
+                'chaves'       => '',
 
                 
             ]);
@@ -60,72 +87,80 @@ class Config extends PageSrv
         return parent::getPanel('Configuração - SRV', $content, 'configuracao');
     }
 
-    public static function cep($request)
-    {
-
-        $postVars = $request->getPostVars();
-
-        $query = new Address();
-        $addressQuery = $query->getAddressFromZipCode($postVars['cep']);
-        $localidade = $addressQuery['localidade'];
-
-        if ($localidade == 'São Roque') {
-
-            $arrResponse = [
-                "retorno" => 'success',
-                "inputs"  => $addressQuery,
-            ];
-        } else {
-            $arrResponse = [
-                "retorno" => 'erro',
-                "erros"   => 'cep invalido'
-            ];
-        }
-        return json_encode($arrResponse);
-    }
-
+    /**
+     * Metódo responsável por inserir as configuraçôes do App
+     *
+     * @param Requaest $request
+     * @return Method
+     */
     public static function postConfig($request)
     {
 
         //Recebe as variaveis POST
         $postVars = $request->getPostVars();
 
-
-        
-
         $idCustomer = $_SESSION['admin']['customer']['idUser'];
-       
-        $objApp = new EntityApp();
-       
 
-        $objApp->idApp        = $idCustomer;
-        $objApp->nomeFantasia = $postVars['nomeFantasia'];
-        $objApp->tipo         = $postVars['tipo'];
-        $objApp->segmento     = $postVars['segmento'];
-        $objApp->email        = $postVars['email'];
-        $objApp->telefone     = $postVars['telefone'];
-        $objApp->celular      = $postVars['celular'];
-        $objApp->cep          = $postVars['cep'];
-        $objApp->logradouro   = $postVars['logradouro'];
-        $objApp->numero       = $postVars['numero'];
-        $objApp->bairro       = $postVars['bairro'];
-        $objApp->localidade   = $postVars['localidade'];
-        $objApp->adicionais   = $postVars['adicionais'];
-        $objApp->chaves       = $postVars['chaves'];
 
-        $objApp->insertNewApp();
+        $objApp= EntityApp::getAppById($idCustomer);
 
-        switch ($objApp->segmento) {
-            case 'hospedagem':
-               self::createHospedagem($idCustomer);
-                break;
-            
-            default:
-                # code...
-                break;
+        if (!$objApp instanceof EntityApp){
+
+            $objApp = new EntityApp();
         }
-
        
+        $objApp->idApp        = $idCustomer;
+        $objApp->nomeFantasia = $postVars['nomeFantasia'] ? $postVars['nomeFantasia']: $objApp->nomeFantasia;
+        $objApp->tipo         = $postVars['tipo']         ? $postVars['tipo']        : $objApp->tipo;
+        $objApp->segmento     = $postVars['segmento']     ? $postVars['segmento']    : $objApp->segmento;
+        $objApp->email        = $postVars['email']        ? $postVars['email']       : $objApp->email;
+        $objApp->telefone     = $postVars['telefone']     ? $postVars['telefone']    : $objApp->telefone;
+        $objApp->celular      = $postVars['celular']      ? $postVars['celular']     : $objApp->celular;
+        $objApp->cep          = $postVars['cep']          ? $postVars['cep']         : $objApp->cep;
+        $objApp->logradouro   = $postVars['logradouro']   ? $postVars['logradouro']  : $objApp->logradouro;
+        $objApp->numero       = $postVars['numero']       ? $postVars['numero']      : $objApp->numero;
+        $objApp->bairro       = $postVars['bairro']       ? $postVars['bairro']      : $objApp->bairro;
+        $objApp->localidade   = $postVars['localidade']   ? $postVars['localidade']  : $objApp->localidade;
+        $objApp->adicionais   = $postVars['adicionais']   ? $postVars['adicionais']  : $objApp->adicionais;
+        $objApp->chaves       = $postVars['chaves']       ? $postVars['chaves']      : $objApp->chaves;
+
+        $action  = $postVars['action'];
+        
+    
+        if($action === 'insert'){
+
+            $objApp->insertNewApp();
+
+            switch ($objApp->segmento) {
+                case 'hospedagem':
+                   self::createHospedagem($idCustomer);
+                    break;
+                
+                default:
+                    # code...
+                    break;
+            }
+        }
+        if($action === 'update'){
+
+            $objApp->updateApp();
+        }
+        if($action === 'delete'){
+
+            $objApp->deleteApp();
+
+            switch ($objApp->segmento) {
+                case 'hospedagem':
+                    EntityHospedagem::deleteHospedagem($idCustomer);
+                    break;
+                
+                default:
+                    # code...
+                    break;
+            }
+
+        }
+    
 
         return self::getConfig();
 
@@ -164,6 +199,30 @@ class Config extends PageSrv
          $objHospegagem->descricao = ''; 
          $objHospegagem->insertNewHospedagem();
         
+    }
+
+    public static function cep($request)
+    {
+
+        $postVars = $request->getPostVars();
+
+        $query = new Address();
+        $addressQuery = $query->getAddressFromZipCode($postVars['cep']);
+        $localidade = $addressQuery['localidade'];
+
+        if ($localidade == 'São Roque') {
+
+            $arrResponse = [
+                "retorno" => 'success',
+                "inputs"  => $addressQuery,
+            ];
+        } else {
+            $arrResponse = [
+                "retorno" => 'erro',
+                "erros"   => 'cep invalido'
+            ];
+        }
+        return json_encode($arrResponse);
     }
 
 }

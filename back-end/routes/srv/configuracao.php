@@ -24,7 +24,7 @@ $objRouter->post('/srv/configuracao/cep',[
     }
 ]);
 
-//Rota de detalhes
+//Rota de POST configuração
 $objRouter->post('/srv/configuracao',[
     'middlewares' => [  
          'required-srv-login'
@@ -35,3 +35,4 @@ $objRouter->post('/srv/configuracao',[
     }
     
 ]);
+
