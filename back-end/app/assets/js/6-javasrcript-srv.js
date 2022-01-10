@@ -9,9 +9,13 @@ $(document).ready(function(){
   });
 
 //Busca mascasra para ocep
-$('#cep').on('focus', function () {
+$('#cep, #telefone, #celular').on('focus', function () {
 
-    VMasker(document.querySelector("#cep")).maskPattern("99999-999");
+    var id=$(this).attr("id");
+
+    if(id == "cep"){VMasker(document.querySelector("#cep")).maskPattern("99999-999")};
+    if(id == "telefone"){VMasker(document.querySelector("#telefone")).maskPattern("(99)9999-9999")};
+    if(id == "celular"){VMasker(document.querySelector("#celular")).maskPattern("(99)99999-9999")};
 
 });
 

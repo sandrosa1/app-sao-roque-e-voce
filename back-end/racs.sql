@@ -72,7 +72,7 @@ CREATE TABLE `sistema`.`app` (
   `chaves` VARCHAR(245) NULL,
   `visualizacao` INT NULL,
   `totalCusto` INT NULL,
-  `totalvaliacao` INT NULL,
+  `totalAvaliacao` INT NULL,
   `custo` INT NULL,
   `avaliacao` INT NULL,
   `img1` VARCHAR(255) NULL,

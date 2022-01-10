@@ -36,9 +36,9 @@ class Config extends PageSrv
      */
     public static function getConfig()
     {
-        $id_app = $_SESSION['admin']['customer']['idUser'];
+        $idApp = $_SESSION['admin']['customer']['idUser'];
 
-        $app = EntityApp::getAppById($id_app);
+        $app = EntityApp::getAppById($idApp);
 
 
         if ($app instanceof EntityApp) {
@@ -93,12 +93,12 @@ class Config extends PageSrv
 
         
 
-        $id_customer = $_SESSION['admin']['customer']['idUser'];
+        $idCustomer = $_SESSION['admin']['customer']['idUser'];
        
         $objApp = new EntityApp();
        
 
-        $objApp->id_app       = $id_customer;
+        $objApp->idApp        = $idCustomer;
         $objApp->nomeFantasia = $postVars['nomeFantasia'];
         $objApp->tipo         = $postVars['tipo'];
         $objApp->segmento     = $postVars['segmento'];
@@ -110,22 +110,20 @@ class Config extends PageSrv
         $objApp->numero       = $postVars['numero'];
         $objApp->bairro       = $postVars['bairro'];
         $objApp->localidade   = $postVars['localidade'];
-        $objApp->complementos = $postVars['complementos'];
+        $objApp->adicionais   = $postVars['adicionais'];
         $objApp->chaves       = $postVars['chaves'];
 
+        $objApp->insertNewApp();
 
-
-        // $objApp->insertNewApp();
-
-        // switch ($objApp->segmento) {
-        //     case 'hospedagem':
-        //        self::createHospedagem($id_customer);
-        //         break;
+        switch ($objApp->segmento) {
+            case 'hospedagem':
+               self::createHospedagem($idCustomer);
+                break;
             
-        //     default:
-        //         # code...
-        //         break;
-        // }
+            default:
+                # code...
+                break;
+        }
 
        
 
@@ -136,32 +134,31 @@ class Config extends PageSrv
     /**
      * Metódo responsável por criar uma nova hospedagem
      *
-     * @param [type] $id_customer
+     * @param [type] $idCustomer
      * @return void
      */
-    private static function createHospedagem($id_customer){
+    private static function createHospedagem($idCustomer){
 
         $objHospegagem = new EntityHospedagem();
 
-         $objHospegagem->id_app = $id_customer;
-         $objHospegagem->estacionamento = -1 ; 
-         $objHospegagem->briquedos = -1 ;
-         $objHospegagem->restaurante = -1 ;
-         $objHospegagem->ar_condicionado = -1 ;
-         $objHospegagem->wi_fi = -1 ;
-         $objHospegagem->academia = -1 ;
-         $objHospegagem->piscina = -1 ;
-         $objHospegagem->refeicao = -1 ;
-         $objHospegagem->emporio = -1 ;
-         $objHospegagem->adega = -1 ;
-         $objHospegagem->bebidas = -1 ;
-         $objHospegagem->sorveteria = -1 ;
-         $objHospegagem->whatsapp = -1 ;
+         $objHospegagem->idApp = $idCustomer;
+         $objHospegagem->estacionamento = -1;
+         $objHospegagem->briquedos = -1;
+         $objHospegagem->restaurante = -1;
+         $objHospegagem->arCondicionado = -1;
+         $objHospegagem->wiFi = -1;
+         $objHospegagem->academia = -1;
+         $objHospegagem->piscina = -1;
+         $objHospegagem->refeicao = -1;
+         $objHospegagem->emporio = -1;
+         $objHospegagem->adega = -1;
+         $objHospegagem->bebidas = -1;
+         $objHospegagem->sorveteria = -1;
+         $objHospegagem->whatsapp = -1;
          $objHospegagem->semana = '00:00 às 00:00';
          $objHospegagem->sabado = '00:00 às 00:00';
          $objHospegagem->domigo = '00:00 às 00:00';
          $objHospegagem->feriado = '00:00 às 00:00';
-         $objHospegagem->logo = '';
          $objHospegagem->img2 = '';
          $objHospegagem->img3 = '';
          $objHospegagem->descricao = ''; 
