@@ -90,10 +90,10 @@ class Servico extends dbApp{
      *
      * @return void
      */
-    public function deleteServico(){
+    public static function deleteServico($idApp){
 
         //Deleta os dados App
-        return (new Database('servico'))->delete('idApp = '.$this->idApp);
+        return (new Database('servico'))->delete('idApp = '.$idApp);
         
         //Sucesso
         return true;

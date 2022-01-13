@@ -76,7 +76,7 @@ $("#formCadastro").on("submit",function(event){
                         outDuration:5000,
                     });
                 });
-                setTimeout(() => {window.location.href = response.page}, 3000);
+                setTimeout(() => {document.location.reload(true)}, 3000);
             }
             ParandoLoading()
         }

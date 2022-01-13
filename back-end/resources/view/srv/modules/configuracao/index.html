@@ -14,7 +14,7 @@
     </div>
     <div class="row">
         
-        <form class="col s12" method="post" >
+        <form class="col s12" name="formConfig" id="formConfig" method="post"  >
         <!-- Estrutura do modal e input nome fantasia -->
         <div class="row">
           
@@ -230,6 +230,11 @@
                     <textarea id="textarea1"class="materialize-textarea" aria-modal="500" name="chaves">{{chaves}}</textarea>
                     <label for="textarea1">7 Palavras chaves</label>
                 </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s12">
+                        <input class="validate" type="hidden" id="g-recaptcha-response" name="g-recaptcha-response" required>
+                      </div>
                 </div>
                 
                 {{botoes}}

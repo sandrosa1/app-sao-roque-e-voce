@@ -105,9 +105,9 @@ class Gastronomia extends dbApp{
      *
      * @return void
      */
-    public function deleteHospedagem(){
+    public static function deleteGastronomia($idApp){
 
-        return (new Database('gastronomia'))->delete('idApp = '.$this->idApp);
+        return (new Database('gastronomia'))->delete('idApp = '.$idApp);
         
         //Sucesso
         return true;

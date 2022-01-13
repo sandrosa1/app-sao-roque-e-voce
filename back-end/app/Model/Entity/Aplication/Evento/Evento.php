@@ -99,9 +99,9 @@ class Evento extends dbApp{
      *
      * @return void
      */
-    public function deleteHospedagem(){
+    public static function deleteEvento($idApp){
 
-        return (new Database('appEvento'))->delete('idApp = '.$this->idApp);
+        return (new Database('appEvento'))->delete('idApp = '.$idApp);
         
         return true;
 

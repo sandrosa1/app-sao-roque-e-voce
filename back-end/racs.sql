@@ -99,7 +99,8 @@ CREATE TABLE `sistema`.`appComercio` (
   `img2` VARCHAR(150) NULL,
   `img3` VARCHAR(150) NULL,
   `descricao` TEXT(1000) NULL,
-  PRIMARY KEY (`idAppComercio`));
+  PRIMARY KEY (`idAppComercio`),
+  UNIQUE INDEX `idApp_UNIQUE` (`idApp` ASC) VISIBLE,);
 
   CREATE TABLE `sistema`.`appEvento` (
   `idAppEvento` INT NOT NULL AUTO_INCREMENT,
@@ -122,7 +123,9 @@ CREATE TABLE `sistema`.`appComercio` (
   `img2` VARCHAR(150) NULL,
   `img3` VARCHAR(150) NULL,
   `descricao` TEXT(1000) NULL,
-  PRIMARY KEY (`idAppEvento`));
+  PRIMARY KEY (`idAppEvento`),
+  UNIQUE INDEX `idApp_UNIQUE` (`idApp` ASC) VISIBLE);
+
 
   CREATE TABLE `sistema`.`appGastronomia` (
   `idAppGastronomia` INT NOT NULL AUTO_INCREMENT,
@@ -145,7 +148,9 @@ CREATE TABLE `sistema`.`appComercio` (
   `img2` VARCHAR(150) NULL,
   `img3` VARCHAR(150) NULL,
   `descricao` TEXT(1000) NULL,
-  PRIMARY KEY (`idAppGastronomia`));
+  PRIMARY KEY (`idAppGastronomia`),
+  UNIQUE INDEX `idApp_UNIQUE` (`idApp` ASC) VISIBLE);
+
 
    CREATE TABLE `sistema`.`appHospedagem` (
   `idAppHospedagem` INT NOT NULL AUTO_INCREMENT,
@@ -170,4 +175,23 @@ CREATE TABLE `sistema`.`appComercio` (
   `img2` VARCHAR(150) NULL,
   `img3` VARCHAR(150) NULL,
   `descricao` TEXT(1000) NULL,
-  PRIMARY KEY (`idAppHospedagem`));
+  PRIMARY KEY (`idAppHospedagem`),
+  UNIQUE INDEX `idApp_UNIQUE` (`idApp` ASC) VISIBLE);
+
+   CREATE TABLE `sistema`.`appSevico` (
+  `idAppServico` INT NOT NULL AUTO_INCREMENT,
+  `idApp` INT NOT NULL,
+  `estacionamento` INT(1) NULL,
+  `acessibilidade` INT(1) NULL,
+  `entregaDomicilio` INT(1) NULL,
+  `whatsapp` INT(1) NULL,
+  `semana` VARCHAR(14) NULL,
+  `sabado` VARCHAR(14) NULL,
+  `domigo` VARCHAR(14) NULL,
+  `feriado` VARCHAR(14) NULL,
+  `logo` VARCHAR(150) NULL,
+  `img2` VARCHAR(150) NULL,
+  `img3` VARCHAR(150) NULL,
+  `descricao` TEXT(1000) NULL,
+  PRIMARY KEY (`idAppServico`),
+  UNIQUE INDEX `idApp_UNIQUE` (`idApp` ASC) VISIBLE);

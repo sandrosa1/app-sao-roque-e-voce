@@ -81,9 +81,9 @@ class Comercio extends dbApp{
      *
      * @return void
      */
-    public function deleteHos(){
+    public static function deleteComercio($idApp){
 
-        return (new Database('appComercio'))->delete('idApp = '.$this->idApp);
+        return (new Database('appComercio'))->delete('idApp = '.$idApp);
         
         return true;
 

@@ -48,7 +48,7 @@ class Cadastro extends Page{
 
         
         //ENVIA O EMAIL SE NÃO HOUVER ERROS
-        if(count($validate->getErro()) <= 0){
+        if(count($validate->getErro()) >= 0){
             $address = $objCadastro->email;
             $subject = 'Confirmação de cadastro';
             $body = "<b>Sejá bem vindo ao São Roque e Vocẽ {$objCadastro->name}.<b><br><br>

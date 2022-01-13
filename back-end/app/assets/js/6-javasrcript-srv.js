@@ -1,7 +1,10 @@
 // ------------------------------------------arquivo para sistema SRV----------------------------\\
-const urlSrvDetalhesCep = urlName+'/srv/configuracao/cep';
-const CarregandoLoadingSrv = () => document.getElementById('loadingCep').innerHTML = '<div class="preloader-wrapper small active"><div class="spinner-layer spinner-green-only"><div class="circle-clipper left"><div class="circle"></div></div><div class="gap-patch"><div class="circle"></div></div><div class="circle-clipper right"><div class="circle"></div></div></div></div>';
-const ParandoLoadingSrv = () => document.getElementById('loadingCep').innerHTML = '';
+const UrlSrvConfigCep = urlName+'/srv/configuracao/cep';
+const UrlSrvConfig = urlName+'/srv/configuracao';
+const LoadingCep = () => document.getElementById('loadingCep').innerHTML = '<div class="preloader-wrapper small active"><div class="spinner-layer spinner-green-only"><div class="circle-clipper left"><div class="circle"></div></div><div class="gap-patch"><div class="circle"></div></div><div class="circle-clipper right"><div class="circle"></div></div></div></div>';
+const ParandoLoadingCep = () => document.getElementById('loadingCep').innerHTML = '';
+const LoadingConfig = () => document.getElementById('loading').innerHTML = '<div class="preloader-wrapper small active"><div class="spinner-layer spinner-green-only"><div class="circle-clipper left"><div class="circle"></div></div><div class="gap-patch"><div class="circle"></div></div><div class="circle-clipper right"><div class="circle"></div></div></div></div>';
+const BreakLoadingConfig = () => document.getElementById('loading').innerHTML = '';
 
 // Modal de ajuda do form de detalhes
 $(document).ready(function(){
@@ -41,17 +44,17 @@ $('#cep').on('blur', function (event) {
     if(document.querySelector("#cep").value.length == 9){
         
         event.preventDefault();
-        CarregandoLoadingSrv();
+        LoadingCep();
         var dados=$(this).serialize();
         $.ajax({
-        url: getRoot(urlSrvDetalhesCep),
+        url: getRoot(UrlSrvConfigCep),
             type: 'post',
             dataType: 'json',
             data: dados,
             success: function (response) {
                 if(response.retorno == 'success'){
                 inputsAddresSrv(response.inputs)
-                ParandoLoadingSrv();
+                ParandoLoadingCep();
                 }else{
                 
                     M.toast({   html: `<span class="lighten-2">${response.erros}</span><button class="btn-flat toast-action"><i class="material-icons yellow-text">error_outline</i></button>`,
@@ -61,7 +64,7 @@ $('#cep').on('blur', function (event) {
                     });
 
                     clearInputsAddresSrv();
-                    ParandoLoadingSrv();
+                    ParandoLoadingCep();
                     
                 }
             }
@@ -73,3 +76,39 @@ $('#cep').on('blur', function (event) {
 $(document).ready(function(){
     $('select').formSelect();
   });
+
+$("#formConfig").on("submit",function(event){
+    event.preventDefault();
+    LoadingConfig()
+    var dados=$(this).serialize();
+    $.ajax({
+        url: getRoot(UrlSrvConfig),
+        type: 'post',
+        dataType: 'json',
+        data: dados,
+        success: function (response) {
+            $('.loading').empty();
+            if(response.retorno == 'erro'){
+                getCaptcha();
+                $.each(response.erros,function(key,value){
+                    M.toast({   html: `<span class="lighten-2">${value}</span><button class="btn-flat toast-action"><i class="material-icons yellow-text">error_outline</i></button>`,
+                        classes: 'rounded, red',
+                        inDuration: 5000,
+                        outDuration:5000,
+                    });
+                });
+            }else{
+                $.each(response.success,function(key,value){
+                    M.toast({   html: `<span>${value}</span><button class="btn-flat toast-action"><i class="material-icons green-text">thumb_up</i></button>`,
+                        classes: 'rounded, green',
+                        inDuration: 5000,
+                        outDuration:5000,
+                    });
+                });
+                setTimeout(() => {window.onload}, 3000);
+            }
+            BreaKLoadingConfig()
+        }
+    });
+});
+

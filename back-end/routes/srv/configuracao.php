@@ -36,3 +36,16 @@ $objRouter->post('/srv/configuracao',[
     
 ]);
 
+//Rota de POST configuração
+$objRouter->get('/srv/configuracao/delete',[
+    'middlewares' => [  
+         'required-srv-login'
+    ],
+    function($request){
+       
+        return new Response(200, Srv\Config::configDelete($request));
+    }
+    
+]);
+
+

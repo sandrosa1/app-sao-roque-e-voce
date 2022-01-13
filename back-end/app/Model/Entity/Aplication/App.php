@@ -105,10 +105,10 @@ class App{
      *
      * @return void
      */
-    public function deleteApp(){
+    public static function deleteApp($idApp){
 
         //Deleta os dados App
-        return (new Database('app'))->delete('idApp = '.$this->idApp);
+        return (new Database('app'))->delete('idApp = '.$idApp);
         
         //Sucesso
         return true;

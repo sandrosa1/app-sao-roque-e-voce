@@ -330,4 +330,58 @@ class Validate{
         }
     }
 
+    /**
+     * Method reponsável por validar o cep
+     *
+     * @param string $cep
+     * @return boolean
+     */
+    public function validadeCep($cep){
+         $result = preg_replace('/\D/','',$cep);
+        
+        if(strlen(strval($result)) == 8){
+            return true;
+     
+        }else{
+            $this->setErro('CEP invalido!');
+            return false;
+        }
+    }
+
+    /**
+     * Method reponsável por validar o cep
+     *
+     * @param string $celular
+     * @return boolean
+     */
+    public function validadeCelular($celular){
+        $result = preg_replace('/\D/','',$celular);
+       
+       if(strlen(strval($result)) == 11){
+           return true;
+    
+       }else{
+           $this->setErro('Número do celular invalido!');
+           return false;
+       }
+   }
+
+   /**
+     * Method reponsável por validar o cep
+     *
+     * @param string $telefone
+     * @return boolean
+     */
+    public function validadeTelefone($telefone){
+        $result = preg_replace('/\D/','',$telefone);
+       
+       if(strlen(strval($result)) == 10){
+           return true;
+    
+       }else{
+           $this->setErro('Número de telefone invalido!');
+           return false;
+       }
+   }
+
 }
