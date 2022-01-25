@@ -12,7 +12,7 @@ class Hospedagem extends dbApp{
     public $idAppHospedagem;
     public $idApp;
     public $estacionamento;
-    public $briquedos;
+    public $brinquedos;
     public $restaurante;
     public $arCondicionado;
     public $wiFi;
@@ -26,7 +26,7 @@ class Hospedagem extends dbApp{
     public $whatsapp;
     public $semana;
     public $sabado;
-    public $domigo;
+    public $domingo;
     public $feriado;
     public $img2;
     public $img3;
@@ -40,7 +40,7 @@ class Hospedagem extends dbApp{
 
             'idApp'             => $this->idApp,
             'estacionamento'    => $this->estacionamento,
-            'briquedos'         => $this->briquedos,
+            'brinquedos'        => $this->brinquedos,
             'restaurante'       => $this->restaurante,
             'arCondicionado'    => $this->arCondicionado,
             'wiFi'              => $this->wiFi,
@@ -54,7 +54,7 @@ class Hospedagem extends dbApp{
             'whatsapp'          => $this->whatsapp,
             'semana'            => $this->semana,
             'sabado'            => $this->sabado,
-            'domigo'            => $this->domigo,
+            'domingo'           => $this->domingo,
             'feriado'           => $this->feriado,
             'img2'              => $this->img2,
             'img3'              => $this->img3,
@@ -73,11 +73,11 @@ class Hospedagem extends dbApp{
     public function updateHospedagem(){
 
         //Atualiza os dados gerais da appHospedagem
-        return (new Database('appHospedagem'))->update('idApp = '.$this->idApp,[
+        return (new Database('appHospedagem'))->update('idAppHospedagem = '.$this->idAppHospedagem,[
 
      
             'estacionamento'    => $this->estacionamento,
-            'briquedos'         => $this->briquedos,
+            'brinquedos'         => $this->brinquedos,
             'restaurante'       => $this->restaurante,
             'arCondicionado'    => $this->arCondicionado,
             'wiFi'              => $this->wiFi,
@@ -91,7 +91,7 @@ class Hospedagem extends dbApp{
             'whatsapp'          => $this->whatsapp,
             'semana'            => $this->semana,
             'sabado'            => $this->sabado,
-            'domigo'            => $this->domigo,
+            'domingo'            => $this->domingo,
             'feriado'           => $this->feriado,
             'img2'              => $this->img2,
             'img3'              => $this->img3,

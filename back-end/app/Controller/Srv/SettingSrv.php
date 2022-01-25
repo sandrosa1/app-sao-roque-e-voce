@@ -1,14 +1,22 @@
 <?php
 
 namespace App\Controller\Srv;
+use \App\Controller\Srv\Config;
+use \App\Validate\Validate;
+use \App\Help\Help;
 use \App\Model\Entity\Aplication\App as EntityApp;
 use \App\Model\Entity\Aplication\Hospedagem\Hospedagem as EntityHospedagem;
+use \App\Model\Entity\Aplication\Comercio\Comercio as EntityComercio;
+use \App\Model\Entity\Aplication\Evento\Evento as EntityEvento;
+use \App\Model\Entity\Aplication\Servico\Servico as EntityServico;
+use \App\Model\Entity\Aplication\Gastronomia\Gastronomia as EntityGastronomia;
+
 
 use \App\Utils\View;
 
 class SettingSrv extends PageSrv{
 
-    
+
     /**
      * Metódo respónsavel por retornar a view do botão de cadastrar
      *
@@ -17,41 +25,105 @@ class SettingSrv extends PageSrv{
     private static function getSeltor(){
 
 
-        $id_customer = $_SESSION['admin']['customer']['idUser'];
+        $session = new PageSrv();
+        $idApp =  $session->idSession;
 
-        $appHopedagem = (array)EntityHospedagem::getHospedagemById($id_customer);
+        $app =  EntityApp::getAppById($idApp);
+      
 
+        switch($app->segmento){
+
+            case 'gastronomia':
+                $appSettings = (array)EntityGastronomia::getGastronomiaById($idApp);
+                break;
+            case 'comercio':
+                $appSettings = (array)EntityComercio::getComercioById($idApp);
+                break;
+            case 'evento':
+                $appSettings = (array)EntityEvento::getEventoById($idApp);
+                break;
+            case 'servico':
+                $appSettings = (array)EntityServico::getServicoById($idApp);
+                break;   
+            case 'hospedagem':
+                $appSettings = (array)EntityHospedagem::getHospedagemById($idApp);
+                break; 
+        
+        }
 
         $seletores = '';
-        foreach ($appHopedagem as $key => $value) {
-                if ($value == -1  ){
+        foreach ($appSettings as $key => $value) {
+                if ($value == -1 ){
                     $seletores .= View::render('srv/modules/detalhes/seletores/seletores',[
                         'item' => $key,
-                        'nomeItem' => $key,
+                        'nomeItem' =>  mb_strtoupper(self::converteString($key)),
                         'active' => ''
-
-                       
                     ]);
                 }
           
                 if ($value == -2 ){
                     $seletores .= View::render('srv/modules/detalhes/seletores/seletores',[
                         'item' => $key,
-                        'nomeItem' => $key,
+                        'nomeItem' =>  mb_strtoupper(self::converteString($key)),
                         'active' => 'checked'
                        
                     ]);
                 }
-                // echo '<pre>';
-                // var_dump($seletores);
-                // echo '</pre>';
-                // exit;
+             
             }
         
         return View::render('srv/modules/detalhes/seletores/boxSeletor',[
             'seletores' => $seletores,
+            'semana'=> $appSettings['semana'],
+            'sabado'=> $appSettings['sabado'],
+            'domingo'=> $appSettings['domingo'],
+            'feriado'=> $appSettings['feriado'],
+            'descricao' => $appSettings['descricao']
         ]);
 
+    }
+
+    private static function converteString($var){
+
+        switch($var){
+            case 'entregaDomicilio';
+                return 'Entrega Domicilio';
+            case 'estacionamento':
+                return 'Estacionamento';
+            case 'acessibilidade':
+                return 'Acessibilidade';
+            case 'whatsapp':
+                return 'whatsapp';
+            case 'wiFi':
+                return 'Wi-Fi';
+            case 'trilhas':
+                return 'Trilha';
+            case 'refeicao':
+                return 'Refeição';
+            case 'emporio':
+                return 'Empório';
+            case 'adega':
+                return 'Adega';
+            case 'bebidas':
+                return 'Bebidas';
+            case 'sorveteria':
+                return 'Sorveteria';
+            case 'show':
+                return 'Shows';
+            case 'brinquedos':
+                return 'Brinquedos';
+            case 'restaurante':
+                return 'Restaurante';
+            case 'arCondicionado':
+                return 'Ar Condi.';
+            case 'academia':
+                return 'Academia';
+            case 'piscina':
+                return 'Piscina';
+            case 'refeicao':
+                return 'Refeição';
+         
+        }
     }
      /**
      * Metódo respónsavel por retornar a view do botão de atualizar e deletar
@@ -59,7 +131,9 @@ class SettingSrv extends PageSrv{
      * @return string
      */
     private static function getBlock(){
-        return View::render('srv/modules/detalhes/seletores/bloqueado');
+        return View::render('srv/modules/detalhes/seletores/bloqueado',[
+            ''
+        ]);
     }
     /**
     * Renderiza o conteúdo de configurações
@@ -69,9 +143,11 @@ class SettingSrv extends PageSrv{
     public static function getSetting(){
 
 
-        $id_customer = $_SESSION['admin']['customer']['idUser'];
+        $session = new PageSrv();
+        $idApp =  $session->idSession;
 
-        $app = EntityApp::getAppById($id_customer);
+
+        $app = EntityApp::getAppById($idApp);
 
         if($app instanceof EntityApp) {
 
@@ -80,25 +156,77 @@ class SettingSrv extends PageSrv{
             ]);   
         }else{
             $content = View::render('srv/modules/detalhes/index',[
-                'seletores'=> self::getBlock(),
+                'boxSeletor'=> self::getBlock(),
             ]);
         }
        
-       return parent::getPanel('Detalhes - SRV', $content,'detalhes');
+       return Config::getPanel('Detalhes - SRV', $content,'detalhes');
 
     }
 
     public static function update($request){
 
+        $session = new PageSrv();
+        $conf = new Config();
+        $validate = new Validate();
+
         $postVars = $request->getPostVars();
-        echo '<pre>';
-        print_r($postVars);
-        echo '</pre>';
-        exit;
+        $idApp =  $session->idSession;
+        $app =  EntityApp::getAppById($idApp);
        
+        $validate->validateHora($postVars['semana']);
+        $validate->validateHora($postVars['sabado']);
+        $validate->validateHora($postVars['domingo']);
+        $validate->validateHora($postVars['feriado']);
+        $words = Help::helpTextForArray($postVars['descricao']);
+        $validate->validateBlockedWord($words);
+
+
+        if(count($validate->getErro()) > 0){
+          
+            return self::statusUpdate($validate);
+        }
+        switch($app->segmento){
+
+            case 'hospedagem':
+                $conf->createHospedagem($idApp, $postVars);
+                    return self::statusUpdate($validate );
+            case 'evento':
+                $conf->createEvento($idApp, $postVars);
+                return self::statusUpdate($validate );
+                    break;
+            case 'comercio':
+                $conf->createComercio($idApp, $postVars);
+                return self::statusUpdate($validate);
+                    break;
+            case 'servico':
+                $conf->createServico($idApp, $postVars);
+                return self::statusUpdate($validate );
+                    break;
+            case 'gastronomia':
+                $conf->createGastronomia($idApp, $postVars);
+                return self::statusUpdate($validate);
+                    break;
+        }
 
     }
 
-  
-  
+    private static function statusUpdate($validate){
+
+        if (count($validate->getErro()) <= 0) {
+
+            $arrResponse = [
+                "retorno" => 'success',
+                "success"  => ['Atualizado com sucesso.'],
+            ];
+        }else{
+
+            $arrResponse = [
+                "retorno" => 'erro',
+                "erros"   => $validate->getErro()
+            ];
+        }
+        return json_encode($arrResponse);
+    }
+
 }

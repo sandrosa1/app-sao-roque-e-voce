@@ -33,6 +33,22 @@ class PageSrv{
             'icon'    => 'comment'
         ],
     ];
+
+    public $idSession;
+
+    public function __construct()
+    {
+        $this->idSession = $_SESSION['admin']['customer']['idUser'];
+    }
+
+    /**
+     * Get the value of session
+     */
+    public function getSession()
+    {
+        return $this->idSession;
+    }
+    
     /**
      * Método resposável por retornar o conteúdo (view) da estrutura genérica de página do paineil
      *
@@ -135,5 +151,6 @@ class PageSrv{
         ]);
 
     }
+
 
 }

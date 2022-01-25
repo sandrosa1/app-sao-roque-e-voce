@@ -1,6 +1,6 @@
 <div class="row">
     <div class="col s12">
-        <h6 class=" mb-3">Clique nas opções disponiveis para seus clientes</h6>
+        <h6 class="srv-c-4 fz-30 fwb mb-3 hc">Clique nas opções disponiveis para seus clientes</h6>
     </div>
 </div>
 <div class="row">
@@ -11,29 +11,33 @@
 
 </div>
 
+<p class="srv-c-2 fz-20 fwb mb-3"><b>Obs:</b>O não preechimento de algum horário ou deixar como 00:00 - 00:00, será considerado que não funciona neste dia.</p> 
+
 <div class="row">
     <div class="col s12 m3">
+       
+    
         <label for="appt">Horario de atentimento na semana:</label>
 
-        <input type="time" id="semana" name="semana" min="01:00" max="00:00" >
+        <input type="text" placeholder="08:00-17:00"  id="semana" name="semana" value="{{semana}}" >
 
     </div>
     <div class="col s12 m3">
         <label for="appt">Horario de atentimento aos Sabádos :</label>
 
-        <input type="time" id="sabado" name="sabado" min="01:00" max="00:00" >
+        <input type="text" placeholder="09:00 - 14:30" id="sabado" name="sabado" value="{{sabado}}"  >
 
     </div>
     <div class="col s12 m3">
         <label for="appt">Horario de atentimento aos Domingos :</label>
 
-        <input type="time" id="domingo" name="domingo" min="01:00" max="00:00" >
+        <input type="text" placeholder="09:00 - 12:00" id="domingo" name="domingo" value="{{domingo}}"  >
 
     </div>
     <div class="col s12 m3">
         <label for="appt">Horario de atentimento na Feriado:</label>
 
-        <input type="time" id="feriado" name="feriado" min="01:00" max="00:00" >
+        <input type="text" placeholder="00:00 - 00:00" id="feriado" name="feriado" value="{{feriado}}"  >
 
     </div>
     
@@ -43,9 +47,20 @@
 <div class="row">
     <div class="col s12 ">
         <div class="row">
+            
             <div class="input-field col s12">
-              <textarea id="textarea1" class="materialize-textarea" maxlength="500" ></textarea>
-              <label for="textarea1">Textarea</label>
+                <div id="modal1" class="modal">
+                    <div class="modal-content">
+                        <h4 class="center srv-c-4 fz-20">Ajuda</h4>
+                        <p>Fale um pouco sobre sua empresa e seus atributos. Você deve descrever em poucas palavras algo que possa ser decisivo para atrair o cliente.</p>
+                    </div>
+                    <div class="modal-footer">
+                        <a  class="modal-close waves-effect waves-green btn-flat"><i class="material-icons icons-ajuda-fechar">close</i></a>
+                    </div>
+                </div>
+                <a class="waves-effect waves-light btn-ajuda modal-trigger prefix" href="#modal1"><i class="material-icons icon-ajuda">help_outline</i></a>
+              <textarea id="textarea1" class="materialize-textarea" maxlength="500" placeholder="" name="descricao" >{{descricao}}</textarea>
+              <label for="textarea1">Descrição de sua empresa</label>
             </div>
           </div>
     </div>

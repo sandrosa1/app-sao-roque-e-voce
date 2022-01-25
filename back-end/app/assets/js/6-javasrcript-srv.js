@@ -1,6 +1,7 @@
 // ------------------------------------------arquivo para sistema SRV----------------------------\\
 const UrlSrvConfigCep = urlName+'/srv/configuracao/cep';
 const UrlSrvConfig = urlName+'/srv/configuracao';
+const UrlSrvDetalhes = urlName+'/srv/detalhes';
 const LoadingCep = () => document.getElementById('loadingCep').innerHTML = '<div class="preloader-wrapper small active"><div class="spinner-layer spinner-green-only"><div class="circle-clipper left"><div class="circle"></div></div><div class="gap-patch"><div class="circle"></div></div><div class="circle-clipper right"><div class="circle"></div></div></div></div>';
 const ParandoLoadingCep = () => document.getElementById('loadingCep').innerHTML = '';
 const LoadingConfig = () => document.getElementById('loading').innerHTML = '<div class="preloader-wrapper small active"><div class="spinner-layer spinner-green-only"><div class="circle-clipper left"><div class="circle"></div></div><div class="gap-patch"><div class="circle"></div></div><div class="circle-clipper right"><div class="circle"></div></div></div></div>';
@@ -99,7 +100,8 @@ $("#formConfig").on("submit",function(event){
                 });
             }else{
                 $.each(response.success,function(key,value){
-                    M.toast({   html: `<span>${value}</span><button class="btn-flat toast-action"><i class="material-icons green-text">thumb_up</i></button>`,
+                    getCaptcha();
+                    M.toast({   html: `<span>${value}</span><button class="btn-flat toast-action"><i class="material-icons blue-text">thumb_up</i></button>`,
                         classes: 'rounded, green',
                         inDuration: 5000,
                         outDuration:5000,
@@ -112,3 +114,53 @@ $("#formConfig").on("submit",function(event){
     });
 });
 
+//Busca mascasra para ocep
+$('#semana, #sabado, #domingo, #feriado').on('focus', function () {
+
+    var id=$(this).attr("id");
+
+    if(id == "semana"){VMasker(document.querySelector("#semana")).maskPattern("99:99 - 99:99")};
+    if(id == "sabado"){VMasker(document.querySelector("#sabado")).maskPattern("99:99 - 99:99")};
+    if(id == "domingo"){VMasker(document.querySelector("#domingo")).maskPattern("99:99 - 99:99")};
+    if(id == "feriado"){VMasker(document.querySelector("#feriado")).maskPattern("99:99 - 99:99")};
+
+});
+
+
+$("#formDetahes").on("submit",function(event){
+    event.preventDefault();
+    LoadingConfig()
+    var dados = $(this).serialize();
+    $.ajax({
+        url: getRoot(UrlSrvDetalhes),
+        type: 'post',
+        dataType: 'json',
+        data: dados,
+        success: function (response) {
+            $('.loading').empty();
+            if(response.retorno == 'erro'){
+                getCaptcha();
+                $.each(response.erros,function(key,value){
+                    M.toast({   html: `<span class="lighten-2">${value}</span><button class="btn-flat toast-action"><i class="material-icons yellow-text">error_outline</i></button>`,
+                        classes: 'rounded, red',
+                        inDuration: 5000,
+                        outDuration:5000,
+                    });
+                });
+               
+            }else{
+                $.each(response.success,function(key,value){
+                    getCaptcha();
+                    M.toast({   html: `<span>${value}</span><button class="btn-flat toast-action"><i class="material-icons blue-text">thumb_up</i></button>`,
+                        classes: 'rounded, green',
+                        inDuration: 5000,
+                        outDuration:5000,
+                    });
+                });
+            
+            }
+            
+            BreakLoadingConfig() 
+        }
+    });
+});

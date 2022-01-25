@@ -2,6 +2,8 @@
 namespace App\Validate;
 
 use \App\Model\Entity\Customer\Customer as EntityCustomer;
+use \App\Model\Entity\Aplication\Help\Help as EntiityHelp;
+use \App\Help\Help;
 use \App\Password\Password as PasswordHash;
 use ZxcvbnPhp\Zxcvbn;
 use \App\Communication\Email;
@@ -384,4 +386,77 @@ class Validate{
        }
    }
 
+    public static function validateHoraAux($input) 
+    {
+        $format = 'H:i';
+
+        $date = \DateTime::createFromFormat('!'. $format, $input);
+
+        return $date && $date->format($format) === $input;
+    }
+
+   public function validateHora($text){
+
+        if(!$text){
+
+            return true;
+        }
+        $result = preg_replace('/\D/','',$text);
+
+        if(strlen(strval($result)) != 8){
+
+            $this->setErro('Formato de data inválido!');
+            return false;
+
+        }
+        $datas = explode(" - ", $text);
+        
+        foreach ($datas as $data) {
+
+            if(self::validateHoraAux($data)){
+
+                return true;
+            }else{
+
+                $this->setErro('Formato de data inválido!');
+                return false;
+            }
+        }
+   }
+
+   /**
+     * Metódo responsável por retornar uma string separada por virgúlo
+     *
+     * @param array $array
+     * @return string
+     */
+    public function validateBlockedWord($words){
+
+        $result = [];
+        foreach($words as $word){
+            
+            $entityBlockedWord = EntiityHelp::getHelpBlockedWord($word);
+            if($entityBlockedWord){
+                array_push($result, $entityBlockedWord->blockedWord);
+               
+            }
+        }
+
+        if(count($result) <= 0){
+
+            return true;
+
+         }else{
+            $blockedWords = Help::helpArrayForString($result);
+            $this->setErro('Não foi possível atualizar!');
+            $this->setErro('Palavra(s) "'.$blockedWords.'" são imprópria(s)!');
+            return false;
+
+         }
+
+    }
+
+
+     
 }
+

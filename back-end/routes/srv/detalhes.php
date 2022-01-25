@@ -20,7 +20,7 @@ $objRouter->get('/srv/detalhes',[
 ]);
 
 //Rota de pesquisa do atualizar (POST)
-$objRouter->post('/srv/detalhes/atualizar',[
+$objRouter->post('/srv/detalhes',[
     'middlewares' => [  
         'required-srv-login'
    ],

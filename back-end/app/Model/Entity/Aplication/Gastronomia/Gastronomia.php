@@ -37,7 +37,7 @@ class Gastronomia extends dbApp{
     public function insertNewGastronomia(){
 
         
-        $this->id_gastronomia = (new Database('gastronomia'))->insert([
+        $this->id_gastronomia = (new Database('appGastronomia'))->insert([
 
             'idApp'             => $this->idApp,
             'estacionamento'    => $this->estacionamento,
@@ -70,8 +70,9 @@ class Gastronomia extends dbApp{
      */
     public function updateGastronomia(){
 
+
   
-        return (new Database('gastronomia'))->update('idApp = '.$this->idApp,[
+        return (new Database('appGastronomia'))->update('idApp = '.$this->idApp,[
 
             'estacionamento'    => $this->estacionamento,
             'acessibilidade'    => $this->acessibilidade,
@@ -107,7 +108,7 @@ class Gastronomia extends dbApp{
      */
     public static function deleteGastronomia($idApp){
 
-        return (new Database('gastronomia'))->delete('idApp = '.$idApp);
+        return (new Database('appGastronomia'))->delete('idApp = '.$idApp);
         
         //Sucesso
         return true;
@@ -136,7 +137,7 @@ class Gastronomia extends dbApp{
     */
     public static function getGastronomia($where = null, $order = null, $limit = null, $fields = '*'){
 
-    return(new Database('gastronomia'))->select($where, $order, $limit, $fields);
+    return(new Database('appGastronomia'))->select($where, $order, $limit, $fields);
     }
 
 }

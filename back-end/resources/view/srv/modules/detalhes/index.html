@@ -5,18 +5,19 @@
         </div>
     </div>
 
-    <form class="col 12" method="post" action="detalhes/atualizar" >
+    <form class="col 12" name="formDetahes" id="formDetahes" method="post" >
 
        {{boxSeletor}}
             
             
         <div class="row">
             <div class="col s2">
+                <input type="hidden" name="action" value="atualizar" >
                 <button class="btn waves-effect waves-light" type="submit" >Atualizar
                     <i class="material-icons right">send</i>
                 </button>
             </div>
-            <div class="input-field col s1" id="loading"></div>
+            <div class="input-field col s1" id="loading" class="loading"></div>
         </div>
 
     </form>
