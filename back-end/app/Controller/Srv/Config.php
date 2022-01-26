@@ -14,7 +14,7 @@ use \App\Validate\Validate;
 
 
 use \App\Utils\View;
-use JetBrains\PhpStorm\Deprecated;
+
 
 class Config extends PageSrv 
 {
@@ -118,7 +118,7 @@ class Config extends PageSrv
             $objApp = new EntityApp();
         }
 
-        if($objApp->segmento != $postVars['segmento']){
+        if($objApp->segmento != '' && $objApp->segmento != $postVars['segmento']){
 
             $validate->setErro('Exclua o anúncio para mudar de segmento');
         }
@@ -146,17 +146,18 @@ class Config extends PageSrv
 
         
         $validate->validateFields($campos);
-        $validate->validateCaptcha($captcha);
+       // $validate->validateCaptcha($captcha);
         $validate->validateEmail($objApp->email);
         $validate->validadeCep($objApp->cep);
         $validate->validadeCelular($objApp->celular);
+        $validate->validateIssetAppFields( $objApp->idApp, $objApp->email,$objApp->celular,$objApp->telefone);
        if($objApp->telefone ){
             $validate->validadeTelefone($objApp->telefone);
        }
         $words = Help::helpTextForArray($postVars['chaves']);
         $validate->validateBlockedWord($words);
 
-    
+  
 
         if(count($validate->getErro()) > 0){
 
@@ -171,7 +172,7 @@ class Config extends PageSrv
             $mensagem = [];
 
             if($action === 'insert'){
-
+               
                 $objApp->insertNewApp();
                 $mensagem = ["Configurações inseridas com sucesso", "Clique em detalhes no menu lateral para prosseguir"];
                
@@ -181,16 +182,16 @@ class Config extends PageSrv
                         break;
                     case 'evento':
                         self::createEvento($idCustomer,  $postVars);
-                            break;
+                        break;
                     case 'comercio':
                         self::createComercio($idCustomer,  $postVars);
-                            break;
-                    case 'servico':
+                        break;
+                    case 'servicos':
                         self::createServico($idCustomer,  $postVars);
-                            break;
+                        break;
                     case 'gastronomia':
                         self::createGastronomia($idCustomer,  $postVars);
-                            break;
+                        break;
                 }
 
             }
@@ -247,7 +248,7 @@ class Config extends PageSrv
                     case 'gastronomia':
                         EntityGastronomia::deleteGastronomia($idApp);
                             break;
-                    case 'servico':
+                    case 'servicos':
                         EntityServico::deleteServico($idApp);
                             break;
                     default:
@@ -298,12 +299,21 @@ class Config extends PageSrv
       
         $objHospedagem = EntityHospedagem::getHospedagemById($idApp);
 
+        if (!$objHospedagem instanceof EntityHospedagem){
        
+            $objHospedagem = new EntityHospedagem();
+
+        }
+        
 
         $objHospedagem->idApp            = $idApp;
         $objHospedagem->idAppHospedagem  = $objHospedagem->idAppHospedagem;
+        $objHospedagem->semana           = !$postVars['semana']  || $postVars['semana']   == '00:00 - 00:00'  ? 'Fechado' : $postVars['semana'];
+        $objHospedagem->sabado           = !$postVars['sabado']  || $postVars['sabado']   == '00:00 - 00:00'  ? 'Fechado' : $postVars['sabado'];
+        $objHospedagem->domingo          = !$postVars['domingo'] || $postVars['domingo']  == '00:00 - 00:00'  ? 'Fechado' : $postVars['domingo'];
+        $objHospedagem->feriado          = !$postVars['feriado'] || $postVars['feriado']  == '00:00 - 00:00'  ? 'Fechado' : $postVars['feriado'];
         $objHospedagem->estacionamento   = $postVars['estacionamento'] ? -2 : -1;
-        $objHospedagem->brinquedos        = $postVars['brinquedos']      ? -2 : -1;
+        $objHospedagem->brinquedos       = $postVars['brinquedos']     ? -2 : -1;
         $objHospedagem->restaurante      = $postVars['restaurante']    ? -2 : -1;
         $objHospedagem->arCondicionado   = $postVars['arCondicionado'] ? -2 : -1;
         $objHospedagem->wiFi             = $postVars['wiFi']           ? -2 : -1;
@@ -315,10 +325,6 @@ class Config extends PageSrv
         $objHospedagem->bebidas          = $postVars['bebidas']        ? -2 : -1;
         $objHospedagem->sorveteria       = $postVars['sorveteria']     ? -2 : -1;
         $objHospedagem->whatsapp         = $postVars['whatsapp']       ? -2 : -1;
-        $objHospedagem->semana           = !$postVars['semana']  || $postVars['semana']   == '00:00 - 00:00'  ? 'Fechado' : $postVars['semana'];
-        $objHospedagem->sabado           = !$postVars['sabado']  || $postVars['sabado']   == '00:00 - 00:00'  ? 'Fechado' : $postVars['sabado'];
-        $objHospedagem->domingo           = !$postVars['domingo']  || $postVars['domingo']   == '00:00 - 00:00'  ? 'Fechado' : $postVars['domingo'];
-        $objHospedagem->feriado          = !$postVars['feriado'] || $postVars['feriado']  == '00:00 - 00:00'  ? 'Fechado' : $postVars['feriado'];
         $objHospedagem->img2             = $postVars['img2']           ? $postVars['img2']           : '';
         $objHospedagem->img3             = $postVars['img3']           ? $postVars['img3']           : '';
         $objHospedagem->descricao        = $postVars['descricao']      ? $postVars['descricao']      : ''; 
@@ -336,6 +342,54 @@ class Config extends PageSrv
         return true;
         
     }
+      /**
+     * Metódo responsável por criar uma nova opção gastronomica
+     *
+     * @param [type] $idApp
+     * @return void
+     */
+    public static function createGastronomia($idApp,  $postVars){
+
+        $objGastronomia = EntityGastronomia::getGastronomiaById($idApp);
+
+        if (!$objGastronomia instanceof EntityGastronomia){
+       
+            $objGastronomia = new EntityGastronomia();
+
+        }
+
+
+        $objGastronomia->idApp             = $idApp;
+        $objGastronomia->idAppGastronomia  = $objGastronomia->idAppGastronomia;
+        $objGastronomia->semana            = !$postVars['semana']  || $postVars['semana']   == '00:00 - 00:00'  ? 'Fechado' : $postVars['semana'];
+        $objGastronomia->sabado            = !$postVars['sabado']  || $postVars['sabado']   == '00:00 - 00:00'  ? 'Fechado' : $postVars['sabado'];
+        $objGastronomia->domingo           = !$postVars['domingo'] || $postVars['domingo']  == '00:00 - 00:00'  ? 'Fechado' : $postVars['domingo'];
+        $objGastronomia->feriado           = !$postVars['feriado'] || $postVars['feriado']  == '00:00 - 00:00'  ? 'Fechado' : $postVars['feriado'];
+        $objGastronomia->estacionamento    = $postVars['estacionamento']   ? -2 : -1;
+        $objGastronomia->acessibilidade    = $postVars['acessibilidade']   ? -2 : -1;
+        $objGastronomia->wiFi              = $postVars['wiFi']             ? -2 : -1;
+        $objGastronomia->brinquedos        = $postVars['brinquedos']       ? -2 : -1;
+        $objGastronomia->restaurante       = $postVars['restaurante']      ? -2 : -1;
+        $objGastronomia->emporio           = $postVars['emporio']          ? -2 : -1;
+        $objGastronomia->adega             = $postVars['adega']            ? -2 : -1;
+        $objGastronomia->bebidas           = $postVars['bebidas']          ? -2 : -1;
+        $objGastronomia->sorveteria        = $postVars['sorveteria']       ? -2 : -1;
+        $objGastronomia->entregaDomicilio  = $postVars['entregaDomicilio'] ? -2 : -1;
+        $objGastronomia->whatsapp          = $postVars['whatsapp']         ? -2 : -1;
+        $objGastronomia->img2              = $postVars['img2']             ? $postVars['img2']             : '';
+        $objGastronomia->img3              = $postVars['img3']             ? $postVars['img3']             : '';
+        $objGastronomia->descricao         = $postVars['descricao']        ? $postVars['descricao']        : ''; 
+
+        if($postVars['action'] == 'atualizar' ){
+          $objGastronomia->updateGastronomia();
+            
+        }else{
+            $objGastronomia->insertNewGastronomia();
+
+        }
+        
+        
+    }
     /**
      * Metódo responsável por criar um novo Evento
      *
@@ -343,31 +397,38 @@ class Config extends PageSrv
      * @return void
      */
     public static function createEvento($idApp,  $postVars){
-        $objEvento = new EntityEvento();
+
+        $objEvento = EntityEvento::getEventoById($idApp);
+
+        if (!$objEvento instanceof EntityEvento){
+            $objEvento = new EntityEvento();
+
+        }
 
         $objEvento->idApp          = $idApp;
-        $objEvento->estacionamento = $postVars['estacionamento'] ? $postVars['estacionamento'] : -1;
-        $objEvento->acessibilidade = $postVars['acessibilidade'] ? $postVars['acessibilidade'] : -1;
-        $objEvento->wiFi           = $postVars['wiFi']           ? $postVars['wiFi']           : -1;
-        $objEvento->trilhas        = $postVars['trilhas']        ? $postVars['trilhas']        : -1;
-        $objEvento->refeicao       = $postVars['refeicao']       ? $postVars['refeicao']       : -1;
-        $objEvento->emporio        = $postVars['emporio']        ? $postVars['emporio']        : -1;
-        $objEvento->adega          = $postVars['adega']          ? $postVars['adega']          : -1;
-        $objEvento->bebidas        = $postVars['bebidas']        ? $postVars['bebidas']        : -1;
-        $objEvento->sorveteria     = $postVars['sorveteria']     ? $postVars['sorveteria']     : -1;
-        $objEvento->musica         = $postVars['musica']         ? $postVars['musica']         : -1;
-        $objEvento->whatsapp       = $postVars['whatsapp']       ? $postVars['whatsapp']       : -1;
-        $objEvento->semana         = $postVars['semana']         ? $postVars['semana']         : '00:00 às 00:00';
-        $objEvento->sabado         = $postVars['sabado']         ? $postVars['sabado']         : '00:00 às 00:00';
-        $objEvento->domingo         = $postVars['domingo']         ? $postVars['domingo']         : '00:00 às 00:00';
-        $objEvento->feriado        = $postVars['feriado']        ? $postVars['feriado']        : '00:00 às 00:00';
+        $objEvento->idEvento       = $objEvento->idEvento;
+        $objEvento->semana         = !$postVars['semana']  || $postVars['semana']   == '00:00 - 00:00'  ? 'Fechado' : $postVars['semana'];
+        $objEvento->sabado         = !$postVars['sabado']  || $postVars['sabado']   == '00:00 - 00:00'  ? 'Fechado' : $postVars['sabado'];
+        $objEvento->domingo        = !$postVars['domingo'] || $postVars['domingo']  == '00:00 - 00:00'  ? 'Fechado' : $postVars['domingo'];
+        $objEvento->feriado        = !$postVars['feriado'] || $postVars['feriado']  == '00:00 - 00:00'  ? 'Fechado' : $postVars['feriado'];
+        $objEvento->estacionamento = $postVars['estacionamento'] ? -2 : -1;
+        $objEvento->acessibilidade = $postVars['acessibilidade'] ? -2 : -1;
+        $objEvento->wiFi           = $postVars['wiFi']           ? -2 : -1;
+        $objEvento->trilhas        = $postVars['trilhas']        ? -2 : -1;
+        $objEvento->refeicao       = $postVars['refeicao']       ? -2 : -1;
+        $objEvento->emporio        = $postVars['emporio']        ? -2 : -1;
+        $objEvento->adega          = $postVars['adega']          ? -2 : -1;
+        $objEvento->bebidas        = $postVars['bebidas']        ? -2 : -1;
+        $objEvento->sorveteria     = $postVars['sorveteria']     ? -2 : -1;
+        $objEvento->musica         = $postVars['musica']         ? -2 : -1;
+        $objEvento->whatsapp       = $postVars['whatsapp']       ? -2 : -1;
         $objEvento->img2           = $postVars['img2']           ? $postVars['img2']           : '';
         $objEvento->img3           = $postVars['img3']           ? $postVars['img3']           : '';
         $objEvento->descricao      = $postVars['descricao']      ? $postVars['descricao']      : ''; 
 
         if($postVars['action'] == 'atualizar' ){
-          
-            
+            $objEvento->updateEvento();
+
         }else{
             $objEvento->insertNewEvento();
         }
@@ -380,68 +441,36 @@ class Config extends PageSrv
      */
     public static function createServico($idApp,  $postVars){
 
-        $objServico = new EntityServico();
+        $objServico = EntityServico::getServicoById($idApp);
+        
+         if (!$objServico instanceof EntityServico){
+            $objServico = new EntityServico();
 
+        }
+        
         $objServico->idApp                = $idApp;
-        $objServico->estacionamento       = $postVars['estacionamento']   ? $postVars['estacionamento']   : -1;
-        $objServico->acessibilidade       = $postVars['acessibilidade']   ? $postVars['acessibilidade']   : -1;
-        $objServico->entregaDomicilio     = $postVars['entregaDomicilio'] ? $postVars['entregaDomicilio'] : -1;
-        $objServico->whatsapp             = $postVars['whatsapp']         ? $postVars['whatsapp']         : -1;
-        $objServico->semana               = $postVars['semana']           ? $postVars['semana']           : '00:00 às 00:00';
-        $objServico->sabado               = $postVars['sabado']           ? $postVars['sabado']           : '00:00 às 00:00';
-        $objServico->domingo               = $postVars['domingo']           ? $postVars['domingo']           : '00:00 às 00:00';
-        $objServico->feriado              = $postVars['feriado']          ? $postVars['feriado']          : '00:00 às 00:00';
+        $objServico->idAppServico         = $objServico->idAppServico;
+        $objServico->semana               = !$postVars['semana']  || $postVars['semana']   == '00:00 - 00:00'  ? 'Fechado' : $postVars['semana'];
+        $objServico->sabado               = !$postVars['sabado']  || $postVars['sabado']   == '00:00 - 00:00'  ? 'Fechado' : $postVars['sabado'];
+        $objServico->domingo              = !$postVars['domingo'] || $postVars['domingo']  == '00:00 - 00:00'  ? 'Fechado' : $postVars['domingo'];
+        $objServico->feriado              = !$postVars['feriado'] || $postVars['feriado']  == '00:00 - 00:00'  ? 'Fechado' : $postVars['feriado'];
+        $objServico->estacionamento       = $postVars['estacionamento']   ? -2 : -1;
+        $objServico->acessibilidade       = $postVars['acessibilidade']   ? -2 : -1;
+        $objServico->entregaDomicilio     = $postVars['entregaDomicilio'] ? -2 : -1;
+        $objServico->whatsapp             = $postVars['whatsapp']         ? -2 : -1;
         $objServico->logo                 = $postVars['logo']             ? $postVars['logo']             : '';
         $objServico->img2                 = $postVars['img2']             ? $postVars['img2']             : '';
         $objServico->img3                 = $postVars['img3']             ? $postVars['img3']             : '';
         $objServico->descricao            = $postVars['descricao']        ? $postVars['descricao']        : ''; 
 
+        
         if($postVars['action'] == 'atualizar' ){
-          
+          $objServico->updateServico();
             
         }else{
+
             $objServico->insertNewServico();
         }
-    }
-    /**
-     * Metódo responsável por criar uma nova opção gastronomica
-     *
-     * @param [type] $idApp
-     * @return void
-     */
-    public static function createGastronomia($idApp,  $postVars){
-
-        $objGastronomia = new EntityGastronomia();
-
-        $objGastronomia->idApp             = $idApp;
-        $objGastronomia->estacionamento    = $postVars['estacionamento']   ? $postVars['estacionamento']   : -1;
-        $objGastronomia->acessibilidade    = $postVars['acessibilidade']   ? $postVars['acessibilidade']   : -1;
-        $objGastronomia->wiFi              = $postVars['wiFi']             ? $postVars['wiFi']             : -1;
-        $objGastronomia->brinquedos         = $postVars['brinquedos']        ? $postVars['brinquedos']        : -1;
-        $objGastronomia->restaurante       = $postVars['restaurante']      ? $postVars['restaurante']      : -1;
-        $objGastronomia->emporio           = $postVars['emporio']          ? $postVars['emporio']          : -1;
-        $objGastronomia->adega             = $postVars['adega']            ? $postVars['adega']            : -1;
-        $objGastronomia->bebidas           = $postVars['bebidas']          ? $postVars['bebidas']          : -1;
-        $objGastronomia->sorveteria        = $postVars['sorveteria']       ? $postVars['sorveteria']       : -1;
-        $objGastronomia->entregaDomicilio  = $postVars['entregaDomicilio'] ? $postVars['entregaDomicilio'] : -1;
-        $objGastronomia->whatsapp          = $postVars['whatsapp']         ? $postVars['whatsapp']         : -1;
-        $objGastronomia->semana            = $postVars['semana']           ? $postVars['semana']           : '00:00 às 00:00';
-        $objGastronomia->sabado            = $postVars['sabado']           ? $postVars['sabado']           : '00:00 às 00:00';
-        $objGastronomia->domingo            = $postVars['domingo']           ? $postVars['domingo']           : '00:00 às 00:00';
-        $objGastronomia->feriado           = $postVars['feriado']          ? $postVars['feriado']          : '00:00 às 00:00';
-        $objGastronomia->img2              = $postVars['img2']             ? $postVars['img2']             : '';
-        $objGastronomia->img3              = $postVars['img3']             ? $postVars['img3']             : '';
-        $objGastronomia->descricao         = $postVars['descricao']       ? $postVars['descricao']         : ''; 
-
-        if($postVars['action'] == 'atualizar' ){
-          
-            
-        }else{
-            $objGastronomia->insertNewGastronomia();
-
-        }
-        
-        
     }
     /**
      * Metódo responsável por criar um novo Comércio
@@ -449,25 +478,32 @@ class Config extends PageSrv
      * @param [type] $idCustomer
      * @return void
      */
-    public static function createComercio($idCustomer,  $postVars){
+    public static function createComercio($idApp,  $postVars){
 
-        $objComercio = new EntityComercio();
+        $objComercio = EntityComercio::getComercioById($idApp);
 
-        $objComercio->idApp = $idCustomer;
-        $objComercio->estacionamento   = $postVars['estacionamento']   ? $postVars['estacionamento']   : -1;
-        $objComercio->acessibilidade   = $postVars['acessibilidade']   ? $postVars['acessibilidade']   : -1;
-        $objComercio->entregaDomicilio = $postVars['entregaDomicilio'] ? $postVars['entregaDomicilio'] : -1;
-        $objComercio->whatsapp         = $postVars['whatsapp']         ? $postVars['whatsapp']         : -1;
-        $objComercio->semana           = $postVars['semana']           ? $postVars['semana']           : '00:00 às 00:00';
-        $objComercio->sabado           = $postVars['sabado']           ? $postVars['sabado']           : '00:00 às 00:00';
-        $objComercio->domingo           = $postVars['domingo']           ? $postVars['domingo']           : '00:00 às 00:00';
-        $objComercio->feriado          = $postVars['feriado']          ? $postVars['feriado']          : '00:00 às 00:00';
+    
+        if (!$objComercio instanceof EntityComercio){
+            $objComercio = new EntityComercio();
+
+        }
+
+        $objComercio->idApp            = $idApp;
+        $objComercio->idAppComercio    = $objComercio->idAppComercio;
+        $objComercio->semana           = !$postVars['semana']  || $postVars['semana']   == '00:00 - 00:00'  ? 'Fechado' : $postVars['semana'];
+        $objComercio->sabado           = !$postVars['sabado']  || $postVars['sabado']   == '00:00 - 00:00'  ? 'Fechado' : $postVars['sabado'];
+        $objComercio->domingo          = !$postVars['domingo'] || $postVars['domingo']  == '00:00 - 00:00'  ? 'Fechado' : $postVars['domingo'];
+        $objComercio->feriado          = !$postVars['feriado'] || $postVars['feriado']  == '00:00 - 00:00'  ? 'Fechado' : $postVars['feriado'];
+        $objComercio->estacionamento   = $postVars['estacionamento']   ? -2 : -1;
+        $objComercio->acessibilidade   = $postVars['acessibilidade']   ? -2 : -1;
+        $objComercio->entregaDomicilio = $postVars['entregaDomicilio'] ? -2 : -1;
+        $objComercio->whatsapp         = $postVars['whatsapp']         ? -2 : -1;
         $objComercio->img2             = $postVars['img2']             ? $postVars['img2']             : '';
         $objComercio->img3             = $postVars['img3']             ? $postVars['img3']             : '';
         $objComercio->descricao        = $postVars['descricao']        ? $postVars['descricao']        : '';
 
         if($postVars['action'] == 'atualizar' ){
-          
+          $objComercio->updateComercio();
             
         }else{ 
             $objComercio->insertNewComercio();

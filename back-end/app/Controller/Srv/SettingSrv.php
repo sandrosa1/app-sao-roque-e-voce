@@ -42,7 +42,7 @@ class SettingSrv extends PageSrv{
             case 'evento':
                 $appSettings = (array)EntityEvento::getEventoById($idApp);
                 break;
-            case 'servico':
+            case 'servicos':
                 $appSettings = (array)EntityServico::getServicoById($idApp);
                 break;   
             case 'hospedagem':
@@ -122,6 +122,9 @@ class SettingSrv extends PageSrv{
                 return 'Piscina';
             case 'refeicao':
                 return 'Refeição';
+            case 'musica':
+                return 'Música';
+             
          
         }
     }
@@ -173,7 +176,6 @@ class SettingSrv extends PageSrv{
         $postVars = $request->getPostVars();
         $idApp =  $session->idSession;
         $app =  EntityApp::getAppById($idApp);
-       
         $validate->validateHora($postVars['semana']);
         $validate->validateHora($postVars['sabado']);
         $validate->validateHora($postVars['domingo']);
@@ -186,27 +188,29 @@ class SettingSrv extends PageSrv{
           
             return self::statusUpdate($validate);
         }
-        switch($app->segmento){
 
+        switch($app->segmento){
+            
             case 'hospedagem':
                 $conf->createHospedagem($idApp, $postVars);
                     return self::statusUpdate($validate );
+
             case 'evento':
                 $conf->createEvento($idApp, $postVars);
                 return self::statusUpdate($validate );
-                    break;
+                  
             case 'comercio':
                 $conf->createComercio($idApp, $postVars);
                 return self::statusUpdate($validate);
-                    break;
-            case 'servico':
+
+            case 'servicos':
+               
                 $conf->createServico($idApp, $postVars);
                 return self::statusUpdate($validate );
-                    break;
+
             case 'gastronomia':
                 $conf->createGastronomia($idApp, $postVars);
-                return self::statusUpdate($validate);
-                    break;
+                return self::statusUpdate($validate);     
         }
 
     }

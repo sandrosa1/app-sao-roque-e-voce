@@ -178,7 +178,7 @@ CREATE TABLE `sistema`.`appComercio` (
   PRIMARY KEY (`idAppHospedagem`),
   UNIQUE INDEX `idApp_UNIQUE` (`idApp` ASC) VISIBLE);
 
-   CREATE TABLE `sistema`.`appSevico` (
+   CREATE TABLE `sistema`.`appServico` (
   `idAppServico` INT NOT NULL AUTO_INCREMENT,
   `idApp` INT NOT NULL,
   `estacionamento` INT(1) NULL,

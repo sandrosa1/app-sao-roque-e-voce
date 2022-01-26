@@ -2,6 +2,7 @@
 namespace App\Validate;
 
 use \App\Model\Entity\Customer\Customer as EntityCustomer;
+use \App\Model\Entity\Aplication\App as EntityApp;
 use \App\Model\Entity\Aplication\Help\Help as EntiityHelp;
 use \App\Help\Help;
 use \App\Password\Password as PasswordHash;
@@ -397,7 +398,7 @@ class Validate{
 
    public function validateHora($text){
 
-        if(!$text){
+        if($text == 'Fechado'){
 
             return true;
         }
@@ -456,7 +457,68 @@ class Validate{
 
     }
 
+    /**
+     * Método responsável por verificar se existe celular, email ou telefone já cadastrado
+     *
+     * @param string $email
+     * @param string $celular
+     * @param string $telefone
+     * @return boolean
+     */
+    public function validateIssetAppFields($idApp, $email, $celular, $telefone )
+    {
+        $appEmail = EntityApp::getAppByEmail($email);
+        $appCelular = EntityApp::getAppByCelular($celular);
+        $appTelefone = EntityApp::getAppByTelefone($telefone);
+        $app = EntityApp::getAppById($idApp);
+        $erro = 0;
+        if(!$app instanceof EntityApp){
+            if( $appEmail instanceof EntityApp){
+                $this->setErro('Email já cadastrado!');
+                $erro ++;
+            }
+            if($telefone){
+                
+                if( $appTelefone instanceof EntityApp){
+                    $this->setErro('Número de telefone já cadastrado!');
+                    $erro ++;
+                }
+               
+            }
+        
+            if( $appCelular instanceof EntityApp){
+                $this->setErro('Número de celular já cadastrado!');
+                $erro ++;
+            }
+            
+        }else{
+            if( $appEmail instanceof EntityApp && $appEmail->idApp != $app->idApp){
+                $this->setErro('Email já cadastrado!');
+                $erro ++;
+            }
+            if($telefone){
+                
+                if( $appTelefone instanceof EntityApp && $appTelefone->idApp != $app->idApp){
+                    $this->setErro('Número de telefone já cadastrado!');
+                    $erro ++;
+                }
+               
+            }
+        
+            if( $appCelular instanceof EntityApp && $appCelular->idApp != $app->idApp){
+                $this->setErro('Número de celular já cadastrado!');
+                $erro ++;
+            }
+        }
+        
+       
+        if($erro > 0){
 
+            return false;
+        }
+        return true;
+
+    }
      
 }
 

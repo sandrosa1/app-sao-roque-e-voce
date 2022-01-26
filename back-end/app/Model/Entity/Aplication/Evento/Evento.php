@@ -6,7 +6,7 @@ use \App\Model\Entity\Aplication\App as dbApp;
 
 class Evento extends dbApp{
 
-        public $idEvento;
+        public $idAppEvento;
         public $idApp;
         public $estacionamento;
         public $acessibilidade;
@@ -21,7 +21,7 @@ class Evento extends dbApp{
         public $whatsapp;
         public $semana;
         public $sabado;
-        public $domigo;
+        public $domingo;
         public $feriado;
         public $img2;
         public $img3;
@@ -36,7 +36,7 @@ class Evento extends dbApp{
      */    
     public function insertNewEvento(){
     
-        $this->idEvento = (new Database('appEvento'))->insert([
+        $this->idAppEvento = (new Database('appEvento'))->insert([
             'idApp'             => $this->idApp,
             'estacionamento'    => $this->estacionamento,
             'acessibilidade'    => $this->acessibilidade,
@@ -51,7 +51,7 @@ class Evento extends dbApp{
             'whatsapp'          => $this->whatsapp,
             'semana'            => $this->semana,
             'sabado'            => $this->sabado,
-            'domigo'            => $this->domigo,
+            'domingo'            => $this->domingo,
             'feriado'           => $this->feriado,
             'img2'              => $this->img2,
             'img3'              => $this->img3,
@@ -83,7 +83,7 @@ class Evento extends dbApp{
             'whatsapp'          => $this->whatsapp,
             'semana'            => $this->semana,
             'sabado'            => $this->sabado,
-            'domigo'            => $this->domigo,
+            'domingo'            => $this->domingo,
             'feriado'           => $this->feriado,
             'img2'              => $this->img2,
             'img3'              => $this->img3,

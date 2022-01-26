@@ -6,7 +6,7 @@ use \App\Model\Entity\Aplication\App as dbApp;
 
 class Servico extends dbApp{
 
-        public $idServico;
+        public $idAppServico;
         public $idApp;
         public $estacionamento;
         public $acessibilidade;
@@ -14,14 +14,12 @@ class Servico extends dbApp{
         public $whatsapp;
         public $semana;
         public $sabado;
-        public $domigo;
+        public $domingo;
         public $feriado;
         public $logo;
         public $img2;
         public $img3;
         public $descricao;
-
-
 
     /**
      * Metódo responsável por inserir novo serviço
@@ -30,7 +28,7 @@ class Servico extends dbApp{
      */    
     public function insertNewServico(){
     
-        $this->idServico = (new Database('servico'))->insert([
+        $this->idAppServico = (new Database('appServico'))->insert([
     
             'idApp'             => $this->idApp,
             'estacionamento'    => $this->estacionamento,
@@ -39,7 +37,7 @@ class Servico extends dbApp{
             'whatsapp'          => $this->whatsapp,
             'semana'            => $this->semana,
             'sabado'            => $this->sabado,
-            'domigo'            => $this->domigo,
+            'domingo'           => $this->domingo,
             'feriado'           => $this->feriado,
             'logo'              => $this->logo,
             'img2'              => $this->img2,
@@ -51,7 +49,6 @@ class Servico extends dbApp{
         return true;
         
     }
-
 
     /**
      * Método reponsável por atualizar os dados de serviço
@@ -61,7 +58,7 @@ class Servico extends dbApp{
     public function updateServico(){
 
         //Atualiza os dados gerais do app
-        return (new Database('servico'))->update('idApp = '.$this->idApp,[
+        return (new Database('appServico'))->update('idAppServico = '.$this->idAppServico,[
 
             'idApp'             => $this->idApp,
             'estacionamento'    => $this->estacionamento,
@@ -70,13 +67,12 @@ class Servico extends dbApp{
             'whatsapp'          => $this->whatsapp,
             'semana'            => $this->semana,
             'sabado'            => $this->sabado,
-            'domigo'            => $this->domigo,
+            'domingo'           => $this->domingo,
             'feriado'           => $this->feriado,
             'logo'              => $this->logo,
             'img2'              => $this->img2,
             'img3'              => $this->img3,
             'descricao'         => $this->descricao,
-                
              
         ]);
         
@@ -84,7 +80,6 @@ class Servico extends dbApp{
         return true;
 
     }
-
      /**
      * Método reponsável por deletar um serviço
      *
@@ -93,7 +88,7 @@ class Servico extends dbApp{
     public static function deleteServico($idApp){
 
         //Deleta os dados App
-        return (new Database('servico'))->delete('idApp = '.$idApp);
+        return (new Database('appServico'))->delete('idApp = '.$idApp);
         
         //Sucesso
         return true;
@@ -123,10 +118,6 @@ class Servico extends dbApp{
     */
     public static function getServico($where = null, $order = null, $limit = null, $fields = '*'){
 
-        return(new Database('servico'))->select($where, $order, $limit, $fields);
+        return(new Database('appServico'))->select($where, $order, $limit, $fields);
     }
-
-
-
-
 }

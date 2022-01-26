@@ -17,7 +17,7 @@ class Comercio extends dbApp{
     public $whatsapp;
     public $semana;
     public $sabado;
-    public $domigo;
+    public $domingo;
     public $feriado;
     public $img2;
     public $img3;
@@ -40,7 +40,7 @@ class Comercio extends dbApp{
             'whatsapp'          => $this->whatsapp,
             'semana'            => $this->semana,
             'sabado'            => $this->sabado,
-            'domigo'            => $this->domigo,
+            'domingo'            => $this->domingo,
             'feriado'           => $this->feriado,
             'img2'              => $this->img2,
             'img3'              => $this->img3,
@@ -58,7 +58,7 @@ class Comercio extends dbApp{
     public function updateComercio(){
 
   
-        return (new Database('appComercio'))->update('idApp = '.$this->idApp,[
+        return (new Database('appComercio'))->update('idAppComercio = '.$this->idAppComercio,[
 
             'estacionamento'    => $this->estacionamento,
             'acessibilidade'    => $this->acessibilidade,
@@ -66,7 +66,7 @@ class Comercio extends dbApp{
             'whatsapp'          => $this->whatsapp,
             'semana'            => $this->semana,
             'sabado'            => $this->sabado,
-            'domigo'            => $this->domigo,
+            'domingo'           => $this->domingo,
             'feriado'           => $this->feriado,
             'img2'              => $this->img2,
             'img3'              => $this->img3,

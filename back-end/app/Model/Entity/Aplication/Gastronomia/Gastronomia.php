@@ -8,10 +8,11 @@ use \App\Model\Entity\Aplication\App as dbApp;
 class Gastronomia extends dbApp{
 
     public $idApp;
+    public $idAppGastronomia;
     public $estacionamento;
     public $acessibilidade;
     public $wiFi;
-    public $briquedos;
+    public $brinquedos;
     public $restaurante;
     public $emporio;
     public $adega;
@@ -21,7 +22,7 @@ class Gastronomia extends dbApp{
     public $whatsapp;
     public $semana;
     public $sabado;
-    public $domigo;
+    public $domingo;
     public $feriado;
     public $img2;
     public $img3;
@@ -37,13 +38,13 @@ class Gastronomia extends dbApp{
     public function insertNewGastronomia(){
 
         
-        $this->id_gastronomia = (new Database('appGastronomia'))->insert([
+        $this->idAppGastronomia = (new Database('appGastronomia'))->insert([
 
             'idApp'             => $this->idApp,
             'estacionamento'    => $this->estacionamento,
             'acessibilidade'    => $this->acessibilidade,
             'wiFi'              => $this->wiFi,
-            'briquedos'         => $this->briquedos,
+            'brinquedos'        => $this->brinquedos,
             'restaurante'       => $this->restaurante,
             'emporio'           => $this->emporio,
             'adega'             => $this->adega,
@@ -53,7 +54,7 @@ class Gastronomia extends dbApp{
             'whatsapp'          => $this->whatsapp,
             'semana'            => $this->semana,
             'sabado'            => $this->sabado,
-            'domigo'            => $this->domigo,
+            'domingo'           => $this->domingo,
             'feriado'           => $this->feriado, 
             'img2'              => $this->img2,
             'img3'              => $this->img3,
@@ -70,14 +71,13 @@ class Gastronomia extends dbApp{
      */
     public function updateGastronomia(){
 
-
   
         return (new Database('appGastronomia'))->update('idApp = '.$this->idApp,[
 
             'estacionamento'    => $this->estacionamento,
             'acessibilidade'    => $this->acessibilidade,
             'wiFi'              => $this->wiFi,
-            'briquedos'         => $this->briquedos,
+            'brinquedos'        => $this->brinquedos,
             'restaurante'       => $this->restaurante,
             'emporio'           => $this->emporio,
             'adega'             => $this->adega,
@@ -87,12 +87,12 @@ class Gastronomia extends dbApp{
             'whatsapp'          => $this->whatsapp,
             'semana'            => $this->semana,
             'sabado'            => $this->sabado,
-            'domigo'            => $this->domigo,
+            'domingo'           => $this->domingo,
             'img2'              => $this->img2,
             'img3'              => $this->img3,
             'descricao'         => $this->descricao,
             'feriado'           => $this->feriado,
-            'complementos'      => $this->complementos, 
+
             
         ]);
         

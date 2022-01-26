@@ -59,8 +59,6 @@ class App{
          return true;
 
     }
-
-
     /**
      * Método reponsável por atualizar o Dados gerais do APP
      *
@@ -99,8 +97,7 @@ class App{
         return true;
 
     }
-
-     /**
+    /**
      * Método reponsável por deletar um cliente
      *
      * @return void
@@ -114,9 +111,8 @@ class App{
         return true;
 
     }
-
-     /**
-     * Método responsável por retornar um cliente pelo idUser
+    /**
+     * Método responsável por retornar um app pelo ID
      *
      * @param Intenger $idApp
      * @return App
@@ -126,10 +122,40 @@ class App{
 
         return self::getApp('idApp = '.$idApp)->fetchObject(self::class);
     }
-   
+    /**
+     * Método responsável por retornar um App pelo número do celular
+     *
+     * @param Intenger $idApp
+     * @return App
+     */
+    public static function getAppByCelular($celular){
 
 
-     /**
+        return (new Database('app'))->select('celular = "'.$celular.'"')->fetchObject(self::class);
+    }
+    /**
+     * Método responsável por retornar um App pelo número do telefone
+     *
+     * @param Intenger $idApp
+     * @return App
+     */
+    public static function getAppByTelefone($telefone){
+
+
+        return (new Database('app'))->select('telefone = "'.$telefone.'"')->fetchObject(self::class);
+    }
+    /**
+     * Método responsável por retornar um App pelo email
+     *
+     * @param Intenger $idApp
+     * @return App
+     */
+    public static function getAppByEmail($email){
+
+
+        return (new Database('app'))->select('email = "'.$email.'"')->fetchObject(self::class);
+    }
+    /**
      * Método responsavel por retornar todos App
      *
      * @param string $where
