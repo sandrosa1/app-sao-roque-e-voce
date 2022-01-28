@@ -9,10 +9,6 @@ $objRouter->get('/srv/detalhes',[
          'required-srv-login'
     ],
     function($request){
-        // echo '<pre>';
-        // print_r($request);
-        // echo '</pre>';
-        // exit;
        
         return new Response(200, Srv\SettingSrv::getSetting($request));
     }

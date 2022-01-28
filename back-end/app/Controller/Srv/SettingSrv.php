@@ -18,6 +18,34 @@ class SettingSrv extends PageSrv{
 
 
     /**
+    * Renderiza o conteúdo de configurações
+    * @param Request $request
+    * @return string
+    */
+    public static function getSetting(){
+
+
+        $session = new PageSrv();
+        $idApp =  $session->idSession;
+
+
+        $app = EntityApp::getAppById($idApp);
+
+        if($app instanceof EntityApp) {
+
+            $content = View::render('srv/modules/detalhes/index',[
+                'boxSeletor'=> self::getSeltor(),
+            ]);   
+        }else{
+            $content = View::render('srv/modules/detalhes/index',[
+                'boxSeletor'=> self::getBlock(),
+            ]);
+        }
+       
+       return Config::getPanel('Detalhes - SRV', $content,'detalhes');
+
+    }
+    /**
      * Metódo respónsavel por retornar a view do botão de cadastrar
      *
      * @return string
@@ -82,6 +110,17 @@ class SettingSrv extends PageSrv{
         ]);
 
     }
+      /**
+     * Metódo respónsavel por retornar a view do botão de atualizar e deletar
+     *
+     * @return string
+     */
+    private static function getBlock(){
+        return View::render('srv/modules/detalhes/seletores/bloqueado',[
+            ''
+        ]);
+    }
+   
 
     private static function converteString($var){
 
@@ -128,45 +167,13 @@ class SettingSrv extends PageSrv{
          
         }
     }
-     /**
-     * Metódo respónsavel por retornar a view do botão de atualizar e deletar
-     *
-     * @return string
-     */
-    private static function getBlock(){
-        return View::render('srv/modules/detalhes/seletores/bloqueado',[
-            ''
-        ]);
-    }
+  
     /**
-    * Renderiza o conteúdo de configurações
-    * @param Request $request
-    * @return string
-    */
-    public static function getSetting(){
-
-
-        $session = new PageSrv();
-        $idApp =  $session->idSession;
-
-
-        $app = EntityApp::getAppById($idApp);
-
-        if($app instanceof EntityApp) {
-
-            $content = View::render('srv/modules/detalhes/index',[
-                'boxSeletor'=> self::getSeltor(),
-            ]);   
-        }else{
-            $content = View::render('srv/modules/detalhes/index',[
-                'boxSeletor'=> self::getBlock(),
-            ]);
-        }
-       
-       return Config::getPanel('Detalhes - SRV', $content,'detalhes');
-
-    }
-
+     * Método responsável pela atualização da pagian de detallhes
+     *
+     * @param Request $request
+     * @return void
+     */
     public static function update($request){
 
         $session = new PageSrv();
@@ -232,5 +239,7 @@ class SettingSrv extends PageSrv{
         }
         return json_encode($arrResponse);
     }
+
+  
 
 }

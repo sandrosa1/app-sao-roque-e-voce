@@ -1,5 +1,6 @@
 /* SISTEMA DE COR SÃO ROQUE E VOCẼ */
 
+
 /* CLASSE DE CORES*/
 .srv-c-1{color: var(--srv1);}
 .srv-c-2{color: var(--srv2);}
@@ -137,10 +138,97 @@
 .icons-ajuda-fechar{
     color: var(--error); 
 }
+
 .obrigatorio{
     color: var(--srv2);
 }
 
+/* --------Tela------- */
+.preview{
+  
+    height: 100vh;
+}
+
+.celular{
+    border:1px solid black ;
+    border-radius: 10px;
+    width: 80mm;
+    height: 150mm;
+}
+
+.telaCelular{
+    margin-top: 20px;
+    border:3px solid black ;
+    border-radius: 1px;
+    width: 64mm;
+    height: 131mm;
+    overflow-x: hidden;
+    overflow-y: hidden;
+  
+}
+/* Nao deu certo scroll */
+.telaCelular:hover{
+    overflow-y: hidden;
+}
+
+.displayCelular{
+    width: 100%;
+    height: 25px;
+    background-color:white;
+    
+}
+.headerCelular{
+    width: 100%;
+    height: 40px;
+    background-color:white;
+   
+}
+/* Fonte App */
+.f-popi{font-family: 'Poppins', sans-serif;}
+.f-robo{font-family: 'Roboto', sans-serif; font-weight: bold;}
+.c-pri{color: #920046;}
+
+.nomeCelular{
+    width: 100%;
+    height: 30px;
+    background-color:white;
+    
+}
+.statusCelular{
+    width: 100%;
+    height: 15px;
+    background-color:white;
+}
+.carrocelCelular{
+    width: 100%;
+    height: 150px;
+    background-color: blue;
+}
+.distanciaCelular{
+    width: 100%;
+    height: 25px;
+    background-color: white;
+}
+.seletoresCelular{
+    width: 100%;
+    min-height: 50px;
+    background-color: blue;
+}
+.descricaoCelular{
+    width: 100%;
+    min-height: 100px;
+    background-color:white;
+}
+.comentarioCelular{
+    width: 100%;
+    height: 25px;
+    background-color: blue;
+}
+.enderecoCelular{
+    width: 100%;
+    height: 50px;
+    background-color:white;
+}
 
 /*Configurações Gerais*/
 /*Extra-small*/
