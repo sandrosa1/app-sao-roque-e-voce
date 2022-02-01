@@ -18,7 +18,7 @@
         <!-- Estrutura do modal e input nome fantasia -->
         <div class="row">
           
-            <div class="input-field col s12">
+            <div class="input-field col s8">
                 <div id="modal1" class="modal">
                     <div class="modal-content">
                         <h4 class="center srv-c-4 fz-20">Ajuda</h4>
@@ -30,8 +30,22 @@
                     </div>
                 </div>
                 <a class="waves-effect waves-light btn-ajuda modal-trigger prefix" href="#modal1"><i class="material-icons icon-ajuda">help_outline</i></a>
-                <input  id="nomeFantasia" type="text" name="nomeFantasia" value="{{nomeFantasia}}" maxlength="100" class="validate" required>
+                <input  id="nomeFantasia" type="text" name="nomeFantasia" value="{{nomeFantasia}}" maxlength="245" class="validate" required>
                 <label for="nomeFantasia">Nome do estabelecimento, atração ou serviço<span class="obrigatorio"> *</span></label>
+            </div>
+            <div class="input-field col s4">
+                <div id="modal1.1" class="modal">
+                    <div class="modal-content">
+                        <h4 class="center srv-c-4 fz-20">Ajuda</h4>
+                        <p>Endereço de um site passa mais seriedade para o cliente caso não possua coloque endereço de blog ou redes socias. Caso não possua nenhum deixar em branco</p>
+                    </div>
+                    <div class="modal-footer">
+                        <a  class="modal-close waves-effect waves-green btn-flat"><i class="material-icons icons-ajuda-fechar">close</i></a>
+                    </div>
+                </div>
+                <a class="waves-effect waves-light btn-ajuda modal-trigger prefix" href="#modal1.1"><i class="material-icons icon-ajuda">help_outline</i></a>
+                <input  id="nomeFantasia" type="text" name="site" value="{{site}}" maxlength="245" class="validate" required>
+                <label for="nomeFantasia">Site ou rede social</label>
             </div>
         </div>
             <!-- Fim de estrutura do modal e input nome fantasia -->

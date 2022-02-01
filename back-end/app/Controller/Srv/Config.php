@@ -58,6 +58,7 @@ class Config extends PageSrv
                 'segmento'     => $app->segmento,
                 'email'        => $app->email,
                 'telefone'     => $app->telefone,
+                'site'         => $app->site,
                 'celular'      => $app->celular,
                 'cep'          => $app->cep,
                 'logradouro'   => $app->logradouro,
@@ -78,6 +79,7 @@ class Config extends PageSrv
                 'segmento'     => 'Selecione um segmento',
                 'email'        => '',
                 'telefone'     => '',
+                'site'         => '',
                 'celular'      => '',
                 'cep'          => '',
                 'logradouro'   => '',
@@ -138,6 +140,7 @@ class Config extends PageSrv
         $campos[8] = $objApp->bairro       = $postVars['bairro']       ? $postVars['bairro']      : $objApp->bairro;
         $campos[9] = $objApp->localidade   = $postVars['localidade']   ? $postVars['localidade']  : $objApp->localidade;
         $objApp->telefone                  = $postVars['telefone']     ? $postVars['telefone']    : '';
+        $objApp->site                      = $postVars['site']         ? $postVars['site']        : $objApp->site;
         $objApp->adicionais                = $postVars['adicionais']   ? $postVars['adicionais']  : $objApp->adicionais;
         $objApp->chaves                    = $postVars['chaves']       ? $postVars['chaves']      : $objApp->chaves;
         $action                            = $postVars['action'];

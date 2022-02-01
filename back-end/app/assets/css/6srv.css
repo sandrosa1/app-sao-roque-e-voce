@@ -146,14 +146,17 @@
 /* --------Tela------- */
 .preview{
   
-    height: 100vh;
+    /* min-height: 100vh; */
 }
+
 
 .celular{
     border:1px solid black ;
     border-radius: 10px;
     width: 80mm;
-    height: 150mm;
+    height: auto;
+    padding-bottom: 50px;
+    
 }
 
 .telaCelular{
@@ -161,9 +164,11 @@
     border:3px solid black ;
     border-radius: 1px;
     width: 64mm;
-    height: 131mm;
+    height: auto;
+    padding-bottom: 40px;
     overflow-x: hidden;
     overflow-y: hidden;
+    background-color: var(--srv8);
   
 }
 /* Nao deu certo scroll */
@@ -174,60 +179,105 @@
 .displayCelular{
     width: 100%;
     height: 25px;
-    background-color:white;
+    background-color:var(--srv8);
     
 }
 .headerCelular{
     width: 100%;
     height: 40px;
-    background-color:white;
+}
+.headerItem{
+padding: 10px 0px 0px 0px;
    
+
 }
 /* Fonte App */
 .f-popi{font-family: 'Poppins', sans-serif;}
 .f-robo{font-family: 'Roboto', sans-serif; font-weight: bold;}
 .c-pri{color: #920046;}
+.c-sec{color: #0B9329;}
 
 .nomeCelular{
     width: 100%;
     height: 30px;
-    background-color:white;
+   
     
 }
+
 .statusCelular{
     width: 100%;
     height: 15px;
-    background-color:white;
+ 
 }
+
 .carrocelCelular{
     width: 100%;
-    height: 150px;
-    background-color: blue;
+    height: 130px;
+    padding: 10px 0px 0px 0px;
+
+    
 }
-.distanciaCelular{
-    width: 100%;
-    height: 25px;
-    background-color: white;
-}
+
+/* ////////////////////////*/
+
+#slide {
+    width: 200px;
+    overflow: hidden;
+    margin:auto;
+    height: 120px;
+    box-shadow: 0 0 8px #000;
+    border-radius: 10px;
+    position: relative;
+ }
+    
+#slide img {
+    width: 200px;
+    height: 120px;
+    position: absolute;
+    z-index: 1;
+    display: none;
+    left: 0;
+ }
+
+/* ////////////////////////*/
+
 .seletoresCelular{
     width: 100%;
-    min-height: 50px;
-    background-color: blue;
+    display: flex;
+    flex-wrap: wrap;
 }
+
+.opcaoWrap{
+    min-width: 16mm;
+   
+}
+
+.dot1 {
+    height: 1px;
+    width: 100px;
+    background-color: #920046 ;
+    border-radius: 50%;
+    display:block;
+    margin: 10px auto;
+  }
 .descricaoCelular{
     width: 100%;
-    min-height: 100px;
-    background-color:white;
 }
 .comentarioCelular{
     width: 100%;
-    height: 25px;
-    background-color: blue;
 }
+.dot2 {
+    height: 1px;
+    width: 100px;
+    background-color: #920046 ;
+    border-radius: 50%;
+    display:block;
+    margin: 3px auto 3px auto;
+  }
 .enderecoCelular{
     width: 100%;
-    height: 50px;
-    background-color:white;
+    height: 20px;
+   
 }
 
 /*Configurações Gerais*/

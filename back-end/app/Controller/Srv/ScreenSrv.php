@@ -49,9 +49,15 @@ class ScreenSrv extends PageSrv{
     private static function getView(){
 
         return View::render('srv/modules/tela/preview/index',[
-            'display'=> self::getDisplay(),
-            'header'=> self::getHeader(),
-            'nome'=> self::getNome(),
+            'display'  => self::getDisplay(),
+            'header'   => self::getHeader(),
+            'nome'     => self::getNome(),
+            'status'   => self::getStatus(),
+            'carrocel' => self::getCarrocel(),
+            'seletores' => self::getSeletores(),
+            'descricao'=> self::getDescricao(),
+            'comentario'=> self::getComentario(),
+            'endereco'=> self::getAddress(),
         ]);
        
     }
@@ -114,9 +120,109 @@ class ScreenSrv extends PageSrv{
             'nome'=> $header->nomeFantasia,
         ]);
     }
-
-
+    /** 
+    * Metódo que retorna o display 
+    *
+    * @return string
+    */
+    private static function getStatus(){
+      
+        return View::render('srv/modules/tela/preview/components/status',[]);
+    }
+    /** 
+    * Metódo que retorna o display 
+    *
+    * @return string
+    */
+    private static function getCarrocel(){
+      
+        return View::render('srv/modules/tela/preview/components/carrocel',[]);
+    }
     
-   
+    /** 
+    * Metódo que retorna o display 
+    *
+    * @return string
+    */
+    private static function getSeletores(){
+
+
+        $appTipo = (array)Help::helpGetEntity(Help::helpApp());
+
+        $opcoes = '';
+        foreach ($appTipo as $key => $value) {
+               
+                if ($value == -2 ){
+                    $value = Help::helpOptions($key)[1];
+                    $nome = Help::helpOptions($key)[0];
+                    $opcoes .= View::render('srv/modules/tela/preview/components/opcao',[
+                        'value' => $value,
+                        'nome'  => $nome,
+                        
+                    ]);
+                   
+                }
+            }
+
+            
+            
+       
+        return View::render('srv/modules/tela/preview/components/seletores',[
+            'seletores' => $opcoes,
+        ]);
+    }
+    /** 
+    * Metódo que retorna o display 
+    *
+    * @return string
+    */
+    private static function getDescricao(){
+        
+        $appTipo = Help::helpGetEntity(Help::helpApp());
+       
+        return View::render('srv/modules/tela/preview/components/descricao',[
+            'descricao' => $appTipo->descricao,
+        ]);
+    }
+
+     /** 
+    * Metódo que retorna o display 
+    *
+    * @return string
+    */
+    private static function getComentario(){
+        
+        
+        return View::render('srv/modules/tela/preview/components/comentario',[
+            
+        ]);
+    }
+
+     /** 
+    * Metódo que retorna o display 
+    *
+    * @return string
+    */
+    private static function getAddress(){
+
+        $app = Help::helpApp();
+        // echo '<pre>';
+        // print_r($app);
+        // echo '</pre>';
+        // exit;
+        // $appTipo = Help::helpGetEntity($app);
+       
+        
+        return View::render('srv/modules/tela/preview/components/endereco',[
+            
+            'endereco' => $app->logradouro .' '. $app->numero.' '.$app->bairro,
+            'telefone' => $app->telefone ?? '',
+            'site'     => $app->site,
+
+        ]);
+    }
+
+
+
 
 }

@@ -13,6 +13,7 @@ class App{
     public $tipo;
     public $email;
     public $telefone;
+    public $site;
     public $celular;
     public $cep;
     public $logradouro;
@@ -39,6 +40,7 @@ class App{
         'tipo'            => $this->tipo,
         'email'           => $this->email,
         'telefone'        => $this->telefone,
+        'site'            => $this->site,
         'celular'         => $this->celular,
         'cep'             => $this->cep,
         'logradouro'      => $this->logradouro,
@@ -75,6 +77,7 @@ class App{
             'tipo'            => $this->tipo,
             'email'           => $this->email,
             'telefone'        => $this->telefone,
+            'site'            => $this->site,    
             'celular'         => $this->celular,
             'cep'             => $this->cep,
             'logradouro'      => $this->logradouro,

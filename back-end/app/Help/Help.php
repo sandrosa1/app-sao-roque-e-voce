@@ -50,31 +50,92 @@ class Help{
 
     }
 
-    public static function helpGetTypeHeader($app){
+    /**
+     * Undocumented function
+     *
+     * @param string $opcao
+     * @return void
+     */
+    public static function helpOptions($opcao){
 
-        switch ($app->segmento) {
-            case 'gastronomia':
-                return ['Gastronomia','restaurant_menu'];
-            case 'evento':
-                return ['Eventos','event'];
-            case 'servicos':
-                return ['Utilitarios','room_service'];
-            case 'comercio':
-                return ['Comércios','shopping_basket'];
-            case 'hospedagem':
-                return ['Hospedagens','hotel'];
-            case 'turismo':
-                return ['Turísmo','camera_alt'];
+        switch ($opcao) {
+            case 'entregaDomicilio';
+                return ["Dellivery","class='c-pri ml-4 fas fa-truck'"];
+            case 'estacionamento':
+                return ["Vaga","class='c-pri ml-4 fas fa-car'"];
+            case 'acessibilidade':
+                return ["Acessibilidade","class='c-pri ml-4 fab fa-accessible-icon'"];
+            case "whatsapp":
+                return ["whatsapp","class='c-pri ml-4 fab fa-whatsapp'"];
+            case "wiFi":
+                return ["WiFi","class='c-pri ml-4 fas fa-wifi'"];
+            case "trilhas":
+                return ["Trilha","class='c-pri ml-4 fas fa-hiking'"];
+            case "refeicao":
+                return ["Refeição","class='c-pri ml-4 fas fa-utensils'"];
+            case "emporio":
+                return ["Empório","class='c-pri ml-4 fas fa-store'"];
+            case "adega":
+                return ["Adega","class='c-pri ml-4 fas fa-wine-bottle'"];
+            case "bebidas":
+                return ["Bebidas","class='c-pri ml-4 fas fa-glass-cheers'"];
+            case "sorveteria":
+                return ["Sorveteria","class='c-pri ml-4 fas fa-ice-cream'"];
+            case "show":
+                return ["Shows","class='c-pri ml-4 far fa-stars'"];
+            case "brinquedos":
+                return ["Brinquedos","class='c-pri ml-4 fas fa-gamepad'"];
+            case "restaurante":
+                return ["Restaurante","class='c-pri ml-4 fas fa-utensils'"];
+            case "arCondicionado":
+                return ["ArCondi","class='c-pri ml-4 fal fa-air-conditioner'"];
+            case "academia":
+                return ["Academia","class='c-pri ml-4 fas fa-running'"];
+            case "piscina":
+                return ["Piscina","class='c-pri ml-4 fas fa-swimmer'"];
+            case "refeicao":
+                return ["Refeição","class='c-pri ml-4 fas fa-cookie-bite'"];
+            case "musica":
+                return ["Música","class='c-pri ml-4 fas fa-music'"];
+            
             default:
-                echo '<pre>';
-                print_r('ScreenSrv/getTypeHeader');
-                echo '</pre>';
-                exit;
+                # code...
                 break;
         }
     }
 
-     /**
+
+    /**
+     * Undocumented function
+     *
+     * @param [type] $app
+     * @return void
+     */
+    public static function helpGetTypeHeader($app){
+
+        switch ($app->segmento) {
+            case 'evento':
+                return ["Eventos","fas fa-calendar-alt"];
+
+            case 'servicos':
+                return ["Utilitarios","fas fa-warehouse"];
+
+            case 'comercio':
+                return ["Comércios","fas fa-store"];
+
+            case 'hospedagem':
+                return ["Hospedagens","fas fa-hotel"];
+
+            case 'turismo':
+                return ["Turísmo","fas fa-camera-retro"];
+            case 'gastronomia':
+            return ["Gastronomia","fas fa-wine-glass-alt"];
+            
+        }
+    }
+
+
+    /**
      * Retorna a entidade
      *
      * @param string $segmento
@@ -84,26 +145,20 @@ class Help{
 
         switch ($app->segmento) {
             case 'gastronomia':
-                return EntityGastronomia::getAppById($app->idApp);
+                return EntityGastronomia::getGastronomiaById($app->idApp);
             case 'evento':
-                return EntityEvento::getAppById($app->idApp);
+                return EntityEvento::getEventoById($app->idApp);
             case 'servicos':
-                return EntityServico::getAppById($app->idApp);
+                return EntityServico::getServicoById($app->idApp);
             case 'comercio':
-                return EntityComercio::getAppById($app->idApp);
+                return EntityComercio::getComercioById($app->idApp);
             case 'hospedagem':
-                return EntityHospedagem::getAppById($app->idApp);
+                return EntityHospedagem::getHospedagemById($app->idApp);
             case 'turismo':
-                return EntityGastronomia::getAppById($app->idApp);
-            default:
-                echo '<pre>';
-                print_r('ScreenSrv/getTypeHeader');
-                echo '</pre>';
-                exit;
-                break;
+                return EntityGastronomia::getGastronomiaById($app->idApp);
+           
         }
     }
-            
-    
+
 
 }

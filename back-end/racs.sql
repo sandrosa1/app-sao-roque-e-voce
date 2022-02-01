@@ -70,6 +70,7 @@ CREATE TABLE `sistema`.`app` (
   `bairro` VARCHAR(45) NOT NULL,
   `localidade` VARCHAR(9) NULL,
   `chaves` VARCHAR(245) NULL,
+  `site` VARCHAR(245) NULL,
   `visualizacao` INT NULL,
   `totalCusto` INT NULL,
   `totalAvaliacao` INT NULL,
