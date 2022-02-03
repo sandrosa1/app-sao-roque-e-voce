@@ -118,7 +118,7 @@ class Help{
                 return ["Eventos","fas fa-calendar-alt"];
 
             case 'servicos':
-                return ["Utilitarios","fas fa-warehouse"];
+                return ["Serviços","fas fa-tools"];
 
             case 'comercio':
                 return ["Comércios","fas fa-store"];
@@ -128,6 +128,7 @@ class Help{
 
             case 'turismo':
                 return ["Turísmo","fas fa-camera-retro"];
+
             case 'gastronomia':
             return ["Gastronomia","fas fa-wine-glass-alt"];
             

@@ -36,6 +36,7 @@ class ScreenSrv extends PageSrv{
         }else{
             $content = View::render('srv/modules/tela/index',[
                 'preview'=> self::getBlockView(),
+                
             ]);
         }
        return parent::getPanel('Tela - SRV', $content,'tela');
@@ -48,17 +49,39 @@ class ScreenSrv extends PageSrv{
      */
     private static function getView(){
 
+
+        $app = Help::helpApp();
+
+       
+        if($app->segmento != 'servicos'){
+
+            return View::render('srv/modules/tela/preview/index',[
+                'display'    => self::getDisplay(),
+                'header'     => self::getHeader(),
+                'nome'       => self::getNome(),
+                'status'     => self::getStatus(),
+                'carrocel'   => self::getCarrocel(),
+                'seletores'  => self::getSeletores(),
+                'descricao'  => self::getDescricao(),
+                'comentario' => self::getComentario(),
+                'endereco'   => self::getAddress(),
+            ]);
+        }
+
         return View::render('srv/modules/tela/preview/index',[
-            'display'  => self::getDisplay(),
-            'header'   => self::getHeader(),
-            'nome'     => self::getNome(),
-            'status'   => self::getStatus(),
-            'carrocel' => self::getCarrocel(),
-            'seletores' => self::getSeletores(),
-            'descricao'=> self::getDescricao(),
-            'comentario'=> self::getComentario(),
-            'endereco'=> self::getAddress(),
+
+            'display'    => self::getDisplay(),
+             'header'     => self::getHeader(),
+            'nome'       => '',
+            'status'     => '',
+            'carrocel'   => Self::getServicos(),
+            'seletores'  => '',
+            'descricao'  => '',
+            'comentario' => '',
+            'endereco'   => '',
         ]);
+
+       
        
     }
       /**
@@ -76,7 +99,18 @@ class ScreenSrv extends PageSrv{
     * @return string
     */
    private static function getForm(){
-       return View::render('srv/modules/tela/form/form',[]);
+
+
+    $app = Help::helpApp();
+
+       
+    if($app->segmento != 'servicos'){
+        return View::render('srv/modules/tela/form/form',[]);
+
+    }else{
+        return View::render('srv/modules/tela/form/formServicos',[]);
+
+    }
    }
 
    /**
@@ -164,9 +198,6 @@ class ScreenSrv extends PageSrv{
                 }
             }
 
-            
-            
-       
         return View::render('srv/modules/tela/preview/components/seletores',[
             'seletores' => $opcoes,
         ]);
@@ -206,23 +237,37 @@ class ScreenSrv extends PageSrv{
     private static function getAddress(){
 
         $app = Help::helpApp();
-        // echo '<pre>';
-        // print_r($app);
-        // echo '</pre>';
-        // exit;
-        // $appTipo = Help::helpGetEntity($app);
-       
-        
+     
         return View::render('srv/modules/tela/preview/components/endereco',[
             
-            'endereco' => $app->logradouro .' '. $app->numero.' '.$app->bairro,
-            'telefone' => $app->telefone ?? '',
-            'site'     => $app->site,
-
+            'endereco' => "<div class='col  s12'><i class='ml-2 c-pri fz-15 fas fa-map-marked-alt'></i><span class=' c-popi fz-5'> ".$app->logradouro .', Nº '. $app->numero.', '.$app->bairro."</span></div>",
+            'telefone' => $app->telefone ? "<div class='col  s12'><i class='ml-2 c-pri fz-15 fas fa-phone-volume'></i><span class=' c-popi fz-5'> ".$app->telefone."</span></div>": '',
+            'site'     => $app->site ? "<div class='col  s12'><i class='ml-2 pb-5 c-pri fz-15 fas fa-globe'></i><span class=' c-popi fz-5'> ".$app->site."</span></div>" :'',
         ]);
     }
 
+    /** 
+    * Metódo que retorna o display 
+    *
+    * @return string
+    */
+    private static function getServicos(){
 
+        $app = Help::helpApp();
+        $appTipo = Help::helpGetEntity($app);
+
+     
+        return View::render('srv/modules/tela/preview/components/servicos',[
+            
+            'endereco'   => "<i class='c-pri fz-15 fas fa-map-marked-alt'></i><span class=' c-popi fz-5'> ".$app->logradouro .', Nº '. $app->numero.', '.$app->bairro."</span>",
+            'telefone'   => $app->telefone   ?"<i class='c-pri fz-15 fas fa-phone-volume'></i><span class=' c-popi fz-5'> ".$app->telefone."</span>": '',
+            'site'       => $app->site       ?"<i class='pb-5 c-pri fz-15 fas fa-globe'></i><span class=' c-popi fz-5'> ".$app->site."</span>" :'',
+            'horarios'   => $appTipo->semana ?"<p class=' c-popi fz-5'>Semana ".$appTipo->semana."</p><p class=' c-popi fz-5'>Sabádo ".$appTipo->sabado."</p><p class=' c-popi fz-5'>Domingo ".$appTipo->domingo."</p><p class=' c-popi fz-5'>Fériados ".$appTipo->feriado."</p>" : '',
+            'logo'       =>  'O',
+        ]);
+    }
+
+    
 
 
 }
