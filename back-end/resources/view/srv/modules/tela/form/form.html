@@ -9,7 +9,7 @@
             <div class="file-field input-field">
               <div class="btn-small">
                 <span>File</span>
-                <input required type="file" name="img-1" Value="" >
+                <input required type="file" name="arquivo[]" Value="">
               </div>
               <div class="file-path-wrapper">
                 <input class="file-path validate" type="text" placeholder="Imagem principal."/>
@@ -19,7 +19,7 @@
             <div class="file-field input-field">
                 <div class="btn">
                   <span>File</span>
-                  <input required type="file" name="img-2" Value="" >
+                  <input required type="file" name="arquivo[]" Value="" >
                 </div>
                 <div class="file-path-wrapper">
                   <input class="file-path validate" type="text" placeholder="Segunda imagem."/>
@@ -29,14 +29,14 @@
               <div class="file-field input-field">
                 <div class="btn">
                   <span>File</span>
-                  <input required type="file" name="img-3" Value="" >
+                  <input required type="file" name="arquivo[]" Value="" >
                 </div>
                 <div class="file-path-wrapper">
                   <input class="file-path validate" type="text" placeholder="Terceira imagem."/>
                 </div>
               </div>
         
-            <button class="waves-effect waves-light btn green" name='inserir'>Inserir</button>
+            <button class="waves-effect waves-light btn green">Inserir</button>
         </form>
 
     </div>
@@ -60,3 +60,8 @@
     
 </div>
  
+  <!-- <form  method="post" enctype="multipart/form-data" name="cadastro" >
+    Upload imagem:
+    <input type="file" name="arquivo" />
+    <button type="submit">Enviar</button>
+</form> -->

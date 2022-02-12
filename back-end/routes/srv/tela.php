@@ -14,3 +14,15 @@ $objRouter->get('/srv/tela',[
     }
     
 ]);
+
+$objRouter->post('/srv/tela',[
+    'middlewares' => [  
+        'required-srv-login'
+    ],
+    function($request){
+      
+        return new Response(200, Srv\ScreenSrv::uploadImage($request));
+    }
+    
+]);
+

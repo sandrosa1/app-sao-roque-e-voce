@@ -147,19 +147,24 @@ class Help{
         switch ($app->segmento) {
             case 'gastronomia':
                 return EntityGastronomia::getGastronomiaById($app->idApp);
+
             case 'evento':
                 return EntityEvento::getEventoById($app->idApp);
+
             case 'servicos':
                 return EntityServico::getServicoById($app->idApp);
+
             case 'comercio':
                 return EntityComercio::getComercioById($app->idApp);
+
             case 'hospedagem':
                 return EntityHospedagem::getHospedagemById($app->idApp);
+
             case 'turismo':
                 return EntityGastronomia::getGastronomiaById($app->idApp);
            
         }
     }
 
-
+   
 }

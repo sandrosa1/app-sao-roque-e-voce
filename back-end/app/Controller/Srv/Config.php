@@ -50,44 +50,46 @@ class Config extends PageSrv
 
 
         if ($app instanceof EntityApp) {
+         
             $content = View::render('srv/modules/configuracao/index', [
-                'botoes'       => self::getButtonEdit(),
-                'h1'           => 'Atualize ou delete seu dados aqui',
-                'nomeFantasia' => $app->nomeFantasia,
-                'tipo'         => $app->tipo,
-                'segmento'     => $app->segmento,
-                'email'        => $app->email,
-                'telefone'     => $app->telefone,
-                'site'         => $app->site,
-                'celular'      => $app->celular,
-                'cep'          => $app->cep,
-                'logradouro'   => $app->logradouro,
-                'numero'       => $app->numero,
-                'bairro'       => $app->bairro,
-                'localidade'   => $app->localidade,
-                'adicionais'   => $app->adicionais,
-                'chaves'       => $app->chaves,
-                'customer'     => $app->idApp
+                'botoes'             => self::getButtonEdit(),
+                'h1'                 => 'Atualize ou delete seu dados aqui',
+                'nomeFantasia'       => $app->nomeFantasia,
+                'tipo'               => $app->tipo,
+                'segmentoFormatado'  => Help::helpGetTypeHeader($app)[0],
+                'segmento'           => $app->segmento,
+                'email'              => $app->email,
+                'telefone'           => $app->telefone,
+                'site'               => $app->site,
+                'celular'            => $app->celular,
+                'cep'                => $app->cep,
+                'logradouro'         => $app->logradouro,
+                'numero'             => $app->numero,
+                'bairro'             => $app->bairro,
+                'localidade'         => $app->localidade,
+                'adicionais'         => $app->adicionais,
+                'chaves'             => $app->chaves,
+                'customer'           => $app->idApp
 
             ]);
         } else {
             $content = View::render('srv/modules/configuracao/index', [
-                'botoes'       => self::getButtonRegister(),
-                'h1'           => 'Configurações',
-                'nomeFantasia' => '',
-                'tipo'         => '',
-                'segmento'     => 'Selecione um segmento',
-                'email'        => '',
-                'telefone'     => '',
-                'site'         => '',
-                'celular'      => '',
-                'cep'          => '',
-                'logradouro'   => '',
-                'numero'       => '',
-                'bairro'       => '',
-                'localidade'   => '',
-                'adicionais'   => '',
-                'chaves'       => '',
+                'botoes'             => self::getButtonRegister(),
+                'h1'                 => 'Configurações',
+                'nomeFantasia'       => '',
+                'tipo'               => '',
+                'segmentoFormatado'  => 'Selecione um segmento',
+                'email'              => '',
+                'telefone'           => '',
+                'site'               => '',
+                'celular'            => '',
+                'cep'                => '',
+                'logradouro'         => '',
+                'numero'             => '',
+                'bairro'             => '',
+                'localidade'         => '',
+                'adicionais'         => '',
+                'chaves'             => '',
         
             ]);
         }
@@ -154,13 +156,15 @@ class Config extends PageSrv
         $validate->validadeCep($objApp->cep);
         $validate->validadeCelular($objApp->celular);
         $validate->validateIssetAppFields( $objApp->idApp, $objApp->email,$objApp->celular,$objApp->telefone);
-       if($objApp->telefone ){
-            $validate->validadeTelefone($objApp->telefone);
-       }
-        $words = Help::helpTextForArray($postVars['chaves']);
-        $validate->validateBlockedWord($words);
 
-  
+        if($objApp->telefone ){
+            $validate->validadeTelefone($objApp->telefone);
+         }
+        $objApp->chaves = Help::helpTextForArray($objApp->chaves);
+
+        $validate->validateBlockedWord($objApp->chaves);
+
+        $objApp->chaves = Help::helpArrayForString($objApp->chaves);
 
         if(count($validate->getErro()) > 0){
 

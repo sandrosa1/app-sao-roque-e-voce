@@ -5,6 +5,9 @@ namespace App\Controller\Srv;
 use \App\Utils\View;
 use \App\Help\Help;
 use \App\Model\Entity\Aplication\App as EntityApp;
+use \App\Image\Upload;
+use \App\Image\Resize;
+
 
 
 class ScreenSrv extends PageSrv{
@@ -267,7 +270,45 @@ class ScreenSrv extends PageSrv{
         ]);
     }
 
-    
+    /**
+     * 
+     *
+     * @param [
+     * @return void
+     */
+    public static function uploadImage(){
+
+        if(isset($_FILES['arquivo'])){
+
+            $uploads = Upload::createMultiUpload($_FILES['arquivo']);
+
+            foreach ($uploads as $objUpload) {
+                // Move os arquivos de upload
+                $sucesso = $objUpload->upload('/var/www/html/app-sao-roque-e-voce/back-end/img/imgApp');
+
+                //Instacia de redimencionamento
+                $objResize = new Resize('/var/www/html/app-sao-roque-e-voce/back-end/img/imgApp/'.$objUpload->getBasename());
+
+                $objResize->resize(200,200);
+
+                $objResize->save('/var/www/html/app-sao-roque-e-voce/back-end/img/imgApp/'.$objUpload->getBasename(),70);
+
+                if($sucesso){
+                    echo 'Arquivo <strong>'.$objUpload->getBasename().'</strong> enviado com sucesso!';
+                    continue;
+                }else{
+                    echo ('Erro ao enviar o arquivo <br>');
+                }
+            
+            }
+
+           exit;
+            
+        }
+
+    }
+
+
 
 
 }
