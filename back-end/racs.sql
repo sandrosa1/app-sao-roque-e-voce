@@ -197,7 +197,71 @@ CREATE TABLE `sistema`.`appComercio` (
   PRIMARY KEY (`idAppServico`),
   UNIQUE INDEX `idApp_UNIQUE` (`idApp` ASC) VISIBLE);
 
+
+
+  CREATE TABLE `sistema`.`appTurismo` (
+  `idAppTurismo` INT NOT NULL AUTO_INCREMENT,
+  `idApp` INT NOT NULL,
+  `estacionamento` INT(1) NULL,
+  `acessibilidade` INT(1) NULL,
+  `wiFi` INT(1) NULL,
+  `trilhas` INT(1) NULL,
+  `restaurante` INT(1) NULL,
+  `brinquedos` INT(1) NULL,
+  `natureza` INT(1) NULL,
+  `bebidas` INT(1) NULL,
+  `sorveteria` INT(1) NULL,
+  `musica` INT(1) NULL,
+  `semana` VARCHAR(14) NULL,
+  `sabado` VARCHAR(14) NULL,
+  `domingo` VARCHAR(14) NULL,
+  `feriado` VARCHAR(14) NULL,
+  `img2` VARCHAR(150) NULL,
+  `img3` VARCHAR(150) NULL,
+  `descricao` TEXT(1000) NULL,
+  PRIMARY KEY (`idAppTurismo`),
+  UNIQUE INDEX `idApp_UNIQUE` (`idApp` ASC) VISIBLE);
+
   CREATE TABLE `sistema`.`appHelp` (
   `idAppHelp` INT NOT NULL AUTO_INCREMENT,
   `wordBlock` MEDIUMTEXT NULL,
   PRIMARY KEY (`idAppHelp`));
+
+
+CREATE TABLE `sistema`.`forum` (
+`idforum` INT NOT NULL AUTO_INCREMENT,
+`idApp` INT NULL,
+`idUsuario` INT NULL,
+`nome` VARCHAR(45) NULL,
+`comentario` VARCHAR(500) NULL,
+`utilSim` INT NULL,
+`utilNao` INT NULL,
+`data` DATETIME NULL,
+`avaliacao` INT NULL,
+PRIMARY KEY (`idforum`),
+UNIQUE INDEX `idforum_UNIQUE` (`idforum` ASC) VISIBLE,
+UNIQUE INDEX `idUsuario_UNIQUE` (`idUsuario` ASC) VISIBLE);
+
+INSERT INTO `sistema`.`forum` (`idforum`, `idApp`, `idUsuario`, `nome`, `comentario`, `utilSim`, `utilNao`, `data`, `avaliacao`) VALUES ('2', '21', '2', 'José Carlos Rodrigues', 'Loja muito organizada, atendentes com dominio do assunto, presentes de qualidade', '1', '0', '2022-02-09 21:22:12', '4');
+
+
+
+CREATE TABLE `sistema`.`usuario` (
+`idusuario` INT NOT NULL AUTO_INCREMENT,
+`usuarioNome` VARCHAR(50) NULL,
+`sobreNome` VARCHAR(4100) NULL,
+`usuarioDataNascimento` VARCHAR(10) NULL,
+`usuarioEmail` VARCHAR(255) NULL,
+`usuarioSenha` VARCHAR(255) NULL,
+`alertNovidade` INT NULL,
+`dicasPontosTuristicos` INT NULL,
+`dicasRestaurantes` INT NULL,
+`dicasHospedagens` INT NULL,
+`alertaEventos` INT NULL,
+`ativaLocalizacao` INT NULL,
+PRIMARY KEY (`idusuario`),
+UNIQUE INDEX `idusuario_UNIQUE` (`idusuario` ASC) VISIBLE,
+UNIQUE INDEX `usuarioEmail_UNIQUE` (`usuarioEmail` ASC) VISIBLE);
+
+INSERT INTO `sistema`.`usuario` (`idusuario`, `usuarioNome`, `sobreNome`, `usuarioDataNascimento`, `usuarioEmail`, `usuarioSenha`, `alertNovidade`, `dicasPontosTuristicos`, `dicasRestaurantes`, `dicasHospedagens`, `alertaEventos`, `ativaLocalizacao`) VALUES ('2', 'José', 'Carlos Rodrigues', '31/12/1987', 'jose@gmail.com', '123456', '0', '0', '1', '1', '1', '1');
+INSERT INTO `sistema`.`usuario` (`idusuario`, `usuarioNome`, `sobreNome`, `usuarioDataNascimento`, `usuarioEmail`, `usuarioSenha`, `alertNovidade`, `dicasPontosTuristicos`, `dicasRestaurantes`, `dicasHospedagens`, `alertaEventos`, `ativaLocalizacao`) VALUES ('3', 'Marcia', 'Laravel', '28/02/1978', 'laravel@gmail.com', '123456', '0', '0', '0', '1', '1', '1');

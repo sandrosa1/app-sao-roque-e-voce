@@ -82,9 +82,9 @@ class Upload{
      *
      * @return void
      */
-    public function generateNewName(){
+    public function generateNewName($idApp,$number){
 
-        $this->name = time().'-'.rand(100000,9999999).'-'.uniqid();
+        $this->name = $idApp.'-'.$number;
 
     }
 
@@ -150,7 +150,11 @@ class Upload{
 
         $uploads = [];
 
+        $number = 1;
+
         foreach($files['name'] as $key => $value){
+
+        
             //Array
             $file = [
                 'name'     => $files['name'][$key],
@@ -159,6 +163,8 @@ class Upload{
                 'error'    => $files['error'][$key],
                 'size'     => $files['size'][$key],
             ];
+
+            $number ++;
 
             $uploads [] = new Upload($file);
 

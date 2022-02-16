@@ -69,9 +69,9 @@
 }
 .painelSrv{
     grid-template:
-    "status-srv status-srv status-srv status-srv" 15vh
+    "status-srv status-srv status-srv status-srv" 8vh
     "nav-srv content-srv content-srv content-srv" 
-    /1fr 3fr 2fr 1fr
+     /0.5fr 3fr 2fr 1fr
 }
 .itemNav{
     grid-area: nav-srv;
@@ -103,7 +103,6 @@
 }
 .nav-collection-item:hover{
     background-color: var(--srv6);
-    font-weight: 900;
     color: var(--srv1);
 }
 .active{
@@ -280,6 +279,10 @@ padding: 10px 0px 0px 0px;
     border: 1px solid #920046;
     border-radius: 10px;
     min-height: 120px;
+}
+.detalhes-tutorial-screw{
+    background-color: var(--srv8);
+    height: 700px;
 }
 
 /*Configurações Gerais*/

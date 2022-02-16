@@ -28,7 +28,7 @@ class PageSrv{
             'icon'  => 'stay_current_portrait'
         ],
         'depoimentos' =>[
-            'label'   => 'Comentários',
+            'label'   => 'Fórum',
             'link'    => URL.'/srv/depoimentos',
             'icon'    => 'comment'
         ],

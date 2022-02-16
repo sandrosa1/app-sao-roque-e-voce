@@ -199,24 +199,24 @@ class SettingSrv extends PageSrv{
         switch($app->segmento){
             
             case 'hospedagem':
-                $conf->createHospedagem($idApp, $postVars);
+                Help::helpHospedagem($idApp, $postVars);
                     return self::statusUpdate($validate );
 
             case 'evento':
-                $conf->createEvento($idApp, $postVars);
+                Help::helpEvento($idApp, $postVars);
                 return self::statusUpdate($validate );
                   
             case 'comercio':
-                $conf->createComercio($idApp, $postVars);
+                Help::helpComercio($idApp, $postVars);
                 return self::statusUpdate($validate);
 
             case 'servicos':
                
-                $conf->createServico($idApp, $postVars);
+                Help::helpServico($idApp, $postVars);
                 return self::statusUpdate($validate );
 
             case 'gastronomia':
-                $conf->createGastronomia($idApp, $postVars);
+                Help::helpGastronomia($idApp, $postVars);
                 return self::statusUpdate($validate);     
         }
 

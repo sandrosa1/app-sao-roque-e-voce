@@ -7,16 +7,19 @@ use \App\Help\Help;
 use \App\Model\Entity\Aplication\App as EntityApp;
 use \App\Image\Upload;
 use \App\Image\Resize;
+use \App\Validate\Validate;
+use \App\Model\Entity\Aplication\Hospedagem\Hospedagem as EntityHospedagem;
+use \App\Model\Entity\Aplication\Comercio\Comercio as EntityComercio;
+use \App\Model\Entity\Aplication\Evento\Evento as EntityEvento;
+use \App\Model\Entity\Aplication\Servico\Servico as EntityServico;
+use \App\Model\Entity\Aplication\Gastronomia\Gastronomia as EntityGastronomia;
 
 
 
 class ScreenSrv extends PageSrv{
 
 
-    public static function apptype(){
-
-
-    }
+   
     /**
     * Renderiza o conteúdo da pagina de depoimentos
     *
@@ -173,7 +176,15 @@ class ScreenSrv extends PageSrv{
     */
     private static function getCarrocel(){
       
-        return View::render('srv/modules/tela/preview/components/carrocel',[]);
+        $app = Help::helpApp();
+        $appTipo = Help::helpGetEntity($app);
+
+        return View::render('srv/modules/tela/preview/components/carrocel',[
+            'img1' => $app->img1,
+            'img2' => $appTipo->img2,
+            'img3' => $appTipo->img3,
+        ]);
+        
     }
     
     /** 
@@ -278,33 +289,89 @@ class ScreenSrv extends PageSrv{
      */
     public static function uploadImage(){
 
+        $app = Help::helpApp();
+        $validate = new Validate();
+
         if(isset($_FILES['arquivo'])){
 
             $uploads = Upload::createMultiUpload($_FILES['arquivo']);
-
+            $pathImages = [];
+            $number = 1;
             foreach ($uploads as $objUpload) {
                 // Move os arquivos de upload
+                $objUpload->generateNewName($app->idApp, $number++);
+
                 $sucesso = $objUpload->upload('/var/www/html/app-sao-roque-e-voce/back-end/img/imgApp');
 
+                array_push($pathImages, $objUpload->getBasename());
                 //Instacia de redimencionamento
                 $objResize = new Resize('/var/www/html/app-sao-roque-e-voce/back-end/img/imgApp/'.$objUpload->getBasename());
 
-                $objResize->resize(200,200);
+                $objResize->resize(250,);
 
                 $objResize->save('/var/www/html/app-sao-roque-e-voce/back-end/img/imgApp/'.$objUpload->getBasename(),70);
 
                 if($sucesso){
-                    echo 'Arquivo <strong>'.$objUpload->getBasename().'</strong> enviado com sucesso!';
+                    //echo 'Arquivo <strong>'.$objUpload->getBasename().'</strong> enviado com sucesso!';
+
+        
                     continue;
                 }else{
-                    echo ('Erro ao enviar o arquivo <br>');
+
+                    $validate->setErro('Erro ao enviar o arquivo <br>');
                 }
+
+               
             
             }
 
-           exit;
+            if(count($validate->getErro()) > 0){
+                echo $validate->getErro();
+                
+            }else{
+
+                ScreenSrv::insertPathImageDataBase($app,$pathImages);
+
+                return self::getScreen();
+            }
+
+            
+
+           //exit;
             
         }
+       
+
+    }
+
+    private static function insertPathImageDataBase($app, $pathImages){
+
+        $app = Help::helpApp();
+        $appSegmento = Help::helpGetEntity($app); 
+        
+      
+
+        switch ($app->segmento) {
+            case 'gastronomia':
+                return help::helpImgGastronomia($app, $appSegmento,$pathImages);
+
+            case 'evento':
+                return help::helpImgEvento($app, $appSegmento,$pathImages);
+
+            case 'servicos':
+                return help::helpImgServico($app, $appSegmento,$pathImages);
+
+            case 'comercio':
+                return help::helpImgComercio($app, $appSegmento,$pathImages);
+
+            case 'hospedagem':
+                return help::helpImgHospedagem($app, $appSegmento,$pathImages);
+
+            case 'turismo':
+                return help::helpImgGastronomia($app, $appSegmento,$pathImages);
+           
+        }
+
 
     }
 

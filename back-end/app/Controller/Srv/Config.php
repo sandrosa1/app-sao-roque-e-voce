@@ -180,24 +180,28 @@ class Config extends PageSrv
 
             if($action === 'insert'){
                
+                //Recebe a imagem padrao
+                $objApp->img1  ='um.jpg';
+                //Cria uma instancia de novo App
                 $objApp->insertNewApp();
                 $mensagem = ["Configurações inseridas com sucesso", "Clique em detalhes no menu lateral para prosseguir"];
                
+                //Cria uma instancia de acordo com o segmento
                 switch ($objApp->segmento) {
                     case 'hospedagem':
-                    self::createHospedagem($idCustomer,  $postVars);
+                    Help::helpHospedagem($idCustomer,  $postVars);
                         break;
                     case 'evento':
-                        self::createEvento($idCustomer,  $postVars);
+                        Help::helpEvento($idCustomer,  $postVars);
                         break;
                     case 'comercio':
-                        self::createComercio($idCustomer,  $postVars);
+                        Help::helpComercio($idCustomer,  $postVars);
                         break;
                     case 'servicos':
-                        self::createServico($idCustomer,  $postVars);
+                        Help::helpServico($idCustomer,  $postVars);
                         break;
                     case 'gastronomia':
-                        self::createGastronomia($idCustomer,  $postVars);
+                        Help::helpGastronomia($idCustomer,  $postVars);
                         break;
                 }
 
@@ -295,227 +299,227 @@ class Config extends PageSrv
         }
         return json_encode($arrResponse);
     }
-     /**
-     * Metódo responsável por criar uma nova hospedagem
-     *
-     * @param [type] $idCustomer
-     * @return void
-     */
-    public static function createHospedagem($idApp,  $postVars){
+    //  /**
+    //  * Metódo responsável por criar uma nova hospedagem
+    //  *
+    //  * @param [type] $idCustomer
+    //  * @return void
+    //  */
+    // public static function createHospedagem($idApp,  $postVars){
 
       
-        $objHospedagem = EntityHospedagem::getHospedagemById($idApp);
+    //     $objHospedagem = EntityHospedagem::getHospedagemById($idApp);
 
-        if (!$objHospedagem instanceof EntityHospedagem){
+    //     if (!$objHospedagem instanceof EntityHospedagem){
        
-            $objHospedagem = new EntityHospedagem();
+    //         $objHospedagem = new EntityHospedagem();
 
-        }
+    //     }
         
 
-        $objHospedagem->idApp            = $idApp;
-        $objHospedagem->idAppHospedagem  = $objHospedagem->idAppHospedagem;
-        $objHospedagem->semana           = !$postVars['semana']  || $postVars['semana']   == '00:00 - 00:00'  ? 'Fechado' : $postVars['semana'];
-        $objHospedagem->sabado           = !$postVars['sabado']  || $postVars['sabado']   == '00:00 - 00:00'  ? 'Fechado' : $postVars['sabado'];
-        $objHospedagem->domingo          = !$postVars['domingo'] || $postVars['domingo']  == '00:00 - 00:00'  ? 'Fechado' : $postVars['domingo'];
-        $objHospedagem->feriado          = !$postVars['feriado'] || $postVars['feriado']  == '00:00 - 00:00'  ? 'Fechado' : $postVars['feriado'];
-        $objHospedagem->estacionamento   = $postVars['estacionamento'] ? -2 : -1;
-        $objHospedagem->brinquedos       = $postVars['brinquedos']     ? -2 : -1;
-        $objHospedagem->restaurante      = $postVars['restaurante']    ? -2 : -1;
-        $objHospedagem->arCondicionado   = $postVars['arCondicionado'] ? -2 : -1;
-        $objHospedagem->wiFi             = $postVars['wiFi']           ? -2 : -1;
-        $objHospedagem->academia         = $postVars['academia']       ? -2 : -1;
-        $objHospedagem->piscina          = $postVars['piscina']        ? -2 : -1;
-        $objHospedagem->refeicao         = $postVars['refeicao']       ? -2 : -1;
-        $objHospedagem->emporio          = $postVars['emporio']        ? -2 : -1;
-        $objHospedagem->adega            = $postVars['adega']          ? -2 : -1;
-        $objHospedagem->bebidas          = $postVars['bebidas']        ? -2 : -1;
-        $objHospedagem->sorveteria       = $postVars['sorveteria']     ? -2 : -1;
-        $objHospedagem->whatsapp         = $postVars['whatsapp']       ? -2 : -1;
-        $objHospedagem->img2             = $postVars['img2']           ? $postVars['img2']           : '';
-        $objHospedagem->img3             = $postVars['img3']           ? $postVars['img3']           : '';
-        $objHospedagem->descricao        = $postVars['descricao']      ? $postVars['descricao']      : ''; 
+    //     $objHospedagem->idApp            = $idApp;
+    //     $objHospedagem->idAppHospedagem  = $objHospedagem->idAppHospedagem;
+    //     $objHospedagem->semana           = !$postVars['semana']  || $postVars['semana']   == '00:00 - 00:00'  ? 'Fechado' : $postVars['semana'];
+    //     $objHospedagem->sabado           = !$postVars['sabado']  || $postVars['sabado']   == '00:00 - 00:00'  ? 'Fechado' : $postVars['sabado'];
+    //     $objHospedagem->domingo          = !$postVars['domingo'] || $postVars['domingo']  == '00:00 - 00:00'  ? 'Fechado' : $postVars['domingo'];
+    //     $objHospedagem->feriado          = !$postVars['feriado'] || $postVars['feriado']  == '00:00 - 00:00'  ? 'Fechado' : $postVars['feriado'];
+    //     $objHospedagem->estacionamento   = $postVars['estacionamento'] ? -2 : -1;
+    //     $objHospedagem->brinquedos       = $postVars['brinquedos']     ? -2 : -1;
+    //     $objHospedagem->restaurante      = $postVars['restaurante']    ? -2 : -1;
+    //     $objHospedagem->arCondicionado   = $postVars['arCondicionado'] ? -2 : -1;
+    //     $objHospedagem->wiFi             = $postVars['wiFi']           ? -2 : -1;
+    //     $objHospedagem->academia         = $postVars['academia']       ? -2 : -1;
+    //     $objHospedagem->piscina          = $postVars['piscina']        ? -2 : -1;
+    //     $objHospedagem->refeicao         = $postVars['refeicao']       ? -2 : -1;
+    //     $objHospedagem->emporio          = $postVars['emporio']        ? -2 : -1;
+    //     $objHospedagem->adega            = $postVars['adega']          ? -2 : -1;
+    //     $objHospedagem->bebidas          = $postVars['bebidas']        ? -2 : -1;
+    //     $objHospedagem->sorveteria       = $postVars['sorveteria']     ? -2 : -1;
+    //     $objHospedagem->whatsapp         = $postVars['whatsapp']       ? -2 : -1;
+    //     $objHospedagem->img2             = $postVars['img2']           ? $postVars['img2']           : '';
+    //     $objHospedagem->img3             = $postVars['img3']           ? $postVars['img3']           : '';
+    //     $objHospedagem->descricao        = $postVars['descricao']      ? $postVars['descricao']      : ''; 
 
-        if($postVars['action'] == 'atualizar' ){
+    //     if($postVars['action'] == 'atualizar' ){
 
-            $objHospedagem->updateHospedagem();
+    //         $objHospedagem->updateHospedagem();
             
-        }else{
+    //     }else{
             
-            $objHospedagem->insertNewHospedagem();
+    //         $objHospedagem->insertNewHospedagem();
         
-        }
+    //     }
 
-        return true;
+    //     return true;
         
-    }
-      /**
-     * Metódo responsável por criar uma nova opção gastronomica
-     *
-     * @param [type] $idApp
-     * @return void
-     */
-    public static function createGastronomia($idApp,  $postVars){
+    // }
+    //   /**
+    //  * Metódo responsável por criar uma nova opção gastronomica
+    //  *
+    //  * @param [type] $idApp
+    //  * @return void
+    //  */
+    // public static function createGastronomia($idApp,  $postVars){
 
-        $objGastronomia = EntityGastronomia::getGastronomiaById($idApp);
+    //     $objGastronomia = EntityGastronomia::getGastronomiaById($idApp);
 
-        if (!$objGastronomia instanceof EntityGastronomia){
+    //     if (!$objGastronomia instanceof EntityGastronomia){
        
-            $objGastronomia = new EntityGastronomia();
+    //         $objGastronomia = new EntityGastronomia();
 
-        }
+    //     }
 
 
-        $objGastronomia->idApp             = $idApp;
-        $objGastronomia->idAppGastronomia  = $objGastronomia->idAppGastronomia;
-        $objGastronomia->semana            = !$postVars['semana']  || $postVars['semana']   == '00:00 - 00:00'  ? 'Fechado' : $postVars['semana'];
-        $objGastronomia->sabado            = !$postVars['sabado']  || $postVars['sabado']   == '00:00 - 00:00'  ? 'Fechado' : $postVars['sabado'];
-        $objGastronomia->domingo           = !$postVars['domingo'] || $postVars['domingo']  == '00:00 - 00:00'  ? 'Fechado' : $postVars['domingo'];
-        $objGastronomia->feriado           = !$postVars['feriado'] || $postVars['feriado']  == '00:00 - 00:00'  ? 'Fechado' : $postVars['feriado'];
-        $objGastronomia->estacionamento    = $postVars['estacionamento']   ? -2 : -1;
-        $objGastronomia->acessibilidade    = $postVars['acessibilidade']   ? -2 : -1;
-        $objGastronomia->wiFi              = $postVars['wiFi']             ? -2 : -1;
-        $objGastronomia->brinquedos        = $postVars['brinquedos']       ? -2 : -1;
-        $objGastronomia->restaurante       = $postVars['restaurante']      ? -2 : -1;
-        $objGastronomia->emporio           = $postVars['emporio']          ? -2 : -1;
-        $objGastronomia->adega             = $postVars['adega']            ? -2 : -1;
-        $objGastronomia->bebidas           = $postVars['bebidas']          ? -2 : -1;
-        $objGastronomia->sorveteria        = $postVars['sorveteria']       ? -2 : -1;
-        $objGastronomia->entregaDomicilio  = $postVars['entregaDomicilio'] ? -2 : -1;
-        $objGastronomia->whatsapp          = $postVars['whatsapp']         ? -2 : -1;
-        $objGastronomia->img2              = $postVars['img2']             ? $postVars['img2']             : '';
-        $objGastronomia->img3              = $postVars['img3']             ? $postVars['img3']             : '';
-        $objGastronomia->descricao         = $postVars['descricao']        ? $postVars['descricao']        : ''; 
+    //     $objGastronomia->idApp             = $idApp;
+    //     $objGastronomia->idAppGastronomia  = $objGastronomia->idAppGastronomia;
+    //     $objGastronomia->semana            = !$postVars['semana']  || $postVars['semana']   == '00:00 - 00:00'  ? 'Fechado' : $postVars['semana'];
+    //     $objGastronomia->sabado            = !$postVars['sabado']  || $postVars['sabado']   == '00:00 - 00:00'  ? 'Fechado' : $postVars['sabado'];
+    //     $objGastronomia->domingo           = !$postVars['domingo'] || $postVars['domingo']  == '00:00 - 00:00'  ? 'Fechado' : $postVars['domingo'];
+    //     $objGastronomia->feriado           = !$postVars['feriado'] || $postVars['feriado']  == '00:00 - 00:00'  ? 'Fechado' : $postVars['feriado'];
+    //     $objGastronomia->estacionamento    = $postVars['estacionamento']   ? -2 : -1;
+    //     $objGastronomia->acessibilidade    = $postVars['acessibilidade']   ? -2 : -1;
+    //     $objGastronomia->wiFi              = $postVars['wiFi']             ? -2 : -1;
+    //     $objGastronomia->brinquedos        = $postVars['brinquedos']       ? -2 : -1;
+    //     $objGastronomia->restaurante       = $postVars['restaurante']      ? -2 : -1;
+    //     $objGastronomia->emporio           = $postVars['emporio']          ? -2 : -1;
+    //     $objGastronomia->adega             = $postVars['adega']            ? -2 : -1;
+    //     $objGastronomia->bebidas           = $postVars['bebidas']          ? -2 : -1;
+    //     $objGastronomia->sorveteria        = $postVars['sorveteria']       ? -2 : -1;
+    //     $objGastronomia->entregaDomicilio  = $postVars['entregaDomicilio'] ? -2 : -1;
+    //     $objGastronomia->whatsapp          = $postVars['whatsapp']         ? -2 : -1;
+    //     $objGastronomia->img2              = $postVars['img2']             ? $postVars['img2']             : '';
+    //     $objGastronomia->img3              = $postVars['img3']             ? $postVars['img3']             : '';
+    //     $objGastronomia->descricao         = $postVars['descricao']        ? $postVars['descricao']        : ''; 
 
-        if($postVars['action'] == 'atualizar' ){
-          $objGastronomia->updateGastronomia();
+    //     if($postVars['action'] == 'atualizar' ){
+    //       $objGastronomia->updateGastronomia();
             
-        }else{
-            $objGastronomia->insertNewGastronomia();
+    //     }else{
+    //         $objGastronomia->insertNewGastronomia();
 
-        }
+    //     }
         
         
-    }
-    /**
-     * Metódo responsável por criar um novo Evento
-     *
-     * @param [type] $idApp
-     * @return void
-     */
-    public static function createEvento($idApp,  $postVars){
+    // }
+    // /**
+    //  * Metódo responsável por criar um novo Evento
+    //  *
+    //  * @param [type] $idApp
+    //  * @return void
+    //  */
+    // public static function createEvento($idApp,  $postVars){
 
-        $objEvento = EntityEvento::getEventoById($idApp);
+    //     $objEvento = EntityEvento::getEventoById($idApp);
 
-        if (!$objEvento instanceof EntityEvento){
-            $objEvento = new EntityEvento();
+    //     if (!$objEvento instanceof EntityEvento){
+    //         $objEvento = new EntityEvento();
 
-        }
+    //     }
 
-        $objEvento->idApp          = $idApp;
-        $objEvento->idEvento       = $objEvento->idEvento;
-        $objEvento->semana         = !$postVars['semana']  || $postVars['semana']   == '00:00 - 00:00'  ? 'Fechado' : $postVars['semana'];
-        $objEvento->sabado         = !$postVars['sabado']  || $postVars['sabado']   == '00:00 - 00:00'  ? 'Fechado' : $postVars['sabado'];
-        $objEvento->domingo        = !$postVars['domingo'] || $postVars['domingo']  == '00:00 - 00:00'  ? 'Fechado' : $postVars['domingo'];
-        $objEvento->feriado        = !$postVars['feriado'] || $postVars['feriado']  == '00:00 - 00:00'  ? 'Fechado' : $postVars['feriado'];
-        $objEvento->estacionamento = $postVars['estacionamento'] ? -2 : -1;
-        $objEvento->acessibilidade = $postVars['acessibilidade'] ? -2 : -1;
-        $objEvento->wiFi           = $postVars['wiFi']           ? -2 : -1;
-        $objEvento->trilhas        = $postVars['trilhas']        ? -2 : -1;
-        $objEvento->refeicao       = $postVars['refeicao']       ? -2 : -1;
-        $objEvento->emporio        = $postVars['emporio']        ? -2 : -1;
-        $objEvento->adega          = $postVars['adega']          ? -2 : -1;
-        $objEvento->bebidas        = $postVars['bebidas']        ? -2 : -1;
-        $objEvento->sorveteria     = $postVars['sorveteria']     ? -2 : -1;
-        $objEvento->musica         = $postVars['musica']         ? -2 : -1;
-        $objEvento->whatsapp       = $postVars['whatsapp']       ? -2 : -1;
-        $objEvento->img2           = $postVars['img2']           ? $postVars['img2']           : '';
-        $objEvento->img3           = $postVars['img3']           ? $postVars['img3']           : '';
-        $objEvento->descricao      = $postVars['descricao']      ? $postVars['descricao']      : ''; 
+    //     $objEvento->idApp          = $idApp;
+    //     $objEvento->idEvento       = $objEvento->idEvento;
+    //     $objEvento->semana         = !$postVars['semana']  || $postVars['semana']   == '00:00 - 00:00'  ? 'Fechado' : $postVars['semana'];
+    //     $objEvento->sabado         = !$postVars['sabado']  || $postVars['sabado']   == '00:00 - 00:00'  ? 'Fechado' : $postVars['sabado'];
+    //     $objEvento->domingo        = !$postVars['domingo'] || $postVars['domingo']  == '00:00 - 00:00'  ? 'Fechado' : $postVars['domingo'];
+    //     $objEvento->feriado        = !$postVars['feriado'] || $postVars['feriado']  == '00:00 - 00:00'  ? 'Fechado' : $postVars['feriado'];
+    //     $objEvento->estacionamento = $postVars['estacionamento'] ? -2 : -1;
+    //     $objEvento->acessibilidade = $postVars['acessibilidade'] ? -2 : -1;
+    //     $objEvento->wiFi           = $postVars['wiFi']           ? -2 : -1;
+    //     $objEvento->trilhas        = $postVars['trilhas']        ? -2 : -1;
+    //     $objEvento->refeicao       = $postVars['refeicao']       ? -2 : -1;
+    //     $objEvento->emporio        = $postVars['emporio']        ? -2 : -1;
+    //     $objEvento->adega          = $postVars['adega']          ? -2 : -1;
+    //     $objEvento->bebidas        = $postVars['bebidas']        ? -2 : -1;
+    //     $objEvento->sorveteria     = $postVars['sorveteria']     ? -2 : -1;
+    //     $objEvento->musica         = $postVars['musica']         ? -2 : -1;
+    //     $objEvento->whatsapp       = $postVars['whatsapp']       ? -2 : -1;
+    //     $objEvento->img2           = $postVars['img2']           ? $postVars['img2']           : '';
+    //     $objEvento->img3           = $postVars['img3']           ? $postVars['img3']           : '';
+    //     $objEvento->descricao      = $postVars['descricao']      ? $postVars['descricao']      : ''; 
 
-        if($postVars['action'] == 'atualizar' ){
-            $objEvento->updateEvento();
+    //     if($postVars['action'] == 'atualizar' ){
+    //         $objEvento->updateEvento();
 
-        }else{
-            $objEvento->insertNewEvento();
-        }
-    }
-    /**
-     * Metódo responsável por criar um novo Serviço
-     *
-     * @param [type] $idApp
-     * @return void
-     */
-    public static function createServico($idApp,  $postVars){
+    //     }else{
+    //         $objEvento->insertNewEvento();
+    //     }
+    // }
+    // /**
+    //  * Metódo responsável por criar um novo Serviço
+    //  *
+    //  * @param [type] $idApp
+    //  * @return void
+    //  */
+    // public static function createServico($idApp,  $postVars){
 
-        $objServico = EntityServico::getServicoById($idApp);
+    //     $objServico = EntityServico::getServicoById($idApp);
         
-         if (!$objServico instanceof EntityServico){
-            $objServico = new EntityServico();
+    //      if (!$objServico instanceof EntityServico){
+    //         $objServico = new EntityServico();
 
-        }
+    //     }
         
-        $objServico->idApp                = $idApp;
-        $objServico->idAppServico         = $objServico->idAppServico;
-        $objServico->semana               = !$postVars['semana']  || $postVars['semana']   == '00:00 - 00:00'  ? 'Fechado' : $postVars['semana'];
-        $objServico->sabado               = !$postVars['sabado']  || $postVars['sabado']   == '00:00 - 00:00'  ? 'Fechado' : $postVars['sabado'];
-        $objServico->domingo              = !$postVars['domingo'] || $postVars['domingo']  == '00:00 - 00:00'  ? 'Fechado' : $postVars['domingo'];
-        $objServico->feriado              = !$postVars['feriado'] || $postVars['feriado']  == '00:00 - 00:00'  ? 'Fechado' : $postVars['feriado'];
-        $objServico->estacionamento       = $postVars['estacionamento']   ? -2 : -1;
-        $objServico->acessibilidade       = $postVars['acessibilidade']   ? -2 : -1;
-        $objServico->entregaDomicilio     = $postVars['entregaDomicilio'] ? -2 : -1;
-        $objServico->whatsapp             = $postVars['whatsapp']         ? -2 : -1;
-        $objServico->logo                 = $postVars['logo']             ? $postVars['logo']             : '';
-        $objServico->img2                 = $postVars['img2']             ? $postVars['img2']             : '';
-        $objServico->img3                 = $postVars['img3']             ? $postVars['img3']             : '';
-        $objServico->descricao            = $postVars['descricao']        ? $postVars['descricao']        : ''; 
+    //     $objServico->idApp                = $idApp;
+    //     $objServico->idAppServico         = $objServico->idAppServico;
+    //     $objServico->semana               = !$postVars['semana']  || $postVars['semana']   == '00:00 - 00:00'  ? 'Fechado' : $postVars['semana'];
+    //     $objServico->sabado               = !$postVars['sabado']  || $postVars['sabado']   == '00:00 - 00:00'  ? 'Fechado' : $postVars['sabado'];
+    //     $objServico->domingo              = !$postVars['domingo'] || $postVars['domingo']  == '00:00 - 00:00'  ? 'Fechado' : $postVars['domingo'];
+    //     $objServico->feriado              = !$postVars['feriado'] || $postVars['feriado']  == '00:00 - 00:00'  ? 'Fechado' : $postVars['feriado'];
+    //     $objServico->estacionamento       = $postVars['estacionamento']   ? -2 : -1;
+    //     $objServico->acessibilidade       = $postVars['acessibilidade']   ? -2 : -1;
+    //     $objServico->entregaDomicilio     = $postVars['entregaDomicilio'] ? -2 : -1;
+    //     $objServico->whatsapp             = $postVars['whatsapp']         ? -2 : -1;
+    //     $objServico->logo                 = $postVars['logo']             ? $postVars['logo']             : '';
+    //     $objServico->img2                 = $postVars['img2']             ? $postVars['img2']             : '';
+    //     $objServico->img3                 = $postVars['img3']             ? $postVars['img3']             : '';
+    //     $objServico->descricao            = $postVars['descricao']        ? $postVars['descricao']        : ''; 
 
         
-        if($postVars['action'] == 'atualizar' ){
-          $objServico->updateServico();
+    //     if($postVars['action'] == 'atualizar' ){
+    //       $objServico->updateServico();
             
-        }else{
+    //     }else{
 
-            $objServico->insertNewServico();
-        }
-    }
-    /**
-     * Metódo responsável por criar um novo Comércio
-     *
-     * @param [type] $idCustomer
-     * @return void
-     */
-    public static function createComercio($idApp,  $postVars){
+    //         $objServico->insertNewServico();
+    //     }
+    // }
+    // /**
+    //  * Metódo responsável por criar um novo Comércio
+    //  *
+    //  * @param [type] $idCustomer
+    //  * @return void
+    //  */
+    // public static function createComercio($idApp,  $postVars){
 
-        $objComercio = EntityComercio::getComercioById($idApp);
+    //     $objComercio = EntityComercio::getComercioById($idApp);
 
     
-        if (!$objComercio instanceof EntityComercio){
-            $objComercio = new EntityComercio();
+    //     if (!$objComercio instanceof EntityComercio){
+    //         $objComercio = new EntityComercio();
 
-        }
+    //     }
 
-        $objComercio->idApp            = $idApp;
-        $objComercio->idAppComercio    = $objComercio->idAppComercio;
-        $objComercio->semana           = !$postVars['semana']  || $postVars['semana']   == '00:00 - 00:00'  ? 'Fechado' : $postVars['semana'];
-        $objComercio->sabado           = !$postVars['sabado']  || $postVars['sabado']   == '00:00 - 00:00'  ? 'Fechado' : $postVars['sabado'];
-        $objComercio->domingo          = !$postVars['domingo'] || $postVars['domingo']  == '00:00 - 00:00'  ? 'Fechado' : $postVars['domingo'];
-        $objComercio->feriado          = !$postVars['feriado'] || $postVars['feriado']  == '00:00 - 00:00'  ? 'Fechado' : $postVars['feriado'];
-        $objComercio->estacionamento   = $postVars['estacionamento']   ? -2 : -1;
-        $objComercio->acessibilidade   = $postVars['acessibilidade']   ? -2 : -1;
-        $objComercio->entregaDomicilio = $postVars['entregaDomicilio'] ? -2 : -1;
-        $objComercio->whatsapp         = $postVars['whatsapp']         ? -2 : -1;
-        $objComercio->img2             = $postVars['img2']             ? $postVars['img2']             : '';
-        $objComercio->img3             = $postVars['img3']             ? $postVars['img3']             : '';
-        $objComercio->descricao        = $postVars['descricao']        ? $postVars['descricao']        : '';
+    //     $objComercio->idApp            = $idApp;
+    //     $objComercio->idAppComercio    = $objComercio->idAppComercio;
+    //     $objComercio->semana           = !$postVars['semana']  || $postVars['semana']   == '00:00 - 00:00'  ? 'Fechado' : $postVars['semana'];
+    //     $objComercio->sabado           = !$postVars['sabado']  || $postVars['sabado']   == '00:00 - 00:00'  ? 'Fechado' : $postVars['sabado'];
+    //     $objComercio->domingo          = !$postVars['domingo'] || $postVars['domingo']  == '00:00 - 00:00'  ? 'Fechado' : $postVars['domingo'];
+    //     $objComercio->feriado          = !$postVars['feriado'] || $postVars['feriado']  == '00:00 - 00:00'  ? 'Fechado' : $postVars['feriado'];
+    //     $objComercio->estacionamento   = $postVars['estacionamento']   ? -2 : -1;
+    //     $objComercio->acessibilidade   = $postVars['acessibilidade']   ? -2 : -1;
+    //     $objComercio->entregaDomicilio = $postVars['entregaDomicilio'] ? -2 : -1;
+    //     $objComercio->whatsapp         = $postVars['whatsapp']         ? -2 : -1;
+    //     $objComercio->img2             = $postVars['img2']             ? $postVars['img2']             : '';
+    //     $objComercio->img3             = $postVars['img3']             ? $postVars['img3']             : '';
+    //     $objComercio->descricao        = $postVars['descricao']        ? $postVars['descricao']        : '';
 
-        if($postVars['action'] == 'atualizar' ){
-          $objComercio->updateComercio();
+    //     if($postVars['action'] == 'atualizar' ){
+    //       $objComercio->updateComercio();
             
-        }else{ 
-            $objComercio->insertNewComercio();
+    //     }else{ 
+    //         $objComercio->insertNewComercio();
     
-        }
-    }
+    //     }
+    // }
 
 }
