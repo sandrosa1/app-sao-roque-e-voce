@@ -167,6 +167,20 @@ class App{
      * @param string $fields
      * @return PDOStatement
      */
+    public static function getAppAll($where = null, $order = null, $limit = null, $fields = '*'){
+
+        return(new Database('app'))->select($where, $order, $limit, $fields)->fetchAll();
+    }
+
+      /**
+     * Método responsavel por retornar todos App
+     *
+     * @param string $where
+     * @param string $order
+     * @param string $limit
+     * @param string $fields
+     * @return PDOStatement
+     */
     public static function getApp($where = null, $order = null, $limit = null, $fields = '*'){
 
         return(new Database('app'))->select($where, $order, $limit, $fields);

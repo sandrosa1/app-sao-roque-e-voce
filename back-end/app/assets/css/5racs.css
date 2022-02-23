@@ -26,18 +26,35 @@
 .cadastro-cliente{width: 80%;}
 .card{ min-width: 200px;}
 .footer-racs{background-color: var(--racs3);}
-.nav-racs{ background-color: var(--racs3);}
+.navRacs{ background-color: var(--racs3);}
 /*Configurações Gerais*/
 /*Extra-small*/
 
-.background-login-racs{
+.backgroundLoginRacs{
     position:absolute; 
     top: 0; left: 0; 
     width: 100%; 
-    height: 100%; 
-    background: url('http://localhost/app-sao-roque-e-voce/back-end/img/water-1920.jpg') no-repeat; background-size: auto;
+    height: 100vh; 
+    background: url('http://localhost/app-sao-roque-e-voce/back-end/img/imgLogin/water-1920.jpg') no-repeat; background-size: auto ;
     opacity: 0.9;
     
+}
+.headerLoginRacs{
+    width: 100%;
+    height: 10vh;
+}
+.cardLoginRacsContent{
+    width: 100%;
+    height: 90vh;
+
+}
+.cardLoginRacs{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
 }
 /*------- Painel de configurações do Racs ------ */
 .gridContainerRacs{
@@ -46,32 +63,41 @@
 }
 .painelRacs{
     grid-template:
-    "status-racs status-racs status-racs status-racs" 15vh
-    "nav-racs content-racs content-racs content-racs" 
-    /1fr 3fr 2fr 1fr
+    "statusRacs statusRacs statusRacs statusRacs" 8vh
+    "navRacs contentRacs contentRacs contentRacs" 92vh
+    /0.5fr 3fr 2fr 1fr
 }
 .itemNavRacs{
-    grid-area: nav-racs;
+    grid-area: navRacs;
     background-color: var(--racs2);
  }
  .itemGreenRacs{
-    grid-area: status-racs;
+    grid-area: statusRacs;
     background-color: var(--racs2);
 }
 .itemRedRacs
 {
-    grid-area: content-racs;
+    grid-area: contentRacs;
     background-color: var(--racs4);
 }
 
+.btnLogoutRacs{
+    background-color: var(--racs2);
+
+}
+
+.btnLogoutRacs:hover{
+    background-color: var(--racs1);
+
+}
+
 /*----------------- Nav lateral--------------- */
-.nav-collection-racs{ 
+.navCollectionRacs{ 
     display: flex;
     flex-direction: column;
-    /* Precisa de uma altura maxima */
-    height: 300px;
+    max-height: 92vh;
 }
-.nav-collection-item-racs{
+.navCollectionItemRacs{
     width: 100%;
     height: 50px;
     padding-left: 25px;
@@ -79,16 +105,22 @@
     color: var(--srv8);
     margin-right: 20px;
 }
-.nav-collection-item-racs:hover{
-    background-color: var(--racs4);
-    font-weight: 900;
-    color: var(--racs2);
+.navCollectionItemRacs:hover{
+    background-color: rgba(255, 255, 255, 0.09);
+    /* font-weight: 900; */
+    color: var(--srv8);
 }
-.active-racs{
+.activeRacs{
     background-color: var(--racs4);
+    color: var(--racs2);
+    font-weight: 700;
+}
+.activeRacs:hover{
+    background-color: rgb(255, 255, 255);
     color: var(--racs2);
     font-weight: 900;
 }
+
 #btn-logout-racs{
     background-color: var(--racs2);
 }
@@ -96,10 +128,92 @@
     background-color: var(--racs2);
 }
 
+/* Apps */
+
+.containerRacs{
+    max-height: 92vh;
+    background-color: var(--srv6);
+}
+
+.navTabs{
+    height: 7vh;
+    box-shadow: 0px 0px 25px 0px rgba(0, 0, 0, 0.2);
+}
+.appsListaRacs{
+    border: 1px solid red;
+    height: 85vh;
+    background-color: #f0f0f0;
+} 
+
+thead, tbody{
+    display: block; 
+}
+thead{
+    height: 7vh;
+}
+
+tbody{
+    overflow-y: scroll;
+    max-height: 78vh;
+    box-shadow: 0px 0px 25px 0px rgba(0, 0, 0, 0.2);
+}
+.table {
+    /*   */
+    background-color: #fff;
+}
+
+.table th,
+.table td {
+    padding: 5px; 
+}
+
+.table th{
+    width: 22%;
+}
+
+.table tbody tr {
+    border-bottom: 1px solid rgb(73, 67, 67);
+}
+
+.tabelaRacs{
+    /* min-width: 100%;
+    height: 10vh; */
+    background-color: var(--racs2);
+    color: var(--racs4);
+ }
+/*Estilo do scroll */
+.listaTabelaRacs::-webkit-scrollbar {
+    width: 12px;               /* width of the entire scrollbar */
+  }
+  
+.listaTabelaRacs::-webkit-scrollbar-track {
+    background: var(--srv6);       /* color of the tracking area */
+  }
+  
+.listaTabelaRacs::-webkit-scrollbar-thumb {
+    background-color: var(--racs1);    /* color of the scroll thumb */
+    border-radius: 20px;       /* roundness of the scroll thumb */
+    border: 3px solid var(--srv6);;  /* creates padding around scroll thumb */
+  }
+  
+
+
+
+
+
 
 @media screen and (max-width: 480px){
     .img-sobre{
        width: 60px;
+    }
+    .backgroundLoginRacs{
+        position:absolute; 
+        top: 0; left: 0; 
+        width: 100%; 
+        height: 100vh; 
+        background: url('http://localhost/app-sao-roque-e-voce/back-end/img/imgLogin/water-800.jpg') no-repeat; background-size: auto ;
+        opacity: 0.9;
+        
     }
 
 }
@@ -108,6 +222,16 @@
         .img-sobre{
             width: 70px;
     }
+    .backgroundLoginRacs{
+        position:absolute; 
+        top: 0; left: 0; 
+        width: 100%; 
+        height: 100vh; 
+        background: url('http://localhost/app-sao-roque-e-voce/back-end/img/water-1200.jpg') no-repeat; background-size: auto ;
+        opacity: 0.9;
+        
+    }
+
 }
 /* @media screen and (min-width: 769px) and (max-width: 1199px){
  

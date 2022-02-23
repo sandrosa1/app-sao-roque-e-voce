@@ -29,7 +29,7 @@ a{text-decoration: none; color: #333;}
 
 .center{text-align: center;}
 /*----------------------------------- Margin */
-.m-0{margin: 0;}
+.m-0{margin: 0px;}
 .m-1{margin: 5px;}
 .m-2{margin: 10px;}
 .m-3{margin: 15px;}
@@ -60,7 +60,7 @@ a{text-decoration: none; color: #333;}
 .mb-4{margin-bottom: 20px;}
 .mb-5{margin-bottom: 25px;}
 /*----------------------------------------------- padding */
-.p-0{padding: 0;}
+.p-0{padding: 0px;}
 .p-1{padding: 5px;}
 .p-2{padding: 10px;}
 .p-3{padding: 15px;}
@@ -123,6 +123,27 @@ a{text-decoration: none; color: #333;}
 .vl{display: flex; align-items: center; justify-content: flex-start;}
 .vsa{display: flex; align-items: center; justify-content: space-around;}
 .vse{display: flex; align-items: center; justify-content: end;}
+
+
+.btnRed{
+    background-color: var(--error);
+}
+.btnRed:hover{
+    background-color: rgb(209, 7, 7);
+}
+.btnBlue{
+    background-color: var(--help);
+}
+.btnBlue:hover{
+    background-color: rgb(14, 14, 209);
+}
+.btnGreen{
+    background-color: var(--success);
+}
+.btnGreen:hover{
+    background-color: green;
+}
+
 
 
 /*Configurações Gerais*/

@@ -330,6 +330,18 @@ class Customer{
         return(new Database('customer'))->select($where, $order, $limit, $fields);
     }
 
-  
-   
+    /**
+     * Método responsavel por retornar todos clientes
+     *
+     * @param string $where
+     * @param string $order
+     * @param string $limit
+     * @param string $fields
+     * @return PDOStatement
+     */
+    public static function getCustomerAll($where = null, $order = null, $limit = null, $fields = '*'){
+
+        return(new Database('customer'))->select($where, $order, $limit, $fields)->fetchAll();
+    }
+
 }

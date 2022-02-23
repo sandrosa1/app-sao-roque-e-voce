@@ -8,13 +8,6 @@ use \App\Model\Entity\Aplication\App as EntityApp;
 use \App\Image\Upload;
 use \App\Image\Resize;
 use \App\Validate\Validate;
-use \App\Model\Entity\Aplication\Hospedagem\Hospedagem as EntityHospedagem;
-use \App\Model\Entity\Aplication\Comercio\Comercio as EntityComercio;
-use \App\Model\Entity\Aplication\Evento\Evento as EntityEvento;
-use \App\Model\Entity\Aplication\Servico\Servico as EntityServico;
-use \App\Model\Entity\Aplication\Gastronomia\Gastronomia as EntityGastronomia;
-
-
 
 class ScreenSrv extends PageSrv{
 
@@ -36,12 +29,17 @@ class ScreenSrv extends PageSrv{
 
         if(Help::helpApp() instanceof EntityApp){
             $content = View::render('srv/modules/tela/index',[
-                'preview'=> self::getView(),
-                'form'   => self::getForm()
+                'preview' => self::getView(),
+                'form'    => self::getForm(),
+                'status'  => '',
+
+                
             ]);   
         }else{
             $content = View::render('srv/modules/tela/index',[
-                'preview'=> self::getBlockView(),
+                'status'  => self::getBlockView(),
+                'preview' => '',
+                'form'    => '',
                 
             ]);
         }

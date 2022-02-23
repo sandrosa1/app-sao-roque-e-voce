@@ -12,20 +12,20 @@ class PageRacs{
             'link'  => URL.'/racs/home',
             'icon'  => 'home'
         ],
-        'clientes'  =>[
-            'label' => 'Clientes',
+        'customer'  =>[
+            'label' => 'Apps',
             'link'  => URL.'/racs/customer',
-            'icon'  => 'build'
+            'icon'  => 'remove_red_eye'
         ],
         'apps' =>[
-            'label' => 'APPs',
+            'label' => 'Create',
             'link'  => URL.'/racs/apps',
             'icon'  => 'stay_current_portrait'
         ],
         'admin' =>[
-            'label'   => 'Administradores',
+            'label'   => 'Roots',
             'link'    => URL.'/racs/admin',
-            'icon'    => 'comment'
+            'icon'    => 'settings'
         ],
     ];
     /**
@@ -58,10 +58,12 @@ class PageRacs{
             $links .= View::render('racs/menu/link',[
                 'label'   => $module['label'],
                 'link'    => $module['link'],
-                'current' => $hash == $currentModule ? 'active-racs' : '',
+                'current' => $hash == $currentModule ? 'activeRacs' : '',
                 'icon'    => $module['icon']
             ]);
+        
         }
+
         //Retorna a view do menu
         return View::render('racs/menu/box',[
             'links' => $links

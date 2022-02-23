@@ -29,14 +29,40 @@
 .fwm{font-weight: 500;}
 .dibl{display: block;}
 
-.card-login{
-    width: 100vw;
-    height: 100vh;
+/* card Login */
+.background-login-srv{
+    position:absolute; 
+    top: 0; left: 0; 
+    width: 100%; 
+    height: 100vh; 
+    background: url('http://localhost/app-sao-roque-e-voce/back-end/img/imgLogin/vinho-1300.jpg') no-repeat; background-size: auto;
+    opacity: 0.9;
+}
+.header-login-src{
+    width: 100%;
+    height: 10vh;
+}
+.card-login-src-content{
+    width: 100%;
+    height: 90vh;
+
+}
+.card-login-src{
+    width: 100%;
+    height: 100%;
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
 }
+/* .card-login{
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+} */
 .z-depth-3{
     background-color: #fff;
     opacity: .9;
@@ -50,14 +76,7 @@
     background-color: #fff;
     opacity: 0.7;
 }
-.background-login{
-    position:absolute; 
-    top: 0; left: 0; 
-    width: 100%; 
-    height: 100%; 
-    background: url('http://localhost/app-sao-roque-e-voce/back-end/img/background-login-1300.jpg') no-repeat; background-size: auto;
-    opacity: 0.9;
-}
+
 .gif{
     width: 80px;
 }
@@ -70,7 +89,7 @@
 .painelSrv{
     grid-template:
     "status-srv status-srv status-srv status-srv" 8vh
-    "nav-srv content-srv content-srv content-srv" 
+    "nav-srv content-srv content-srv content-srv" 92vh
      /0.5fr 3fr 2fr 1fr
 }
 .itemNav{
@@ -85,6 +104,7 @@
 {
     grid-area: content-srv;
     background-color: var(--srv6);
+
 }
 /*----------------- Nav lateral--------------- */
 .nav-collection{ 
@@ -102,27 +122,50 @@
    
 }
 .nav-collection-item:hover{
-    background-color: var(--srv6);
-    color: var(--srv1);
+    background-color: rgba(39, 199, 83, 0.8);
+    color: white;
 }
 .active{
     background-color: var(--srv6);
     color: var(--srv1);
     font-weight: 900;
 }
-#btn-logout-svr{
-    background-color: var(--srv4);
+
+.active:hover{
+    background-color: rgb(255, 255, 255);
+    color: var(--srv1);
+    font-weight: 900;
 }
-#btn-logout-svr:hover{
-    background-color: var(--srv2);
-}
+
+/*Estilo do scroll */
+.containerSrv::-webkit-scrollbar {
+    width: 12px;               /* width of the entire scrollbar */
+  }
+  
+.containerSrv::-webkit-scrollbar-track {
+    background: var(--srv6);       /* color of the tracking area */
+  }
+  
+.containerSrv::-webkit-scrollbar-thumb {
+    background-color: var(--srv1);    /* color of the scroll thumb */
+    border-radius: 20px;       /* roundness of the scroll thumb */
+    border: 3px solid var(--srv6);;  /* creates padding around scroll thumb */
+  }
+
 /* tutorial */
 .detalhes-tutorial{
     background-color: var(--srv8);
     height: 400px;
 }
+/* Config */
 
-
+.containerSrv{
+    position: relative;
+    max-height: 92vh;
+    overflow-y: scroll;
+    background-color: var(--srv6);
+    padding: 20px 50px 20px 50px;
+}
 /* Detalhes */
 .modal{
     width: 30%;
@@ -288,23 +331,18 @@ padding: 10px 0px 0px 0px;
 /*Configurações Gerais*/
 /*Extra-small*/
 @media screen and (max-width: 480px){
-    .login{
-        width: 80vh;
-        padding: 30px;
-    }
-    .card-login{
-        width: 100vw;
-        height: 100vh;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-    }
-   
+    
 }
 /*Small*/
 @media screen and (min-width: 481px) and (max-width: 768px){
-
+    .background-login-srv{
+        position:absolute; 
+        top: 0; left: 0; 
+        width: 100%; 
+        height: 100vh; 
+        background: url('http://localhost/app-sao-roque-e-voce/back-end/img/imgLogin/vinho.jpg') no-repeat; background-size: auto;
+        opacity: 0.9;
+    }
   
 } 
 /*Medium*/

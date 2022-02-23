@@ -3,6 +3,7 @@
 namespace App\Help;
 
 use \App\Controller\Srv\PageSrv;
+use \App\Model\Entity\Customer\Customer as EntityCustomer;
 use \App\Model\Entity\Aplication\App as EntityApp;
 use \App\Model\Entity\Aplication\Hospedagem\Hospedagem as EntityHospedagem;
 use \App\Model\Entity\Aplication\Comercio\Comercio as EntityComercio;
@@ -473,21 +474,28 @@ class Help{
    
     public static function helpImgComercio($app, $appSegmento, $pathImages){
 
-        // $app = Help::helpApp();
-        // $appTipo = Help::helpGetEntity($app);
-        // $objComercio = EntityComercio::getComercioById($idApp);
-       
+     
         $app->img1          = $pathImages[0];
         $appSegmento->img2  = $pathImages[1];
         $appSegmento->img3  = $pathImages[2];
 
-      
-
-        
         $app->updateApp();
         $appSegmento->updateComercio();
             
         return true;
     }
+
+    public static function hellGetAllsApps(){
+
+      
+       return EntityApp::getAppAll();
+
+    }
+    public static function hellGetAllsCustomers(){
+
+      
+        return EntityCustomer::getCustomerAll();
+ 
+     }
 
 }

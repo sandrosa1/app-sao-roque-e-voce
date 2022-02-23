@@ -1,17 +1,16 @@
-
 :root {
     /* cores racs */
     --racs1: #6300ff;
-    --racs2: #00b7ff;
+    --racs2: #2a5768;
     --racs3: #8faadc;
-    --racs4: #eee;
+    --racs4: rgb(242, 241, 241);
     --racs5: #000;
     --racs6: rgb(100, 226, 69);
 
     /* cores São Roque e Voce */
     --srv3: #920046;
     --srv2: #FF3434;
-    --srv1: #0CB664;
+    --srv1: #3ea574;
     --srv4: #00812d;
     --srv5: #FF3434;
     --srv6: #f5f5f5;
@@ -24,6 +23,6 @@
     --success: #1cf51c;
     --error: #f10e0e;
     --alert: #fdf904;
-    --help: #1059c7;
+    --help:  #1059c7;
    
 }
