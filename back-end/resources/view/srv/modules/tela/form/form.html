@@ -1,71 +1,88 @@
  <!-- Bloco de comentários -->
+<!-- Formulário de upload de imagens -->
  <div class="row">
+
     <div class="col s5">
-      <h3 class="srv-c-4 fz-20 fwb ">Anexar imagens</h3>
-        <form  method="post" enctype="multipart/form-data">
- 
+
+        <h3 class="srv-c-4 fz-20 fwb ">Anexar imagens</h3>
+
+        <form id="formImagens" method="post" enctype="multipart/form-data">
+
             <div class="file-field input-field">
-              <div class="btn btnBlue">
-                <span>File</span>
-                <input required type="file" name="arquivo[]" Value="">
-              </div>
-              <div class="file-path-wrapper">
-                <input class="file-path validate" type="text" placeholder="Imagem principal."/>
-              </div>
+                <div class="btn btnBlue">
+                    <span>File</span>
+                    <input required type="file" name="arquivo[]" Value="">
+                </div>
+                <div class="file-path-wrapper">
+                    <input class="file-path validate" type="text" placeholder="Imagem principal."/>
+                </div>
             </div>
 
             <div class="file-field input-field">
                 <div class="btn btnBlue">
-                  <span>File</span>
-                  <input required type="file" name="arquivo[]" Value="" >
+                    <span>File</span>
+                    <input required type="file" name="arquivo[]" Value="" >
                 </div>
                 <div class="file-path-wrapper">
-                  <input class="file-path validate" type="text" placeholder="Segunda imagem."/>
+                    <input class="file-path validate" type="text" placeholder="Segunda imagem."/>
                 </div>
-              </div>
+            </div>
 
-              <div class="file-field input-field">
+            <div class="file-field input-field">
                 <div class="btn btnBlue">
-                  <span>File</span>
-                  <input required type="file" name="arquivo[]" Value="" >
+                    <span>File</span>
+                    <input required type="file" name="arquivo[]" Value="" >
                 </div>
                 <div class="file-path-wrapper">
-                  <input class="file-path validate" type="text" placeholder="Terceira imagem."/>
+                    <input class="file-path validate" type="text" placeholder="Terceira imagem."/>
                 </div>
-              </div>
-        
-            <button class="btnGreen btn ">Inserir</button>
+            </div>
+
+            <div class="col 6s">
+                <button class="btnGreen btn ">Inserir</button>
+            </div>
+            <!-- Usado paro o loading do ajax -->
+            <div id="loading" class="col s3 loading"></div>
+            <div id="resposta" class="col s3 resposta"></div>
+
         </form>
 
     </div>
-    <div class="col s1"></div>
-    <div class="col s5 mt-5">
-      <div class="col detalhes-tutorial-screw ">
-        <h3 class="srv-c-4 fzc-20 fwb">Importante</h3>
-        <div class="col s12">
-          <p class="fzj-15">Nessa seção você inseri tres imagens. Essas imagens podem ser da faixa ou interior do seu estabelecimento, produtos que você quer expor. A primeira imagem e o carro chefe será exibida nas opçoes primaias do menu. </p>
-          <br>
-          <hr>
-          <br>
-          <p class="fzj-15">Os formatos de imagem aceito são <b>jpg ou jpeg</b>. </p>
-          <br>
-          <hr>
-          <br>
-          <p class="fzj-15">Para um enquadramento perfeito da imagem, a <b>largura dividido pela altura</b> deve estar entre <b>1.45 a 1.55</b></p>
-          <p class="fzj-15"><b>EX:</b> 1280 pixel / 850 pixel = <b>1.505</b> </p>
-          <p class="fzj-15"><b>EX:</b> 15 cm / 10cm  = <b>1.5</b> </p>
-          <p class="fzj-15"><b>Quanto mais proximo de 1.5, mais precisa sera a imagem.</b> </p>
-          <p class="fzj-15"><b>Verifique como ela aparece no simular ao lado.</b> </p>
+
+
+<!-- Informações para o usuário inserir uma imagem adequeada -->
+
+    <div class="col s5 mt-5 offset-s1">
+        <div class="col detalhes-tutorial-screw ">
+            <h3 class="srv-c-4 fzc-20 fwb">Importante</h3>
+            <div class="col s12">
+
+                <p class="fzj-15 mt-1 mb-1">Nessa seção você inseri tres imagens. 
+                    Essas imagens podem ser da faixa ou interior do seu estabelecimento, 
+                    produtos que você quer expor. A primeira imagem e o carro chefe será 
+                    exibida nas opçoes primaias do menu.</p>
+
+                <hr>
+
+                <p class="fzj-15 mt-1 mb-1">Os formatos de imagem aceito são <b>jpg ou jpeg</b>.</p>
+
+                <hr>
+
+                <p class="fzj-15 mt-1">Para um enquadramento perfeito da imagem, 
+                    a <b>largura dividido pela altura</b> deve estar entre <b>1.45 a 1.55</b></p>
+
+                <p class="fzj-15"><b>EX:</b> 1280 pixel / 850 pixel = <b>1.505</b> </p>
+
+                <p class="fzj-15"><b>EX:</b> 15 cm / 10cm  = <b>1.5</b> </p>
+
+                <p class="fzj-15"><b>Quanto mais proximo de 1.5, mais precisa sera a imagem.</b> </p>
+
+                <p class="fzj-15"><b>Verifique como ela aparece no simular ao lado.</b> </p>
+
+            </div>
 
         </div>
     </div>
-  </div>
-  <div class="col s1"></div>
-    
+
 </div>
  
-  <!-- <form  method="post" enctype="multipart/form-data" name="cadastro" >
-    Upload imagem:
-    <input type="file" name="arquivo" />
-    <button type="submit">Enviar</button>
-</form> -->

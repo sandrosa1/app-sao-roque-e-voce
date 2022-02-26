@@ -1,9 +1,10 @@
-/*Sistema*/
-html, body {
+/*Stylo comum para toda aplicação*/
+/* html, body {
     margin: 0;
     padding: 0;
     height: 100%;
-    }
+    } */
+    
 *{margin:0; padding: 0; box-sizing: border-box; font-family: Arial, sans-serif; scrollbar-color: transparent transparent;  scrollbar-width: 0px}
 
 a{text-decoration: none; color: #333;}
@@ -19,11 +20,11 @@ a{text-decoration: none; color: #333;}
 .inLineBlock{display: inline-block;}
 
 .w100{width: 100%;}
-.w90{width: 100%;}
-.w80{width: 100%;}
-.w70{width: 100%;}
-.w60{width: 100%;}
-.w50{width: 100%;}
+.w90{width: 90%;}
+.w80{width: 80%;}
+.w70{width: 70%;}
+.w60{width: 60%;}
+.w50{width: 60%;}
 
 .h40{height: 40px;}
 

@@ -1,3 +1,4 @@
+/* variaveis de corea da aplicação */
 :root {
     /* cores racs */
     --racs1: #6300ff;
@@ -11,7 +12,7 @@
     --srv3: #920046;
     --srv2: #FF3434;
     --srv1: #3ea574;
-    --srv4: #00812d;
+    --srv4: #0B9329;
     --srv5: #FF3434;
     --srv6: #f5f5f5;
     --srv7: #E8AA0B;
@@ -26,3 +27,4 @@
     --help:  #1059c7;
    
 }
+

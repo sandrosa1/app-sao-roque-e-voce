@@ -1,17 +1,18 @@
 // ------------------------------------------arquivo para sistema SRV----------------------------\\
+//Endereços das requis
 const UrlSrvConfigCep = urlName+'/srv/configuracao/cep';
 const UrlSrvConfig = urlName+'/srv/configuracao';
 const UrlSrvDetalhes = urlName+'/srv/detalhes';
+const UrlSrvTela = urlName+'/srv/tela';
+//Sistem de loading
 const LoadingCep = () => document.getElementById('loadingCep').innerHTML = '<div class="preloader-wrapper small active"><div class="spinner-layer spinner-green-only"><div class="circle-clipper left"><div class="circle"></div></div><div class="gap-patch"><div class="circle"></div></div><div class="circle-clipper right"><div class="circle"></div></div></div></div>';
 const ParandoLoadingCep = () => document.getElementById('loadingCep').innerHTML = '';
 const LoadingConfig = () => document.getElementById('loading').innerHTML = '<div class="preloader-wrapper small active"><div class="spinner-layer spinner-green-only"><div class="circle-clipper left"><div class="circle"></div></div><div class="gap-patch"><div class="circle"></div></div><div class="circle-clipper right"><div class="circle"></div></div></div></div>';
 const BreakLoadingConfig = () => document.getElementById('loading').innerHTML = '';
-
 // Modal de ajuda do form de detalhes
 $(document).ready(function(){
     $('.modal').modal();
-  });
-
+});
 //Busca mascasra para ocep
 $('#cep, #telefone, #celular').on('focus', function () {
 
@@ -22,7 +23,7 @@ $('#cep, #telefone, #celular').on('focus', function () {
     if(id == "celular"){VMasker(document.querySelector("#celular")).maskPattern("(99)99999-9999")};
 
 });
-
+//Preenche os campos do formulario da pagina de conf. com os dados retornado da funçao ajax cep
 const inputsAddresSrv = (result) => {
     for(const campo in result){
         if(document.querySelector("#"+campo)){
@@ -30,6 +31,7 @@ const inputsAddresSrv = (result) => {
         }
     }
 }
+//Limpa os dados de endereço
 const clearInputsAddresSrv = () => {
    
     document.querySelector("#cep").value = '';
@@ -38,9 +40,7 @@ const clearInputsAddresSrv = () => {
     document.querySelector("#localidade").value = '';
         
 }
-
-
-//Saiu do focus
+//Busca o cep quando sai do foco
 $('#cep').on('blur', function (event) {
     if(document.querySelector("#cep").value.length == 9){
         
@@ -73,11 +73,10 @@ $('#cep').on('blur', function (event) {
     }
 
 });
-
-$(document).ready(function(){
-    $('select').formSelect();
-  });
-
+// $(document).ready(function(){
+//     $('select').formSelect();
+//   });
+//Formulario de informação dos dados do app
 $("#formConfig").on("submit",function(event){
     event.preventDefault();
     LoadingConfig()
@@ -107,14 +106,13 @@ $("#formConfig").on("submit",function(event){
                         outDuration:5000,
                     });
                 });
-                setTimeout(() => {window.onload}, 3000);
+                setTimeout(() => {window.location.href = response.page}, 3000);
             }
             BreaKLoadingConfig()
         }
     });
 });
-
-//Busca mascasra para ocep
+//Máscara de formatação
 $('#semana, #sabado, #domingo, #feriado').on('focus', function () {
 
     var id=$(this).attr("id");
@@ -125,8 +123,7 @@ $('#semana, #sabado, #domingo, #feriado').on('focus', function () {
     if(id == "feriado"){VMasker(document.querySelector("#feriado")).maskPattern("99:99 - 99:99")};
 
 });
-
-
+//Seta os detalhes do app
 $("#formDetahes").on("submit",function(event){
     event.preventDefault();
     LoadingConfig()
@@ -157,23 +154,62 @@ $("#formDetahes").on("submit",function(event){
                         outDuration:5000,
                     });
                 });
+                setTimeout(() => {window.location.href = response.page}, 3000);
             
             }
+            BreakLoadingConfig();
+
+        }
+    });
+});
+//Upload das imagens
+$("#formImagens").on("submit",function(event){
+    event.preventDefault();
+    var form_img = new FormData(document.getElementById("formImagens"));
+    LoadingConfig()
+    $.ajax({
+         url: getRoot(UrlSrvTela),
+         method: 'post',
+         data: form_img,
+         dataType: 'json',
+         cache: false,
+         contentType: false,
+         processData: false,
+         success: function(response){                                                                                          
+            $('.loading').empty();
+            if(response.retorno == 'erro'){
+                getCaptcha();
+                $.each(response.erros,function(key,value){
+                    M.toast({   html: `<span class="lighten-2">${value}</span><button class="btn-flat toast-action"><i class="material-icons yellow-text">error_outline</i></button>`,
+                        classes: 'rounded, red',
+                        inDuration: 5000,
+                        outDuration:5000,
+                    });
+                });
+                
+            }else{
+                $.each(response.success,function(key,value){
+                    getCaptcha();
+                    M.toast({   html: `<span>${value}</span><button class="btn-flat toast-action"><i class="material-icons blue-text">thumb_up</i></button>`,
+                        classes: 'rounded, green',
+                        inDuration: 5000,
+                        outDuration:5000,
+                    });
+                });
+                setTimeout(() => {window.location.href = response.page}, 3000);
             
+            }   
             BreakLoadingConfig() 
         }
     });
 });
-
-
-
+//Carrocel de imagens
 $(function(){
 
     $('#slide img:eq(0)').addClass("ativo").show();
     setInterval(slide,5000);
     
     function slide(){
-    
         //Se a proxima imagem existir
         if($('.ativo').next().length){
     
@@ -188,5 +224,5 @@ $(function(){
             $('#slide img:eq(0)').fadeIn().addClass("ativo");
     
         }
-    
-    } });
+    } 
+});

@@ -214,13 +214,13 @@ class Config extends PageSrv
         
             $arrResponse=[
                 "retorno" => "success",
-                "page"    => "srv/configuracao",
+                "page"    => "configuracao",
                 "success" => $mensagem
             ];   
 
         }
 
-        echo json_encode($arrResponse);
+        return json_encode($arrResponse);
     }
 
    

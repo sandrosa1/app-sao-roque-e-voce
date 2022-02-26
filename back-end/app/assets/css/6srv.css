@@ -1,5 +1,9 @@
 /* SISTEMA DE COR SÃO ROQUE E VOCẼ */
 
+.f-popi{font-family: 'Poppins', sans-serif;}
+.f-robo{font-family: 'Roboto', sans-serif; font-weight: bold;}
+.c-pri{color: var(--srv3);}
+.c-sec{color: var(--srv4);}
 
 /* CLASSE DE CORES*/
 .srv-c-1{color: var(--srv1);}
@@ -76,36 +80,34 @@
     background-color: #fff;
     opacity: 0.7;
 }
-
 .gif{
     width: 80px;
 }
+
 /*------- Painel de configurações do cliente ------ */
 .gridContainerSrv{
     display: grid;
     height: 100vh;
-
 }
 .painelSrv{
     grid-template:
     "status-srv status-srv status-srv status-srv" 8vh
     "nav-srv content-srv content-srv content-srv" 92vh
-     /0.5fr 3fr 2fr 1fr
+    /0.5fr 3fr 2fr 1fr
 }
 .itemNav{
     grid-area: nav-srv;
     background-color: var(--srv1);
- }
+}
  .itemGreen{
     grid-area: status-srv;
     background-color: var(--srv1);
 }
-.itemRed
-{
+.itemRed{
     grid-area: content-srv;
     background-color: var(--srv6);
-
 }
+
 /*----------------- Nav lateral--------------- */
 .nav-collection{ 
     display: flex;
@@ -119,7 +121,6 @@
     padding-left: 20px;
     font-size: 1.3rem;
     color: var(--srv8);
-   
 }
 .nav-collection-item:hover{
     background-color: rgba(39, 199, 83, 0.8);
@@ -130,34 +131,38 @@
     color: var(--srv1);
     font-weight: 900;
 }
-
 .active:hover{
     background-color: rgb(255, 255, 255);
     color: var(--srv1);
     font-weight: 900;
 }
 
-/*Estilo do scroll */
+/*-------Estilo do scroll -----*/
 .containerSrv::-webkit-scrollbar {
-    width: 12px;               /* width of the entire scrollbar */
-  }
+    width: 12px;               
+}
   
 .containerSrv::-webkit-scrollbar-track {
-    background: var(--srv6);       /* color of the tracking area */
-  }
-  
+    background: var(--srv6);     
+}
 .containerSrv::-webkit-scrollbar-thumb {
-    background-color: var(--srv1);    /* color of the scroll thumb */
-    border-radius: 20px;       /* roundness of the scroll thumb */
-    border: 3px solid var(--srv6);;  /* creates padding around scroll thumb */
+    background-color: var(--srv1);    
+    border-radius: 20px;      
+    border: 3px solid var(--srv6);
   }
+/*Scroll firefox */
+.containerSrv{
+    scrollbar-color: var(--srv1) var(--srv6);
+    scrollbar-width: 10px;
+}
 
-/* tutorial */
+/* ---------------Tutorial------------- */
 .detalhes-tutorial{
     background-color: var(--srv8);
     height: 400px;
 }
-/* Config */
+
+/* ----------Config-----------*/
 
 .containerSrv{
     position: relative;
@@ -176,26 +181,21 @@
     padding: 2px;
     color: #fff;
 }
-
 .icons-ajuda-fechar{
     color: var(--error); 
 }
-
 .obrigatorio{
     color: var(--srv2);
 }
 
 /* --------Tela------- */
-
 .celular{
     border:1px solid black ;
     border-radius: 10px;
     width: 80mm;
     height: auto;
-    padding-bottom: 50px;
-    
+    padding-bottom: 50px; 
 }
-
 .telaCelular{
     margin-top: 20px;
     border:3px solid black ;
@@ -207,58 +207,37 @@
     overflow-x: hidden;
     overflow-y: hidden;
     background-color: var(--srv8);
-  
 }
-/* Nao deu certo scroll */
-.telaCelular:hover{
-    overflow-y: hidden;
-}
-
 .displayCelular{
     width: 100%;
     height: 25px;
     background-color:var(--srv8);
-    
 }
 .headerCelular{
     width: 100%;
     height: 40px;
 }
 .headerItem{
-padding: 10px 0px 0px 0px;
-   
-
+    padding: 10px 0px 0px 0px;
 }
+
 /* Fonte App */
-.f-popi{font-family: 'Poppins', sans-serif;}
-.f-robo{font-family: 'Roboto', sans-serif; font-weight: bold;}
-.c-pri{color: #920046;}
-.c-sec{color: #0B9329;}
 
 .nomeCelular{
     width: 100%;
     height: 30px;
-   
-    
 }
-
 .statusCelular{
     width: 100%;
     height: 15px;
- 
 }
-
 .carrocelCelular{
     width: 100%;
     min-height: 130px;
-    padding: 10px 0px 0px 0px;
-
-    
+    padding: 10px 0px 0px 0px;  
 }
 
-/* ////////////////////////*/
-
-#slide {
+#slide{
     width: 200px;
     overflow: hidden;
     margin:auto;
@@ -266,8 +245,7 @@ padding: 10px 0px 0px 0px;
     box-shadow: 0 0 8px #000;
     border-radius: 10px;
     position: relative;
- }
-    
+}
 #slide img {
     width: 200px;
     height: 120px;
@@ -275,21 +253,15 @@ padding: 10px 0px 0px 0px;
     z-index: 1;
     display: none;
     left: 0;
- }
-
-/* ////////////////////////*/
-
+}
 .seletoresCelular{
     width: 100%;
     display: flex;
     flex-wrap: wrap;
 }
-
 .opcaoWrap{
     min-width: 16mm;
-   
 }
-
 .dot1 {
     height: 1px;
     width: 100px;
@@ -297,7 +269,7 @@ padding: 10px 0px 0px 0px;
     border-radius: 50%;
     display:block;
     margin: 10px auto;
-  }
+}
 .descricaoCelular{
     width: 100%;
 }
@@ -311,13 +283,11 @@ padding: 10px 0px 0px 0px;
     border-radius: 50%;
     display:block;
     margin: 3px auto 3px auto;
-  }
+}
 .enderecoCelular{
     width: 100%;
     height: 20px;
-   
 }
-
 .servicosBox{
     border: 1px solid #920046;
     border-radius: 10px;

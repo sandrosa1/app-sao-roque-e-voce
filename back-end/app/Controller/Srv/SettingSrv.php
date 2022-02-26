@@ -227,8 +227,9 @@ class SettingSrv extends PageSrv{
         if (count($validate->getErro()) <= 0) {
 
             $arrResponse = [
-                "retorno" => 'success',
+                "retorno"  => 'success',
                 "success"  => ['Atualizado com sucesso.'],
+                "page"     => 'detalhes',
             ];
         }else{
 
