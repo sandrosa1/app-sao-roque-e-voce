@@ -11,51 +11,38 @@ use \App\Validate\Validate;
 
 class ScreenSrv extends PageSrv{
 
-
-   
     /**
-    * Renderiza o conteúdo da pagina de depoimentos
+    * Renderiza o conteúdo da pagina de tela do appp
     *
     * @param Request $request
     * @return string
     */
     public static function getScreen(){
 
-        // $session = new PageSrv();
-        // $idApp =  $session->idSession;
-
-
-        // $app = EntityApp::getAppById($idApp);
-
         if(Help::helpApp() instanceof EntityApp){
             $content = View::render('srv/modules/tela/index',[
                 'preview' => self::getView(),
                 'form'    => self::getForm(),
-                'status'  => '',
-
-                
+                'status'  => '',   
             ]);   
         }else{
             $content = View::render('srv/modules/tela/index',[
                 'status'  => self::getBlockView(),
                 'preview' => '',
-                'form'    => '',
-                
+                'form'    => '',   
             ]);
         }
        return parent::getPanel('Tela - SRV', $content,'tela');
 
     }
-      /**
-     * Metódo respónsavel por retornar a view do botão de cadastrar
+    /**
+     * Metódo respónsavel por retornar o preview do app
      *
      * @return string
      */
     private static function getView(){
 
-
         $app = Help::helpApp();
-
        
         if($app->segmento != 'servicos'){
 
@@ -84,41 +71,35 @@ class ScreenSrv extends PageSrv{
             'comentario' => '',
             'endereco'   => '',
         ]);
-
-       
-       
     }
       /**
-     * Metódo respónsavel por retornar a view do botão de atualizar e deletar
+     * Metódo respónsavel por retornar a página de bloqueio
      *
      * @return string
      */
     private static function getBlockView(){
         return View::render('srv/modules/tela/block/index',[]);
     }
-
     /**
-    * Metódo respónsavel por retornar a view do botão de atualizar e deletar
+    * Metódo respónsavel por retornar o form de upload de imagens
     *
     * @return string
     */
-   private static function getForm(){
+     private static function getForm(){
 
-
-    $app = Help::helpApp();
-
+        $app = Help::helpApp();
        
-    if($app->segmento != 'servicos'){
-        return View::render('srv/modules/tela/form/form',[]);
+        if($app->segmento != 'servicos'){
+            return View::render('srv/modules/tela/form/form',[]);
 
-    }else{
-        return View::render('srv/modules/tela/form/formServicos',[]);
+        }else{
+            return View::render('srv/modules/tela/form/formServicos',[]);
 
+        }
     }
-   }
 
-   /**
-    * Metódo que retorna o display 
+    /**
+    * Metódo que retorna o componente de display do preview do app 
     *
     * @return string
     */
@@ -128,14 +109,12 @@ class ScreenSrv extends PageSrv{
         ]);
     }
        /**
-    * Metódo que retorna o display 
+    * Metódo que retorna o componente de header do preview do app
     *
     * @return string
     */
     private static function getHeader(){
 
-       
-       
         $header = Help::helpGetTypeHeader(Help::helpApp());
       
         return View::render('srv/modules/tela/preview/components/header',[
@@ -144,13 +123,11 @@ class ScreenSrv extends PageSrv{
         ]);
     }
     /** 
-    * Metódo que retorna o display 
+    * Metódo que retorna o componente de nome fantásia do preview do app
     *
     * @return string
     */
     private static function getNome(){
-
-       
        
         $header = Help::helpApp();
       
@@ -159,7 +136,7 @@ class ScreenSrv extends PageSrv{
         ]);
     }
     /** 
-    * Metódo que retorna o display 
+    * Metódo que retorna o componente de status do preview do app
     *
     * @return string
     */
@@ -168,12 +145,12 @@ class ScreenSrv extends PageSrv{
         return View::render('srv/modules/tela/preview/components/status',[]);
     }
     /** 
-    * Metódo que retorna o display 
+    * Metódo que retorna o componente de carrocel de imagens do preview do app
     *
     * @return string
     */
     private static function getCarrocel(){
-      
+
         $app = Help::helpApp();
         $appTipo = Help::helpGetEntity($app);
 
@@ -184,18 +161,17 @@ class ScreenSrv extends PageSrv{
         ]);
         
     }
-    
     /** 
-    * Metódo que retorna o display 
+    * Metódo que retorna o componente de opções do preview do app
     *
     * @return string
     */
     private static function getSeletores(){
 
-
         $appTipo = (array)Help::helpGetEntity(Help::helpApp());
 
         $opcoes = '';
+
         foreach ($appTipo as $key => $value) {
                
                 if ($value == -2 ){
@@ -203,10 +179,8 @@ class ScreenSrv extends PageSrv{
                     $nome = Help::helpOptions($key)[0];
                     $opcoes .= View::render('srv/modules/tela/preview/components/opcao',[
                         'value' => $value,
-                        'nome'  => $nome,
-                        
+                         'nome'  => $nome,
                     ]);
-                   
                 }
             }
 
@@ -215,7 +189,7 @@ class ScreenSrv extends PageSrv{
         ]);
     }
     /** 
-    * Metódo que retorna o display 
+    * Metódo que retorna o componente de descrição do preview do app
     *
     * @return string
     */
@@ -229,7 +203,7 @@ class ScreenSrv extends PageSrv{
     }
 
      /** 
-    * Metódo que retorna o display 
+    * Metódo que retorna o componente de comentário do preview do app
     *
     * @return string
     */
@@ -242,7 +216,7 @@ class ScreenSrv extends PageSrv{
     }
 
      /** 
-    * Metódo que retorna o display 
+    * Metódo que retorna o componente de endereço do preview do app
     *
     * @return string
     */
@@ -259,7 +233,7 @@ class ScreenSrv extends PageSrv{
     }
 
     /** 
-    * Metódo que retorna o display 
+    * Metódo que retorna o componente de serviços do preview do app
     *
     * @return string
     */
@@ -280,7 +254,7 @@ class ScreenSrv extends PageSrv{
     }
 
     /**
-     * 
+     * Modo responsável peo controlar o upload de imagens
      *
      * @param [
      * @return void
@@ -310,44 +284,46 @@ class ScreenSrv extends PageSrv{
                 $objResize->save('/var/www/html/app-sao-roque-e-voce/back-end/img/imgApp/'.$objUpload->getBasename(),70);
 
                 if($sucesso){
-                    //echo 'Arquivo <strong>'.$objUpload->getBasename().'</strong> enviado com sucesso!';
-
-        
                     continue;
+                    
                 }else{
 
                     $validate->setErro('Erro ao enviar o arquivo <br>');
                 }
-
-               
-            
             }
 
             if(count($validate->getErro()) > 0){
-                echo $validate->getErro();
+                $arrResponse = [
+                    "retorno" => "erro",
+                    "erros"   => $validate->getErro(),
+                ];
                 
             }else{
 
                 ScreenSrv::insertPathImageDataBase($app,$pathImages);
 
-                return self::getScreen();
+                $arrResponse = [
+                    "retorno" => "success",
+                    "success" => ['Imagens inseridas com sucesso'],
+                    "page"    => 'tela'
+                ];
             }
+            return json_encode($arrResponse);
 
-            
-
-           //exit;
-            
         }
-       
-
     }
 
+    /**
+     * Método responsável por controlar a inserção dos caminhos das imagens no banco de dados
+     *
+     * @param Entity $app
+     * @param string $pathImages
+     * @return void
+     */
     private static function insertPathImageDataBase($app, $pathImages){
 
-        $app = Help::helpApp();
         $appSegmento = Help::helpGetEntity($app); 
         
-      
 
         switch ($app->segmento) {
             case 'gastronomia':
