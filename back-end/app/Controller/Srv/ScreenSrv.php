@@ -4,10 +4,11 @@ namespace App\Controller\Srv;
 
 use \App\Utils\View;
 use \App\Help\Help;
-use \App\Model\Entity\Aplication\App as EntityApp;
+use \App\Help\HelpEntity;
 use \App\Image\Upload;
 use \App\Image\Resize;
 use \App\Validate\Validate;
+use \App\Model\Entity\Aplication\App as EntityApp;
 
 class ScreenSrv extends PageSrv{
 
@@ -19,7 +20,7 @@ class ScreenSrv extends PageSrv{
     */
     public static function getScreen(){
 
-        if(Help::helpApp() instanceof EntityApp){
+        if(HelpEntity::helpApp() instanceof EntityApp){
             $content = View::render('srv/modules/tela/index',[
                 'preview' => self::getView(),
                 'form'    => self::getForm(),
@@ -42,7 +43,7 @@ class ScreenSrv extends PageSrv{
      */
     private static function getView(){
 
-        $app = Help::helpApp();
+        $app = HelpEntity::helpApp();
        
         if($app->segmento != 'servicos'){
 
@@ -87,7 +88,7 @@ class ScreenSrv extends PageSrv{
     */
      private static function getForm(){
 
-        $app = Help::helpApp();
+        $app = HelpEntity::helpApp();
        
         if($app->segmento != 'servicos'){
             return View::render('srv/modules/tela/form/form',[]);
@@ -115,7 +116,7 @@ class ScreenSrv extends PageSrv{
     */
     private static function getHeader(){
 
-        $header = Help::helpGetTypeHeader(Help::helpApp());
+        $header = Help::helpGetTypeHeader(HelpEntity::helpApp());
       
         return View::render('srv/modules/tela/preview/components/header',[
             'icon' => $header[1],
@@ -129,7 +130,7 @@ class ScreenSrv extends PageSrv{
     */
     private static function getNome(){
        
-        $header = Help::helpApp();
+        $header = HelpEntity::helpApp();
       
         return View::render('srv/modules/tela/preview/components/nome',[
             'nome'=> $header->nomeFantasia,
@@ -151,8 +152,8 @@ class ScreenSrv extends PageSrv{
     */
     private static function getCarrocel(){
 
-        $app = Help::helpApp();
-        $appTipo = Help::helpGetEntity($app);
+        $app = HelpEntity::helpApp();
+        $appTipo = HelpEntity::helpGetEntity($app);
 
         return View::render('srv/modules/tela/preview/components/carrocel',[
             'img1' => $app->img1,
@@ -168,7 +169,7 @@ class ScreenSrv extends PageSrv{
     */
     private static function getSeletores(){
 
-        $appTipo = (array)Help::helpGetEntity(Help::helpApp());
+        $appTipo = (array)HelpEntity::helpGetEntity(HelpEntity::helpApp());
 
         $opcoes = '';
 
@@ -195,7 +196,7 @@ class ScreenSrv extends PageSrv{
     */
     private static function getDescricao(){
         
-        $appTipo = Help::helpGetEntity(Help::helpApp());
+        $appTipo = HelpEntity::helpGetEntity(HelpEntity::helpApp());
        
         return View::render('srv/modules/tela/preview/components/descricao',[
             'descricao' => $appTipo->descricao,
@@ -222,7 +223,7 @@ class ScreenSrv extends PageSrv{
     */
     private static function getAddress(){
 
-        $app = Help::helpApp();
+        $app = HelpEntity::helpApp();
      
         return View::render('srv/modules/tela/preview/components/endereco',[
             
@@ -239,8 +240,8 @@ class ScreenSrv extends PageSrv{
     */
     private static function getServicos(){
 
-        $app = Help::helpApp();
-        $appTipo = Help::helpGetEntity($app);
+        $app = HelpEntity::helpApp();
+        $appTipo = HelpEntity::helpGetEntity($app);
 
      
         return View::render('srv/modules/tela/preview/components/servicos',[
@@ -261,7 +262,7 @@ class ScreenSrv extends PageSrv{
      */
     public static function uploadImage(){
 
-        $app = Help::helpApp();
+        $app = HelpEntity::helpApp();
         $validate = new Validate();
 
         if(isset($_FILES['arquivo'])){
@@ -322,27 +323,27 @@ class ScreenSrv extends PageSrv{
      */
     private static function insertPathImageDataBase($app, $pathImages){
 
-        $appSegmento = Help::helpGetEntity($app); 
+        $appSegmento = HelpEntity::helpGetEntity($app); 
         
 
         switch ($app->segmento) {
             case 'gastronomia':
-                return help::helpImgGastronomia($app, $appSegmento,$pathImages);
+                return HelpEntity::helpImgGastronomia($app, $appSegmento,$pathImages);
 
             case 'evento':
-                return help::helpImgEvento($app, $appSegmento,$pathImages);
+                return HelpEntity::helpImgEvento($app, $appSegmento,$pathImages);
 
             case 'servicos':
-                return help::helpImgServico($app, $appSegmento,$pathImages);
+                return HelpEntity::helpImgServico($app, $appSegmento,$pathImages);
 
             case 'comercio':
-                return help::helpImgComercio($app, $appSegmento,$pathImages);
+                return HelpEntity::helpImgComercio($app, $appSegmento,$pathImages);
 
             case 'hospedagem':
-                return help::helpImgHospedagem($app, $appSegmento,$pathImages);
+                return HelpEntity::helpImgHospedagem($app, $appSegmento,$pathImages);
 
             case 'turismo':
-                return help::helpImgGastronomia($app, $appSegmento,$pathImages);
+                return HelpEntity::helpImgGastronomia($app, $appSegmento,$pathImages);
            
         }
 

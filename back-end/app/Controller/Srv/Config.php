@@ -3,6 +3,7 @@
 namespace App\Controller\Srv;
 
 use \SandroAmancio\Search\Address;
+use \App\Help\HelpEntity;
 use \App\Help\Help;
 use \App\Model\Entity\Aplication\App as EntityApp;
 use \App\Model\Entity\Aplication\Hospedagem\Hospedagem as EntityHospedagem;
@@ -189,19 +190,19 @@ class Config extends PageSrv
                 //Cria uma instancia de acordo com o segmento
                 switch ($objApp->segmento) {
                     case 'hospedagem':
-                    Help::helpHospedagem($idCustomer,  $postVars);
+                        HelpEntity::helpHospedagem($idCustomer,  $postVars);
                         break;
                     case 'evento':
-                        Help::helpEvento($idCustomer,  $postVars);
+                        HelpEntity::helpEvento($idCustomer,  $postVars);
                         break;
                     case 'comercio':
-                        Help::helpComercio($idCustomer,  $postVars);
+                        HelpEntity::helpComercio($idCustomer,  $postVars);
                         break;
                     case 'servicos':
-                        Help::helpServico($idCustomer,  $postVars);
+                        HelpEntity::helpServico($idCustomer,  $postVars);
                         break;
                     case 'gastronomia':
-                        Help::helpGastronomia($idCustomer,  $postVars);
+                        HelpEntity::helpGastronomia($idCustomer,  $postVars);
                         break;
                 }
 

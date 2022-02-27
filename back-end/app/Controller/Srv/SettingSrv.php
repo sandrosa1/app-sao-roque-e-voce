@@ -3,6 +3,7 @@
 namespace App\Controller\Srv;
 use \App\Controller\Srv\Config;
 use \App\Validate\Validate;
+use \App\Help\HelpEntity;
 use \App\Help\Help;
 use \App\Model\Entity\Aplication\App as EntityApp;
 use \App\Model\Entity\Aplication\Hospedagem\Hospedagem as EntityHospedagem;
@@ -199,24 +200,24 @@ class SettingSrv extends PageSrv{
         switch($app->segmento){
             
             case 'hospedagem':
-                Help::helpHospedagem($idApp, $postVars);
+                HelpEntity::helpHospedagem($idApp, $postVars);
                     return self::statusUpdate($validate );
 
             case 'evento':
-                Help::helpEvento($idApp, $postVars);
+                HelpEntity::helpEvento($idApp, $postVars);
                 return self::statusUpdate($validate );
                   
             case 'comercio':
-                Help::helpComercio($idApp, $postVars);
+                HelpEntity::helpComercio($idApp, $postVars);
                 return self::statusUpdate($validate);
 
             case 'servicos':
                
-                Help::helpServico($idApp, $postVars);
+                HelpEntity::helpServico($idApp, $postVars);
                 return self::statusUpdate($validate );
 
             case 'gastronomia':
-                Help::helpGastronomia($idApp, $postVars);
+                HelpEntity::helpGastronomia($idApp, $postVars);
                 return self::statusUpdate($validate);     
         }
 
