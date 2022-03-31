@@ -95,7 +95,7 @@
 .navCollectionRacs{ 
     display: flex;
     flex-direction: column;
-    max-height: 92vh;
+    
 }
 .navCollectionItemRacs{
     width: 100%;
@@ -121,6 +121,26 @@
     font-weight: 900;
 }
 
+/*-------Estilo do scroll -----*/
+.containerRacs::-webkit-scrollbar {
+    width: 12px;               
+}
+  
+.containerRacs::-webkit-scrollbar-track {
+    background: var(--srv6);     
+}
+.containerRacs::-webkit-scrollbar-thumb {
+    background-color: var(--racs2);    
+    border-radius: 20px;      
+    border: 3px solid var(--srv6);
+  }
+/*Scroll firefox */
+.containerRacs{
+    scrollbar-color: var(--racs2) var(--srv6);
+    scrollbar-width: 10px;
+}
+
+
 #btn-logout-racs{
     background-color: var(--racs2);
 }
@@ -131,71 +151,173 @@
 /* Apps */
 
 .containerRacs{
+    margin: 0px;
+    padding: 0px;
+    position: relative;
     max-height: 92vh;
+    overflow-y: scroll;
     background-color: var(--srv6);
+    
+    
 }
 
 .navTabs{
-    height: 7vh;
-    box-shadow: 0px 0px 25px 0px rgba(0, 0, 0, 0.2);
+    height: 50px;
 }
+
 .appsListaRacs{
+    margin: 0px;
+    padding: 0px;
     border: 1px solid red;
-    height: 85vh;
+    display: flex;
+    min-height: calc(92vh - 50px);
     background-color: #f0f0f0;
+}
+
+.tabelaAppRacs{
+    margin: 0px;
+    padding: 0px;
+    width: 100%;
+
 } 
 
+table{
+    margin: 0px;
+    padding: 0px;
+    display:block;
+    overflow-y:scroll;
+    border: 1px solid black;
+
+
+}
+ 
 thead, tbody{
     display: block; 
-}
-thead{
-    height: 7vh;
-}
-
-tbody{
-    overflow-y: scroll;
-    max-height: 78vh;
-    box-shadow: 0px 0px 25px 0px rgba(0, 0, 0, 0.2);
-}
-.table {
-    /*   */
-    background-color: #fff;
-}
-
-.table th,
-.table td {
-    padding: 2px 2px 2px 5px; 
-    width: 22.8%;
-    border: 1px solid rgb(73, 67, 67);
-
-}
-
-/* .table th{
    
-} */
+}
 
-
-
-/* .tabelaRacs{
-    
-    background-color: var(--racs2);
-    color: var(--racs4);
- } */
+thead{
+    color: var(--racs1);
+}
+tbody{
+    max-height: calc(96vh - 50px);
+    font-size: 10px;
+}
+.telaRacs{
+    margin: 20px 0px 0px 0px;
+    padding: 0px;
+    width: 100%;
+    background-color:rgb(117, 253, 253);
  
-/*Estilo do scroll */
-.listaTabelaRacs::-webkit-scrollbar {
-    width: 12px;               /* width of the entire scrollbar */
 }
-.listaTabelaRacs::-webkit-scrollbar-track {
-    background: var(--srv6);       /* color of the tracking area */
+.previewAppRacs{
+    margin: 0px;
+    padding: 0px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color:aqua;
 }
-  
-.listaTabelaRacs::-webkit-scrollbar-thumb {
-    background-color: var(--racs1   );    /* color of the scroll thumb */
-    border-radius: 20px;       /* roundness of the scroll thumb */
-    border: 3px solid var(--srv6);;  /* creates padding around scroll thumb */
-}
-  
+
+ .celularAppRacs{
+    margin: 0px;
+    padding: 0px;
+    border: 1px solid black;
+    border-radius: 10px;
+    width: 80mm;
+    height: auto;
+    padding-bottom: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color:rgb(28, 204, 204);
+
+
+ }
+ .telaAppRacs{
+    margin: 0px;
+    padding: 0px;
+    display: flex;
+    margin-top: 20px;
+    border:3px solid black ;
+    border-radius: 1px;
+    width: 64mm;
+    min-height: 134mm;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    background-color: var(--srv8);
+    justify-content: center;
+    background-color:rgb(46, 169, 169);
+
+ }
+
+ .displayAppRacs{
+    margin: 0px;
+    padding: 0px;
+    width: 100%;
+    height: 25px;
+    background-color:white;
+ }
+ 
+ .headerAppRacs{
+    width: 100%;
+    height: 40px;
+    background-color:rgb(223, 211, 211);
+ }
+ 
+ .tituloAppRacs{
+    width: 100%;
+    height: 30px;
+    background-color:rgb(204, 179, 179);
+
+ }
+
+ .statusAppRacs{
+    width: 100%;
+    height: 15px;
+    background-color:rgb(174, 140, 140);
+
+ }
+ .carrocelAppRacs{
+    width: 100%;
+    height: 130px;
+    padding: 10px 0px 0px 0px; 
+    background-color:rgb(141, 107, 107);
+
+ }
+ 
+ .seletoresAppRacs{
+    width: 100%;
+    /* Altura provisoria */
+    height: 100px;
+    display: flex;
+    flex-wrap: wrap;
+    background-color:rgb(126, 88, 88);
+
+ }
+
+ .descricaAppCRacs{
+    width: 100%;
+    height: 80px;
+    background-color:rgb(126, 80, 80);
+
+ }
+
+
+ .comentarioAppRacs{
+    width: 100%;
+    height: 50px;
+    background-color:rgb(104, 73, 73);
+
+ }
+ .enderecoAppRacs{
+    width: 100%;
+    height: 40px;
+    background-color:rgb(68, 40, 40);
+ }
+ 
+
 
 @media screen and (max-width: 480px){
     .img-sobre{

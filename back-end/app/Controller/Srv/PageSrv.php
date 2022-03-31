@@ -27,9 +27,9 @@ class PageSrv{
             'link'  => URL.'/srv/tela',
             'icon'  => 'stay_current_portrait'
         ],
-        'depoimentos' =>[
+        'forum' =>[
             'label'   => 'Fórum',
-            'link'    => URL.'/srv/depoimentos',
+            'link'    => URL.'/srv/forum',
             'icon'    => 'comment'
         ],
     ];

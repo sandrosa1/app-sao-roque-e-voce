@@ -3,7 +3,7 @@
 namespace App\Controller\RACS;
 
 use \App\Utils\View;
-use \App\Help\Help;
+use \App\Help\HelpEntity;
 
 class CustomerRacs extends PageRacs{
 
@@ -17,22 +17,22 @@ class CustomerRacs extends PageRacs{
     public static function getCustomers(){
 
          $content = View::render('racs/modules/customer/index',[
-            'tabelaClientes'    => self::getTabelaClientes(),
-            'tabelaApps'        => self::getTabelaApps('app'),
-            'tabelaHospedagens' => self::getTabelaApps('hospedagem'),
-            'tabelaTurismo'     => self::getTabelaApps('turismo'),
-            'tabelaGastronomia' => self::getTabelaApps('gastronomia'),
-            'tabelaEventos'     => self::getTabelaApps('evento'),
-            'tabelaComercio'    => self::getTabelaApps('comercio'),
-            'tabelaServicos'    => self::getTabelaApps('servicos'),
-            'previewClientes'   => '',
-            'previewApps'       => '',
-            'previewHospedagens' => '',
-            'previewTurismo'     => '',
-            'previewGastronomia' => '',
-            'previewEventos'     => '',
-            'previewComercio'    => '',
-            'previewServicos'    => '',
+            'tabelaClientes'     => self::getTabelaClientes(),
+            'tabelaApps'         => self::getTabelaApps('app'),
+            'tabelaHospedagens'  => self::getTabelaApps('hospedagem'),
+            'tabelaTurismo'      => self::getTabelaApps('turismo'),
+            'tabelaGastronomia'  => self::getTabelaApps('gastronomia'),
+            'tabelaEventos'      => self::getTabelaApps('evento'),
+            'tabelaComercio'     => self::getTabelaApps('comercio'),
+            'tabelaServicos'     => self::getTabelaApps('servicos'),
+            'previewClientes'    => self::getDisplayAppRacs(),
+            'previewApps'        => self::getDisplayAppRacs(),
+            'previewHospedagens' => self::getDisplayAppRacs(),
+            'previewTurismo'     => self::getDisplayAppRacs(),
+            'previewGastronomia' => self::getDisplayAppRacs(),
+            'previewEventos'     => self::getDisplayAppRacs(),
+            'previewComercio'    => self::getDisplayAppRacs(),
+            'previewServicos'    => self::getDisplayAppRacs(),
 
         ]) ;
             return parent::getPanel('Customer - RACS', $content,'customer');
@@ -54,7 +54,7 @@ class CustomerRacs extends PageRacs{
 
     private static function getTbodyClientes(){
 
-        $customers = Help::hellGetAllsCustomers();
+        $customers = HelpEntity::hellGetAllsCustomers();
 
         $content = '';
  
@@ -86,7 +86,7 @@ class CustomerRacs extends PageRacs{
 
     private static function getTbodySegmento($segmento){
 
-        $apps = Help::hellGetAllsApps();
+        $apps = HelpEntity::hellGetAllsApps();
 
         $content = '';
  
@@ -107,6 +107,22 @@ class CustomerRacs extends PageRacs{
          
         }
          return $content ;
+    }
+
+    private static function getDisplayAppRacs(){
+        return View::render('racs/modules/customer/components/preview/preview',[
+
+            'display' => '',
+            'header' => '',
+            'nome' => '',
+            'status' => '',
+            'carrocel' => '',
+            'seletores' => '',
+            'descricao' => '',
+            'comentario' => '',
+            'endereco' => '',
+
+        ]);
     }
  
 }

@@ -138,11 +138,15 @@ class Forum {
 
     }
     /**
-     * Método responsável por pegar todos comentário 
+     * Método responsavel por retornar todos App
      *
-     * @return void
+     * @param string $where
+     * @param string $order
+     * @param string $limit
+     * @param string $fields
+     * @return PDOStatement
      */
-    public static function getForum($where = null, $order = null, $limit = null, $fields = '*'){
+    public function getForum($where = null, $order = null, $limit = null, $fields = '*'){
         
         return(new Database('forum'))->select($where, $order, $limit, $fields);
 
