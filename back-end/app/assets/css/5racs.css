@@ -27,6 +27,10 @@
 .card{ min-width: 200px;}
 .footer-racs{background-color: var(--racs3);}
 .navRacs{ background-color: var(--racs3);}
+
+.fwb{font-weight: bold;}
+.fwr{font-weight:bolder;}
+.fw6{font-weight:600;}
 /*Configurações Gerais*/
 /*Extra-small*/
 

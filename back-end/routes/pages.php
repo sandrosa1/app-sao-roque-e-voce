@@ -37,6 +37,18 @@ $objRouter->post('/cadastro',[
         return new Response(200,Pages\Cadastro::insertRegistration($request));
     }
 ]);
+//Rota de Contato (GET)
+$objRouter->get('/contato',[
+    function($request){
+        return new Response(200,Pages\Contato::getContato($request));
+    }
+]);
+//Rota de formulario Contato (POST)
+$objRouter->post('/contato',[
+    function($request){
+        return new Response(200,Pages\Contato::postContato($request));
+    }
+]);
 
 
 

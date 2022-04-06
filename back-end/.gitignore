@@ -3,4 +3,5 @@ img/imgApp*
 temp*
 vendor*
 composer.lock
+racs-db.sql
 

@@ -15,6 +15,7 @@ function getRoot(url)
     return root;
 }
 
+
 //Sistema de loadind
 const gif = getRoot(urlName+'/img/anime.gif')
 const logoSrv =  getRoot(urlName+'/img/logo-srv-200.png')
