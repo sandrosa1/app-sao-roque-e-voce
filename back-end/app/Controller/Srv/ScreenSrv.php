@@ -60,17 +60,12 @@ class ScreenSrv extends PageSrv{
             ]);
         }
 
-        return View::render('srv/modules/tela/preview/index',[
+        return View::render('srv/modules/tela/preview/servico',[
 
             'display'    => self::getDisplay(),
-             'header'     => self::getHeader(),
-            'nome'       => '',
-            'status'     => '',
-            'carrocel'   => Self::getServicos(),
-            'seletores'  => '',
-            'descricao'  => '',
-            'comentario' => '',
-            'endereco'   => '',
+            'header'     => self::getHeader(),
+            'informacoes'   => Self::getServicos(),
+         
         ]);
     }
       /**
@@ -246,14 +241,16 @@ class ScreenSrv extends PageSrv{
      
         return View::render('srv/modules/tela/preview/components/servicos',[
             
+            'nome'       => $app->nomeFantasia ? "<p class='c-popi fz-10 fwb'> ".$app->nomeFantasia ."</p>":"",
             'endereco'   => "<i class='c-pri fz-15 fas fa-map-marked-alt'></i><span class=' c-popi fz-5'> ".$app->logradouro .', Nº '. $app->numero.', '.$app->bairro."</span>",
             'telefone'   => $app->telefone   ?"<i class='c-pri fz-15 fas fa-phone-volume'></i><span class=' c-popi fz-5'> ".$app->telefone."</span>": '',
             'site'       => $app->site       ?"<i class='pb-5 c-pri fz-15 fas fa-globe'></i><span class=' c-popi fz-5'> ".$app->site."</span>" :'',
             'horarios'   => $appTipo->semana ?"<p class=' c-popi fz-5'>Semana ".$appTipo->semana."</p><p class=' c-popi fz-5'>Sabádo ".$appTipo->sabado."</p><p class=' c-popi fz-5'>Domingo ".$appTipo->domingo."</p><p class=' c-popi fz-5'>Fériados ".$appTipo->feriado."</p>" : '',
-            'logo'       =>  'O',
+            'logo'       => $app->img1       ? "<img src='{{URL}}/img/imgApp/$app->img1' alt='Imagem de logotipo'>" : '' ,
         ]);
     }
 
+  
     /**
      * Modo responsável peo controlar o upload de imagens
      *
@@ -264,35 +261,48 @@ class ScreenSrv extends PageSrv{
 
         $app = HelpEntity::helpApp();
         $validate = new Validate();
+        if(isset($_FILES['arquivoImagem']) || isset($_FILES['arquivoLogo']) ){
 
-        if(isset($_FILES['arquivo'])){
-
-            $uploads = Upload::createMultiUpload($_FILES['arquivo']);
+            if(isset($_FILES['arquivoImagem'])){
+                $uploads = Upload::createMultiUpload($_FILES['arquivoImagem']);
+                $tamaho = 250;
+            }else{
+                $uploads = Upload::createMultiUpload($_FILES['arquivoLogo']);
+                $tamanho = 50;
+            }
+       
             $pathImages = [];
             $number = 1;
-            foreach ($uploads as $objUpload) {
-                // Move os arquivos de upload
-                $objUpload->generateNewName($app->idApp, $number++);
 
-                $sucesso = $objUpload->upload('/var/www/html/app-sao-roque-e-voce/back-end/img/imgApp');
+           if($uploads){
 
-                array_push($pathImages, $objUpload->getBasename());
-                //Instacia de redimencionamento
-                $objResize = new Resize('/var/www/html/app-sao-roque-e-voce/back-end/img/imgApp/'.$objUpload->getBasename());
+                foreach ($uploads as $objUpload) {
+                    // Move os arquivos de upload
+                    $objUpload->generateNewName($app->idApp, $number++);
 
-                $objResize->resize(250,);
+                    $sucesso = $objUpload->upload('/var/www/html/app-sao-roque-e-voce/back-end/img/imgApp');
 
-                $objResize->save('/var/www/html/app-sao-roque-e-voce/back-end/img/imgApp/'.$objUpload->getBasename(),70);
+                    array_push($pathImages, $objUpload->getBasename());
+                    //Instacia de redimencionamento
+                    $objResize = new Resize('/var/www/html/app-sao-roque-e-voce/back-end/img/imgApp/'.$objUpload->getBasename());
 
-                if($sucesso){
-                    continue;
-                    
-                }else{
+                    $objResize->resize($tamanho);
 
-                    $validate->setErro('Erro ao enviar o arquivo <br>');
+                    $objResize->save('/var/www/html/app-sao-roque-e-voce/back-end/img/imgApp/'.$objUpload->getBasename(),70);
+
+                    if($sucesso){
+                        continue;
+                        
+                    }else{
+
+                        $validate->setErro('Erro ao enviar o arquivo <br>');
+                    }
+
                 }
+                
+            }else{
+                $validate->setErro('Formato da imagem inválido!');
             }
-
             if(count($validate->getErro()) > 0){
                 $arrResponse = [
                     "retorno" => "erro",
@@ -347,10 +357,6 @@ class ScreenSrv extends PageSrv{
            
         }
 
-
     }
-
-
-
 
 }

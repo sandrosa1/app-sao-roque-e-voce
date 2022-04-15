@@ -49,13 +49,15 @@ class Cadastro extends Page{
         
         //ENVIA O EMAIL SE NÃO HOUVER ERROS
         if(count($validate->getErro()) >= 0){
+            $name = $objCadastro->name;
             $address = $objCadastro->email;
             $subject = 'Confirmação de cadastro';
-            $body = "<b>Sejá bem vindo ao São Roque e Vocẽ {$objCadastro->name}.<b><br><br>
-            <b>Para finalizar seu cadastro</b><a href='http://www.racsstudios.com/srv/confirmation?email={$objCadastro->email}&token={$objCadastro->token}'> click aqui</a><br><br>
-            <img src='http://www.racsstudios.com/img/assinatura-400.png' alt='Logomarca da WEF'>";
-           
-            $validate->ValidateSendEmail($address,$subject,$body);
+            $body = 
+            "Confirmação de Cadastro
+            Sejá bem vindo ao São Roque e Vocẽ {$objCadastro->name}.
+            Para finalizar seu cadastro href='http://www.racsstudios.com/srv/confirmation?email={$objCadastro->email}&token={$objCadastro->token}";
+                     
+            $validate->ValidateSendEmail($address,$subject,$body,$name);
         }
 
         //Instacia a classe de senha para criptografala
@@ -79,7 +81,7 @@ class Cadastro extends Page{
             $objCadastro->insertNewCustomer();
 
         }
-        echo json_encode($arrResponse);
+        return json_encode($arrResponse);
    
     }
     /**

@@ -3,7 +3,6 @@
 namespace App\Image;
 
 
-
 class Upload{
 
     /**
@@ -151,10 +150,17 @@ class Upload{
         $uploads = [];
 
         $number = 1;
-
+        
+        $count = 1;
+        
+        foreach($files['type'] as $key => $value){
+            if($value != 'image/jpeg'){
+                return false;
+            }
+        }
+        
         foreach($files['name'] as $key => $value){
 
-        
             //Array
             $file = [
                 'name'     => $files['name'][$key],

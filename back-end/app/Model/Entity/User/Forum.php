@@ -122,9 +122,9 @@ class Forum {
      *
      * @return void
      */
-    public static function getForumByIdUser($idUser){
+    public static function getForumByIdUser($idUsuario){
 
-        return (new Database('forum'))->select('idUser = "'.$idUser.'"')->fetchObject(self::class);
+        return (new Database('forum'))->select('idUsuario = "'.$idUsuario.'"')->fetchObject(self::class);
 
     }
     /**
@@ -146,7 +146,7 @@ class Forum {
      * @param string $fields
      * @return PDOStatement
      */
-    public function getForum($where = null, $order = null, $limit = null, $fields = '*'){
+    public static function getForum($where = null, $order = null, $limit = null, $fields = '*'){
         
         return(new Database('forum'))->select($where, $order, $limit, $fields);
 

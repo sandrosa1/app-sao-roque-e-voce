@@ -140,7 +140,7 @@
   }
 /*Scroll firefox */
 .containerRacs{
-    scrollbar-color: var(--racs2) var(--srv6);
+    scrollbar-color: var(--racs2) var(--racs1);
     scrollbar-width: 10px;
 }
 
@@ -185,7 +185,7 @@
 
 } 
 
-table{
+.tableRacs{
     margin: 0px;
     padding: 0px;
     display:block;
@@ -195,15 +195,15 @@ table{
 
 }
  
-thead, tbody{
+.theadRacs, .tbodyRacs{
     display: block; 
    
 }
 
-thead{
+.theadRacs{
     color: var(--racs1);
 }
-tbody{
+.tbodyRacs{
     max-height: calc(96vh - 50px);
     font-size: 10px;
 }

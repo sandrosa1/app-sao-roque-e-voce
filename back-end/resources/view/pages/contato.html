@@ -1,53 +1,50 @@
 <section class="container">
-<div class="row">
-    <div class="col s6">
-        <img  src="{{URL}}/img/call-center-640.png" style="width: 100%;" class="responsive-img mt-3">
-    </div>
-    <div class="col s6"> 
-        <h3 class="center-align fz-30 f-robo fwb racs-c-1">Fale Conosco</h3>
-            <form method="POST" >
-                <div class="input-field">
-                    <i class="material-icons prefix racs-c-1">perm_identity</i>
-                    <label for="nome">Nome</label>
-                    <input type="text" name="nome" required>
-                </div>
-
-                <div class="input-field">
-                    <i class="material-icons prefix racs-c-1">person_pin</i>
-                    <label for="assunto">Assunto</label>
-                    <input type="text" name="assunto" required>
-                </div>
-                
-                <div class="input-field">
-                    <i class="material-icons prefix racs-c-1">email</i>
-                    <label for="email">Email</label>
-                    <input type="email" name="email" required>
-                </div>
-
-                <div class="input-field">
-                    <i class="material-icons prefix racs-c-1">phone</i>
-                    <label for="tel">Telefone</label>
-                    <input id="phone" type="tel" name="telefone" required>
-                </div>
-
-               
-
-                <div class="input-field">
-                    <i class="material-icons prefix racs-c-1">mode_edit</i>
-                    <label for="mensagem">Mensangem</label>
-                    <textarea name="mensagem" id="" rows="10" class="materialize-textarea"  length="250" required></textarea>
-                    <input class="validate" type="hidden" id="g-recaptcha-response" name="g-recaptcha-response" required>
-                </div>
-                
-                <p class="center-align">
-                    <button class=" #01579b light-blue darken-4 btn" type="submit"><i class="material-icons right">send</i>enviar</button>
-                </p>
-
-            </form>
-    </div>
-</div>
-
     <div class="row">
-   
+        <div class="col s12 m6">
+            <img  src="{{URL}}/img/call-center-640.png" style="width: 100%;" class="responsive-img mt-3">
+        </div>
+        <div class="col s12 m6"> 
+            <h3 class="center-align fz-30 f-robo fwb racs-c-1">Fale Conosco</h3>
+                <form name="formContato" id="formContato" method="post" >
+                    <div class="input-field">
+                        <i class="material-icons prefix racs-c-1">perm_identity</i>
+                        <label for="nome">Nome</label>
+                        <input type="text" name="nome" required>
+                    </div>
+    
+                    <div class="input-field">
+                        <i class="material-icons prefix racs-c-1">person_pin</i>
+                        <label for="assunto">Assunto</label>
+                        <input type="text" name="assunto" required>
+                    </div>
+                    
+                    <div class="input-field">
+                        <i class="material-icons prefix racs-c-1">email</i>
+                        <label for="email">Email</label>
+                        <input type="email" name="email" required>
+                    </div>
+    
+                    <div class="input-field">
+                        <i class="material-icons prefix racs-c-1">phone</i>
+                        <label for="tel">Telefone</label>
+                        <input id="phone" type="tel" name="telefone" required>
+                    </div>
+    
+                   
+    
+                    <div class="input-field">
+                        <i class="material-icons prefix racs-c-1">mode_edit</i>
+                        <label for="mensagem">Mensangem</label>
+                        <textarea name="mensagem" id="" rows="10" class="materialize-textarea"  length="250" required></textarea>
+                        <input class="validate" type="hidden" id="g-recaptcha-response" name="g-recaptcha-response" required>
+                    </div>
+                    
+                
+                    <div class="col s5 "><button class=" #01579b light-blue darken-4 btn ml-2 mt-5" type="submit"><i class="material-icons right">send</i>enviar</button></div><div class="col s7 " id="root"><img  src="{{URL}}/img/logo-racs-100.png" alt="Logomarca da Racs" style="width: 70px;"></div>
+                    
+                </form>
+        </div>
     </div>
-</section>
+    
+    </section>
+    

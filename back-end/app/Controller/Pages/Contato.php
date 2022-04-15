@@ -7,8 +7,6 @@ use App\Validate\Validate;
 
 class Contato extends Page{
 
-
-
     public static function getContato(){
 
         $content = View::render('pages/contato',[]);
@@ -36,31 +34,41 @@ class Contato extends Page{
         $validate->validateEmail($dadosContato[2]);
         $validate->validateCaptcha($dadosContato[5]);
 
+
         if(count($validate->getErro()) == 0){
 
-            $mensagen = "<p>Nome: $dadosContato[0]<p><p>Telefone: $dadosContato[2]</p><p>Telefone: $dadosContato[4]</p><p>Mensagem: $dadosContato[3]</p>";
+            $mensagen = "Nome: $dadosContato[0]
+                         Assunto: $dadosContato[1]
+                         Email: $dadosContato[2]
+                         Mensagem: $dadosContato[3]";
 
-           $validate->validateSendEmail('racsstudios@gmail.com',$dadosContato[1],$mensagen);
+           $validate->validateSendEmail('racsstudios@gmail.com',$dadosContato[1],$mensagen, $dadosContato[0]);
 
            if(count($validate->getErro()) == 0){
             
-                echo "sucesso";
-           }else{
+                $arrResponse=[
+                    "retorno" => "success",
+                    "page"    => "/",
+                    "success" => ["Contato realizado com sucesso.","Em Breve entraremos em contato."]
+                ];   
+          
+            }else{
 
-                echo '<pre>';
-                print_r($validate->getErro());
-                echo '</pre>';
-                exit;
-           }
+                $arrResponse=[
+                    "retorno" => "erro",
+                    "erros"   => $validate->getErro()
+                ];
+            }
            
         }else{
-            echo '<pre>';
-            print_r($validate->getErro());
-            echo '</pre>';
-            exit;
+            $arrResponse=[
+                "retorno" => "erro",
+                "erros"   => $validate->getErro()
+            ];
 
         }
-
+        
+        return json_encode($arrResponse);
        
     }
     

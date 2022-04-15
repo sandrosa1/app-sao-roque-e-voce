@@ -295,8 +295,54 @@
 }
 .detalhes-tutorial-screw{
     background-color: var(--srv8);
-    height: 700px;
+    height: auto;
 }
+
+/* Tela celular de serviços */
+.informacoesCelularServicos{
+    margin: 0px;
+    padding: 0px;
+}
+
+/* FORUNS */
+
+
+.tabelaAppSrv{
+    margin: 0px;
+    padding: 0px;
+    width: 100%;
+
+} 
+
+.tableSrv{
+    margin: 0px;
+    padding: 0px;
+    display:block;
+    overflow-y:scroll;
+    border: 1px solid black;
+
+
+}
+ 
+.theadSrv, .tbodySrv{
+    display: block; 
+   
+}
+
+/* .theadSrv{
+    color: var(--racs1);
+}
+.tbodySrv{
+    max-height: calc(96vh - 50px);
+    font-size: 10px;
+}
+.telaSrv{
+    margin: 20px 0px 0px 0px;
+    padding: 0px;
+    width: 100%;
+    background-color:rgb(117, 253, 253);
+ 
+} */
 
 /*Configurações Gerais*/
 /*Extra-small*/

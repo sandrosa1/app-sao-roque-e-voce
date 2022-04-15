@@ -6,6 +6,7 @@ const urlLogin = urlName+'/srv/login';
 const urlRedefinePassword = urlName+'/srv/redefinir_senha';
 const urlNewPassword = urlName+'/srv/nova_senha';
 const urlLoginRacs = urlName+'/racs/login';
+const urlContatoRacs = urlName+'/contato';
 
 
 //Pega o local 
@@ -19,8 +20,11 @@ function getRoot(url)
 //Sistema de loadind
 const gif = getRoot(urlName+'/img/anime.gif')
 const logoSrv =  getRoot(urlName+'/img/logo-srv-200.png')
+const logoRacs =  getRoot(urlName+'/img/logo-racs-100.png')
 const CarregandoLoading = () => document.getElementById('root').innerHTML = `<img class="gif" src='${gif}' alt="Logomarca da WEF">`;
-const ParandoLoading = () => document.getElementById('root').innerHTML = `<img  src='${logoSrv}' alt="Logomarca da WEF">`;
+const ParandoLoading = () => document.getElementById('root').innerHTML = `<img  src='${logoSrv}' alt="Logomarca da ">`;
+const LoadingRacs = () => document.getElementById('root').innerHTML = `<img class="gif" src='${gif}' alt= Loading">`;
+const ParandoLoadingRacs = () => document.getElementById('root').innerHTML = `<img  src='${logoRacs}' alt="Logomarca da RACS" style="width: 70px;>`;
 //Mascara de validação para campos númericos
 //https://github.com/vanilla-masker/vanilla-masker
 //Listen the input element masking it to format with pattern.
@@ -30,9 +34,9 @@ $('#cpf , #birthDate, #phone').on('focus', function () {
 
     if(id == "cpf"){VMasker(document.querySelector("#cpf")).maskPattern("999.999.999-99");}
 
-    if(id == "birthDate"){VMasker(document.querySelector("#birthDate")).maskPattern("99/99/9999")};
+    if(id == "birthDate"){VMasker(document.querySelector("#birthDate")).maskPattern("99/99/9999");}
 
-    if(id == "phone"){VMasker(document.querySelector("#phone")).maskPattern("(99)-999999999")};
+    if(id == "phone"){VMasker(document.querySelector("#phone")).maskPattern("(99)-999999999");}
 
 });
 
@@ -45,13 +49,12 @@ function getCaptcha()
         });
     });
 }
-
 //Inicia o captcha
 getCaptcha();
 //Ajax do formulário de cadastro de clientes
 $("#formCadastro").on("submit",function(event){
     event.preventDefault();
-    CarregandoLoading()
+    CarregandoLoading();
     var dados=$(this).serialize();
     $.ajax({
        url: getRoot(urlCadastro),
@@ -77,10 +80,10 @@ $("#formCadastro").on("submit",function(event){
                         outDuration:5000,
                     });
                 });
-                setTimeout(() => { window.location.href = response.page }, 3000);
+                setTimeout(() => { window.location.href = response.page }, 6000);
                 
             }
-            ParandoLoading()
+            ParandoLoading();
         }
     });
 });
@@ -98,7 +101,7 @@ $("#senha").keypress(function(e){
 
 //Formulario de login
 $("#formLogin").on("submit",function(event){
-    CarregandoLoading()
+    CarregandoLoading();
     event.preventDefault();
     var dados=$(this).serialize();
     $.ajax({
@@ -108,7 +111,7 @@ $("#formLogin").on("submit",function(event){
         data: dados,
         success: function (response) {
           if(response.retorno == 'success'){
-              window.location.href = response.page;
+            window.location.href = response.page;
           }else{
               getCaptcha();
               if(response.tentativas == true){
@@ -116,10 +119,10 @@ $("#formLogin").on("submit",function(event){
               }
               $('.resultadoForm').empty();
               $.each(response.erros, function(key, value){
-                  $('.resultadoForm').append(value + '<br>')
-              })
+                  $('.resultadoForm').append(value + '<br>');
+              });
             }
-            ParandoLoading()
+            ParandoLoading();
         }
     });
     
@@ -129,7 +132,7 @@ $("#formLogin").on("submit",function(event){
 // Envia o formulario para redefinir a senha
 $("#formRedefinePassword").on("submit",function(event){
     event.preventDefault();
-    CarregandoLoading()
+    CarregandoLoading();
     var dados=$(this).serialize();
     $.ajax({
         url: getRoot(urlRedefinePassword),
@@ -146,7 +149,7 @@ $("#formRedefinePassword").on("submit",function(event){
                     outDuration:5000,
                 });
             });   
-            window.location.href = response.page;
+            setTimeout(() => { window.location.href = response.page }, 6000);
 
           }else{
               getCaptcha();
@@ -155,10 +158,10 @@ $("#formRedefinePassword").on("submit",function(event){
               }
               $('.resultadoForm').empty();
               $.each(response.erros, function(key, value){
-                  $('.resultadoForm').append(value + '<br>')
-              })
+                  $('.resultadoForm').append(value + '<br>');
+              });
             }
-            ParandoLoading()
+            ParandoLoading();
         }
     });
 });
@@ -166,7 +169,7 @@ $("#formRedefinePassword").on("submit",function(event){
 //Envia o formulario para criar a nova senha
 $("#formNewPassword").on("submit",function(event){
     event.preventDefault();
-    CarregandoLoading()
+    CarregandoLoading();
     var dados=$(this).serialize();
     $.ajax({
         url: getRoot(urlNewPassword),
@@ -184,7 +187,7 @@ $("#formNewPassword").on("submit",function(event){
                     outDuration:5000,
                 });
             });
-            window.location.href = response.page;
+            setTimeout(() => { window.location.href = response.page }, 6000);
           }else{
               getCaptcha();
               if(response.tentativas == true){
@@ -192,17 +195,17 @@ $("#formNewPassword").on("submit",function(event){
               }
               $('.resultadoForm').empty();
               $.each(response.erros, function(key, value){
-                  $('.resultadoForm').append(value + '<br>')
-              })
+                  $('.resultadoForm').append(value + '<br>');
+              });
             }
-            ParandoLoading()
+            ParandoLoading();
         }
     });
 });
 
 //Formulario de login racs
 $("#formLoginRacs").on("submit",function(event){
-    CarregandoLoading()
+    CarregandoLoading();
     event.preventDefault();
     var dados=$(this).serialize();
 
@@ -213,7 +216,7 @@ $("#formLoginRacs").on("submit",function(event){
         data: dados,
         success: function (response) {
           if(response.retorno == 'success'){
-              window.location.href = response.page;
+               window.location.href = response.page;
           }else{
               getCaptcha();
               if(response.tentativas == true){
@@ -221,11 +224,47 @@ $("#formLoginRacs").on("submit",function(event){
               }
               $('.resultadoForm').empty();
               $.each(response.erros, function(key, value){
-                  $('.resultadoForm').append(value + '<br>')
-              })
+                  $('.resultadoForm').append(value + '<br>');
+              });
             }
-            ParandoLoading()
+            ParandoLoading();
         }
     });
     
+});
+
+//Formulario de contato
+$("#formContato").on("submit",function(event){
+    event.preventDefault();
+    LoadingRacs();
+    var dados=$(this).serialize();
+    $.ajax({
+       url: getRoot(urlContatoRacs),
+        type: 'post',
+        dataType: 'json',
+        data: dados,
+        success: function (response) {
+            //$('.retornoCad').empty();
+            if(response.retorno == 'erro'){
+                getCaptcha();
+                $.each(response.erros,function(key,value){
+                    M.toast({   html: `<span class="lighten-2">${value}</span><button class="btn-flat toast-action"><i class="material-icons yellow-text">error_outline</i></button>`,
+                        classes: 'rounded',
+                        inDuration: 5000,
+                        outDuration:5000,
+                    });
+                });
+            }else{
+                $.each(response.success,function(key,value){
+                    M.toast({   html: `<span>${value}</span><button class="btn-flat toast-action"><i class="material-icons green-text">thumb_up</i></button>`,
+                        classes: 'rounded',
+                        inDuration: 5000,
+                        outDuration:5000,
+                    });
+                });
+                
+            }
+           ParandoLoadingRacs();
+        }
+    });
 });

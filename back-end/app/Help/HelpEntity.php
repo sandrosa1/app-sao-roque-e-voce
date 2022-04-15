@@ -329,7 +329,6 @@ class HelpEntity{
         $app->img1          = $pathImages[0];
         $appSegmento->img2  = $pathImages[1];
         $appSegmento->img3  = $pathImages[2];
-
         
         $app->updateApp();
         $appSegmento->updateEvento();
@@ -345,9 +344,8 @@ class HelpEntity{
     public static function helpImgServico($app, $appSegmento, $pathImages){
 
         $app->img1          = $pathImages[0];
-        $appSegmento->img2  = $pathImages[1];
-        $appSegmento->img3  = $pathImages[2];
-
+        $appSegmento->img2  = $pathImages[0];
+        $appSegmento->img3  = $pathImages[0];
         
         $app->updateApp();
         $appSegmento->updateServico();

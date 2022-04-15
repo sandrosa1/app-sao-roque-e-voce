@@ -134,14 +134,16 @@ class Validate{
      * @param string $body
      * @return boolean
      */ 
-    public function validateSendEmail($address,$subject,$body){
+    public function validateSendEmail($address,$subject,$body, $name){
+
+        
 
         $objEmail = new Email;
-        $sucess = $objEmail->sendEmail($address,$subject,$body);
+        $success = $objEmail->sendEmail($address,$subject,$body,$name);
+     
+        if(!$success){
 
-        if(!$sucess){
-
-            $this->setErro("Problemas no envio de email de confirmação.");
+            $this->setErro($objEmail->getError());
             return false;
 
         }

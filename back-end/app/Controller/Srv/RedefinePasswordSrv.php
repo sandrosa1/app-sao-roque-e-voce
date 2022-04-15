@@ -60,13 +60,14 @@ class RedefinePasswordSrv extends PageSrv{
         $customer = EntityCustomer::getCustomerToken($email);
         $address = $customer->email;
         $token = $customer->token;
+        $name = $customer->name;
         $subject = 'Redefinir senha';
-        $body = "<b>Acesse esse link para criar uma nova senha.<b><br><br>
-        <a href='http://www.racsstudios.com/srv/nova_senha?email={$email}&token={$token}'> click aqui</a><br><br>
-        <img src='http://www.racsstudios.com/img/assinatura-400.png' alt='Logomarca da WEF'>";
-
-
-        if(!$validate->validateSendEmail($address,$subject,$body)){
+        $body = "
+        Olá {$name}.
+        
+        Clique nesse link para criar uma nova senha. href='http://www.racsstudios.com/srv/nova_senha?email={$email}&token={$token}'>";
+       
+        if(!$validate->validateSendEmail($address,$subject,$body,$name)){
 
             return self:: responseError($validate, $objCustomer);
         }

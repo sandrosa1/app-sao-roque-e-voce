@@ -1,11 +1,4 @@
-/*Stylo comum para toda aplicação*/
-/* html, body {
-    margin: 0;
-    padding: 0;
-    height: 100%;
-    } */
-    
-*{margin:0; padding: 0; box-sizing: border-box; font-family: Arial, sans-serif; scrollbar-color: transparent transparent;  scrollbar-width: 0px}
+*{margin:0; padding: 0; box-sizing: border-box; font-family: Arial, sans-serif; }
 
 a{text-decoration: none; color: #333;}
 
@@ -120,6 +113,7 @@ a{text-decoration: none; color: #333;}
 .fzj-60{font-size: 60px; text-align: justify;}
 /* ALINHA OS ITENS FILHOS NO CENTRO  NA VERTICAL*/
 .hc{display: flex; justify-content: center;}
+.hl{display: flex; justify-content: flex-start;}
 .vc{display: flex; align-items: center; justify-content: center;}
 .vl{display: flex; align-items: center; justify-content: flex-start;}
 .vsa{display: flex; align-items: center; justify-content: space-around;}
@@ -145,27 +139,3 @@ a{text-decoration: none; color: #333;}
     background-color: green;
 }
 
-
-
-/*Configurações Gerais*/
-
-
-/*Extra-small*/
-/* @media screen and (max-width: 480px){
-    
-}
-
-/*Small*/
-/* @media screen and (min-width: 481px) and (max-width: 768px){
-    
-} */
-
-/*Medium*/
-/* @media screen and (min-width: 769px) and (max-width: 1199px){
-  
-} */
-
-/*Large*/
-/* @media screen and (min-width: 1200px){
-
-} */ 

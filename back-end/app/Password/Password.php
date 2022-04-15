@@ -3,7 +3,7 @@
 namespace App\Password;
 
 use \App\Model\Entity\Customer\Customer;
-use App\Model\Entity\RACS\RACS;
+use \App\Model\Entity\RACS\RACS;
 
 class Password{
 

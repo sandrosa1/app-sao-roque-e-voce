@@ -91,7 +91,7 @@ class Hospedagem extends dbApp{
             'whatsapp'          => $this->whatsapp,
             'semana'            => $this->semana,
             'sabado'            => $this->sabado,
-            'domingo'            => $this->domingo,
+            'domingo'           => $this->domingo,
             'feriado'           => $this->feriado,
             'img2'              => $this->img2,
             'img3'              => $this->img3,
