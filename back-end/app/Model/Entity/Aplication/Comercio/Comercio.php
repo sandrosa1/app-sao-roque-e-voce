@@ -4,9 +4,8 @@ namespace App\Model\Entity\Aplication\Comercio;
 
 use \SandroAmancio\DatabaseManager\Database;
 
-use \App\Model\Entity\Aplication\App as dbApp;
 
-class Comercio extends dbApp{
+class Comercio {
 
 
     public $idAppComercio;

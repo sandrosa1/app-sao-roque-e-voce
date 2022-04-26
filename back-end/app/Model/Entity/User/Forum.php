@@ -77,7 +77,7 @@ class Forum {
             'comentario' => $this->comentario,
             'utilSim'    => $this->utilSim,
             'utilNao'    => $this->utilNao,
-            'data'       => $this->data,
+            'data'       => date("Y-m-d H:i:s"),
             'avaliacao'  => $this->avaliacao,
 
         ]);

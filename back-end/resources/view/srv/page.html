@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="pt-BR">
 
   <head>
 
@@ -19,8 +19,6 @@
   <body>
 
     <div class="container-fluid">{{content}}</div>
-
-    <input class="float" type="hidden" id="g-recaptcha-response" name="g-recaptcha-response" required>
     <script src='https://www.google.com/recaptcha/api.js?render={{SITEKEY}}'></script>
     <script> const sitekey = '{{SITEKEY}}'; </script>
     <script src='{{URL}}/app/assets/javascripts.min.js'></script>

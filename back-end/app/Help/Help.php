@@ -62,43 +62,70 @@ class Help{
         switch ($opcao) {
             case 'entregaDomicilio';
                 return ["Dellivery","class='c-pri ml-4 fas fa-truck'"];
+
             case 'estacionamento':
                 return ["Vaga","class='c-pri ml-4 fas fa-car'"];
+
             case 'acessibilidade':
                 return ["Acessibilidade","class='c-pri ml-4 fab fa-accessible-icon'"];
+
             case "whatsapp":
                 return ["whatsapp","class='c-pri ml-4 fab fa-whatsapp'"];
+
             case "wiFi":
                 return ["WiFi","class='c-pri ml-4 fas fa-wifi'"];
+
             case "trilhas":
                 return ["Trilha","class='c-pri ml-4 fas fa-hiking'"];
+
             case "refeicao":
                 return ["Refeição","class='c-pri ml-4 fas fa-utensils'"];
+
             case "emporio":
                 return ["Empório","class='c-pri ml-4 fas fa-store'"];
+
             case "adega":
                 return ["Adega","class='c-pri ml-4 fas fa-wine-bottle'"];
+
             case "bebidas":
                 return ["Bebidas","class='c-pri ml-4 fas fa-glass-cheers'"];
+
             case "sorveteria":
                 return ["Sorveteria","class='c-pri ml-4 fas fa-ice-cream'"];
+
             case "show":
                 return ["Shows","class='c-pri ml-4 far fa-stars'"];
+
             case "brinquedos":
                 return ["Brinquedos","class='c-pri ml-4 fas fa-gamepad'"];
+
             case "restaurante":
                 return ["Restaurante","class='c-pri ml-4 fas fa-utensils'"];
+
             case "arCondicionado":
                 return ["ArCondi","class='c-pri ml-4 fal fa-air-conditioner'"];
+
             case "academia":
                 return ["Academia","class='c-pri ml-4 fas fa-running'"];
+
             case "piscina":
                 return ["Piscina","class='c-pri ml-4 fas fa-swimmer'"];
+
             case "refeicao":
                 return ["Refeição","class='c-pri ml-4 fas fa-cookie-bite'"];
+
             case "musica":
                 return ["Música","class='c-pri ml-4 fas fa-music'"];
-            
+
+            case "fe":
+                return ["Fé","class='c-pri ml-4  fa-solid fa-hands-praying'"];
+
+            case "natureza":
+                return ["Natureza","class='c-pri ml-4  fa-solid fa-tree'"];
+
+            case "cachoeira":
+                return ["Cachoeira","class='c-pri ml-4  fa-solid fa-water'"];
+        
             default:
                 # code...
                 break;

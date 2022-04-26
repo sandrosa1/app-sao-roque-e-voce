@@ -18,13 +18,13 @@ function getRoot(url)
 
 
 //Sistema de loadind
-const gif = getRoot(urlName+'/img/anime.gif')
-const logoSrv =  getRoot(urlName+'/img/logo-srv-200.png')
-const logoRacs =  getRoot(urlName+'/img/logo-racs-100.png')
-const CarregandoLoading = () => document.getElementById('root').innerHTML = `<img class="gif" src='${gif}' alt="Logomarca da WEF">`;
-const ParandoLoading = () => document.getElementById('root').innerHTML = `<img  src='${logoSrv}' alt="Logomarca da ">`;
-const LoadingRacs = () => document.getElementById('root').innerHTML = `<img class="gif" src='${gif}' alt= Loading">`;
-const ParandoLoadingRacs = () => document.getElementById('root').innerHTML = `<img  src='${logoRacs}' alt="Logomarca da RACS" style="width: 70px;>`;
+const gif = getRoot(urlName+'/img/anime.gif');
+const logoSrv  =  getRoot(urlName+'/img/logo-srv-200.png');
+const logoRacs =  getRoot(urlName+'/img/logo-racs-100.png');
+const CarregandoLoading  = () => document.getElementById('root').innerHTML = `<img  class="gif" src='${gif}' alt="Logomarca da WEF">`;
+const ParandoLoading     = () => document.getElementById('root').innerHTML = `<img  src='${logoSrv}' alt="Logomarca da ">`;
+const LoadingRacs        = () => document.getElementById('root').innerHTML = `<img  class="gif" src='${gif}' alt= Loading">`;
+const ParandoLoadingRacs = () => document.getElementById('root').innerHTML = `<img  src='${logoRacs}' alt="Logomarca da RACS" style="width: 70px;">`;
 //Mascara de validação para campos númericos
 //https://github.com/vanilla-masker/vanilla-masker
 //Listen the input element masking it to format with pattern.
@@ -99,34 +99,6 @@ $("#senha").keypress(function(e){
     }
 });
 
-//Formulario de login
-$("#formLogin").on("submit",function(event){
-    CarregandoLoading();
-    event.preventDefault();
-    var dados=$(this).serialize();
-    $.ajax({
-       url: getRoot(urlLogin),
-        type: 'post',
-        dataType: 'json',
-        data: dados,
-        success: function (response) {
-          if(response.retorno == 'success'){
-            window.location.href = response.page;
-          }else{
-              getCaptcha();
-              if(response.tentativas == true){
-                //$('.loginFormulario').hide();
-              }
-              $('.resultadoForm').empty();
-              $.each(response.erros, function(key, value){
-                  $('.resultadoForm').append(value + '<br>');
-              });
-            }
-            ParandoLoading();
-        }
-    });
-    
-});
 
 
 // Envia o formulario para redefinir a senha
@@ -203,24 +175,24 @@ $("#formNewPassword").on("submit",function(event){
     });
 });
 
-//Formulario de login racs
-$("#formLoginRacs").on("submit",function(event){
+
+//Formulario de login
+$("#formLogin").on("submit",function(event){
     CarregandoLoading();
     event.preventDefault();
     var dados=$(this).serialize();
-
     $.ajax({
-       url: getRoot(urlLoginRacs),
+       url: getRoot(urlLogin),
         type: 'post',
         dataType: 'json',
         data: dados,
         success: function (response) {
           if(response.retorno == 'success'){
-               window.location.href = response.page;
+            window.location.href = response.page;
           }else{
               getCaptcha();
               if(response.tentativas == true){
-               // $('.loginFormulario').hide();
+                //$('.loginFormulario').hide();
               }
               $('.resultadoForm').empty();
               $.each(response.erros, function(key, value){
@@ -232,6 +204,37 @@ $("#formLoginRacs").on("submit",function(event){
     });
     
 });
+
+//Formulario de login
+$("#formLoginRacs").on("submit",function(event){
+    CarregandoLoading();
+    event.preventDefault();
+    var dados=$(this).serialize();
+    $.ajax({
+       url: getRoot(urlLoginRacs),
+        type: 'post',
+        dataType: 'json',
+        data: dados,
+        success: function (response) {
+          if(response.retorno == 'success'){
+            window.location.href = response.page;
+          }else{
+              getCaptcha();
+              if(response.tentativas == true){
+                //$('.loginFormulario').hide();
+              }
+              $('.resultadoForm').empty();
+              $.each(response.erros, function(key, value){
+                  $('.resultadoForm').append(value + '<br>');
+              });
+            }
+            ParandoLoadingRacs();
+        }
+    });
+    
+});
+
+
 
 //Formulario de contato
 $("#formContato").on("submit",function(event){
@@ -264,7 +267,7 @@ $("#formContato").on("submit",function(event){
                 });
                 
             }
-           ParandoLoadingRacs();
+            ParandoLoading();
         }
     });
 });

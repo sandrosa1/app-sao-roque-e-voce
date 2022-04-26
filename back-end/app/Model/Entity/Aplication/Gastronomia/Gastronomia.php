@@ -3,9 +3,8 @@
 namespace App\Model\Entity\Aplication\Gastronomia;
 
 use \SandroAmancio\DatabaseManager\Database;
-use \App\Model\Entity\Aplication\App as dbApp;
 
-class Gastronomia extends dbApp{
+class Gastronomia {
 
     public $idApp;
     public $idAppGastronomia;

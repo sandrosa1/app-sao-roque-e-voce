@@ -8,6 +8,7 @@ use \App\Model\Entity\Aplication\App as EntityApp;
 use \App\Model\Entity\Aplication\Hospedagem\Hospedagem as EntityHospedagem;
 use \App\Model\Entity\Aplication\Comercio\Comercio as EntityComercio;
 use \App\Model\Entity\Aplication\Evento\Evento as EntityEvento;
+use \App\Model\Entity\Aplication\Turismo\Turismo as EntityTurismo;
 use \App\Model\Entity\Aplication\Servico\Servico as EntityServico;
 use \App\Model\Entity\Aplication\Gastronomia\Gastronomia as EntityGastronomia;
 use \App\Model\Entity\User\Forum;
@@ -32,6 +33,7 @@ class HelpEntity{
      */
     public static function helpGetEntity($app){
 
+       
         switch ($app->segmento) {
             case 'gastronomia':
                 return EntityGastronomia::getGastronomiaById($app->idApp);
@@ -49,7 +51,7 @@ class HelpEntity{
                 return EntityHospedagem::getHospedagemById($app->idApp);
 
             case 'turismo':
-                return EntityGastronomia::getGastronomiaById($app->idApp);
+                return EntityTurismo::getTurismoById($app->idApp);
            
         }
     }
@@ -275,6 +277,54 @@ class HelpEntity{
         }
     }
 
+     /**
+     * Metódo responsável por criar um novo Evento
+     *
+     * @param [type] $idApp
+     * @return void
+     */
+    public static function helpTurismo($idApp,  $postVars){
+
+
+        $objTurismo = EntityTurismo::getTurismoById($idApp);
+
+        if (!$objTurismo instanceof EntityTurismo){
+            $objTurismo = new EntityTurismo();
+
+        }
+
+        $objTurismo->idApp          = $idApp;
+        $objTurismo->idTurismo       = $objTurismo->idTurismo;
+        $objTurismo->semana         = !$postVars["semana"]  || $postVars["semana"]   == "00:00 - 00:00"  ? "Fechado" : $postVars["semana"];
+        $objTurismo->sabado         = !$postVars["sabado"]  || $postVars["sabado"]   == "00:00 - 00:00"  ? "Fechado" : $postVars["sabado"];
+        $objTurismo->domingo        = !$postVars["domingo"] || $postVars["domingo"]  == "00:00 - 00:00"  ? "Fechado" : $postVars["domingo"];
+        $objTurismo->feriado        = !$postVars["feriado"] || $postVars["feriado"]  == "00:00 - 00:00"  ? "Fechado" : $postVars["feriado"];
+        $objTurismo->estacionamento = $postVars["estacionamento"] ? -2 : -1;
+        $objTurismo->acessibilidade = $postVars["acessibilidade"] ? -2 : -1;
+        $objTurismo->fe             = $postVars["fe"]             ? -2 : -1;
+        $objTurismo->trilhas        = $postVars["trilhas"]        ? -2 : -1;
+        $objTurismo->refeicao       = $postVars["refeicao"]       ? -2 : -1;
+        $objTurismo->natureza       = $postVars["natureza"]       ? -2 : -1;
+        $objTurismo->cachoeira      = $postVars["cachoeira"]      ? -2 : -1;
+        $objTurismo->parque         = $postVars["parque"]         ? -2 : -1;
+        $objTurismo->descricao      = $postVars["descricao"]      ? $postVars["descricao"]      : ""; 
+
+
+        if($postVars["action"] == "atualizar" ){
+            $objTurismo->updateTurismo();
+            
+
+        }else{
+
+            $objTurismo->img2           = 'dois.jpg';
+            $objTurismo->img3           = 'tres.jpg';
+            $objTurismo->insertNewTurismo();
+
+        }
+
+
+        return true;
+    }
 
 
     /**
@@ -368,6 +418,19 @@ class HelpEntity{
         return true;
     }
 
+    public static function helpImgTurismo($app, $appSegmento, $pathImages){
+
+     
+        $app->img1          = $pathImages[0];
+        $appSegmento->img2  = $pathImages[1];
+        $appSegmento->img3  = $pathImages[2];
+
+        $app->updateApp();
+        $appSegmento->updateTurismo();
+            
+        return true;
+    }
+
     public static function hellGetAllsApps(){
 
       
@@ -380,5 +443,14 @@ class HelpEntity{
         return EntityCustomer::getCustomerAll();
  
      }
+
+     public static function hellGetAllsTourism(){
+
+      
+        return EntityTurismo::getTurismoAll();
+ 
+     }
+
+
 
 }

@@ -16,6 +16,11 @@ include __DIR__ . '/routes/srv.php';
 // Inclui rotas do painel dos colaboradores racs
 include __DIR__ . '/routes/racs.php';
 
+
+// Inclui rotas da API
+include __DIR__ . '/routes/api.php';
+
+
 // Imprime o response da rota
 $objRouter->run()->sendResponse();
 

@@ -1,94 +1,43 @@
-<div class="row containerRacs ">
-    <div class="container-fluid">
-        <ul class="tabs navTabs">
-            <li class="tab "><a class="active" href="#clientes">Clientes</a></li>
-            <li class="tab "><a class="" href="#apps">Apps</a></li>
-            <li class="tab "><a class="" href="#turismo">Pontos Turisticos</a></li>
-            <li class="tab "><a class="" href="#hospedagens">Hospedagens</a></li>
-            <li class="tab "><a class="" href="#gastronomia">Gastronomia</a></li>
-            <li class="tab "><a class="" href="#comercios">Comercio</a></li>
-            <li class="tab "><a class="" href="#eventos">Eventos</a></li>
-            <li class="tab "><a class="" href="#servicos">Serviços</a></li>
+<div class="container-fluid ">
+    <div class="row">
+        <div class="col s12">
+        <ul class="tabs navTabs center-align fwb">
+            <li class="tab "><a href="#geral">Preview</a></li>
+            <li class="tab "><a href="#apps">Apps</a></li>
+            <li class="tab "><a href="#turismo">Pontos Turisticos</a></li>
+            <li class="tab "><a href="#hospedagens">Hospedagens</a></li>
+            <li class="tab "><a href="#gastronomia">Gastronomia</a></li>
+            <li class="tab "><a href="#comercios">Comercio</a></li>
+            <li class="tab "><a href="#eventos">Eventos</a></li>
+            <li class="tab "><a href="#servicos">Serviços</a></li>
         </ul>
     </div>
-    <div id="clientes" class="col s12 appsListaRacs ">
-        <div class="row ">
-            <div class="col s4 telaRacs">
-                {{previewClientes}}
-            </div>
-            <div class="col s8 tabelaAppRacs ">
-                {{tabelaClientes}}
-            </div>
-        </div>
+    <div id="geral" class="col s12 tabelaAppRacs">
+        <div class="col s12 m5 ">{{previewApps}}</div>
+        <div class="col s12 m7 ">{{infoCliente}}</div>
     </div>
-    <div id="apps" class="col s12 appsListaRacs ">
-        <div class="row">
-            <div class="col s4 telaRacs ">
-                {{previewApps}}
-            </div>
-            <div class="col s8 tabelaAppRacs">
-                {{tabelaApps}}
-            </div>
-        </div>
+   
+    <div id="apps" class="col s10 offset-s1 tabelaAppRacs">
+        {{tabelaApps}}
     </div>
-    <div id="turismo" class="col s12 appsListaRacs">
-        <div class="row">
-            <div class="col s4 telaRacs ">
-                {{previewTurismo}}
-            </div>
-            <div class="col s8 tabelaAppRacs">
-                {{tabelaTurismo}}
-            </div>
-        </div>
+    <div id="turismo" class="col s10 offset-s1 tabelaAppRacs">
+        {{tabelaTurismo}}
     </div>
-    <div id="hospedagens" class="col s12 appsListaRacs">
-        <div class="row">
-            <div class="col s4 telaRacs ">
-                {{previewHospedagens}}
-            </div>
-            <div class="col s8 tabelaAppRacs ">
-                {{tabelaHospedagens}}
-            </div>
-        </div>
+    <div id="hospedagens" class="col s10 offset-s1 tabelaAppRacs">
+        {{tabelaHospedagens}}
     </div>
-    <div id="gastronomia" class="col s12 appsListaRacs">
-        <div class="row">
-            <div class="col s4 telaRacs ">
-                {{previewGastronomia}}
-            </div>
-            <div class="col s8 tabelaAppRacs">
-                {{tabelaGastronomia}}
-            </div>
-        </div>
+    <div id="gastronomia" class="col s10 offset-s1 tabelaAppRacs">
+        {{tabelaGastronomia}}
+    
     </div>
-    <div id="comercios" class="col s12 appsListaRacs">
-        <div class="row">
-            <div class="col s4 telaRacs ">
-                {{previewComercio}}
-            </div>
-            <div class="col s8 tabelaAppRacs ">
-                {{tabelaComercio}}
-            </div>
-        </div>
+    <div id="comercios" class="col s10 offset-s1 tabelaAppRacs">
+        {{tabelaComercio}}
     </div>
-    <div id="eventos" class="col s12 appsListaRacs">
-        <div class="row">
-            <div class="col s4 telaRacs ">
-                {{previewEventos}}
-            </div>
-            <div class="col s8 tabelaAppRacs ">
-                {{tabelaEventos}}
-            </div>
-        </div>
+    <div id="eventos" class="col s10 offset-s1 tabelaAppRacs">
+        {{tabelaEventos}}
     </div>
-    <div id="servicos" class="col s12 appsListaRacs">
-        <div class="row">
-            <div class="col s4 telaRacs ">
-                {{previewServicos}}
-            </div>
-            <div class="col s8 tabelaAppRacs">
-                {{tabelaServicos}}
-            </div>
-        </div>
+    <div id="servicos" class="col s10 offset-s1 tabelaAppRacs">
+        {{tabelaServicos}}
     </div>
+</div>
 </div>

@@ -2,9 +2,9 @@
 namespace App\Model\Entity\Aplication\Evento;
 
 use \SandroAmancio\DatabaseManager\Database;
-use \App\Model\Entity\Aplication\App as dbApp;
 
-class Evento extends dbApp{
+
+class Evento {
 
         public $idAppEvento;
         public $idApp;

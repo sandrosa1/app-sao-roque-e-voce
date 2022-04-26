@@ -75,7 +75,7 @@ class LoginRacs extends PageRacs{
         }
         
         
-        if(count($validate->getErro()) >0){
+        if(count($validate->getErro()) > 0){
             $objRACS->insertAttempt();
             $arrResponse=[
                "retorno" => "erro",

@@ -4,9 +4,7 @@ namespace App\Model\Entity\Aplication\Hospedagem;
 
 use \SandroAmancio\DatabaseManager\Database;
 
-use \App\Model\Entity\Aplication\App as dbApp;
-
-class Hospedagem extends dbApp{
+class Hospedagem {
 
 
     public $idAppHospedagem;

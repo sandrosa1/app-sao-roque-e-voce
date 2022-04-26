@@ -4,9 +4,8 @@ namespace App\Model\Entity\Aplication\Help;
 
 use \SandroAmancio\DatabaseManager\Database;
 
-use \App\Model\Entity\Aplication\App as dbApp;
 
-class Help extends dbApp{
+class Help {
 
 
     /**

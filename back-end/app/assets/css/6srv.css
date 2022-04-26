@@ -211,11 +211,13 @@
 .displayCelular{
     width: 100%;
     height: 25px;
+    color: #000;
     background-color:var(--srv8);
 }
 .headerCelular{
     width: 100%;
     height: 40px;
+    color: #000;
 }
 .headerItem{
     padding: 10px 0px 0px 0px;
@@ -226,6 +228,7 @@
 .nomeCelular{
     width: 100%;
     height: 30px;
+    color: #000;
 }
 .statusCelular{
     width: 100%;
@@ -261,6 +264,7 @@
 }
 .opcaoWrap{
     min-width: 16mm;
+    color: #000;
 }
 .dot1 {
     height: 1px;
@@ -271,9 +275,11 @@
     margin: 10px auto;
 }
 .descricaoCelular{
+    color: #000;
     width: 100%;
 }
 .comentarioCelular{
+    color: #000;
     width: 100%;
 }
 .dot2 {
@@ -284,14 +290,16 @@
     display:block;
     margin: 3px auto 3px auto;
 }
-.enderecoCelular{
+.enderecoCelular{   
     width: 100%;
     height: 20px;
+    color: #000;
 }
 .servicosBox{
     border: 1px solid #920046;
     border-radius: 10px;
     min-height: 120px;
+    color: #000;
 }
 .detalhes-tutorial-screw{
     background-color: var(--srv8);

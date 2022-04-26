@@ -266,7 +266,22 @@ class Router {
             
 
         }catch(Exception $e){
-            return new Response($e->getCode(),$e->getMessage());
+            return new Response($e->getCode(),$this->getErrorMessage($e->getMessage()), $this->contentType);
+        }
+    }
+
+    private function getErrorMessage($message){
+        switch ($this->contentType) {
+            case 'application/json':
+                return [
+                    'retorno' => 'error',
+                    'error' => $message,
+                ];
+                break;
+            
+            default:
+                return $message;
+                break;
         }
     }
 

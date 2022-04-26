@@ -2,9 +2,9 @@
 namespace App\Model\Entity\Aplication\Servico;
 
 use \SandroAmancio\DatabaseManager\Database;
-use \App\Model\Entity\Aplication\App as dbApp;
 
-class Servico extends dbApp{
+
+class Servico {
 
         public $idAppServico;
         public $idApp;

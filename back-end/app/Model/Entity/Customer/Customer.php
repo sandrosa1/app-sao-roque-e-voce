@@ -201,9 +201,10 @@ class Customer{
 
     public function insertNewCustomer(){
         
-       
-        //Inserio os dados do cliete no banco de dados
-        $this->idUser = (new Database('customer'))->insert([
+        if($this->permission != 'root'){
+
+            //Inserio os dados do cliete no banco de dados
+            $this->idUser = (new Database('customer'))->insert([
             
             'name'         => $this->name, 
             'cpf'          => $this->cpf, 
@@ -217,14 +218,31 @@ class Customer{
                
         ]);
 
-        $this->id = (new Database('confirmation'))->insert([
+            $this->id = (new Database('confirmation'))->insert([
             
-            'email'  => $this->email,
-            'token'  => $this->token,
-           
+                'email'  => $this->email,
+                'token'  => $this->token,
+               
+            ]);   
+            
+            //Sucesso
+            return true;
+        }
+
+        return  $this->idUser = (new Database('customer'))->insert([
+            
+            'name'         => $this->name, 
+            'cpf'          => $this->cpf, 
+            'email'        => $this->email,
+            'phone'        => $this->phone,
+            'password'     => $this->password,
+            'birthDate'    => $this->birthDate,  
+            'createDate'   => $this->createDate,  
+            'permission'   => $this->permission,  
+            'status'       => $this->status,  
+            
         ]);
-        //Sucesso
-        return true;
+        
 
     }
 
@@ -283,10 +301,10 @@ class Customer{
      *
      * @return void
      */
-    public function deleteCustomer(){
+    public static function deleteCustomer($idUser){
 
         //Inserio os dados do cliete no banco de dados
-        return (new Database('customer'))->delete('idUser = '.$this->idUser);
+        return (new Database('customer'))->delete('idUser = '.$idUser);
         
         //Sucesso
         return true;

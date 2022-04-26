@@ -265,7 +265,7 @@ class ScreenSrv extends PageSrv{
 
             if(isset($_FILES['arquivoImagem'])){
                 $uploads = Upload::createMultiUpload($_FILES['arquivoImagem']);
-                $tamaho = 250;
+                $tamanho = 250;
             }else{
                 $uploads = Upload::createMultiUpload($_FILES['arquivoLogo']);
                 $tamanho = 50;
@@ -353,7 +353,7 @@ class ScreenSrv extends PageSrv{
                 return HelpEntity::helpImgHospedagem($app, $appSegmento,$pathImages);
 
             case 'turismo':
-                return HelpEntity::helpImgGastronomia($app, $appSegmento,$pathImages);
+                return HelpEntity::helpImgTurismo($app, $appSegmento,$pathImages);
            
         }
 
