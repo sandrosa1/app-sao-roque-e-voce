@@ -51,7 +51,8 @@ MiddlewareQueue::setMap([
     'required-srv-login'    => \App\Http\Middleware\RequireSrvLoginCustomer::class,
     'required-racs-logout'  => \App\Http\Middleware\RequireLogoutRACS::class,
     'required-racs-login'   => \App\Http\Middleware\RequireLoginRACS::class,
-    'api'                   => \App\Http\Middleware\Api::class
+    'user-basic-auth'       => \App\Http\Middleware\UserBasicAuth::class,
+    'api'                   => \App\Http\Middleware\Api::class,
 ]);
 
 //Define o mapeamento de middlewares padrões (Executa em todas as rotas)

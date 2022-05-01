@@ -9,9 +9,7 @@ use \SandroAmancio\PaginationManager\Pagination;
 
 class Apps extends Api {
 
-
-
-     /**
+    /**
      * Método responsável por obter a renderização  dos itens de depoimentos para a página
      * @param Request $request
      *  @param Pagination $$objPagination
@@ -37,6 +35,15 @@ class Apps extends Api {
         //RENDERIZA ITEM
         while($objApp = $results->fetchObject(EntityApps::class)){
         
+            if($objApp->avaliacao){
+                $avaliacaoMedia = round((int)$objApp->totalAvaliacao/(int)$objApp->avaliacao, 2);
+                $custoMedia = round((int)$objApp->totalCusto/(int)$objApp->avaliacao, 2);
+
+            }else{
+                $avaliacaoMedia = 0;
+
+            }
+        
             $itens [] = [
             'idApp'          => (int)$objApp->idApp,
             'nomeFantasia'   => $objApp->nomeFantasia,
@@ -53,14 +60,12 @@ class Apps extends Api {
             'localidade'     => $objApp->localidade,
             'chaves'         => $objApp->chaves,
             'visualizacao'   => $objApp->visualizacao,
-            'totalCusto'     => $objApp->totalCusto,
-            'totalAvaliacao' => $objApp->totalAvaliacao,
-            'custo'          => $objApp->custo,
             'avaliacao'      => $objApp->avaliacao,
             'img1'           => 'http://www.racsstudios.com/img/imgApp/'.$objApp->img1,
             'adicionais'     => $objApp->adicionais,
+            'estrelas'       => (float)$avaliacaoMedia,
+            'custoMedio'     => (float)$custoMedia     
             ];
-            
         }
 
         //RETORNA OS DEPOIMENTOS
@@ -90,23 +95,35 @@ class Apps extends Api {
      * @param int $id
      * @return array
      */
-    public static function getApp($request, $id){
+    public static function getApp($request,$id){
 
-
+       
         if(!is_numeric($id)){
-            
             throw new \Exception("O id ".$id." não e valido", 400);
 
         }
-
+      
         $objApp = EntityApps::getAppById($id);
-        $objAppTur = HelpEntity::helpGetEntity($objApp );
+        $objAppTur = HelpEntity::helpGetEntity($objApp);
 
         if(!$objApp instanceof EntityApps){
             throw new \Exception("O App ".$id." não foi localizado", 404);
         }
 
+        $objApp->visualizacao = (int)$objApp->visualizacao + 1;
+
+        $objApp->updateApp();
+
+        if($objApp->avaliacao){
+            $avaliacaoMedia = round((int)$objApp->totalAvaliacao/(int)$objApp->avaliacao, 2);
+            $custoMedia = round((int)$objApp->totalCusto/(int)$objApp->avaliacao, 2);
+
+        }else{
+           $media = 0;
+
+        }
         return  [
+        
             'idApp'          => (int)$objApp->idApp,
             'nomeFantasia'   => $objApp->nomeFantasia,
             'segmento'       => $objApp->segmento,
@@ -122,17 +139,14 @@ class Apps extends Api {
             'localidade'     => $objApp->localidade,
             'chaves'         => $objApp->chaves,
             'visualizacao'   => $objApp->visualizacao,
-            'totalCusto'     => $objApp->totalCusto,
-            'totalAvaliacao' => $objApp->totalAvaliacao,
-            'custo'          => $objApp->custo,
             'avaliacao'      => $objApp->avaliacao,
             'img1'           => 'http://www.racsstudios.com/img/imgApp/'.$objApp->img1,
             'adicionais'     => $objApp->adicionais,
-            'complemeto'     =>self::getEntity($objApp->segmento,$objAppTur)
-
+            'estrelas'       => (float)$media,
+            'custoMedio'     => (float)$custoMedia,
+            'complemeto'     => self::getEntity($objApp->segmento,$objAppTur )
         ];
         
-
     }
 
 
@@ -176,28 +190,29 @@ class Apps extends Api {
      */
     private static function hospedagem($objHospedagem){
 
-      
+    
         return [
-            'semana' => $objHospedagem->semana,
-            'sabado' => $objHospedagem->sabado,
-            'domingo' => $objHospedagem->domingo,
-            'feriado' => $objHospedagem->feriado,
-            'estacionamento' => $objHospedagem->estacionamento == -1 ? false : true,
-            'brinquedos' => $objHospedagem->brinquedos == -1 ? false : true,
-            'restaurante' => $objHospedagem->restaurante == -1 ? false : true,
-            'arCondicionado' => $objHospedagem->arCondicionado == -1 ? false : true,
-            'wiFi' => $objHospedagem->wiFi == -1 ? false : true,
-            'academia' => $objHospedagem->academia == -1 ? false : true,
-            'piscina' => $objHospedagem->piscina == -1 ? false : true,
-            'refeicao' => $objHospedagem->refeicao == -1 ? false : true,
-            'emporio' => $objHospedagem->emporio == -1 ? false : true,
-            'adega' => $objHospedagem->adega == -1 ? false : true,
-            'bebidas' => $objHospedagem->bebidas == -1 ? false : true,
-            'sorveteria' => $objHospedagem->sorveteria == -1 ? false : true,
-            'whatsapp' => $objHospedagem->whatsapp == -1 ? false : true,
-            'descricao' => $objHospedagem->descricao,
-            'img2' => $objHospedagem->img2,
-            'img3' => $objHospedagem->img3,
+
+            'semana'         => $objHospedagem->semana,
+            'sabado'         => $objHospedagem->sabado,
+            'domingo'        => $objHospedagem->domingo,
+            'feriado'        => $objHospedagem->feriado,
+            'estacionamento' => $objHospedagem->estacionamento == -1 ? 0 : 1,
+            'brinquedos'     => $objHospedagem->brinquedos == -1 ? 0 : 1,
+            'restaurante'    => $objHospedagem->restaurante == -1 ? 0 : 1,
+            'arCondicionado' => $objHospedagem->arCondicionado == -1 ? 0 : 1,
+            'wiFi'           => $objHospedagem->wiFi == -1 ? 0 : 1,
+            'academia'       => $objHospedagem->academia == -1 ? 0 : 1,
+            'piscina'        => $objHospedagem->piscina == -1 ? 0 : 1,
+            'refeicao'       => $objHospedagem->refeicao == -1 ? 0 : 1,
+            'emporio'        => $objHospedagem->emporio == -1 ? 0 : 1,
+            'adega'          => $objHospedagem->adega == -1 ? 0 : 1,
+            'bebidas'        => $objHospedagem->bebidas == -1 ? 0 : 1,
+            'sorveteria'     => $objHospedagem->sorveteria == -1 ? 0 : 1,
+            'whatsapp'       => $objHospedagem->whatsapp == -1 ? 0 : 1,
+            'descricao'      => $objHospedagem->descricao,
+            'img2'           => 'http://www.racsstudios.com/img/imgApp/'.$objHospedagem->img2,
+            'img3'           => 'http://www.racsstudios.com/img/imgApp/'.$objHospedagem->img3,
         ];
          
         
@@ -212,24 +227,24 @@ class Apps extends Api {
 
         return [
 
-            'semana' => $objGastronomia->semana,
-            'sabado' => $objGastronomia->sabado,
-            'domingo' => $objGastronomia->domingo,
-            'feriado' => $objGastronomia->feriado,
-            'estacionamento' => $objGastronomia->estacionamento == -1 ? false : true,
-            'acessibilidade' => $objGastronomia->acessibilidade == -1 ? false : true,
-            'wiFi' => $objGastronomia->wiFi == -1 ? false : true,
-            'brinquedos' => $objGastronomia->brinquedos == -1 ? false : true,
-            'restaurante' => $objGastronomia->restaurante == -1 ? false : true,
-            'emporio' => $objGastronomia->emporio == -1 ? false : true,
-            'adega' => $objGastronomia->adega == -1 ? false : true,
-            'bebidas' => $objGastronomia->bebidas == -1 ? false : true,
-            'sorveteria' => $objGastronomia->sorveteria == -1 ? false : true,
-            'entregaDomicilio' => $objGastronomia->entregaDomicilio == -1 ? false : true,
-            'whatsapp' => $objGastronomia->whatsapp == -1 ? false : true,
-            'descricao' => $objGastronomia->descricao,
-            'img2' => $objGastronomia->img2,
-            'img3' => $objGastronomia->img3,
+            'semana'           => $objGastronomia->semana,
+            'sabado'           => $objGastronomia->sabado,
+            'domingo'          => $objGastronomia->domingo,
+            'feriado'          => $objGastronomia->feriado,
+            'estacionamento'   => $objGastronomia->estacionamento == -1 ? 0 : 1,
+            'acessibilidade'   => $objGastronomia->acessibilidade == -1 ? 0 : 1,
+            'wiFi'             => $objGastronomia->wiFi == -1 ? 0 : 1,
+            'brinquedos'       => $objGastronomia->brinquedos == -1 ? 0 : 1,
+            'restaurante'      => $objGastronomia->restaurante == -1 ? 0 : 1,
+            'emporio'          => $objGastronomia->emporio == -1 ? 0 : 1,
+            'adega'            => $objGastronomia->adega == -1 ? 0 : 1,
+            'bebidas'          => $objGastronomia->bebidas == -1 ? 0 : 1,
+            'sorveteria'       => $objGastronomia->sorveteria == -1 ? 0 : 1,
+            'entregaDomicilio' => $objGastronomia->entregaDomicilio == -1 ? 0 : 1,
+            'whatsapp'         => $objGastronomia->whatsapp == -1 ? 0 : 1,
+            'descricao'        => $objGastronomia->descricao,
+            'img2'             => 'http://www.racsstudios.com/img/imgApp/'.$objGastronomia->img2,
+            'img3'             => 'http://www.racsstudios.com/img/imgApp/'.$objGastronomia->img3,
 
         ];
         
@@ -244,24 +259,24 @@ class Apps extends Api {
 
        return [
 
-            'semana' => $objEvento->semana,
-            'sabado' => $objEvento->sabado,
-            'domingo' => $objEvento->domingo,
-            'feriado' => $objEvento->feriado,
-            'estacionamento' => $objEvento->estacionamento == -1 ? false : true,
-            'acessibilidade' => $objEvento->acessibilidade == -1 ? false : true,
-            'wiFi' => $objEvento->wiFi == -1 ? false : true,
-            'trilhas' => $objEvento->trilhas == -1 ? false : true,
-            'refeicao' => $objEvento->refeicao == -1 ? false : true,
-            'emporio' => $objEvento->emporio == -1 ? false : true,
-            'adega' => $objEvento->adega == -1 ? false : true,
-            'bebidas' => $objEvento->bebidas == -1 ? false : true,
-            'sorveteria' => $objEvento->sorveteria == -1 ? false : true,
-            'musica' => $objEvento->musica == -1 ? false : true,
-            'whatsapp' => $objEvento->whatsapp == -1 ? false : true,
-            'descricao' => $objEvento->descricao,
-            'img2' => $objEvento->img2,
-            'img3' => $objEvento->img3,
+            'semana'         => $objEvento->semana,
+            'sabado'         => $objEvento->sabado,
+            'domingo'        => $objEvento->domingo,
+            'feriado'        => $objEvento->feriado,
+            'estacionamento' => $objEvento->estacionamento == -1 ? 0 : 1,
+            'acessibilidade' => $objEvento->acessibilidade == -1 ? 0 : 1,
+            'wiFi'           => $objEvento->wiFi == -1 ? 0 : 1,
+            'trilhas'        => $objEvento->trilhas == -1 ? 0 : 1,
+            'refeicao'       => $objEvento->refeicao == -1 ? 0 : 1,
+            'emporio'        => $objEvento->emporio == -1 ? 0 : 1,
+            'adega'          => $objEvento->adega == -1 ? 0 : 1,
+            'bebidas'        => $objEvento->bebidas == -1 ? 0 : 1,
+            'sorveteria'     => $objEvento->sorveteria == -1 ? 0 : 1,
+            'musica'         => $objEvento->musica == -1 ? 0 : 1,
+            'whatsapp'       => $objEvento->whatsapp == -1 ? 0 : 1,
+            'descricao'      => $objEvento->descricao,
+            'img2'           => 'http://www.racsstudios.com/img/imgApp/'.$objEvento->img2,
+            'img3'           => 'http://www.racsstudios.com/img/imgApp/'.$objEvento->img3,
        ];
 
 
@@ -275,16 +290,16 @@ class Apps extends Api {
     private static function servico($objServico){
 
         return [
-            'semana' => $objServico->semana,
-            'sabado' => $objServico->sabado,
-            'domingo' => $objServico->domingo,
-            'feriado' => $objServico->feriado,
-            'estacionamento' => $objServico->estacionamento == -1 ? false : true,
-            'acessibilidade' => $objServico->acessibilidade == -1 ? false : true,
-            'entregaDomicilio' => $objServico->entregaDomicilio == -1 ? false : true,
-            'whatsapp' => $objServico->whatsapp == -1 ? false : true,
-            'descricao' => $objServico->descricao,
-            'logo' => $objServico->logo,
+            'semana'           => $objServico->semana,
+            'sabado'           => $objServico->sabado,
+            'domingo'          => $objServico->domingo,
+            'feriado'          => $objServico->feriado,
+            'estacionamento'   => $objServico->estacionamento == -1 ? 0 : 1,
+            'acessibilidade'   => $objServico->acessibilidade == -1 ? 0 : 1,
+            'entregaDomicilio' => $objServico->entregaDomicilio == -1 ? 0 : 1,
+            'whatsapp'         => $objServico->whatsapp == -1 ? 0 : 1,
+            'descricao'        => $objServico->descricao,
+            'logo'             => $objServico->logo,
         ];
         
     }
@@ -296,18 +311,20 @@ class Apps extends Api {
      */
     private static function comercio($objComercio){
 
+     
         return [
-            'semana' => $objComercio->semana,
-            'sabado' => $objComercio->sabado,
-            'domingo' => $objComercio->domingo,
-            'feriado' => $objComercio->feriado  == -1 ? false : true,
-            'estacionamento' => $objComercio->estacionamento  == -1 ? false : true,
-            'acessibilidade' => $objComercio->acessibilidade  == -1 ? false : true,
-            'entregaDomicilio' => $objComercio->entregaDomicilio  == -1 ? false : true,
-            'whatsapp' => $objComercio->whatsapp  == -1 ? false : true,
-            'descricao' => $objComercio->descricao,
-            'img2' => $objComercio->img2,
-            'img3' => $objComercio->img3,
+
+            'semana'           => $objComercio->semana,
+            'sabado'           => $objComercio->sabado,
+            'domingo'          => $objComercio->domingo,
+            'feriado'          => $objComercio->feriado,
+            'estacionamento'   => $objComercio->estacionamento  == -1 ? 0 : 1,
+            'acessibilidade'   => $objComercio->acessibilidade  == -1 ? 0 : 1,
+            'entregaDomicilio' => $objComercio->entregaDomicilio  == -1 ? 0 : 1,
+            'whatsapp'         => $objComercio->whatsapp  == -1 ? 0 : 1,
+            'descricao'        => $objComercio->descricao,
+            'img2'             => 'http://www.racsstudios.com/img/imgApp/'.$objComercio->img2,
+            'img3'             => 'http://www.racsstudios.com/img/imgApp/'.$objComercio->img3,
         ];
             
     }
@@ -322,21 +339,21 @@ class Apps extends Api {
 
 
         return[
-           'semana' => $objTurismo->semana,
-           'sabado' => $objTurismo->sabado,
-           'domingo' => $objTurismo->domingo,
-           'feriado' => $objTurismo->feriado,
-           'estacionamento' => $objTurismo->estacionamento == -1 ? false : true,
-           'acessibilidade' => $objTurismo->acessibilidade == -1 ? false : true,
-           'fe' => $objTurismo->fe == -1 ? false : true,
-           'trilhas' => $objTurismo->trilhas == -1 ? false : true,
-           'refeicao' => $objTurismo->refeicao == -1 ? false : true,
-           'natureza' => $objTurismo->natureza == -1 ? false : true,
-           'cachoeira' => $objTurismo->cachoeira == -1 ? false : true,
-           'parque' => $objTurismo->parque == -1 ? false : true,
-           'descricao' => $objTurismo->descricao, 
-           'img2' => $objTurismo->img2,
-           'img3' => $objTurismo->img3,
+           'semana'         => $objTurismo->semana,
+           'sabado'         => $objTurismo->sabado,
+           'domingo'        => $objTurismo->domingo,
+           'feriado'        => $objTurismo->feriado,
+           'estacionamento' => $objTurismo->estacionamento == -1 ? 0 : 1,
+           'acessibilidade' => $objTurismo->acessibilidade == -1 ? 0 : 1,
+           'fe'             => $objTurismo->fe == -1 ? 0 : 1,
+           'trilhas'        => $objTurismo->trilhas == -1 ? 0 : 1,
+           'refeicao'       => $objTurismo->refeicao == -1 ? 0 : 1,
+           'natureza'       => $objTurismo->natureza == -1 ? 0 : 1,
+           'cachoeira'      => $objTurismo->cachoeira == -1 ? 0 : 1,
+           'parque'         => $objTurismo->parque == -1 ? 0 : 1,
+           'descricao'      => $objTurismo->descricao, 
+           'img2'           => 'http://www.racsstudios.com/img/imgApp/'.$objTurismo->img2,
+           'img3'           => 'http://www.racsstudios.com/img/imgApp/'.$objTurismo->img3,
         ] ;
 
     }

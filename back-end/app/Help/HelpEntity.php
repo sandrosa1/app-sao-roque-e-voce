@@ -11,8 +11,6 @@ use \App\Model\Entity\Aplication\Evento\Evento as EntityEvento;
 use \App\Model\Entity\Aplication\Turismo\Turismo as EntityTurismo;
 use \App\Model\Entity\Aplication\Servico\Servico as EntityServico;
 use \App\Model\Entity\Aplication\Gastronomia\Gastronomia as EntityGastronomia;
-use \App\Model\Entity\User\Forum;
-use \App\model\Entity\User\User;
 
 
 class HelpEntity{

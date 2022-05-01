@@ -3,7 +3,7 @@ namespace App\Model\Entity\User;
 
 use SandroAmancio\DatabaseManager\Database;
 
-class Forum {
+class Comment {
 
 
     /**
@@ -11,7 +11,7 @@ class Forum {
      *
      * @var int
      */
-    public $idForum;
+    public $idComment;
     /**
      * ID do App
      *
@@ -61,14 +61,22 @@ class Forum {
      */
     public $avaliacao;
 
+     /**
+     * Avaliação
+     *
+     * @var integer
+     */
+    public $custo;
     /**
      * Método responsável por inserir um comentário
      *
      * @return void
      */
-    public function insertNewForum(){
+    public function insertNewComment(){
 
-        $this->idForum = ( new Database('forum'))->insert([
+        $this->data = date("Y-m-d H:i:s");
+
+        $this->idComment = ( new Database('comentario'))->insert([
 
             
             'idApp'      => $this->idApp,
@@ -77,8 +85,9 @@ class Forum {
             'comentario' => $this->comentario,
             'utilSim'    => $this->utilSim,
             'utilNao'    => $this->utilNao,
-            'data'       => date("Y-m-d H:i:s"),
+            'data'       => $this->data,
             'avaliacao'  => $this->avaliacao,
+            'custo'      => $this->custo,
 
         ]);
 
@@ -90,9 +99,11 @@ class Forum {
      *
      * @return void
      */
-    public function updateForum(){
+    public function updateComment(){
 
-        $this->Forum = ( new Database('forum'))->update('idForum ='.$this->idForum,[
+        $this->data = date("Y-m-d H:i:s");
+
+        $this->Comment = ( new Database('comentario'))->update('idComment ='.$this->idComment,[
             
             'idApp'      => $this->idApp,
             'idUsuario'  => $this->idUsuario,
@@ -102,6 +113,8 @@ class Forum {
             'utilNao'    => $this->utilNao,
             'data'       => $this->data,
             'avaliacao'  => $this->avaliacao,
+            'custo'      => $this->custo,
+
         ]); 
 
         return true;
@@ -111,20 +124,31 @@ class Forum {
      *
      * @return void
      */
-    public function deleteForum(){
+    public function deleteComment(){
 
-        $this->idForum = (new Database('forum'))->delete('idForum ='.$this->idForum);
+        $this->idComment = (new Database('comentario'))->delete('idComment ='.$this->idComment);
 
         return true;
+    }
+     /**
+     * Método responsável por deletar todos comentarios de um usuario
+     *
+     * @return void
+     */
+    public static function deleteAllCommentUser($idUsuario){
+
+        return (new Database('comentario'))->delete('idUsuario ='.$idUsuario);
+
+        
     }
     /**
      * Método responsável por pegar um comentário pelo id do usuário
      *
      * @return void
      */
-    public static function getForumByIdUser($idUsuario){
+    public static function getCommentByIdUser($idUsuario){
 
-        return (new Database('forum'))->select('idUsuario = "'.$idUsuario.'"')->fetchObject(self::class);
+        return (new Database('comentario'))->select('idUsuario = "'.$idUsuario.'"')->fetchObject(self::class);
 
     }
     /**
@@ -132,9 +156,20 @@ class Forum {
      *
      * @return void
      */
-    public static function getForumByIdApp($idApp){
+    public static function getCommentByIdApp($idApp){
 
-        return (new Database('forum'))->select('idApp = "'.$idApp.'"')->fetchObject(self::class);
+        return (new Database('comentario'))->select('idApp = "'.$idApp.'"')->fetchObject(self::class);
+
+    }
+
+    /**
+     * Método responsável por pegar um comentário pelo id do App
+     *
+     * @return void
+     */
+    public static function getCommentByIdAppComment($idComment){
+
+        return (new Database('comentario'))->select('idComment = "'.$idComment.'"')->fetchObject(self::class);
 
     }
     /**
@@ -146,9 +181,9 @@ class Forum {
      * @param string $fields
      * @return PDOStatement
      */
-    public static function getForum($where = null, $order = null, $limit = null, $fields = '*'){
+    public static function getComment($where = null, $order = null, $limit = null, $fields = '*'){
         
-        return(new Database('forum'))->select($where, $order, $limit, $fields);
+        return(new Database('comentario'))->select($where, $order, $limit, $fields);
 
     }
 

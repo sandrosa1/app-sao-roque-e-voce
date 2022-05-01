@@ -146,6 +146,8 @@ class Config extends PageSrv
         $objApp->site                      = $postVars['site']         ? $postVars['site']        : $objApp->site;
         $objApp->adicionais                = $postVars['adicionais']   ? $postVars['adicionais']  : $objApp->adicionais;
         $objApp->chaves                    = $postVars['chaves']       ? $postVars['chaves']      : $objApp->chaves;
+
+        
         $action                            = $postVars['action'];
         $captcha                           = $postVars['g-recaptcha-response'];
 
@@ -181,8 +183,13 @@ class Config extends PageSrv
 
             if($action === 'insert'){
                
-                //Recebe a imagem padrao
+                //Recebe a imagem padrao e configurações adicionais
                 $objApp->img1  ='um.jpg';
+                $objApp->visualizacao = 0;
+                $objApp->totalCusto = 0;
+                $objApp->totalAvaliacao = 0;
+                $objApp->avaliacao = 0;  
+
                 //Cria uma instancia de novo App
                 $objApp->insertNewApp();
                 $mensagem = ["Configurações inseridas com sucesso", "Clique em detalhes no menu lateral para prosseguir"];

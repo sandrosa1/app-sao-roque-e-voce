@@ -242,10 +242,13 @@ class AppRacs extends PageRacs{
 
         if(count($validate->getErro()) == 0){
 
-
             if($postVars['action'] == 'insert'){
                 //Recebe a imagem padrao
                 $objApp->img1  ='um.jpg';
+                $objApp->visualizacao = 0;
+                $objApp->totalCusto = 0;
+                $objApp->totalAvaliacao = 0;
+                $objApp->avaliacao = 0;  
                             
                $status = $objApp->insertNewApp();
 
@@ -254,9 +257,7 @@ class AppRacs extends PageRacs{
                 $status = $objApp->updateApp();
             }
 
-            
-
-             //Cria uma instancia de novo Apa
+            //Cria uma instancia de novo Apa
             if( $status){
               
    

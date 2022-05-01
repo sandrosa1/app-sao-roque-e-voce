@@ -33,21 +33,21 @@ class User{
      *
      * @var string
      */
-    public $usuarioDataNascimento;
+    public $dataNascimento;
     /**
      * 5)
      * Email do usuário
      *
      * @var string
      */
-    public $usuarioEmail;
+    public $email;
     /**
      * 6)
      * Senha do usuário
      *
      * @var string
      */
-    public $usuarioSenha;
+    public $senha;
     /**
      * 7)
      * alerta de novidades
@@ -93,24 +93,6 @@ class User{
     
 
 
-    // public static function getUserToken($usuarioEmail){
-
-    //     return (new Database('confirmation'))->select('usuarioEmail = "'.$usuarioEmail.'"')->fetchObject(self::class);
-    // }
-
-    // public static function confirmationCad($idUsuario,$dicasRestaurantes){
-
-
-    //     return (new Database('usuario'))->update('idUsuario = '.$idUsuario,[
-
-    //         'dicasRestaurantes'       => $dicasRestaurantes,
-    //     ]);
-
-    //     return true;
-
-    // }
-
-
     public function insertNewUser(){
         
        
@@ -120,8 +102,8 @@ class User{
             'nomeUsuario'              => $this->nomeUsuario, 
             'sobreNome'                => $this->sobreNome, 
             'dataNascimento'           => $this->dataNascimento, 
-            'usuarioEmail'             => $this->usuarioEmail,
-            'usuarioSenha'             => $this->usuarioSenha,   
+            'email'                    => $this->email,
+            'senha'                    => $this->senha,   
             'alertaNovidade'           => $this->alertaNovidade,
             'dicasPontosTuristicos'    => $this->dicasPontosTuristicos,
             'dicasRestaurantes'        => $this->dicasRestaurantes,
@@ -130,13 +112,6 @@ class User{
             'ativaLocalizacao'         => $this->ativaLocalizacao,
         ]);
 
-        // $this->id = (new Database('confirmation'))->insert([
-            
-        //     'usuarioEmail'  => $this->usuarioEmail,
-        //     'dicasHospedagens'  => $this->dicasHospedagens,
-           
-        // ]);
-        //Sucesso
         return true;
     }
 
@@ -153,8 +128,8 @@ class User{
             'nomeUsuario'              => $this->nomeUsuario, 
             'sobreNome'                => $this->sobreNome, 
             'dataNascimento'           => $this->dataNascimento, 
-            'usuarioEmail'             => $this->usuarioEmail,
-            'usuarioSenha'             => $this->usuarioSenha,   
+            'email'                    => $this->email,
+            'senha'                    => $this->senha,   
             'alertaNovidade'           => $this->alertaNovidade,
             'dicasPontosTuristicos'    => $this->dicasPontosTuristicos,
             'dicasRestaurantes'        => $this->dicasRestaurantes,
@@ -169,7 +144,7 @@ class User{
     }
 
     /**
-     * Método reponsável por atualizar o usuarioSenha
+     * Método reponsável por atualizar o senha
      *
      * @return void
      */
@@ -178,7 +153,7 @@ class User{
         //Inserio os dados do cliete no banco de dados
         return (new Database('usuario'))->update('idUsuario = '.$this->idUsuario,[
 
-            'usuarioSenha'     => $this->usuarioSenha,
+            'senha'     => $this->senha,
           
         ]);
         
@@ -214,15 +189,15 @@ class User{
     }
    
     /**
-     * Método responsável por retotornar um usuário com base em seu usuarioEmail
+     * Método responsável por retotornar um usuário com base em seu email
      *
-     * @param string $usuarioEmail
+     * @param string $email
      * @return User
      */
-    public static function getUserByEmail($usuarioEmail){
+    public static function getUserByEmail($email){
 
       
-        return (new Database('usuario'))->select('usuarioEmail = "'.$usuarioEmail.'"')->fetchObject(self::class);
+        return (new Database('usuario'))->select('email = "'.$email.'"')->fetchObject(self::class);
     }
 
      /**

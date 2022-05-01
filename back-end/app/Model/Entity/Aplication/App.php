@@ -24,7 +24,6 @@ class App{
     public $visualizacao;
     public $totalCusto;
     public $totalAvaliacao;
-    public $custo;
     public $avaliacao;
     public $img1;
     public $adicionais;
@@ -51,7 +50,6 @@ class App{
         'visualizacao'    => $this->visualizacao,
         'totalCusto'      => $this->totalCusto,
         'totalAvaliacao'  => $this->totalAvaliacao,
-        'custo'           => $this->custo,
         'avaliacao'       => $this->avaliacao,
         'img1'            => $this->img1,
         'adicionais'      => $this->adicionais,  
@@ -88,7 +86,6 @@ class App{
             'visualizacao'    => $this->visualizacao,
             'totalCusto'      => $this->totalCusto,
             'totalAvaliacao'  => $this->totalAvaliacao,
-            'custo'           => $this->custo,
             'avaliacao'       => $this->avaliacao,
             'img1'            => $this->img1,  
             'adicionais'      => $this->adicionais,  
