@@ -139,3 +139,6 @@ a{text-decoration: none; color: #333;}
     background-color: green;
 }
 
+.contatoRacs{
+    min-height: calc(100vh - 275px);
+}

@@ -4,7 +4,7 @@ namespace App\Controller\Srv;
 
 use \App\Utils\View;
 use \App\Help\HelpEntity;
-use \App\Model\Entity\User\Forum;
+use \App\Model\Entity\User\Comment;
 use \SandroAmancio\PaginationManager\Pagination;
 use \App\Model\Entity\Aplication\App as EntityApp;
 
@@ -56,7 +56,7 @@ class ForumSrv extends PageSrv{
             $idApp = HelpEntity::helpApp()->idApp;
 
             //QUANTIDADE TOTAL DE REGISTROS
-            $quatidadeTotal = Forum::getForum("idApp = {$idApp}" ,null,null,'COUNT(*) as qtd')->fetchObject()->qtd;
+            $quatidadeTotal = Comment::getComment("idApp = {$idApp}" ,null,null,'COUNT(*) as qtd')->fetchObject()->qtd;
 
             if($quatidadeTotal){
                 //PAGINA ATUAL
@@ -67,10 +67,10 @@ class ForumSrv extends PageSrv{
                 $obPagination = new Pagination($quatidadeTotal,$pagianaAtual, 2);
 
                 //RESULTADOS DA PÁGINA
-                $results = Forum::getForum("idApp = {$idApp}",'data  DESC',null);
+                $results = Comment::getComment("idApp = {$idApp}",'data  DESC',null);
 
                 //RENDERIZA ITEM
-                while($objForum = $results->fetchObject(Forum::class)){
+                while($objForum = $results->fetchObject(Comment::class)){
                     $itens   .= View::render('srv/modules/forum/components/box/item',[
                     'idForum'  => $objForum->idForum,
                     'idApp'    => $objForum->idApp,
@@ -81,6 +81,7 @@ class ForumSrv extends PageSrv{
                     'utilSim'  => $objForum->utilSim,
                     'utilNao'  => $objForum->utilNao,
                     'avaliacao'=> $objForum->avaliacao,
+                    'custo'    => $objForum->custo,
                     ]);
                     
                 }

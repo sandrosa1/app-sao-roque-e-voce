@@ -154,6 +154,7 @@
 .containerSrv{
     scrollbar-color: var(--srv1) var(--srv6);
     scrollbar-width: 10px;
+    
 }
 
 /* ---------------Tutorial------------- */
@@ -171,6 +172,16 @@
     background-color: var(--srv6);
     padding: 20px 50px 20px 50px;
 }
+
+
+.containerSrvTela{
+    position: relative;
+    max-height: 92vh;
+    overflow-y: scroll;
+    background-color: var(--srv6);
+    padding-top: 20px;
+}
+
 /* Detalhes */
 .modal{
     width: 30%;
@@ -355,6 +366,12 @@
 /*Configurações Gerais*/
 /*Extra-small*/
 @media screen and (max-width: 480px){
+    .login{
+        width: 360px;
+        height: 270px;
+        padding: 27px;
+    }
+   
     
 }
 /*Small*/
@@ -367,6 +384,7 @@
         background: url('http://localhost/app-sao-roque-e-voce/back-end/img/imgLogin/vinho.jpg') no-repeat; background-size: auto;
         opacity: 0.9;
     }
+   
   
 } 
 /*Medium*/

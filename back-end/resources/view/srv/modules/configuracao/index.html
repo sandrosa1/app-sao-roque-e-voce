@@ -18,7 +18,7 @@
         <!-- Estrutura do modal e input nome fantasia -->
         <div class="row mb-0">
           
-            <div class="input-field col s8">
+            <div class="input-field col s12 m12 l8">
                 <div id="modal1" class="modal">
                     <div class="modal-content">
                         <h4 class="center srv-c-4 fz-20">Ajuda</h4>
@@ -31,9 +31,9 @@
                 </div>
                 <a class="waves-effect waves-light btn-ajuda modal-trigger prefix" href="#modal1"><i class="material-icons icon-ajuda">help_outline</i></a>
                 <input  id="nomeFantasia" type="text" name="nomeFantasia" value="{{nomeFantasia}}" maxlength="245" class="validate" required>
-                <label for="nomeFantasia">Nome do estabelecimento, atração ou serviço<span class="obrigatorio"> *</span></label>
+                <label for="nomeFantasia">Nome do estabelecimento<span class="obrigatorio"> *</span></label>
             </div>
-            <div class="input-field col s4">
+            <div class="input-field col s12 m12 l4">
                 <div id="modal1.1" class="modal">
                     <div class="modal-content">
                         <h4 class="center srv-c-4 fz-20">Ajuda</h4>
@@ -51,7 +51,7 @@
             <!-- Fim de estrutura do modal e input nome fantasia -->
             <!-- Tipo de negôcio -->
         <div class="row mb-0">
-            <div class="input-field col s6">
+            <div class="input-field col s12 m7 l6">
                 <div id="modal1.1" class="modal">
                     <div class="modal-content">
                         <h4 class="center srv-c-4 fz-20">Ajuda</h4>
@@ -77,7 +77,7 @@
                 <label>Tipo de segmento  <span class="obrigatorio">*</span></label>
             </div>
 
-            <div class="input-field col s6">
+            <div class="input-field col s12 m5 s6">
                 <div id="modal9" class="modal">
                     <div class="modal-content">
                         <h4 class="center srv-c-4 fz-20">Ajuda</h4>
@@ -100,7 +100,7 @@
             <!-- Formulario de e-mail e telefone-->
             <div class="row mb-0">
                 
-                <div class="input-field col s6">
+                <div class="input-field col s12 m6 s6">
                     <div id="modal2" class="modal">
                         <div class="modal-content">
                             <h4 class="center srv-c-4 fz-20">Ajuda</h4>
@@ -117,7 +117,7 @@
                     <label for="email">Email<span class="obrigatorio"> *</span></label>   
                 </div>
 
-                <div class="input-field col s3">
+                <div class="input-field col s12 m6 l3">
                     <div id="modal3" class="modal">
                         <div class="modal-content">
                             <h4 class="center srv-c-4 fz-20">Ajuda</h4>
@@ -135,7 +135,7 @@
                     <label for="telefone">Telefone</label>
                     
                 </div>
-                <div class="input-field col s3">
+                <div class="input-field col s12 m6 l3">
                     <div id="modal4" class="modal">
                         <div class="modal-content">
                             <h4 class="center srv-c-4 fz-20">Ajuda</h4>
@@ -156,8 +156,8 @@
               <!--Fim do formulario de e-mail e telefone-->
 
               <!-- Formulario endereço-->
-            <div class="row mb-0">
-                <div class="input-field col s3">
+            <div class="row mb-0">  
+                <div class="input-field col s10 m4 l3">
                     <div id="modal5" class="modal">
                         <div class="modal-content">
                             <h4 class="center srv-c-4 fz-20">Ajuda</h4>
@@ -175,8 +175,8 @@
                     <label for="cep">CEP <span class="obrigatorio"> *</span></label> 
                     <!-- <input type=submit> -->
                 </div>
-                <div class="input-field col s1" id="loadingCep"></div>
-                <div class="input-field col s7">
+                <div class="input-field col s2 m1 l1" id="loadingCep"></div>
+                <div class="input-field col s12 m6 l7">
                     <div id="modal6" class="modal">
                         <div class="modal-content">
                             <h4 class="center srv-c-4 fz-20">Ajuda</h4>
@@ -191,23 +191,23 @@
                     <label for="logradouro">Logradouro <span class="obrigatorio">*</span></label>
                 </div>
 
-                <div class="input-field col s1">
+                <div class="input-field col s12 m1 l1">
                     <input id="numero" type="text" name="numero" value="{{numero}}" maxlength="20" class="validate" required>
                     <label for="numero">N° <span class="obrigatorio">*</span></label>
                 </div>
               </div>
               <div class="row">  
-                <div class="input-field col s3">
+                <div class="input-field col s12 m5 l3">
                     <input id="bairro" type="text" name="bairro" value="{{bairro}}" maxlength="45" class="validate" required>
                     <label for="bairro">Bairro <span class="obrigatorio">*</span></label>   
                 </div>
 
-                <div class="input-field col s3">
+                <div class="input-field col s12 m5 l3">
                     <input id="localidade" type="text" name="localidade" value="{{localidade}}" maxlength="9" class="validate" required>
                     <label for="localidade">Cidade <span class="obrigatorio">*</span></label>
                 </div>
 
-                <div class="input-field col s6">
+                <div class="input-field col s12 m12 l6">
                     <div id="modal7" class="modal">
                         <div class="modal-content">
                             <h4 class="center srv-c-4 fz-20">Ajuda</h4>
@@ -220,7 +220,7 @@
                     </div>
                     <a class="waves-effect waves-light btn-ajuda modal-trigger prefix" href="#modal7"><i class="material-icons icon-ajuda" >help_outline</i></a>
                     <input id="adicionais" type="text" name="adicionais" value="{{adicionais}}" maxlength="255" class="validate">
-                    <label for="adicionais">Complemtos e ponto de referência</label>
+                    <label for="adicionais">Complemtos ou referência</label>
                 </div>
 
                 <div class="row mb-0">

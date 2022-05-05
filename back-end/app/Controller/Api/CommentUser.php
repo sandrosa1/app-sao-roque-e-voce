@@ -21,8 +21,13 @@ class CommentUser extends Api {
         //DEPOIMENTOS
         $itens = [];
 
+        $queryParams = $request->getQueryParams();
+        $pagianaAtual = $queryParams['page'] ?? 1;
+        $filter = $queryParams['filter'] ?? "data";
+        $order = $queryParams['order'] ?? "DESC";
+
         //QUANTIDADE TOTAL DE REGISTROS
-        $quatidadeTotal = EntityComments::getComment($where.' = '.$idUsuario,null,null,'COUNT(*) as qtd')->fetchObject()->qtd;
+        $quatidadeTotal = EntityComments::getComment($where.' = '.$idUsuario, $filter.' '.$order ,null,'COUNT(*) as qtd')->fetchObject()->qtd;
 
         //PAGINA ATUAL
         $queryParams = $request->getQueryParams();
@@ -32,7 +37,7 @@ class CommentUser extends Api {
          $objPagination = new Pagination($quatidadeTotal,$pagianaAtual, 4);
 
         //RESULTADOS DA PÁGINA
-        $results = EntityComments::getComment($where.' = '.$idUsuario,'data DESC',$objPagination->getLimit());
+        $results = EntityComments::getComment($where.' = '.$idUsuario,$filter.' '.$order,$objPagination->getLimit());
 
         //RENDERIZA ITEM
         while($objComment = $results->fetchObject(EntityComments::class)){
@@ -130,10 +135,12 @@ class CommentUser extends Api {
         $objComment->custo          = $postVars['custo'];
 
         if( $objComment->avaliacao != $postVars['avaliacao']){
-            $objComment->avaliacao  = $postVars['avaliacao'];
-            $objApp->avaliacao      = $objApp->avaliacao + 1 ;
-            $objApp->totalAvaliacao = $objApp->totalAvaliacao + $postVars['avaliacao'];
-            $objApp->totalCusto     = $objApp->totalCusto + $postVars['custo'];
+            $objApp = EntityApps::getAppById($postVars['idApp']);
+            $objApp->avaliacao       = $objApp->avaliacao + 1 ;
+            $objApp->totalAvaliacao  = $objApp->totalAvaliacao + $postVars['avaliacao'];
+            $objApp->totalCusto      = $objApp->totalCusto + $postVars['custo'];
+            $objApp->custoMedio      =  (float)$objApp->totalCusto / (float)$objApp->avaliacao;
+            $objApp->estrelas        =  (float)$objApp->totalAvaliacao / (float)$objApp->avaliacao;
             $objApp->updateApp();
         }
        

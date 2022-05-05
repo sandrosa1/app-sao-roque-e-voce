@@ -19,30 +19,23 @@ class Apps extends Api {
         //DEPOIMENTOS
         $itens = [];
 
-        //QUANTIDADE TOTAL DE REGISTROS
-        $quatidadeTotal = EntityApps::getApp(null,null,null,'COUNT(*) as qtd')->fetchObject()->qtd;
-
-        //PAGINA ATUAL
         $queryParams = $request->getQueryParams();
         $pagianaAtual = $queryParams['page'] ?? 1;
+        $filter = $queryParams['filter'] ?? "visualizacao";
+        $order = $queryParams['order'] ?? "DESC";
+        //QUANTIDADE TOTAL DE REGISTROS
+        $quatidadeTotal = EntityApps::getApp(null,$filter.' '.$order,null,'COUNT(*) as qtd')->fetchObject()->qtd;
+
         
         //INSTANCIA DE PAGINAÇÃO
          $objPagination = new Pagination($quatidadeTotal,$pagianaAtual, 4);
 
         //RESULTADOS DA PÁGINA
-        $results = EntityApps::getApp(null,'idApp DESC',$objPagination->getLimit());
+        $results = EntityApps::getApp(null, $filter.' '.$order,$objPagination->getLimit());
 
         //RENDERIZA ITEM
         while($objApp = $results->fetchObject(EntityApps::class)){
         
-            if($objApp->avaliacao){
-                $avaliacaoMedia = round((int)$objApp->totalAvaliacao/(int)$objApp->avaliacao, 2);
-                $custoMedia = round((int)$objApp->totalCusto/(int)$objApp->avaliacao, 2);
-
-            }else{
-                $avaliacaoMedia = 0;
-
-            }
         
             $itens [] = [
             'idApp'          => (int)$objApp->idApp,
@@ -63,8 +56,8 @@ class Apps extends Api {
             'avaliacao'      => $objApp->avaliacao,
             'img1'           => 'http://www.racsstudios.com/img/imgApp/'.$objApp->img1,
             'adicionais'     => $objApp->adicionais,
-            'estrelas'       => (float)$avaliacaoMedia,
-            'custoMedio'     => (float)$custoMedia     
+            'estrelas'       => (float)$objApp->estrelas,
+            'custoMedio'     => (float)$objApp->custoMedio      
             ];
         }
 
@@ -97,7 +90,7 @@ class Apps extends Api {
      */
     public static function getApp($request,$id){
 
-       
+     
         if(!is_numeric($id)){
             throw new \Exception("O id ".$id." não e valido", 400);
 
@@ -114,14 +107,6 @@ class Apps extends Api {
 
         $objApp->updateApp();
 
-        if($objApp->avaliacao){
-            $avaliacaoMedia = round((int)$objApp->totalAvaliacao/(int)$objApp->avaliacao, 2);
-            $custoMedia = round((int)$objApp->totalCusto/(int)$objApp->avaliacao, 2);
-
-        }else{
-           $media = 0;
-
-        }
         return  [
         
             'idApp'          => (int)$objApp->idApp,
@@ -142,8 +127,8 @@ class Apps extends Api {
             'avaliacao'      => $objApp->avaliacao,
             'img1'           => 'http://www.racsstudios.com/img/imgApp/'.$objApp->img1,
             'adicionais'     => $objApp->adicionais,
-            'estrelas'       => (float)$media,
-            'custoMedio'     => (float)$custoMedia,
+            'estrelas'       => (float)$objApp->estrelas,
+            'custoMedio'     => (float)$objApp->custoMedio,  
             'complemeto'     => self::getEntity($objApp->segmento,$objAppTur )
         ];
         

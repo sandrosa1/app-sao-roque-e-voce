@@ -25,6 +25,8 @@ class App{
     public $totalCusto;
     public $totalAvaliacao;
     public $avaliacao;
+    public $custoMedio;
+    public $estrelas;
     public $img1;
     public $adicionais;
    
@@ -51,6 +53,8 @@ class App{
         'totalCusto'      => $this->totalCusto,
         'totalAvaliacao'  => $this->totalAvaliacao,
         'avaliacao'       => $this->avaliacao,
+        'custoMedio'      => $this->custoMedio,
+        'estrelas'        => $this->estrelas,
         'img1'            => $this->img1,
         'adicionais'      => $this->adicionais,  
 
@@ -87,6 +91,8 @@ class App{
             'totalCusto'      => $this->totalCusto,
             'totalAvaliacao'  => $this->totalAvaliacao,
             'avaliacao'       => $this->avaliacao,
+            'custoMedio'      => $this->custoMedio,
+            'estrelas'        => $this->estrelas,
             'img1'            => $this->img1,  
             'adicionais'      => $this->adicionais,  
                
