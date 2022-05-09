@@ -77,7 +77,7 @@ class AllApps extends Api {
         $pagianaAtual = $queryParams['page'] ?? 1;
         
         //INSTANCIA DE PAGINAÇÃO
-         $objPagination = new Pagination($quatidadeTotal,$pagianaAtual, 1);
+         $objPagination = new Pagination($quatidadeTotal,$pagianaAtual, 4);
 
         //RESULTADOS DA PÁGINA
         $results = EntityApps::getApp($where.' = "'.$segmento .'"','idApp DESC',$objPagination->getLimit());
@@ -124,6 +124,7 @@ class AllApps extends Api {
      * @return array
      */
     public static function getAllAppsForType($request,$segmento){
+
 
         return [
             'apps'      => self::getAppsItems($request,$segmento,$objPagination,'segmento'),

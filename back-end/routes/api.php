@@ -23,3 +23,6 @@ include __DIR__.'/api/v1/search.php';
 
 //Inclui as rotas dos usuários do app
 include __DIR__.'/api/v1/util.php';
+
+//Inclui as rotas de login 
+include __DIR__.'/api/v1/login.php';
