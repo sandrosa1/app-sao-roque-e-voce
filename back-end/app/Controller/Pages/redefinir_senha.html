@@ -5,24 +5,26 @@
   
         <div class="card-login-src">
   
-          <form class="z-depth-3 "  name="formRedefinePassword" id="formRedefinePassword"  method="post">
+          <form class="z-depth-3 "  name="formLogin" id="formNewPassword"  method="post">
               
             <div class="login">
   
               <div class="loginLogomarca mb-3 center " id="root"><img src="{{URL}}/img/logo-srv-200.png" alt="Logomarca da WEF"></div>
   
-             <div class="float w100 center m-1 srv-c-4"><h6>Digite o email cadastrado</h6></div>
+             <div class="float w100 center m-1 srv-c-4"><h6>Digite a nova senha</h6></div>
              
              <div class="resultadoForm float w100 center m-2 srv-c-2"></div>
   
               <div class="loginFormulario float ">
   
-            <div class="row">
+         <div class="row">
              
               <div class="input-field col s12"><input class='float' type='hidden' id='iduser' name='iduser' value="{{status}}" required></div>
               
-              <div class="input-field col s12"><i class="material-icons prefix">vpn_key</i><input  type="email" name="email" id="email" class="validate"><label for="email">Email cadastrado</label></div>
+              <div class="input-field col s12"><i class="material-icons prefix">vpn_key</i><input  type="password" name="password" id="password"  class="validate"><label for="password">Senha</label></div>
              
+              <div class="input-field col s12"><i class="material-icons prefix">vpn_key</i><input  type="password" name="passwordconf" id="passwordconf"  class="validate"><label for="passwordconf">Confirme a senha</label></div>
+            
             </div>
             
             <input class="float" type="hidden" id="g-recaptcha-response" name="g-recaptcha-response" required>

@@ -118,9 +118,11 @@ class Validate{
         $return=file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret={$secretkey}&response={$captcha}");
         $response = json_decode($return);
         if($response->success == true && $response->score >= $score){
+            
             return true;
         }else{
             $this->setErro("Captcha Inválido! Atualize a página e tente novamente.");
+
             return false;
         }
     }

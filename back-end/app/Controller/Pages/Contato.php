@@ -37,10 +37,10 @@ class Contato extends Page{
 
         if(count($validate->getErro()) == 0){
 
-            $mensagen = "Nome: $dadosContato[0]
-                         Assunto: $dadosContato[1]
-                         Email: $dadosContato[2]
-                         Mensagem: $dadosContato[3]";
+            $mensagen = "<p>Nome: $dadosContato[0]</p>
+                         <p>Assunto: $dadosContato[1]</p>
+                         <p>Email: $dadosContato[2]</p><br>
+                         <p>Mensagem: $dadosContato[3]</p>";
 
            $validate->validateSendEmail('racsstudios@gmail.com',$dadosContato[1],$mensagen, $dadosContato[0]);
 

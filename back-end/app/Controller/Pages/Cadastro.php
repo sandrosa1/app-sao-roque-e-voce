@@ -45,19 +45,21 @@ class Cadastro extends Page{
         $validate->validateCPF($cadastro[1]);
         $validate->validateData($cadastro[4]);
         $validate->validateCaptcha($cadastro[7]);
-
         
         //ENVIA O EMAIL SE NÃO HOUVER ERROS
-        if(count($validate->getErro()) >= 0){
+        if(count($validate->getErro()) == 0){
+
             $name = $objCadastro->name;
             $address = $objCadastro->email;
-            $subject = 'Confirmação de cadastro';
-            $body = 
-            "Confirmação de Cadastro
-            Sejá bem vindo ao São Roque e Vocẽ {$objCadastro->name}.
-            Para finalizar seu cadastro href='http://www.racsstudios.com/srv/confirmation?email={$objCadastro->email}&token={$objCadastro->token}";
+            $subject = "Confirmação de cadastro";
+            $body ="<h1>Confirmação de Cadastro<h1>
+            <br>
+            <p>Sejá bem vindo ao São Roque e Você {$objCadastro->name}.</p>
+            <p>Para finalizar seu cadastro <a href='http://www.racsstudios.com/srv/confirmation?email={$objCadastro->email}&token={$objCadastro->token}'>Clique Aqui</a></p>
+            <br><br><br>
+            <img src='http://www.racsstudios.com/img/logo-srv-300.png' alt='Logotipo do aplicativo São roque e vocẽ'>";
                      
-            $validate->ValidateSendEmail($address,$subject,$body,$name);
+            $validate->validateSendEmail($address,$subject,$body,$name);
         }
 
         //Instacia a classe de senha para criptografala

@@ -32,10 +32,13 @@ class RedefinePasswordSrv extends PageSrv{
      */
     public static function setRedefinePassword($request){
 
+
         $dados = [];
         $postVars = $request->getPostVars();
         $dados[0] = $email               = $postVars['email'] ?? '';
-        $dados[2] = $gRecaptchaResponse  = $postVars['g-recaptcha-response'] ?? '';
+        $dados[1] = $gRecaptchaResponse  = $postVars['g-recaptcha-response'] ?? '';
+
+      
 
         $validate = new Validate();
         $objCustomer = new EntityCustomer();
@@ -61,11 +64,13 @@ class RedefinePasswordSrv extends PageSrv{
         $address = $customer->email;
         $token = $customer->token;
         $name = $customer->name;
-        $subject = 'Redefinir senha';
-        $body = "
-        Olá {$name}.
-        
-        Clique nesse link para criar uma nova senha. href='http://www.racsstudios.com/srv/nova_senha?email={$email}&token={$token}'>";
+        $subject = "Redefinir senha";
+        $body ="<h1>Redefinir senha<h1>
+        <br>
+        <p>Olá {$customer->name}.</p>
+        <p>Para criar uma nova senha <a href='http://www.racsstudios.com/srv/nova_senha?email={$email}&token={$token}'>Clique Aqui</a>.</p>
+        <br><br><br>
+        <img src='http://www.racsstudios.com/img/logo-srv-300.png' alt='Logotipo do aplicativo São roque e vocẽ'>";
        
         if(!$validate->validateSendEmail($address,$subject,$body,$name)){
 

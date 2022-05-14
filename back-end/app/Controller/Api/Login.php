@@ -35,9 +35,10 @@ class Login extends Api {
         $email = $postVars['email'];
         $senha = $postVars['senha']; 
 
-        $user = EntityUser::getUserByEmail($email);
+        $objUser = EntityUser::getUserByEmail($email);
 
-        if(!$user instanceof EntityUser){
+        if(!$objUser instanceof EntityUser){
+            
             return  [
                 "retorno" => 'error',
                 "error"  => "Email ou senha inválido!"
@@ -45,7 +46,7 @@ class Login extends Api {
 
         }
 
-        if(!password_verify($senha,$user->senha)){
+        if(!password_verify($senha,$objUser->senha)){
             return  [
 
                 "retorno" => 'error',
@@ -56,6 +57,16 @@ class Login extends Api {
         return [
 
             "retorne"=> true,
+            'nomeUsuario'            => $objUser->nomeUsuario,           
+            'sobreNome'              => $objUser->sobreNome,             
+            'dataNascimento'         => $objUser->dataNascimento,        
+            'email'                  => $objUser->email,                                
+            "alertaNovidade"         => (int)$objUser->alertaNovidade, 
+            "dicasPontosTuristicos"  => (int)$objUser->dicasPontosTuristicos, 
+            "dicasRestaurantes"      => (int)$objUser->dicasRestaurantes, 
+            "dicasHospedagens"       => (int)$objUser->dicasHospedagens, 
+            "alertaEventos"          => (int)$objUser->alertaEventos, 
+            "ativaLocalizacao"       => (int)$objUser->ativaLocalizacao,   
             
         ];
 
