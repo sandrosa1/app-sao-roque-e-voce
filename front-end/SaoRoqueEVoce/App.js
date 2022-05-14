@@ -1,0 +1,58 @@
+import React from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import Home from './pages/home/Home'
+import Login from './pages/login/Login'
+import Cadastro from './pages/login/Cadastro'
+import Politica from './pages/login/Politica'
+import Termos from './pages/login/Termos'
+import EsqueciSenha from './pages/login/EsqueciSenha'
+import PontosTuristicos from './pages/pontosTuristicos/PontosTuristicos'
+import Hospedagem from './pages/hospedagem/Hospedagem'
+import Eventos from './pages/eventos/Eventos'
+import Gastronomia from './pages/gastronomia/Gastronomia'
+import Servicos from './pages/servicos/Servicos'
+import QuemSomos from './pages/quemsomos/QuemSomos'
+import Configuracao from './pages/configuracao/Configuracao'
+import Perfil from './pages/configuracao/Perfil'
+import Ajustes from './pages/configuracao/Ajustes'
+import Comercio from './pages/comercio/Comercio'
+import Notificacao from './pages/configuracao/Notificacao'
+import Comentarios from './pages/configuracao/Comentarios'
+import PaginaDetalhes from './componentes/PaginaDetalhes'
+import PaginaDetalhesComentario from './componentes/PaginaDetalhesComentario'
+
+
+const Stack = createNativeStackNavigator();
+
+function App() {
+  return (
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName="Home"
+                       screenOptions={{headerShown:false}}>
+        <Stack.Screen name="Home" component={Home} />
+        <Stack.Screen name="Login" component={Login} />
+        <Stack.Screen name="Cadastro" component={Cadastro} />
+        <Stack.Screen name="Politica" component={Politica} />
+        <Stack.Screen name="Termos" component={Termos} />
+        <Stack.Screen name="EsqueciSenha" component={EsqueciSenha} />
+        <Stack.Screen name="PontosTuristicos" component={PontosTuristicos} />
+        <Stack.Screen name="Hospedagem" component={Hospedagem} />
+        <Stack.Screen name="Eventos" component={Eventos} />
+        <Stack.Screen name="Gastronomia" component={Gastronomia} />
+        <Stack.Screen name="Comercio" component={Comercio} />
+        <Stack.Screen name="Servicos" component={Servicos} />
+        <Stack.Screen name="QuemSomos" component={QuemSomos} />
+        <Stack.Screen name="Configuracao" component={Configuracao} />
+        <Stack.Screen name="Perfil" component={Perfil} />
+        <Stack.Screen name="Ajustes" component={Ajustes} />
+        <Stack.Screen name="Notificacao" component={Notificacao} />
+        <Stack.Screen name="Comentarios" component={Comentarios} />
+        <Stack.Screen name="PaginaDetalhes" component={PaginaDetalhes} />
+        <Stack.Screen name="PaginaDetalhesComentario" component={PaginaDetalhesComentario} />
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
+}
+
+export default App;
