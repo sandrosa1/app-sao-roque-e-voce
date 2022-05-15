@@ -14,7 +14,7 @@ export default function App(){
 
   return (
     <View style={estilos.container}>
-      <Header goingback={true}/>
+      <Header goingback={true} space={true}/>
         <View style={{paddingHorizontal:30}}>
               <Text style={estilos.h1}>Notificações</Text>
               <Text style={estilos.txt}>

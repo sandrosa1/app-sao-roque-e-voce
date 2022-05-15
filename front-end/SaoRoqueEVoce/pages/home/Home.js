@@ -6,12 +6,16 @@ import {
   Image,
   ScrollView,
   FlatList,
-  TouchableOpacity
+  TouchableOpacity,
+  ActivityIndicator
 } from 'react-native';
 import Header from '../../componentes/Header';
 import MenuBar from '../../componentes/MenuBar';
 import BuscarBar from '../../componentes/BuscarBar';
 import CardHome from '../../componentes/CardHome';
+import Globais from '../../componentes/Globais';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useIsFocused } from '@react-navigation/native';
 import axios from "axios";
 
 export default function App(){
@@ -20,15 +24,23 @@ export default function App(){
     const [loading,setLoading] =useState(false);
     const [page,setPage] = useState(1);
     const [filtro,setFiltro] = useState(dados);
+    const [login,setLoagin] = useState(true);
+    const [logado,setLogado] = useState(false);    
+  
+    const isFocused = useIsFocused();
+
 
     useEffect(()=>{
-        loadApi();
+        loadApi();        
     },[]);
+
 
     async function loadApi(){
         if(loading) return;
 
+        if(page <= 1){
         setLoading(true)
+        }
 
         const response = await axios.get(`${url}/apps?page=${page}`);
 
@@ -36,19 +48,42 @@ export default function App(){
         if(page < response.data.paginacao.quantidadeTotalPaginas+1){
             setDados([...dados,...response.data.apps]);
             setPage(page + 1)};
-            setLoading(false);            
+            setTimeout(()=>{setLoading(false);},800);            
         }
 
         useEffect(()=>{            
             setFiltro(dados.filter(item=>{if(item.segmento !== 'servicos'){return true}}))
         },[dados]);
+
+        function verificarLogin(){
+            if(Globais.dados?.usernome){
+                setLogado(true);
+                setLoagin(false);
+            } else {
+                setLogado(false);
+                setLoagin(true);
+            }
+        }
         
+
       
-   console.log(filtro)  
+        useEffect(()=>{
+            const dadosdousuario = async ()=>{           
+                const json = await AsyncStorage.getItem("usuario");
+                if(json){
+                    Globais.dados = JSON.parse(json)
+                }     
+            }
+            console.log(Globais.dados)
+            verificarLogin();
+            dadosdousuario()
+        },[isFocused]);
+        
+   
   return (
     <View style={estilos.container}>
     <ScrollView showsVerticalScrollIndicator={false}>
-      <Header nobr={true} login={true}/>
+      <Header nobr={true} login={login} logado={logado} goingback={false}/>
       <View style={{flex:1}}>
       
         <BuscarBar/>
@@ -60,42 +95,47 @@ export default function App(){
                 <MenuBar
                 nome={'Pontos Turísticos'}
                 icon={require('../../images/menubar/pontos.png')}
-                nav={'PontosTuristicos'}
+                pesquisa={'Turismo'}
+                busca={'turismo'}
                 />
                 <MenuBar
                 nome={'Hospedagem'}
                 icon={require('../../images/menubar/hotel.png')}
-                nav={'Hospedagem'}
+                pesquisa={'Hospedagem'}
+                busca={'hospedagem'}
                 />
                 <MenuBar
                 nome={'Gastronomia'}
                 icon={require('../../images/menubar/gastronomia.png')}
-                nav={'Gastronomia'}
+                pesquisa={'Gastronomia'}
+                busca={'gastronomia'}
                 />
                 <MenuBar
                 nome={'Comércio'}
                 icon={require('../../images/menubar/comercio.png')}
-                nav={'Comercio'}
+                pesquisa={'Comércio'}
+                busca={'comercio'}
                 />
                 <MenuBar
                 nome={'Eventos'}
                 icon={require('../../images/menubar/evento.png')}
-                nav={'Eventos'}
+                pesquisa={'Eventos'}
+                busca={'evento'}
                 />
                 <MenuBar
                 nome={'Serviços'}
                 icon={require('../../images/menubar/servico.png')}
-                nav={'Servicos'}
+                pesquisa={'Servicos'}
                 />
                 <MenuBar
                 nome={'Sobre Nós'}
                 icon={require('../../images/menubar/quemsomos.png')}
-                nav={'QuemSomos'}
+                pesquisa={'QuemSomos'}
                 />
                 <MenuBar
                 nome={'Ajustes'}
                 icon={require('../../images/menubar/config.png')}
-                nav={'Configuracao'}
+                pesquisa={'Configuracao'}
                 />
             </ScrollView>
         <Image source={require('../../images/line.png')} style={{alignSelf:'center', resizeMode:'contain'}}/> 
@@ -109,19 +149,24 @@ export default function App(){
                 Conheça nossas dicas para a semana.
             </Text>
         </View>
+        {!loading ?
         <View style={{flex:1, alignItems:'center', marginVertical:20, marginBottom:10}}>           
                <FlatList               
                data={filtro}
                keyExtractor={item => String(item.idApp)}
                renderItem={({item})=> <CardHome data={item}/>}
                />
-        </View> 
         <View style={{marginVertical:5, marginBottom:20}}>
-                        <TouchableOpacity style={{flexDirection:'row', alignItems:'center', justifyContent:'center'}} onPress={loadApi}>
-                        <Image style={{marginHorizontal:10, width:25, height:25}} source={require('../../images/paginadetalhes/mais.png')}/>
-                        <Text style={{fontFamily:'Poppins-Regular',color:'#910046',fontSize:14}}>Carregar mais</Text>
-                        </TouchableOpacity>
+            <TouchableOpacity style={{flexDirection:'row', alignItems:'center', justifyContent:'center'}} onPress={loadApi}>
+                <Image style={{marginHorizontal:10, width:25, height:25}} source={require('../../images/paginadetalhes/mais.png')}/>
+                <Text style={{fontFamily:'Poppins-Regular',color:'#910046',fontSize:14}}>Carregar mais</Text>
+            </TouchableOpacity>
         </View>      
+        </View>:
+        <View style={{marginTop:100,alignItems:'center', justifyContent: 'center'}}>
+                    <ActivityIndicator size={50} color="#910046"/>
+        </View>} 
+
         </View>
         </ScrollView>
         </View>

@@ -5,19 +5,39 @@ import {
   View,
   TouchableOpacity,
   Image,
-  Modal
+  Modal,
+  ActivityIndicator
 } from 'react-native';
 import Header from '../../componentes/Header';
 import SwitchBtn from '../../componentes/SwitchBtn';
-import AlertModal from '../../componentes/AlertModal';
+import { useNavigation } from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import Globais from '../../componentes/Globais';
+
 
 export default function App(){
+    const navigation = useNavigation();
     const [mostrar,setMostrar] = useState(false)
+    const [sair,setSair] = useState(false)
+    const [mostrarindicator, setMostrarindicator] = useState(false)
 
-   
+    const logout = async () => {
+        try {
+            await AsyncStorage.clear()
+        } catch(e) {
+          console.log(e)
+        }
+        Globais.dados = null;
+        setSair(false)
+        setMostrarindicator(true)
+        setTimeout(()=>{setMostrarindicator(false); navigation.navigate('Home')},1500); 
+                
+      } 
+      
+
   return (
     <View style={estilos.container}>
-      <Header goingback={true}/>
+      <Header goingback={true} space={true}/>
         <View style={{paddingHorizontal:30}}>
               <Text style={estilos.h1}>Configurações</Text>
               <Text style={estilos.txt}>Ajuste suas configurações.</Text>            
@@ -34,7 +54,7 @@ export default function App(){
             </View>        
         </View> 
         <View style={estilos.containerBtn}>
-        <TouchableOpacity  style={estilos.btn}>
+        <TouchableOpacity  style={estilos.btn} onPress={()=>{setSair(true);}}>
             <Text style={{fontSize:24,fontFamily:'Poppins-Regular',color:'#fff',padding:5,}}>Sair da Conta</Text>
         </TouchableOpacity>
         <TouchableOpacity  style={[estilos.btn, {backgroundColor:'#ff3434'}]} onPress={()=>{setMostrar(true)}}>
@@ -42,7 +62,7 @@ export default function App(){
         </TouchableOpacity>
       </View>
 
-        <View>    
+           
             <View>
                 <Modal visible={mostrar} transparent={true}>
                     <View style={{flex:1, alignItems:'center', backgroundColor:'rgba(0, 0 , 0, 0.8)'}}>
@@ -67,9 +87,50 @@ export default function App(){
                         </View>
                     </View>
                 </Modal>
-            </View>        
-        </View>
+            </View> 
+
+            <View>
+                <Modal visible={sair} transparent={true}>
+                    <View style={{flex:1, alignItems:'center', backgroundColor:'rgba(0, 0 , 0, 0.8)'}}>
+                        <View style={estilos.containerModal}>
+                            <View style={{alignItems:'flex-end'}}>
+                                <TouchableOpacity onPress={()=>{setSair(false)}}>
+                                    <Image source={require('../../images/configuracao/close.png')}/>
+                                </TouchableOpacity>
+                            </View>
+                            <View style={{flex:1, alignItems:'center',justifyContent:'center'}}>
+                                    <Image source={require('../../images/configuracao/warningicon.png')}/>
+                                    <Text style={[estilos.txt,{paddingVertical:10, fontSize:14}]}>Deseja sair da sua conta?</Text>
+                                    <View style={{flexDirection:'row', padding:0}}>
+                                    <TouchableOpacity style={estilos.btnBg} onPress={()=>{setSair(false)}}>
+                                        <Text style={[estilos.txtModal,{color:'#707070'}]}>Não</Text>
+                                    </TouchableOpacity> 
+                                    <TouchableOpacity style={[estilos.btnBg,{backgroundColor:'#920046'}]} onPress={logout}>
+                                        <Text style={[estilos.txtModal,{color:'#FFF'}]}>Sim</Text>
+                                    </TouchableOpacity> 
+                                </View>
+                            </View>                    
+                        </View>
+                    </View>
+                </Modal>
+            </View>  
+
+            <View>
+                <Modal visible={mostrarindicator} transparent={true}>
+                    <View style={{flex:1, alignItems:'center', backgroundColor:'rgba(0, 0 , 0, 0.8)'}}>
+                        <View style={estilos.containerModal}>
+                            <View style={{flex:1,alignItems:'center', justifyContent: 'center'}}>
+                            <Text style={[estilos.txtModal,{paddingVertical:10}]}>Saindo...</Text>
+                            <ActivityIndicator size='large' color="#910046"/>
+                            </View>
+                        </View>
+                    </View>
+                </Modal>
+            </View>    
+
+        
     </View>   
+
   );
 };
 
@@ -128,7 +189,7 @@ const estilos = StyleSheet.create({
     txtModal:{
         fontSize:17,
         fontFamily:'Poppins-Regular',
-
+        color:'#000'
     }
 
 });

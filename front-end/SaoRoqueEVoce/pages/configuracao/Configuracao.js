@@ -16,7 +16,7 @@ const navigation = useNavigation();
     <View style={estilos.container}>
         <ScrollView showsVerticalScrollIndicator={false}>
             <View> 
-                <Header goingback={true}/>              
+                <Header goingback={true} space={true}/>              
 
                <View style={estilos.containerMenu}>
                 <View style={estilos.containerOpcao}>

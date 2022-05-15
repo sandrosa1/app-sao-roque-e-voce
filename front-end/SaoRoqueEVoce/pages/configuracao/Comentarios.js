@@ -16,7 +16,7 @@ const [mostrar,setMostrar] = useState(false)
   return (
     <View style={estilos.container}>
          <ScrollView showsVerticalScrollIndicator={false}>
-      <Header goingback={true}/>
+      <Header goingback={true} space={true}/>
         <View style={{paddingHorizontal:30}}>
               <Text style={estilos.h1}>Meus Comentários</Text>
               <Text style={estilos.txt}>

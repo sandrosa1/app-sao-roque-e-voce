@@ -12,6 +12,7 @@ import { useNavigation } from '@react-navigation/native';
 import NavPages from './NavPages';
 import axios from "axios";
 import Carousel from 'react-native-snap-carousel';
+import Globais from './Globais';
 
 export default function App({route}){
     const navigation = useNavigation();

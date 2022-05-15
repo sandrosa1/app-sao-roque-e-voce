@@ -47,9 +47,9 @@ const estilos = StyleSheet.create({
     h1:{
         marginLeft:10,
         fontSize:24,
-        fontFamily:'Poppins-Regular',
+        fontFamily:'Poppins-SemiBold',
         color:'#910046',
-        textShadowColor:'#000',
+        textShadowColor:'#green',
         textShadowOffset:{width:0.2,height:0.2},
         textShadowRadius:2
     },

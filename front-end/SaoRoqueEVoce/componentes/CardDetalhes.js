@@ -1,4 +1,4 @@
-import React,{useState, useEffect} from 'react';
+import React from 'react';
 import {
   StyleSheet,
   Text,
@@ -12,14 +12,10 @@ import { useNavigation } from '@react-navigation/native';
 
 
 export default function App({data}){
-  const navigation = useNavigation();
-  
+  const navigation = useNavigation();  
   let distancia = 5
   let estrelas = data?.estrelas  
   let custo = data?.custoMedio
- 
-  
-  
   let arrayestrela = []
   let arraycusto = []
 
@@ -34,8 +30,7 @@ export default function App({data}){
            estrelas = 0
       } else {
           arrayestrela[i]= require('../images/paginadetalhes/star0.png')
-      }
-  }}
+      }}}
   
   
   for(i=0 ; i<5 ; i++){
@@ -44,8 +39,7 @@ export default function App({data}){
         custo = custo - 1
     } else {            
          arraycusto[i] = require('../images/paginadetalhes/custo0.png')
-    }
-}
+    }}
   
   return ( 
       <View style={estilos.container}>

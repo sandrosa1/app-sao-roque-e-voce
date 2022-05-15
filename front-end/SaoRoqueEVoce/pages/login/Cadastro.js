@@ -17,11 +17,11 @@ import { TextInputMask } from 'react-native-masked-text'
 import axios from "axios";
 
 
-export default function App({navigation}){
+export default function App({navigation,route}){
     const baseURL = 'http://www.racsstudios.com/api/v1/user/';
     const [isSelected, setSelection] = useState(false);
     const [nome,setNome] = useState('');
-    const [sobrenome,setSobrenome] = useState('');
+    const [sobrenome,setSobrenome] = useState();
     const [dataNascimento,setDataNascimento] = useState('');
     const [email,setEmail] = useState('');
     const [senha,setSenha] = useState('');
@@ -136,6 +136,15 @@ export default function App({navigation}){
 
     console.log(confirmacao);
     console.log(error);
+    console.log(sobrenome)
+
+    let id = route.params?.id
+    let icon = route.params?.icon
+    let tipo = route.params?.tipo
+    let titleTermos = 'Termos de Uso'
+    let titlePolitica = 'Política de Privacidade'
+    let textTermos = 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime mollitia, molestiae quas vel sint commodi repudiandae consequuntur voluptatum laborum numquam blanditiis harum quisquam eius sed odit fugiat iusto fuga praesentium optio, eaque rerum! Provident similique accusantium nemo autem. Veritatis obcaecati tenetur iure eius earum ut molestias architecto voluptate aliquam nihil, eveniet aliquid culpa officia aut! Impedit sit sunt quaerat, odit, tenetur error, harum nesciunt ipsum debitis quas aliquid. Reprehenderit, quia. Quo neque error repudiandae fuga?'
+    let textPolitica = 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime mollitia, molestiae quas vel sint commodi repudiandae consequuntur voluptatum laborum numquam blanditiis harum quisquam eius sed odit fugiat iusto fuga praesentium optio, eaque rerum! Provident similique accusantium nemo autem. Veritatis obcaecati tenetur iure eius earum ut molestias architecto voluptate aliquam nihil, eveniet aliquid culpa officia aut! Impedit sit sunt quaerat, odit, tenetur error, harum nesciunt ipsum debitis quas aliquid. Reprehenderit, quia. Quo neque error repudiandae fuga?'
 
   return (
     <View style={estilos.container}>
@@ -207,9 +216,9 @@ export default function App({navigation}){
                 />
                 <View style={{flexDirection:'row', flexWrap:'wrap', paddingLeft:10}}>
                     <Text style={{color:'#414141'}}>Li e concordo com os </Text>
-                    <TouchableOpacity onPress={() => navigation.navigate('Termos')}><Text style={{textDecorationLine:'underline', color:'#000'}}>Termos de Uso</Text></TouchableOpacity>
+                    <TouchableOpacity onPress={() => navigation.navigate('TermosPolitica',{title: titleTermos, text: textTermos})}><Text style={{textDecorationLine:'underline', color:'#000'}}>Termos de Uso</Text></TouchableOpacity>
                     <Text style={{color:'#414141'}}> e com a </Text>
-                    <TouchableOpacity onPress={() => navigation.navigate('Politica')}><Text style={{textDecorationLine:'underline', color:'#000'}}>Política de privacidade.</Text></TouchableOpacity>
+                    <TouchableOpacity onPress={() => navigation.navigate('TermosPolitica',{title: titlePolitica, text: textPolitica})}><Text style={{textDecorationLine:'underline', color:'#000'}}>Política de privacidade.</Text></TouchableOpacity>
                 </View>                
                 <Text style={{position:'absolute',top:60, left:20,color:'#910046'}}>{erroselect}</Text>
             </View>
@@ -221,7 +230,7 @@ export default function App({navigation}){
                 <TouchableOpacity  style={estilos.btn} onPress={createPost}>
                     <Text style={{fontSize:24,fontFamily:'Poppins-Regular',color:'#fff',paddingTop:5}}>Cadastrar</Text>
                 </TouchableOpacity>
-                <TouchableOpacity  style={estilos.btn2} onPress={() => navigation.navigate('Login')}>
+                <TouchableOpacity  style={estilos.btn2} onPress={() => navigation.goBack({icon: icon, tipo:tipo, id:id})}>
                     <Text style={{fontSize:24,fontFamily:'Poppins-Regular',color:'#910046',paddingTop:5}}>Cancelar</Text>
                 </TouchableOpacity>
             </View>  
@@ -232,7 +241,7 @@ export default function App({navigation}){
                     <View style={{flex:1, alignItems:'center', backgroundColor:'rgba(0, 0 , 0, 0.8)'}}>
                         <View style={estilos.containerModal}>
                             <View style={{alignItems:'flex-end'}}>
-                                <TouchableOpacity onPress={() => navigation.navigate('Home')}>
+                                <TouchableOpacity onPress={() => navigation.goBack({icon: icon, tipo:tipo, id:id})}>
                                     <Image source={require('../../images/configuracao/close.png')}/>
                                 </TouchableOpacity>
                             </View>

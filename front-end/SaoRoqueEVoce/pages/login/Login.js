@@ -10,42 +10,86 @@ import {
   TouchableOpacity,
   Dimensions,
   KeyboardAvoidingView,
-  Modal
+  Modal,
+  ActivityIndicator
 } from 'react-native';
 import axios from "axios";
 import Globais from '../../componentes/Globais';
-import AS_Usuario from '@react-native-async-storage/async-storage'
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-export default function App({navigation}){
+
+export default function App({navigation, route}){
     const baseURL = "http://www.racsstudios.com/api/v1/login";
     const [email,setEmail] = useState('');
     const [senha,setSenha] = useState('');
-    const [confirmacao,setConfirmacao] = useState('');
+    const [versenha,setVersenha] = useState(true);
+    const [iconsenha,setIconsenha] = useState(require('../../images/eye1.png'));
+    const [confirmacao,setConfirmacao] = useState(null);
     const [mostrar,setMostrar] = useState(false);
+    const [mostrarindicator,setMostrarindicator] = useState(false);
     const [mostrarerro,setMostrarerro] = useState(false);
-    const [curso, setCurso] = useState('--')
-  
-    const Armazenar = (chave, valor) => {
-        AS_Usuario.setItem(chave,valor)
-    }
+    const [usernome,setUsernome] = useState(null);
+    const [usersobrenome,setUsersobrenome] = useState(null);
+    const [usernascimento,setUsernascimento] = useState(null);
+    const [useremail,setUseremail] = useState(null);
+    const [userdicasrestaurante,setUserdicasrestaurante] = useState(null);
+    const [userdicasturismo,setUserdicasturismo] = useState(null);
+    const [userdicashospedagem,setUserdicashospedagem] = useState(null);
+    const [userativalocalizacao,setUserativalocalizacao] = useState(null);
+    const [useralertanovidade,setUseralertanovidade] = useState(null);
+    const [useralertaevento,setUseralertaevento] = useState(null);
+    const [msg,setMsg] = useState('');
+    const [loading,setLoading] = useState(false);
 
-  
-    const getData = async () => {
-        try {
-        const value = await AS_Usuario.getItem('@storage_Key')
-        console.log(value)
-        if(value !== null) {
-            //          
-        }
-        } catch(e) {
-        // error reading value
-        }
-    }
+
     
+    
+    const salvar = async () => {
+    
+        const usuario = {
+            usernome,
+            usersobrenome,
+            usernascimento,
+            useremail,
+            userdicasrestaurante,
+            userdicasturismo,
+            userdicashospedagem,
+            userativalocalizacao,
+            useralertanovidade,
+            useralertaevento
+        }
+        try {
+        const jsonValue = JSON.stringify(usuario)
+        await AsyncStorage.setItem("usuario", jsonValue )
+        console.log(jsonValue)
+        } catch (e){
+            console.log(e)
+        }
+    }
 
-    console.log(Globais.nome)
+  
+    const carregarDados = async () => {    
+        try {    
+        const json = await AsyncStorage.getItem("usuario")    
+        return json != null ? JSON.parse(json) : null;  
+        } catch ( e ) {
+            console.log('error' + e)
+        }
+    }      
+     
+    const dadosdousuario = async ()=>{           
+        const json = await AsyncStorage.getItem("usuario");
+        if(json){
+            Globais.dados = JSON.parse(json)                
+        }           
+    }
+
 
     function login() {
+        if(email == '' || senha == ''){
+            setMsg('Insira seu email e senha!\nou crie uma nova conta!')
+            setMostrarerro(true)
+        }else {
         axios.post(baseURL, {           
             email: email,
             senha: senha
@@ -55,34 +99,66 @@ export default function App({navigation}){
           }).catch(error => {
             setError(error.response.data);
             });
-      }
-
+      }}
       
       
       if (confirmacao){          
           if(confirmacao.error == 'Email ou senha inválido!' || confirmacao.error == 'Senha ou Email inválido!'){
-              setMostrarerro(true);
-              setConfirmacao()        
+                setMsg('E-mail ou Senha inválido!')
+                setMostrarerro(true);
+                setConfirmacao()        
+            }else if (confirmacao.retorne == true) {                
+                setUsernome(confirmacao.nomeUsuario[0].toUpperCase() + confirmacao.nomeUsuario.substr(1))               
+                setUsersobrenome(confirmacao.sobreNome[0].toUpperCase() + confirmacao.sobreNome.substr(1))
+                setUseremail(confirmacao.email)
+                setUsernascimento(confirmacao.dataNascimento)
+                setUserdicasrestaurante(confirmacao.dicasRestaurantes)
+                setUserdicasturismo(confirmacao.dicasPontosTuristicos)
+                setUserdicashospedagem(confirmacao.dicasHospedagens)
+                setUserativalocalizacao(confirmacao.ativaLocalizacao)
+                setUseralertanovidade(confirmacao.alertaNovidade)
+                setUseralertaevento(confirmacao.alertaEventos)
+                load()              
+                setConfirmacao() 
+            } else {
+                setMsg('Houve um problema na sua requisição.\nVerifique sua conexão com a internet.')
+                setMostrarerro(true);
+                setConfirmacao()        
             }
-            if (confirmacao.retorne == true) {                
-            setMostrar(true);
-            Armazenar('nome',confirmacao.nomeUsuario)
-            Armazenar('sobrenome',confirmacao.sobreNome)
-            Armazenar('email',confirmacao.email)
-            Armazenar('data',confirmacao.dataNascimento)
-            Armazenar('dicasRestaurantes',String(confirmacao.dicasRestaurantes))
-            Armazenar('dicasTurismo',String(confirmacao.dicasPontosTuristicos))
-            Armazenar('dicasHospedagens',String(confirmacao.dicasHospedagens))
-            Armazenar('ativaLocalizacao',String(confirmacao.ativaLocalizacao))
-            Armazenar('alertaNovidade',String(confirmacao.alertaNovidade))
-            Armazenar('alertaEventos',String(confirmacao.alertaEventos))
-            getData()
-            setConfirmacao()       
+        }
+        
+        function load(){
+        setMostrarindicator(true)        
+        salvar()
+        dadosdousuario()
+        setTimeout(()=>{setMostrarindicator(false);setMostrar(true) },3000);         
+               
+        }
+
+    const mostrarsenha = () =>{
+        setVersenha(!versenha)
+        if(versenha == true){
+            setIconsenha(require('../../images/eye0.png'))
+        } else {
+            setIconsenha(require('../../images/eye1.png'))
         }
     }
-      
 
+    useEffect(()=>{
+        if(usernome != null){
+            load()
+        }
+    },[useremail]);
+    
+    useEffect(()=>{
+        console.log('tatata')    
+    },[]);
+    
+    let id = route.params?.id
+    let icon = route.params?.icon
+    let tipo = route.params?.tipo
 
+console.log(Globais.dados)
 
   return (
     <SafeAreaView style={estilos.conteiner}>            
@@ -91,7 +167,6 @@ export default function App({navigation}){
                 <TouchableOpacity onPress={() => navigation.navigate('Home')}>
                 <Image source={require('../../images/logo.png')} style={{width:'100%', resizeMode:'contain'}}/>
                 </TouchableOpacity>
-                <Text>{}</Text>
             </View>
             <KeyboardAvoidingView style={{flex:1}}
             behavior={Platform.OS === 'ios' ? "padding" : "height"}
@@ -100,8 +175,19 @@ export default function App({navigation}){
                 <Text style={{fontSize:24,marginTop:50,fontFamily:'Poppins-SemiBold', color:'#910046'}}>Login</Text>
                 <TextInput onChangeText={setEmail} value={email} placeholder="E-mail" placeholderTextColor={'#910046'} style={estilos.input}>
                 </TextInput>
-                <TextInput onChangeText={setSenha} value={senha} placeholder="Senha"  placeholderTextColor={'#910046'} secureTextEntry={true} style={estilos.input}>
+
+                <View style={{ width:'100%', marginTop:15, marginBottom:25, flexDirection:'row', alignItems:'center', justifyContent:'center'}}>
+                
+                <TextInput value={senha} onChangeText={value => {setSenha(value);}} placeholder="Senha" secureTextEntry={versenha} placeholderTextColor={'#910046'} style={estilos.input}>
                 </TextInput>
+               
+                <TouchableOpacity style={{position:'absolute', right:10}} onPress={mostrarsenha}>
+                    <View style={{padding:7}}>
+                    <Image style={{width:25,height:25}} source={iconsenha}/>
+                    </View>
+                </TouchableOpacity>
+                </View>
+
                 <TouchableOpacity  style={estilos.btn} onPress={login}>
                     <Text style={{fontSize:24,fontFamily:'Poppins-Regular',color:'#910046', letterSpacing:2, paddingTop:5}}>ENTRAR</Text>
                 </TouchableOpacity>
@@ -126,8 +212,8 @@ export default function App({navigation}){
                                 </TouchableOpacity>
                             </View>
                             <View style={{flex:1, alignItems:'center',justifyContent:'center'}}>
-                                    <Image source={require('../../images/configuracao/dangericon.png')}/>
-                                    <Text style={[estilos.txtModal,{paddingVertical:5}]}>E-mail ou Senha inválido!</Text>                                   
+                                    <Image style={{width:50, height:50}} source={require('../../images/configuracao/dangericon.png')}/>
+                                    <Text style={[estilos.txtModal,{paddingVertical:5}]}>{msg}</Text>                                   
                                     <Text style={[estilos.txtModal,{marginTop:0}]}>Tente novamente.</Text>                                   
                             </View>                    
                         </View>
@@ -139,17 +225,29 @@ export default function App({navigation}){
                     <View style={{flex:1, alignItems:'center', backgroundColor:'rgba(0, 0 , 0, 0.8)'}}>
                         <View style={estilos.containerModal}>
                             <View style={{alignItems:'flex-end'}}>
-                                <TouchableOpacity onPress={() => navigation.navigate('Home')}>
+                                <TouchableOpacity onPress={() => navigation.goBack({icon: icon, tipo:tipo, id:id})}>
                                     <Image source={require('../../images/configuracao/close.png')}/>
                                 </TouchableOpacity>
                             </View>
                             <View style={{flex:1, alignItems:'center',justifyContent:'center'}}>
-                                    <Image source={require('../../images/configuracao/sucesso.png')}/>
-                                    <Text style={[estilos.txtModal,{paddingVertical:5}]}>Bem vindo! @@@@</Text>  
-                                    <TouchableOpacity  style={estilos.btn2} onPress={() => navigation.navigate('Home')}>
+                                    <Image style={{width:50, height:50, marginBottom:10}} source={require('../../images/configuracao/sucesso.png')}/>
+                                    <Text style={[estilos.txtModal,{paddingVertical:10}]}>Bem vindo! {Globais.dados?.usernome} {Globais.dados?.usersobrenome}</Text>  
+                                    <TouchableOpacity  style={estilos.btn2} onPress={() => navigation.goBack({icon: icon, tipo:tipo, id:id})}>
                                         <Text style={{fontSize:24,fontFamily:'Poppins-Regular',color:'#fff', letterSpacing:2, paddingTop:5}}>ok</Text>
                                     </TouchableOpacity>                                 
                             </View>                    
+                        </View>
+                    </View>
+                </Modal>
+            </View>    
+            <View>
+                <Modal visible={mostrarindicator} transparent={true}>
+                    <View style={{flex:1, alignItems:'center', backgroundColor:'rgba(0, 0 , 0, 0.8)'}}>
+                        <View style={estilos.containerModal}>
+                            <View style={{flex:1,alignItems:'center', justifyContent: 'center'}}>
+                            <Text style={[estilos.txtModal,{paddingVertical:10}]}>Conectando...</Text>
+                            <ActivityIndicator size='large' color="#910046"/>
+                            </View>
                         </View>
                     </View>
                 </Modal>
@@ -231,9 +329,9 @@ const estilos = StyleSheet.create({
         marginHorizontal:20
     },
     txtModal:{
-        fontSize:18,
+        fontSize:15,
         fontFamily:'Poppins-Regular',
-        margin:10,
+        margin:0,
         color:'#000'
 
     }

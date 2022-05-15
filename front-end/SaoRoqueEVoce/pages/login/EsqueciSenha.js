@@ -33,8 +33,10 @@ export default function App(){
                 <CheckBox
                 value={isSelected}
                 onValueChange={setSelection}
+                style={{ transform: [{ scaleX: 1.5 }, { scaleY: 1.5 }] }}
+                tintColors={{ true: '#910046', false: '#910046' }}
                 />
-                <Text style={estilos.txt}>Não sou um robô</Text>
+                <Text style={[estilos.txt, {paddingLeft:10}]}>Não sou um robô</Text>
                 </View>
                 <Image
                 source={require('../../images/captchalogo.png')}
@@ -94,7 +96,8 @@ const estilos = StyleSheet.create({
         fontSize:17,
         borderBottomWidth:1,
         borderColor:'#D8d8d8',
-        fontFamily:'Poppins-Regular'
+        fontFamily:'Poppins-Regular',
+        color:'#000'
     },
     conteudoCkecbox:{
         marginTop:30,

@@ -10,19 +10,21 @@ import Header from '../../componentes/Header';
 import Globais from '../../componentes/Globais';
 
 export default function App(){
-  let nome = Globais.nome
-  let sobrenome = Globais.sobrenome
-  let dataNascimento = Globais.dataNascimento
-  let email = Globais.email
+  let nome = Globais.dados?.usernome
+  let sobrenome = Globais.dados?.usersobrenome
+  let dataNascimento = Globais.dados?.usernascimento
+  let email = Globais.dados?.useremail
+
   return (
     <View style={estilos.container}>
-      <Header goingback={true}/>
+      <Header goingback={true} space={true}/>
         <View style={{paddingHorizontal:30}}>
               <Text style={estilos.h1}>Perfil</Text>
               <Text style={estilos.txt}>
                   Atualize suas informações.
               </Text>            
         </View>
+      {}
       <View style={{flex:2, paddingHorizontal:30}}>
         <View style={{marginTop:15}}>
           <Text style={estilos.miniText}>Nome</Text>
@@ -82,7 +84,8 @@ const estilos = StyleSheet.create({
         fontSize:18,
         borderBottomWidth:1,
         borderColor:'#C4C4C4',
-        paddingBottom:-10
+        paddingBottom:-10,
+        color:'#000'
       },
       btn:{
         marginTop:25,
