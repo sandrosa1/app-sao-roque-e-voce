@@ -90,6 +90,20 @@ class User{
      * @var integer
      */
     public $ativaLocalizacao;
+    /**
+     * 13)
+     * Token
+     *
+     * @var string
+     */
+    public $token;
+     /**
+     * 14)
+     * Status
+     *
+     * @var string
+     */
+    public $status;
     
 
 
@@ -110,6 +124,8 @@ class User{
             'dicasHospedagens'         => $this->dicasHospedagens,
             'alertaEventos'            => $this->alertaEventos,
             'ativaLocalizacao'         => $this->ativaLocalizacao,
+            'token'                    => $this->token,
+            'status'                   => $this->status,
         ]);
 
         return true;
@@ -136,6 +152,9 @@ class User{
             'dicasHospedagens'         => $this->dicasHospedagens,
             'alertaEventos'            => $this->alertaEventos,
             'ativaLocalizacao'         => $this->ativaLocalizacao,
+            'token'                    => $this->token,
+            'status'                   => $this->status,
+    
                
         ]);
         
