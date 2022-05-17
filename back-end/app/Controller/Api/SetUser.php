@@ -3,12 +3,9 @@
 namespace App\Controller\Api;
 
 use \App\Model\Entity\User\User as EntityUser;
-use \App\Model\Entity\User\Comment as EntityComment;
 use \App\Validate\Validate;
 
-
 class SetUser extends Api {
-
 
     /**
      * Inserí um novo comentário a um estabelecimento
@@ -36,11 +33,12 @@ class SetUser extends Api {
                 throw new \Exception("Usuario: ".$postVars['newToken']." não encontrado.", 404);
             }
 
+            $token = "";
             $min = 1000;
             $max = 9999;
-            $token = rand($min,$max);
+            $token = (string)rand($min,$max);
 
-            $objUser->token     = $token;
+            $objUser->token     = password_hash($token, PASSWORD_DEFAULT);
             $objUser->status    = "confirmacao";
 
             $address = $objUser->email;
@@ -48,7 +46,7 @@ class SetUser extends Api {
             $subjet = "Reenvio do codígo de validação São Roque e Você.";
     
             $body = "<h5>Novo codígo de validação São Roque e Você.</h5>
-            <h6>Olá $objUser->nomeUsuario</h6>
+            <p>Olá $objUser->nomeUsuario</p>
             <p>Este e seu novo codígo de validação</p>
             <p>CODIGO: $token</p>
             <br><br><br>
@@ -65,23 +63,23 @@ class SetUser extends Api {
             }
 
 
-        return [
+            return [
 
-            'retorno'                => 'success',
-            'success'                => 'Codígo reenvido, Aguardado confirmação',
-            "nomeUsuario"            => $objUser->nomeUsuario, 
-            "sobreNome"              => $objUser->sobreNome, 
-            "dataNascimento"         => $objUser->dataNascimento, 
-            "email"                  => $objUser->email, 
-            "alertaNovidade"         => (int)$objUser->alertaNovidade, 
-            "dicasPontosTuristicos"  => (int)$objUser->dicasPontosTuristicos, 
-            "dicasRestaurantes"      => (int)$objUser->dicasRestaurantes, 
-            "dicasHospedagens"       => (int)$objUser->dicasHospedagens, 
-            "alertaEventos"          => (int)$objUser->alertaEventos, 
-            "ativaLocalizacao"       => (int)$objUser->ativaLocalizacao, 
-            "status"                 => $objUser->status,      
+                'retorno'                => 'success',
+                'success'                => 'Codígo reenvido, Aguardado confirmação',
+                "nomeUsuario"            => $objUser->nomeUsuario, 
+                "sobreNome"              => $objUser->sobreNome, 
+                "dataNascimento"         => $objUser->dataNascimento, 
+                "email"                  => $objUser->email, 
+                "alertaNovidade"         => (int)$objUser->alertaNovidade, 
+                "dicasPontosTuristicos"  => (int)$objUser->dicasPontosTuristicos, 
+                "dicasRestaurantes"      => (int)$objUser->dicasRestaurantes, 
+                "dicasHospedagens"       => (int)$objUser->dicasHospedagens, 
+                "alertaEventos"          => (int)$objUser->alertaEventos, 
+                "ativaLocalizacao"       => (int)$objUser->ativaLocalizacao, 
+                "status"                 => $objUser->status,      
 
-        ];
+            ];
     
         }elseif(isset($postVars['redefinirSenha'])){
 
@@ -98,18 +96,19 @@ class SetUser extends Api {
                 throw new \Exception("Usuario: ".$postVars['redefinirSenha']." não encontrado.", 404);
             }
 
+            $token ='';
             $min = 1000;
             $max = 9999;
-            $token = rand($min,$max);
+            $token = (string)rand($min,$max);
 
-            $objUser->token  = $token;
+            $objUser->token  = password_hash($token, PASSWORD_DEFAULT);
             
             $address = $objUser->email;
 
             $subjet = "Redefinir senha São Roque e Você.";
     
             $body = "<h4>Redefinir senha São Roque e Você.</h4>
-            <h6>Olá $objUser->nomeUsuario</h6>
+            <p>Olá $objUser->nomeUsuario</p>
             <p>Este é seu codígo de validação para redefir a senha.</p>
             <p>CODIGO: $token</p>
             <br><br><br>
@@ -126,31 +125,30 @@ class SetUser extends Api {
             }
 
 
-        return [
+            return [
 
-            'retorno'                => 'success',
-            'success'                => 'Codígo reenvido, Aguardado confirmação',
-            "nomeUsuario"            => $objUser->nomeUsuario, 
-            "sobreNome"              => $objUser->sobreNome, 
-            "dataNascimento"         => $objUser->dataNascimento, 
-            "email"                  => $objUser->email, 
-            "alertaNovidade"         => (int)$objUser->alertaNovidade, 
-            "dicasPontosTuristicos"  => (int)$objUser->dicasPontosTuristicos, 
-            "dicasRestaurantes"      => (int)$objUser->dicasRestaurantes, 
-            "dicasHospedagens"       => (int)$objUser->dicasHospedagens, 
-            "alertaEventos"          => (int)$objUser->alertaEventos, 
-            "ativaLocalizacao"       => (int)$objUser->ativaLocalizacao, 
-            "status"                 => $objUser->status,      
+                'retorno'                => 'success',
+                'success'                => 'Codígo reenvido, Aguardado confirmação',
+                "nomeUsuario"            => $objUser->nomeUsuario, 
+                "sobreNome"              => $objUser->sobreNome, 
+                "dataNascimento"         => $objUser->dataNascimento, 
+                "email"                  => $objUser->email, 
+                "alertaNovidade"         => (int)$objUser->alertaNovidade, 
+                "dicasPontosTuristicos"  => (int)$objUser->dicasPontosTuristicos, 
+                "dicasRestaurantes"      => (int)$objUser->dicasRestaurantes, 
+                "dicasHospedagens"       => (int)$objUser->dicasHospedagens, 
+                "alertaEventos"          => (int)$objUser->alertaEventos, 
+                "ativaLocalizacao"       => (int)$objUser->ativaLocalizacao, 
+                "status"                 => $objUser->status,      
 
-        ];
+            ];
 
 
         }
 
     }
 
-
-      /**
+    /**
      * Atualiza configurações de usuario a um app
      *
      * @param Request $request
@@ -175,7 +173,7 @@ class SetUser extends Api {
             }
         
 
-            if($objUser->token == $postVars['token']){
+            if(password_verify($postVars['token'], $objUser->token)){
 
                 $objUser->status    = 'ativo';
                 $objUser->senha     = password_hash($postVars['novaSenha'], PASSWORD_DEFAULT);
@@ -217,8 +215,6 @@ class SetUser extends Api {
             throw new \Exception("Ops. Algo deu errado na rota setUser POST.", 404);
         }
        
-
     }
-   
    
 }

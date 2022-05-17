@@ -6,9 +6,7 @@ use \App\Model\Entity\User\User as EntityUser;
 use \App\Model\Entity\User\Comment as EntityComment;
 use \App\Validate\Validate;
 
-
 class User extends Api {
-
 
     /**
      * Inserí um novo comentário a um estabelecimento
@@ -17,7 +15,6 @@ class User extends Api {
      * @return array
      */
     public static function setNewUserApp($request){
-
 
         $postVars = $request->getPostVars();
 
@@ -57,7 +54,7 @@ class User extends Api {
         $objUser->dicasHospedagens      = 0;
         $objUser->alertaEventos         = 0;
         $objUser->ativaLocalizacao      = 0;
-        $objUser->token                 = $token;
+        $objUser->token                 = password_hash($token, PASSWORD_DEFAULT);
         $objUser->status                = "confirmacao";
 
 
@@ -66,7 +63,7 @@ class User extends Api {
         $subjet = "Codigo de validação São Roque e Você.";
 
         $body = "<h5>Codigo de validação São Roque e Você.</h5>
-        <h6>Olá $objUser->nomeUsuario</h6>
+        <p>Olá $objUser->nomeUsuario</p>
         <p>Este e seu Codigo de validação</p>
         <p>CODIGO: $token</p>
         <br><br><br>
@@ -102,8 +99,7 @@ class User extends Api {
         ];
     }
 
-
-      /**
+    /**
      * Atualiza configurações de usuario a um app
      *
      * @param Request $request
@@ -127,7 +123,7 @@ class User extends Api {
     
             }
 
-            if($objUser->token == $postVars['token']){
+            if(password_verify($postVars['token'], $objUser->token)){
 
                 $objUser->status    = 'ativo';
 
@@ -189,8 +185,7 @@ class User extends Api {
             $objUser->alertaEventos         = $postVars['alertaEventos'];
             $objUser->ativaLocalizacao      = $postVars['ativaLocalizacao'];
            
-            //Atualiza o configurações de usuario
-
+    
             if(!$objUser->updateUser()){
 
                 throw new \Exception("Ops. Algo na atualização. Tente novamente mais tarde.", 404);
@@ -214,10 +209,6 @@ class User extends Api {
             ];
 
         }
-
-
-       
-
     }
    
     /**

@@ -2,7 +2,6 @@
 
 namespace App\Controller\Api;
 
-use App\Help\Help;
 use \App\Model\Entity\Aplication\App as EntityApps;
 use \App\Help\HelpEntity;
 use \SandroAmancio\PaginationManager\Pagination;

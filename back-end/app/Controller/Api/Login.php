@@ -5,24 +5,11 @@ namespace App\Controller\Api;
 use \App\Model\Entity\User\User as EntityUser;
 
 
-
 class Login extends Api {
 
-
+  
     /**
-     * Inserí um novo comentário a um estabelecimento
-     *
-     * @param Request $request
-     * @return array
-     */
-    public static function setNewPassword($request){
-
-        //Code
-       
-    }
-
-      /**
-     * Atualiza um comentário a um app
+     *Login de usuario do App
      *
      * @param Request $request
      * @return array
@@ -53,10 +40,24 @@ class Login extends Api {
                 "error"   => "Senha ou Email inválido!"
             ];
         }
+
+        $token = "";
+        $min = 1000;
+        $max = 9999;
+        $token = (string)rand($min,$max);
+
+        $objUser->token  = password_hash($token, PASSWORD_DEFAULT);
+
+        if(!$objUser->updateUser()){
+
+            throw new \Exception("Ops. Algo deu errado na atualização dos dados. Tente novamente mais tarde.", 404);
+
+        }
        
         return [
 
             "retorne"=> true,
+            'token'                  => $token,
             'nomeUsuario'            => $objUser->nomeUsuario,           
             'sobreNome'              => $objUser->sobreNome,             
             'dataNascimento'         => $objUser->dataNascimento,        
@@ -73,12 +74,4 @@ class Login extends Api {
        
     }
 
-
-    public static function resetPassword(){
-
-        //code
-    }
-   
-   
-   
 }

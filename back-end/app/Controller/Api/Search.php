@@ -2,9 +2,7 @@
 
 namespace App\Controller\Api;
 
-use App\Help\Help;
 use \App\Model\Entity\Aplication\App as EntityApps;
-use \App\Help\HelpEntity;
 use \SandroAmancio\PaginationManager\Pagination;
 
 class Search extends Api {
@@ -29,12 +27,7 @@ class Search extends Api {
             $quatidadeTotal = EntityApps::getApp('chaves LIKE "%'.$like .'%"',null,null,'COUNT(*) as qtd')->fetchObject()->qtd;
             $query = 'chaves LIKE "%'.$like .'%"';
             
-        }else{
-
         }
-
-     
-        //PAGINA ATUAL
         
         //INSTANCIA DE PAGINAÇÃO
          $objPagination = new Pagination($quatidadeTotal,$pagianaAtual, 4);
