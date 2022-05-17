@@ -133,7 +133,7 @@ class Comment extends Api {
 
         $objComment->idApp      = (int)$postVars['idApp'];
         $objComment->idUsuario  = (int)$request->user->idUsuario;
-        $objComment->nome       = $request->user->nomeUsuario." ". $request->user->sobreNome;
+        $objComment->nome       = $request->user->nomeUsuario;
         $objComment->comentario = $postVars['comentario'];
         $objComment->utilSim    = 0;
         $objComment->utilNao    = 0;
@@ -202,7 +202,7 @@ class Comment extends Api {
        
         $objComment->idApp          = $postVars['idApp'];
         $objComment->idUsuario      = $request->user->idUsuario;
-        $objComment->nome           = $request->user->nomeUsuario." ". $request->user->sobreNome;
+        $objComment->nome           = $request->user->nomeUsuario;
         $objComment->comentario     = $postVars['comentario'];
         $objComment->custo          = $postVars['custo'];
 

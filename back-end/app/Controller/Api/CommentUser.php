@@ -130,7 +130,7 @@ class CommentUser extends Api {
          
         $objComment->idApp          = $postVars['idApp'];
         $objComment->idUsuario      = $request->user->idUsuario;
-        $objComment->nome           = $request->user->nomeUsuario;
+        $objComment->nome           = $request->user->nomeUsuario." ". $request->user->sobreNome;
         $objComment->comentario     = $postVars['comentario'];
         $objComment->custo          = $postVars['custo'];
 
