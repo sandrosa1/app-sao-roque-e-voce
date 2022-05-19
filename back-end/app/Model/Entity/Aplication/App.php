@@ -14,6 +14,9 @@ class App{
     public $email;
     public $telefone;
     public $site;
+    public $facebook;
+    public $instagram;
+    public $youtube;
     public $celular;
     public $cep;
     public $logradouro;
@@ -42,6 +45,9 @@ class App{
         'email'           => $this->email,
         'telefone'        => $this->telefone,
         'site'            => $this->site,
+        'facebook'        => $this->facebook,
+        'instagram'       => $this->instagram,
+        'youtube'         => $this->youtube,
         'celular'         => $this->celular,
         'cep'             => $this->cep,
         'logradouro'      => $this->logradouro,
@@ -79,7 +85,10 @@ class App{
             'tipo'            => $this->tipo,
             'email'           => $this->email,
             'telefone'        => $this->telefone,
-            'site'            => $this->site,    
+            'site'            => $this->site, 
+            'facebook'        => $this->facebook,
+            'instagram'       => $this->instagram,
+            'youtube'         => $this->youtube,   
             'celular'         => $this->celular,
             'cep'             => $this->cep,
             'logradouro'      => $this->logradouro,

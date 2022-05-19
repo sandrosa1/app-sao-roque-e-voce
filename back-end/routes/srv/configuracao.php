@@ -23,6 +23,15 @@ $objRouter->post('/srv/configuracao/cep',[
         return new Response(200,Srv\Config::cep($request));
     }
 ]);
+//Rota de pesquisa do cep (POST)
+$objRouter->post('/srv/configuracao/tipo',[
+    'middlewares' => [  
+        'required-srv-login'
+   ],
+    function($request){
+        return new Response(200,Srv\Config::tipo($request));
+    }
+]);
 
 //Rota de POST configuração
 $objRouter->post('/srv/configuracao',[

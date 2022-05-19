@@ -238,7 +238,7 @@ class ScreenSrv extends PageSrv{
         $app = HelpEntity::helpApp();
         $appTipo = HelpEntity::helpGetEntity($app);
 
-     
+
         return View::render('srv/modules/tela/preview/components/servicos',[
             
             'nome'       => $app->nomeFantasia ? "<p class='c-popi fz-10 fwb'> ".$app->nomeFantasia ."</p>":"",
@@ -246,7 +246,7 @@ class ScreenSrv extends PageSrv{
             'telefone'   => $app->telefone   ?"<i class='c-pri fz-15 fas fa-phone-volume'></i><span class=' c-popi fz-5'> ".$app->telefone."</span>": '',
             'site'       => $app->site       ?"<i class='pb-5 c-pri fz-15 fas fa-globe'></i><span class=' c-popi fz-5'> ".$app->site."</span>" :'',
             'horarios'   => $appTipo->semana ?"<p class=' c-popi fz-5'>Semana ".$appTipo->semana."</p><p class=' c-popi fz-5'>Sabádo ".$appTipo->sabado."</p><p class=' c-popi fz-5'>Domingo ".$appTipo->domingo."</p><p class=' c-popi fz-5'>Fériados ".$appTipo->feriado."</p>" : '',
-            'logo'       => $app->img1       ? "<img src='{{URL}}/img/imgApp/$app->img1' alt='Imagem de logotipo'>" : '' ,
+            'logo'       => $app->img1       ? $app->img1 : '' ,
         ]);
     }
 

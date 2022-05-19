@@ -1,6 +1,7 @@
 // ------------------------------------------arquivo para sistema SRV----------------------------\\
 //Endereços das requis
 const UrlSrvConfigCep = urlName+'/srv/configuracao/cep';
+const UrlSrvConfigTipo = urlName+'/srv/configuracao/tipo';
 const UrlSrvConfig = urlName+'/srv/configuracao';
 const UrlSrvDetalhes = urlName+'/srv/detalhes';
 const UrlSrvTela = urlName+'/srv/tela';
@@ -40,6 +41,27 @@ const clearInputsAddresSrv = () => {
     document.querySelector("#localidade").value = '';
         
 };
+//Busca o cep quando sai do foco
+$('#segmento').on('change', function (event) {
+   
+    if((document.querySelector("#segmento").value.length > 1) || document.querySelector("#segmento").value != '{{segmento}}'){
+        event.preventDefault();
+        var dados=$(this).serialize();
+        $.ajax({
+        url: getRoot(UrlSrvConfigTipo),
+            type: 'post',
+            dataType: 'json',
+            data: dados,
+            success: function (response) {
+                if(response.retorno == 'success'){
+                   document.querySelector('#divTipos').innerHTML = response.divTipo
+                
+                }
+            }
+        });
+    }
+
+});
 //Busca o cep quando sai do foco
 $('#cep').on('blur', function (event) {
     if(document.querySelector("#cep").value.length == 9){

@@ -1,4 +1,5 @@
 <div class="containerSrv">
+
     <div class="row">
         <div class="col s12 hc">
             <h1 class="srv-c-4 fz-20 mb-0 fwb">{{h1}}</h1>
@@ -13,12 +14,14 @@
         </div>
     </div>
     <div class="row mb-0">
-        
+
+
+
         <form class="col s12" name="formConfig" id="formConfig" method="post"  >
         <!-- Estrutura do modal e input nome fantasia -->
         <div class="row mb-0">
-          
-            <div class="input-field col s12 m12 l8">
+
+            <div class="input-field col s12 m12 l7">
                 <div id="modal1" class="modal">
                     <div class="modal-content">
                         <h4 class="center srv-c-4 fz-20">Ajuda</h4>
@@ -33,25 +36,8 @@
                 <input  id="nomeFantasia" type="text" name="nomeFantasia" value="{{nomeFantasia}}" maxlength="245" class="validate" required>
                 <label for="nomeFantasia">Nome do estabelecimento<span class="obrigatorio"> *</span></label>
             </div>
-            <div class="input-field col s12 m12 l4">
-                <div id="modal1.1" class="modal">
-                    <div class="modal-content">
-                        <h4 class="center srv-c-4 fz-20">Ajuda</h4>
-                        <p>Endereço de um site passa mais seriedade para o cliente caso não possua coloque endereço de blog ou redes socias. Caso não possua nenhum deixar em branco</p>
-                    </div>
-                    <div class="modal-footer">
-                        <a  class="modal-close waves-effect waves-green btn-flat"><i class="material-icons icons-ajuda-fechar">close</i></a>
-                    </div>
-                </div>
-                <a class="waves-effect waves-light btn-ajuda modal-trigger prefix" href="#modal1.1"><i class="material-icons icon-ajuda">help_outline</i></a>
-                <input  id="nomeFantasia" type="text" name="site" value="{{site}}" maxlength="245" class="validate" >
-                <label for="nomeFantasia">Site ou rede social</label>
-            </div>
-        </div>
-            <!-- Fim de estrutura do modal e input nome fantasia -->
-            <!-- Tipo de negôcio -->
-        <div class="row mb-0">
-            <div class="input-field col s12 m7 l6">
+            
+            <div class="input-field col s12 m12 l5">
                 <div id="modal1.1" class="modal">
                     <div class="modal-content">
                         <h4 class="center srv-c-4 fz-20">Ajuda</h4>
@@ -66,7 +52,7 @@
                     </div>
                 </div>
                 <a class="waves-effect waves-light btn-ajuda modal-trigger prefix" href="#modal1.1"><i class="material-icons icon-ajuda">help_outline</i></a>
-                <select name='segmento'>
+                <select name='segmento' id="segmento">
                     <option value="{{segmento}}" >{{segmentoFormatado}}</option>
                     <option value="hospedagem">Hospedagem</option>
                     <option value="gastronomia">Gastronomia</option>
@@ -77,22 +63,96 @@
                 <label>Tipo de segmento  <span class="obrigatorio">*</span></label>
             </div>
 
-            <div class="input-field col s12 m5 s6">
+        </div>
+          
+        <div class="row mb-0">
+            <div class="input-field col s1 m1 l1 " >
                 <div id="modal9" class="modal">
                     <div class="modal-content">
                         <h4 class="center srv-c-4 fz-20">Ajuda</h4>
-                        <p>Nesse campo você  define em uma palavra ou frase curta, seu comércio, evento ou serviço. <b>Exemplos: Livraria, Padaria, Farmácia, Hamburgueria, Festa da uva .....</b>.</p>
+                        <p>Nesse campo você define ou escolhe em uma palavra ou frase curta, seu comércio, evento ou serviço. <b>Exemplos: Livraria, Padaria, Farmácia, Hamburgueria, Festa da uva .....</b>.</p>
                     </div>
                     <div class="modal-footer">
                         <a class="modal-close waves-effect waves-green btn-flat"><i class="material-icons icons-ajuda-fechar">close</i></a>
                     </div>
                 </div>
-                <a class="waves-effect waves-light btn-ajuda modal-trigger prefix" href="#modal9"><i class="material-icons icon-ajuda" >help_outline</i></a>
-                <input id="tipo" type="text" name="tipo" value="{{tipo}}" maxlength="255" class="validate" required>
-                <label for="tipo">Tipo<span class="obrigatorio"> *</span></label>   
+                <a class="waves-effect waves-light btn-ajuda modal-trigger prefix " href="#modal9"><i class="material-icons icon-ajuda" >help_outline</i></a>
+            </div>
+            <div class="input-field col s11 m11 l11 " id="divTipos">
+            
+                    {{tipos}}
+
+            </div>
+            
+        </div>
+
+        <div class="row mb-0">
+           
+            <div class="input-field col s12 m12 l3">
+                <div id="modal1.1.3" class="modal">
+                    <div class="modal-content">
+                        <h4 class="center srv-c-4 fz-20">Ajuda</h4>
+                        <p>Endereço de um site passa mais seriedade para o cliente.  Caso não possua, deixar em branco, mas se quiser uma site para ter mais alcance em seus negócios, faleconosco.</p>
+                    </div>
+                    <div class="modal-footer">
+                        <a  class="modal-close waves-effect waves-green btn-flat"><i class="material-icons icons-ajuda-fechar">close</i></a>
+                    </div>
+                </div>
+                <a class="waves-effect waves-light btn-ajuda modal-trigger prefix" href="#modal1.1.3"><i class="material-icons icon-ajuda">public</i></a>
+                <input  id="nomeFantasia" type="text" name="site" value="{{site}}" maxlength="245" class="validate" >
+                <label for="nomeFantasia">Site </label>
             </div>
 
-        </div>
+
+            <div class="input-field col s12 m12 l3">
+                <div id="modal1.1.1" class="modal">
+                    <div class="modal-content">
+                        <h4 class="center srv-c-4 fz-20">Ajuda</h4>
+                        <p>Aqui você adicio o endereço de sua pagína no Facebook. Caso não possua, deixar em branco, mas se quiser uma Fanpage para ter mais alcance em seus negócios, fale conosco.</p>
+                    </div>
+                    <div class="modal-footer">
+                        <a  class="modal-close waves-effect waves-green btn-flat"><i class="material-icons icons-ajuda-fechar">close</i></a>
+                    </div>
+                </div>
+                <a class="waves-effect waves-light btn-ajuda modal-trigger prefix" href="#modal1.1.1"><i class="material-icons icon-ajuda">facebook</i></a>
+                <input  id="nomeFantasia" type="text" name="facebook" value="{{facebook}}" maxlength="245" class="validate" >
+                <label for="nomeFantasia">Facebook </label>
+            </div>
+
+
+            <div class="input-field col s12 m12 l3">
+                <div id="modal1.1.2" class="modal">
+                    <div class="modal-content">
+                        <h4 class="center srv-c-4 fz-20">Ajuda</h4>
+                        <p>Aqui você adiciona o endereço de sua página no Instagram. Caso não possua, deixar em branco, mas se quiser uma página no Instagram para ter mais alcance em seus negócios, falo conosco.</p>
+                    </div>
+                    <div class="modal-footer">
+                        <a  class="modal-close waves-effect waves-green btn-flat"><i class="material-icons icons-ajuda-fechar">close</i></a>
+                    </div>
+                </div>
+                <a class="waves-effect waves-light btn-ajuda modal-trigger prefix" href="#modal1.1.2"><i class="material-icons icon-ajuda">photo_camera</i></a>
+                <input  id="nomeFantasia" type="text" name="instagram" value="{{instagram}}" maxlength="245" class="validate" >
+                <label for="nomeFantasia">Instagram </label>
+            </div>
+
+            <div class="input-field col s12 m12 l3">
+                <div id="modal1.1.4" class="modal">
+                    <div class="modal-content">
+                        <h4 class="center srv-c-4 fz-20">Ajuda</h4>
+                        <p>Aqui você adiciona o endereço de canal no YouTube. Caso não possua nenhuma deixar em branco.</p>
+                    </div>
+                    <div class="modal-footer">
+                        <a  class="modal-close waves-effect waves-green btn-flat"><i class="material-icons icons-ajuda-fechar">close</i></a>
+                    </div>
+                </div>
+                <a class="waves-effect waves-light btn-ajuda modal-trigger prefix" href="#modal1.1.4"><i class="material-icons icon-ajuda">video_library</i></a>
+                <input  id="nomeFantasia" type="text" name="youtube" value="{{youtube}}" maxlength="245" class="validate" >
+                <label for="nomeFantasia">YouTube </label>
+
+
+             </div>
+
+            </div>
             <!-- Fim do tipo de negôcio -->
 
 

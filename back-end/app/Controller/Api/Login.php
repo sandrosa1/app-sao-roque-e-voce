@@ -41,6 +41,17 @@ class Login extends Api {
             ];
         }
 
+        if($objUser->status == "confirmacao"){
+
+           
+            return  [
+
+                "retorno" => 'error',
+                "error"   => "Precizar confirmar token"
+            ];
+        }
+        
+        
         $token = "";
         $min = 1000;
         $max = 9999;

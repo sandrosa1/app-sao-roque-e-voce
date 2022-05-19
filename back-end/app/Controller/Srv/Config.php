@@ -56,12 +56,16 @@ class Config extends PageSrv
                 'botoes'             => self::getButtonEdit(),
                 'h1'                 => 'Atualize ou delete seu dados aqui',
                 'nomeFantasia'       => $app->nomeFantasia,
-                'tipo'               => $app->tipo,
+                'tipos'              => self::getFieldType($app->tipo,$app->segmento),
+                'tipos'              => self::getFieldType($app->tipo,$app->segmento),
                 'segmentoFormatado'  => Help::helpGetTypeHeader($app)[0],
                 'segmento'           => $app->segmento,
                 'email'              => $app->email,
                 'telefone'           => $app->telefone,
                 'site'               => $app->site,
+                'facebook'           => $app->facebook,
+                'instagram'          => $app->instagram,
+                'youtube'            => $app->youtube,
                 'celular'            => $app->celular,
                 'cep'                => $app->cep,
                 'logradouro'         => $app->logradouro,
@@ -78,11 +82,14 @@ class Config extends PageSrv
                 'botoes'             => self::getButtonRegister(),
                 'h1'                 => 'Configurações',
                 'nomeFantasia'       => '',
-                'tipo'               => '',
+                'tipos'              =>  self::getFieldType("",""),
                 'segmentoFormatado'  => 'Selecione um segmento',
                 'email'              => '',
                 'telefone'           => '',
                 'site'               => '',
+                'facebook'           => '',
+                'instagram'          => '',
+                'youtube'            => '',
                 'celular'            => '',
                 'cep'                => '',
                 'logradouro'         => '',
@@ -91,11 +98,47 @@ class Config extends PageSrv
                 'localidade'         => '',
                 'adicionais'         => '',
                 'chaves'             => '',
+                'site'               => $app->site,
+                'tipos'              => '',
+
         
             ]);
         }
 
         return parent::getPanel('Configuração - SRV', $content, 'configuracao');
+    }
+
+    private static function getFieldType($tipo, $segmento){
+
+
+        if($segmento == 'servicos'){
+
+            return View::render('srv/modules/configuracao/tipo/servicos2', [
+                'hospital' => $tipo == 'hospital' ? self::getFieldInput('hospital','checked') : self::getFieldInput('hospital',''),
+                'farmacia' => $tipo == 'farmacia' ? self::getFieldInput('farmacia','checked') : self::getFieldInput('farmacia',''), 
+                'oficina'  => $tipo == 'oficina'  ? self::getFieldInput('oficina','checked')  : self::getFieldInput('oficina',''), 
+                'banco'    => $tipo == 'banco'    ? self::getFieldInput('banco','checked')    : self::getFieldInput('banco',''), 
+              
+            ]);
+
+        }else{
+
+            $content = View::render('srv/modules/configuracao/tipo/outros', [
+                'tipo' => $tipo
+            ]);
+
+        }
+
+        
+
+    }
+    private static function getFieldInput($tipo, $status){
+
+        return View::render('srv/modules/configuracao/tipo/input', [
+            'value'   => $tipo,
+            'status' => $status
+        ]);
+
     }
 
     /**
@@ -132,22 +175,23 @@ class Config extends PageSrv
         //Criando o APP ou Atualizando APP
         $objApp->idApp        = $idCustomer;
 
-        $campos[0] = $objApp->nomeFantasia = $postVars['nomeFantasia'] ? $postVars['nomeFantasia']: $objApp->nomeFantasia;
-        $campos[1] = $objApp->tipo         = $postVars['tipo']         ? $postVars['tipo']        : $objApp->tipo;
-        $campos[2] = $objApp->segmento     = $postVars['segmento']     ? $postVars['segmento']    : $objApp->segmento;
-        $campos[3] = $objApp->email        = $postVars['email']        ? $postVars['email']       : $objApp->email;
-        $campos[4] = $objApp->celular      = $postVars['celular']      ? $postVars['celular']     : $objApp->celular;
-        $campos[5] = $objApp->cep          = $postVars['cep']          ? $postVars['cep']         : $objApp->cep;
-        $campos[6] = $objApp->logradouro   = $postVars['logradouro']   ? $postVars['logradouro']  : $objApp->logradouro;
-        $campos[7] = $objApp->numero       = $postVars['numero']       ? $postVars['numero']      : $objApp->numero;
-        $campos[8] = $objApp->bairro       = $postVars['bairro']       ? $postVars['bairro']      : $objApp->bairro;
-        $campos[9] = $objApp->localidade   = $postVars['localidade']   ? $postVars['localidade']  : $objApp->localidade;
+        $campos['nomeFantasia']            = $objApp->nomeFantasia = $postVars['nomeFantasia'] ? $postVars['nomeFantasia']: $objApp->nomeFantasia;
+        $campos['tipo']                    = $objApp->tipo         = $postVars['tipo']         ? $postVars['tipo']        : $objApp->tipo;
+        $campos['segmento']                = $objApp->segmento     = $postVars['segmento']     ? $postVars['segmento']    : $objApp->segmento;
+        $campos['email']                   = $objApp->email        = $postVars['email']        ? $postVars['email']       : $objApp->email;
+        $campos['celular']                 = $objApp->celular      = $postVars['celular']      ? $postVars['celular']     : $objApp->celular;
+        $campos['cep']                     = $objApp->cep          = $postVars['cep']          ? $postVars['cep']         : $objApp->cep;
+        $campos['logradouro']              = $objApp->logradouro   = $postVars['logradouro']   ? $postVars['logradouro']  : $objApp->logradouro;
+        $campos['numero']                  = $objApp->numero       = $postVars['numero']       ? $postVars['numero']      : $objApp->numero;
+        $campos['bairro']                  = $objApp->bairro       = $postVars['bairro']       ? $postVars['bairro']      : $objApp->bairro;
+        $campos['localidade']              = $objApp->localidade   = $postVars['localidade']   ? $postVars['localidade']  : $objApp->localidade;
         $objApp->telefone                  = $postVars['telefone']     ? $postVars['telefone']    : '';
         $objApp->site                      = $postVars['site']         ? $postVars['site']        : $objApp->site;
+        $objApp->facebook                  = $postVars['facebook']     ? $postVars['facebook']    : $objApp->facebook;
+        $objApp->instagram                 = $postVars['instagram']    ? $postVars['instagram']   : $objApp->instagram;
+        $objApp->youtube                   = $postVars['youtube']      ? $postVars['youtube']     : $objApp->youtube;
         $objApp->adicionais                = $postVars['adicionais']   ? $postVars['adicionais']  : $objApp->adicionais;
         $objApp->chaves                    = $postVars['chaves']       ? $postVars['chaves']      : $objApp->chaves;
-
-        
         $action                            = $postVars['action'];
         $captcha                           = $postVars['g-recaptcha-response'];
 
@@ -306,6 +350,34 @@ class Config extends PageSrv
             ];
         }
         return json_encode($arrResponse);
+    }
+
+    public static function tipo($request)
+    {
+
+        $postVars = $request->getPostVars();
+
+        if($postVars['segmento'] == 'servicos'){
+            $content = View::render('srv/modules/configuracao/tipo/servicos', [
+
+            ]);
+            $arrResponse = [
+                "retorno" => 'success',
+                "divTipo"  => $content,
+            ];
+        }else{
+            $content = View::render('srv/modules/configuracao/tipo/outros', [
+                'tipo' => ''
+            ]);
+            
+            $arrResponse = [
+                "retorno" => 'success',
+                "divTipo"  => $content,
+            ];
+        }
+       
+        return json_encode($arrResponse);
+
     }
 
 }
