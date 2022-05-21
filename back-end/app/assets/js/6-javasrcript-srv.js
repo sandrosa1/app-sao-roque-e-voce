@@ -44,21 +44,19 @@ const clearInputsAddresSrv = () => {
 //Busca o cep quando sai do foco
 $('#segmento').on('change', function (event) {
    
+   
     if((document.querySelector("#segmento").value.length > 1) || document.querySelector("#segmento").value != '{{segmento}}'){
-        event.preventDefault();
-        var dados=$(this).serialize();
-        $.ajax({
-        url: getRoot(UrlSrvConfigTipo),
-            type: 'post',
-            dataType: 'json',
-            data: dados,
-            success: function (response) {
-                if(response.retorno == 'success'){
-                   document.querySelector('#divTipos').innerHTML = response.divTipo
-                
-                }
-            }
-        });
+       
+        let tipo = document.querySelector("#segmento").value;
+       
+        if(tipo == 'servicos'){
+            document.getElementById("divDiversos").style.display = "block";
+            document.getElementById("divServicos").style.display = "none";
+            
+        }else{
+            document.getElementById("divDiversos").style.display = "none";
+            document.getElementById("divServicos").style.display = "block";
+        }
     }
 
 });

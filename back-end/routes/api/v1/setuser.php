@@ -3,7 +3,7 @@
 use \App\Http\Response;
 use \App\Controller\Api;
 
-//Rota de post, inseri um novo usuário
+//Para reenviar token ou esqueci minha senha
 $objRouter->post('/api/v1/setuser/',[
     'middlewares' => [
         'api'
@@ -14,7 +14,7 @@ $objRouter->post('/api/v1/setuser/',[
     }
 ]);
 
-// //Rota de put, as configurações de usuário
+//Rota de put,inserir nova senha
 $objRouter->put('/api/v1/setuser/',[
     'middlewares' => [
         'api',

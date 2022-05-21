@@ -67,6 +67,13 @@ class Comment {
      * @var integer
      */
     public $custo;
+
+      /**
+     * Nome do estabelecimento
+     *
+     * @var string
+     */
+    public $estabelecimento;
     /**
      * Método responsável por inserir um comentário
      *
@@ -79,15 +86,16 @@ class Comment {
         $this->idComment = ( new Database('comentario'))->insert([
 
             
-            'idApp'      => $this->idApp,
-            'idUsuario'  => $this->idUsuario,
-            'nome'       => $this->nome,
-            'comentario' => $this->comentario,
-            'utilSim'    => $this->utilSim,
-            'utilNao'    => $this->utilNao,
-            'data'       => $this->data,
-            'avaliacao'  => $this->avaliacao,
-            'custo'      => $this->custo,
+            'idApp'            => $this->idApp,
+            'idUsuario'        => $this->idUsuario,
+            'estabelecimento'  => $this->estabelecimento,
+            'nome'             => $this->nome,
+            'comentario'       => $this->comentario,
+            'utilSim'          => $this->utilSim,
+            'utilNao'          => $this->utilNao,
+            'data'             => $this->data,
+            'avaliacao'        => $this->avaliacao,
+            'custo'            => $this->custo,
 
         ]);
 
@@ -105,15 +113,16 @@ class Comment {
 
         $this->Comment = ( new Database('comentario'))->update('idComment ='.$this->idComment,[
             
-            'idApp'      => $this->idApp,
-            'idUsuario'  => $this->idUsuario,
-            'nome'       => $this->nome,
-            'comentario' => $this->comentario,
-            'utilSim'    => $this->utilSim,
-            'utilNao'    => $this->utilNao,
-            'data'       => $this->data,
-            'avaliacao'  => $this->avaliacao,
-            'custo'      => $this->custo,
+            'idApp'            => $this->idApp,
+            'idUsuario'        => $this->idUsuario,
+            'estabelecimento'  => $this->estabelecimento,
+            'nome'             => $this->nome,
+            'comentario'       => $this->comentario,
+            'utilSim'          => $this->utilSim,
+            'utilNao'          => $this->utilNao,
+            'data'             => $this->data,
+            'avaliacao'        => $this->avaliacao,
+            'custo'            => $this->custo,
 
         ]); 
 

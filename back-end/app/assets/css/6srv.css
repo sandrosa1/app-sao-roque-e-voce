@@ -182,6 +182,10 @@
     padding-top: 20px;
 }
 
+#divServicos, #divDiversos{
+    display: none;
+}
+
 /* Detalhes */
 .modal{
     width: 30%;

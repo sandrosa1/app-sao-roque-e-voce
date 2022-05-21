@@ -43,16 +43,17 @@ class CommentUser extends Api {
         while($objComment = $results->fetchObject(EntityComments::class)){
         
             $itens [] = [
-                'idComment'  => (int)$objComment->idComment,
-                'idApp'      => (int)$objComment->idApp,
-                'idUsuario'  => (int)$objComment->idUsuario,
-                'nome'       => $objComment->nome,
-                'comentario' => $objComment->comentario,
-                'utilSim'    => (int)$objComment->utilSim,
-                'utilNao'    => (int)$objComment->utilNao,
-                'data'       => $objComment->data,
-                'avaliacao'  => (int)$objComment->avaliacao,
-                'custo'      => (int)$objComment->custo,
+                'idComment'           => (int)$objComment->idComment,
+                'idApp'               => (int)$objComment->idApp,
+                'idUsuario'           => (int)$objComment->idUsuario,
+                'estabelecimento'     => $objComment->estabelecimento,
+                'nome'                => $objComment->nome,
+                'comentario'          => $objComment->comentario,
+                'utilSim'             => (int)$objComment->utilSim,
+                'utilNao'             => (int)$objComment->utilNao,
+                'data'                => $objComment->data,
+                'avaliacao'           => (int)$objComment->avaliacao,
+                'custo'               => (int)$objComment->custo,
             ];
             
         }
@@ -128,11 +129,11 @@ class CommentUser extends Api {
 
         $objApp = EntityApps::getAppById($postVars['idApp']);
          
-        $objComment->idApp          = $postVars['idApp'];
-        $objComment->idUsuario      = $request->user->idUsuario;
-        $objComment->nome           = $request->user->nomeUsuario." ". $request->user->sobreNome;
-        $objComment->comentario     = $postVars['comentario'];
-        $objComment->custo          = $postVars['custo'];
+        $objComment->idApp           = $postVars['idApp'];
+        $objComment->idUsuario       = $request->user->idUsuario;
+        $objComment->nome            = $request->user->nomeUsuario." ". $request->user->sobreNome;
+        $objComment->comentario      = $postVars['comentario'];
+        $objComment->custo           = $postVars['custo'];
 
         if( $objComment->avaliacao != $postVars['avaliacao']){
             $objApp = EntityApps::getAppById($postVars['idApp']);
@@ -149,16 +150,17 @@ class CommentUser extends Api {
 
         //Retorna o commentario atualizado
         return [
-                'idComment'  => (int)$objComment->idComment,
-                'idApp'      => (int)$objComment->idApp,
-                'idUsuario'  => $objComment->idUsuario,
-                'nome'       => $objComment->nome,
-                'comentario' => $objComment->comentario,
-                'utilSim'    => (int)$objComment->utilSim,
-                'utilNao'    => (int)$objComment->utilNao,
-                'data'       => $objComment->data,
-                'avaliacao'  => (int)$objComment->avaliacao,
-                'custo'      => (int)$objComment->custo,
+                'idComment'        => (int)$objComment->idComment,
+                'idApp'            => (int)$objComment->idApp,
+                'estabelecimento'   => $objComment->estabelecimento,
+                'idUsuario'         => $objComment->idUsuario,
+                'nome'              => $objComment->nome,
+                'comentario'        => $objComment->comentario,
+                'utilSim'           => (int)$objComment->utilSim,
+                'utilNao'           => (int)$objComment->utilNao,
+                'data'              => $objComment->data,
+                'avaliacao'         => (int)$objComment->avaliacao,
+                'custo'             => (int)$objComment->custo,
         ];
 
     }

@@ -15,8 +15,7 @@
     </div>
     <div class="row mb-0">
 
-
-
+        <!-- Inicio -->
         <form class="col s12" name="formConfig" id="formConfig" method="post"  >
         <!-- Estrutura do modal e input nome fantasia -->
         <div class="row mb-0">
@@ -60,32 +59,54 @@
                     <option value="comercio">Comércio</option>
                     <option value="servicos">Serviços</option>
                 </select>
-                <label>Tipo de segmento  <span class="obrigatorio">*</span></label>
+                <label>Segmento  <span class="obrigatorio">*</span></label>
             </div>
 
         </div>
-          
+
         <div class="row mb-0">
-            <div class="input-field col s1 m1 l1 " >
-                <div id="modal9" class="modal">
+            <div class="input-field col s12 " id="divDiversos" >
+                <div id="modal1.5" class="modal">
                     <div class="modal-content">
                         <h4 class="center srv-c-4 fz-20">Ajuda</h4>
-                        <p>Nesse campo você define ou escolhe em uma palavra ou frase curta, seu comércio, evento ou serviço. <b>Exemplos: Livraria, Padaria, Farmácia, Hamburgueria, Festa da uva .....</b>.</p>
+                        <p>Nesse campo você escolhe qual tipo de serviço você atua.</p>                   
                     </div>
                     <div class="modal-footer">
-                        <a class="modal-close waves-effect waves-green btn-flat"><i class="material-icons icons-ajuda-fechar">close</i></a>
+                        <a  class="modal-close waves-effect waves-green btn-flat"><i class="material-icons icons-ajuda-fechar">close</i></a>
                     </div>
                 </div>
-                <a class="waves-effect waves-light btn-ajuda modal-trigger prefix " href="#modal9"><i class="material-icons icon-ajuda" >help_outline</i></a>
-            </div>
-            <div class="input-field col s11 m11 l11 " id="divTipos">
-            
-                    {{tipos}}
+                <a class="waves-effect waves-light btn-ajuda modal-trigger prefix" href="#modal1.5"><i class="material-icons icon-ajuda">help_outline</i></a>
+                <select name='tipo2' id="tipoServicos">
+                    <option value="{{tipo}}" >{{tipoFormatado}}</option>
+                    <option value="hospital">Hospital</option>
+                    <option value="farmacias">Farmacia</option>
+                    <option value="oficinas">Oficinas</option>
+                    <option value="bancos">Bancos</option>
+                </select>
+                <label>Tipo  <span class="obrigatorio">*</span></label>
 
+            </div>
+
+            <div class="input-field col s12 " id="divServicos">
+
+                <div id="modal1.6" class="modal">
+                    <div class="modal-content">
+                        <h4 class="center srv-c-4 fz-20">Ajuda</h4>
+                        <p>Nesse campo você define ou escolhe em uma palavra ou frase curta para seu comércio ou evento. <b>Exemplos:Restaurante, Hotel, Pousada,  Livraria, Padaria, Farmácia, Hamburgueria, Materias de construçao, Festa da uva .....</b>.</p>
+                         
+                    </div>
+                    <div class="modal-footer">
+                        <a  class="modal-close waves-effect waves-green btn-flat"><i class="material-icons icons-ajuda-fechar">close</i></a>
+                    </div>
+                </div>
+                <a class="waves-effect waves-light btn-ajuda modal-trigger prefix" href="#modal1.6"><i class="material-icons icon-ajuda">help_outline</i></a>
+                <input  id="nomeFantasia" type="text" name="tipo1" id="tipoDiversos" value="{{tipoFormatado}}" maxlength="245" >
+                <label for="nomeFantasia">Tipo<span class="obrigatorio"> *</span></label>
+            
             </div>
             
         </div>
-
+    
         <div class="row mb-0">
            
             <div class="input-field col s12 m12 l3">
@@ -157,162 +178,166 @@
 
 
 
-            <!-- Formulario de e-mail e telefone-->
-            <div class="row mb-0">
+        <!-- Formulario de e-mail e telefone-->
+        <div class="row mb-0">
+            
+            <div class="input-field col s12 m6 s6">
+                <div id="modal2" class="modal">
+                    <div class="modal-content">
+                        <h4 class="center srv-c-4 fz-20">Ajuda</h4>
+                        <p>E-mail para que os clientes entre em contato com o estabelecimento ou serviço. <b>Obs: E-mail corporativo sempre passa mais segurança, mas não e necessário.</b>.</p>
+                        <hr class="m-3">
+                        <p>Se você está informando um evento, o e-mail declarado e para fins de informações sobre o evento.</p>
+                    </div>
+                    <div class="modal-footer">
+                        <a class="modal-close waves-effect waves-green btn-flat"><i class="material-icons icons-ajuda-fechar">close</i></a>
+                    </div>
+                </div>
+                <a class="waves-effect waves-light btn-ajuda modal-trigger prefix" href="#modal2"><i class="material-icons icon-ajuda" >help_outline</i></a>
+                <input id="email" type="email" name="email" value="{{email}}" maxlength="255" class="validate" required>
+                <label for="email">Email<span class="obrigatorio"> *</span></label>   
+            </div>
+
+            <div class="input-field col s12 m6 l3">
+                <div id="modal3" class="modal">
+                    <div class="modal-content">
+                        <h4 class="center srv-c-4 fz-20">Ajuda</h4>
+                        <p>Não é necessário o DDD, pois todos os telefones precisão ser da cidade.</p>
+                        <p>Para empresas ou comércio, fornecer o telefone fixo causa melhor impressão.</p>
+                        <hr class="m-3">
+                        <p>Se você está informando um evento, o número declarado deve ter a finalidade de informações gerais do evento.</p>
+                    </div>
+                    <div class="modal-footer">
+                        <a class="modal-close waves-effect waves-green btn-flat"><i class="material-icons icons-ajuda-fechar">close</i></a>
+                    </div>
+                </div>
+                <a class="waves-effect waves-light btn-ajuda modal-trigger prefix" href="#modal3"><i class="material-icons icon-ajuda" >help_outline</i></a>
+                <input id="telefone" type="tel" name="telefone" value="{{telefone}}" maxlength="16" class="validate">
+                <label for="telefone">Telefone</label>
                 
-                <div class="input-field col s12 m6 s6">
-                    <div id="modal2" class="modal">
-                        <div class="modal-content">
-                            <h4 class="center srv-c-4 fz-20">Ajuda</h4>
-                            <p>E-mail para que os clientes entre em contato com o estabelecimento ou serviço. <b>Obs: E-mail corporativo sempre passa mais segurança, mas não e necessário.</b>.</p>
-                            <hr class="m-3">
-                            <p>Se você está informando um evento, o e-mail declarado e para fins de informações sobre o evento.</p>
-                        </div>
-                        <div class="modal-footer">
-                            <a class="modal-close waves-effect waves-green btn-flat"><i class="material-icons icons-ajuda-fechar">close</i></a>
-                        </div>
+            </div>
+            <div class="input-field col s12 m6 l3">
+                <div id="modal4" class="modal">
+                    <div class="modal-content">
+                        <h4 class="center srv-c-4 fz-20">Ajuda</h4>
+                        <p>Se o campo telefone foi preenchido, este campo não e mais obrigatório. Porém o celular e uma segunda opção caso ocorra algum problema com o telefone fixo.</p>
+                        <hr class="m-3">
+                        <p>Se você é um prestador de serviço, este campo pode ser útil para seus clientes te contactarem com mais facilidade.</p>
                     </div>
-                    <a class="waves-effect waves-light btn-ajuda modal-trigger prefix" href="#modal2"><i class="material-icons icon-ajuda" >help_outline</i></a>
-                    <input id="email" type="email" name="email" value="{{email}}" maxlength="255" class="validate" required>
-                    <label for="email">Email<span class="obrigatorio"> *</span></label>   
-                </div>
-
-                <div class="input-field col s12 m6 l3">
-                    <div id="modal3" class="modal">
-                        <div class="modal-content">
-                            <h4 class="center srv-c-4 fz-20">Ajuda</h4>
-                            <p>Não é necessário o DDD, pois todos os telefones precisão ser da cidade.</p>
-                            <p>Para empresas ou comércio, fornecer o telefone fixo causa melhor impressão.</p>
-                            <hr class="m-3">
-                            <p>Se você está informando um evento, o número declarado deve ter a finalidade de informações gerais do evento.</p>
-                        </div>
-                        <div class="modal-footer">
-                            <a class="modal-close waves-effect waves-green btn-flat"><i class="material-icons icons-ajuda-fechar">close</i></a>
-                        </div>
+                    <div class="modal-footer">
+                        <a class="modal-close waves-effect waves-green btn-flat"><i class="material-icons icons-ajuda-fechar">close</i></a>
                     </div>
-                    <a class="waves-effect waves-light btn-ajuda modal-trigger prefix" href="#modal3"><i class="material-icons icon-ajuda" >help_outline</i></a>
-                    <input id="telefone" type="tel" name="telefone" value="{{telefone}}" maxlength="16" class="validate">
-                    <label for="telefone">Telefone</label>
-                    
                 </div>
-                <div class="input-field col s12 m6 l3">
-                    <div id="modal4" class="modal">
-                        <div class="modal-content">
-                            <h4 class="center srv-c-4 fz-20">Ajuda</h4>
-                            <p>Se o campo telefone foi preenchido, este campo não e mais obrigatório. Porém o celular e uma segunda opção caso ocorra algum problema com o telefone fixo.</p>
-                            <hr class="m-3">
-                            <p>Se você é um prestador de serviço, este campo pode ser útil para seus clientes te contactarem com mais facilidade.</p>
-                        </div>
-                        <div class="modal-footer">
-                            <a class="modal-close waves-effect waves-green btn-flat"><i class="material-icons icons-ajuda-fechar">close</i></a>
-                        </div>
+                <a class="waves-effect waves-light btn-ajuda modal-trigger prefix" href="#modal4"><i class="material-icons icon-ajuda" >help_outline</i></a>
+                <input id="celular" type="tel" name="celular" value="{{celular}}" maxlength="17" class="validate" required>
+                <label for="celular">Celular<span class="obrigatorio"> *</span></label>
+                
+            </div>
+        </div>
+            <!--Fim do formulario de e-mail e telefone-->
+
+            <!-- Formulario endereço-->
+        <div class="row mb-0">  
+            <div class="input-field col s10 m4 l3">
+                <div id="modal5" class="modal">
+                    <div class="modal-content">
+                        <h4 class="center srv-c-4 fz-20">Ajuda</h4>
+                        <p>CEP do local do estabelecimento, comercio ou evento.</b>.</p>
+                        <hr class="m-3">
+                        <p>Se você e <b>prestador</b> de serviço, pode fornecer o CEP de seu residência. Ele não será utilizado no anúncio</b>.</p> 
                     </div>
-                    <a class="waves-effect waves-light btn-ajuda modal-trigger prefix" href="#modal4"><i class="material-icons icon-ajuda" >help_outline</i></a>
-                    <input id="celular" type="tel" name="celular" value="{{celular}}" maxlength="17" class="validate" required>
-                    <label for="celular">Celular<span class="obrigatorio"> *</span></label>
-                    
-                </div>
-              </div>
-              <!--Fim do formulario de e-mail e telefone-->
-
-              <!-- Formulario endereço-->
-            <div class="row mb-0">  
-                <div class="input-field col s10 m4 l3">
-                    <div id="modal5" class="modal">
-                        <div class="modal-content">
-                            <h4 class="center srv-c-4 fz-20">Ajuda</h4>
-                            <p>CEP do local do estabelecimento, comercio ou evento.</b>.</p>
-                            <hr class="m-3">
-                            <p>Se você e <b>prestador</b> de serviço, pode fornecer o CEP de seu residência. Ele não será utilizado no anúncio</b>.</p> 
-                        </div>
-                        <div class="modal-footer">
-                            <a class="modal-close waves-effect waves-green btn-flat"><i class="material-icons icons-ajuda-fechar">close</i></a>
-                        </div>
+                    <div class="modal-footer">
+                        <a class="modal-close waves-effect waves-green btn-flat"><i class="material-icons icons-ajuda-fechar">close</i></a>
                     </div>
-                    
-                    <a class="waves-effect waves-light btn-ajuda modal-trigger prefix" href="#modal5"><i class="material-icons icon-ajuda" >help_outline</i></a>
-                    <input id="cep" type="text" name="cep" value="{{cep}}" maxlength="9" class="validate" required>
-                    <label for="cep">CEP <span class="obrigatorio"> *</span></label> 
-                    <!-- <input type=submit> -->
                 </div>
-                <div class="input-field col s2 m1 l1" id="loadingCep"></div>
-                <div class="input-field col s12 m6 l7">
-                    <div id="modal6" class="modal">
-                        <div class="modal-content">
-                            <h4 class="center srv-c-4 fz-20">Ajuda</h4>
-                            <p>Informe o endereço.</p>
-                        </div>
-                        <div class="modal-footer">
-                            <a class="modal-close waves-effect waves-green btn-flat"><i class="material-icons icons-ajuda-fechar">close</i></a>
-                        </div>
+                
+                <a class="waves-effect waves-light btn-ajuda modal-trigger prefix" href="#modal5"><i class="material-icons icon-ajuda" >help_outline</i></a>
+                <input id="cep" type="text" name="cep" value="{{cep}}" maxlength="9" class="validate" required>
+                <label for="cep">CEP <span class="obrigatorio"> *</span></label> 
+                <!-- <input type=submit> -->
+            </div>
+            <div class="input-field col s2 m1 l1" id="loadingCep"></div>
+            <div class="input-field col s12 m6 l7">
+                <div id="modal6" class="modal">
+                    <div class="modal-content">
+                        <h4 class="center srv-c-4 fz-20">Ajuda</h4>
+                        <p>Informe o endereço.</p>
                     </div>
-                    <a class="waves-effect waves-light btn-ajuda modal-trigger prefix" href="#modal6"><i class="material-icons icon-ajuda" >help_outline</i></a>
-                    <input id="logradouro" type="text" name="logradouro" value="{{logradouro}}" maxlength="255" class="validate" required>
-                    <label for="logradouro">Logradouro <span class="obrigatorio">*</span></label>
-                </div>
-
-                <div class="input-field col s12 m1 l1">
-                    <input id="numero" type="text" name="numero" value="{{numero}}" maxlength="20" class="validate" required>
-                    <label for="numero">N° <span class="obrigatorio">*</span></label>
-                </div>
-              </div>
-              <div class="row">  
-                <div class="input-field col s12 m5 l3">
-                    <input id="bairro" type="text" name="bairro" value="{{bairro}}" maxlength="45" class="validate" required>
-                    <label for="bairro">Bairro <span class="obrigatorio">*</span></label>   
-                </div>
-
-                <div class="input-field col s12 m5 l3">
-                    <input id="localidade" type="text" name="localidade" value="{{localidade}}" maxlength="9" class="validate" required>
-                    <label for="localidade">Cidade <span class="obrigatorio">*</span></label>
-                </div>
-
-                <div class="input-field col s12 m12 l6">
-                    <div id="modal7" class="modal">
-                        <div class="modal-content">
-                            <h4 class="center srv-c-4 fz-20">Ajuda</h4>
-                            <p>Complementos <b>Exemplos: sala1, galeria nome, andar 32</b>.</p>
-                            <p>Rua ou local para referência <b>Exemplos: Proxímo a ígreja matriz, De frente a praça dos mendes</b></p>
-                        </div>
-                        <div class="modal-footer">
-                            <a class="modal-close waves-effect waves-green btn-flat"><i class="material-icons icons-ajuda-fechar">close</i></a>
-                        </div>
+                    <div class="modal-footer">
+                        <a class="modal-close waves-effect waves-green btn-flat"><i class="material-icons icons-ajuda-fechar">close</i></a>
                     </div>
-                    <a class="waves-effect waves-light btn-ajuda modal-trigger prefix" href="#modal7"><i class="material-icons icon-ajuda" >help_outline</i></a>
-                    <input id="adicionais" type="text" name="adicionais" value="{{adicionais}}" maxlength="255" class="validate">
-                    <label for="adicionais">Complemtos ou referência</label>
                 </div>
+                <a class="waves-effect waves-light btn-ajuda modal-trigger prefix" href="#modal6"><i class="material-icons icon-ajuda" >help_outline</i></a>
+                <input id="logradouro" type="text" name="logradouro" value="{{logradouro}}" maxlength="255" class="validate" required>
+                <label for="logradouro">Logradouro <span class="obrigatorio">*</span></label>
+            </div>
 
-                <div class="row mb-0">
+            <div class="input-field col s12 m1 l1">
+                <input id="numero" type="text" name="numero" value="{{numero}}" maxlength="20" class="validate" required>
+                <label for="numero">N° <span class="obrigatorio">*</span></label>
+            </div>
+        </div>
+
+        <div class="row mb-0">  
+
+            <div class="input-field col s12 m5 l3">
+                <input id="bairro" type="text" name="bairro" value="{{bairro}}" maxlength="45" class="validate" required>
+                <label for="bairro">Bairro <span class="obrigatorio">*</span></label>   
+            </div>
+
+            <div class="input-field col s12 m5 l3">
+                <input id="localidade" type="text" name="localidade" value="{{localidade}}" maxlength="9" class="validate" required>
+                <label for="localidade">Cidade <span class="obrigatorio">*</span></label>
+            </div>
+
+            <div class="input-field col s12 m12 l6">
+                <div id="modal7" class="modal">
+                    <div class="modal-content">
+                        <h4 class="center srv-c-4 fz-20">Ajuda</h4>
+                        <p>Complementos <b>Exemplos: sala1, galeria nome, andar 32</b>.</p>
+                        <p>Rua ou local para referência <b>Exemplos: Proxímo a ígreja matriz, De frente a praça dos mendes</b></p>
+                    </div>
+                    <div class="modal-footer">
+                        <a class="modal-close waves-effect waves-green btn-flat"><i class="material-icons icons-ajuda-fechar">close</i></a>
+                    </div>
+                </div>
+                <a class="waves-effect waves-light btn-ajuda modal-trigger prefix" href="#modal7"><i class="material-icons icon-ajuda" >help_outline</i></a>
+                <input id="adicionais" type="text" name="adicionais" value="{{adicionais}}" maxlength="255" class="validate">
+                <label for="adicionais">Complemtos ou referência</label>
+            </div>
+        </div>
+
+        <div class="row mb-0">
+            <div class="input-field col s12">
+                <div id="modal8" class="modal">
+                    <div class="modal-content">
+                        <h4 class="center srv-c-4 fz-20">Ajuda</h4>
+                        <p>Palavras chaves ajudam aos mecanimos de busca do app a encontrar seu anúncio, facilitando ao cliente chegar até você.</p> 
+                        <p>Digíte 7 palavras separadas por virgula e espaço, que mais tem haver com seu anúncio.</p> 
+                        <p><b>Exemplos:</b></p> 
+                        <p><b>Padaria:</b> Padaria, Pães, Pão, Café, Doces, Salgados, Bebidas</p> 
+                        <p><b>Evento:</b> Musicas, Comidas tipicas, Diversão, Alegria, Festa, Bebidas</p> 
+                        <p><b>Loja de calçados:</b> Sapatos, tênis, meias, chinelos, botas, moda, calçados</p> 
+                        </div>
+                    <div class="modal-footer">
+                        <a class="modal-close waves-effect waves-green btn-flat"><i class="material-icons icons-ajuda-fechar">close</i></a>
+                    </div>
+                </div>
+                
+                <a class="waves-effect waves-light btn-ajuda modal-trigger prefix" href="#modal8"><i class="material-icons icon-ajuda" >help_outline</i></a>
+                <textarea id="textarea1"class="materialize-textarea" aria-modal="500" name="chaves">{{chaves}}</textarea>
+                <label for="textarea1">7 Palavras chaves</label>
+            </div>
+        </div>
+        
+        <div class="row">
                 <div class="input-field col s12">
-                    <div id="modal8" class="modal">
-                        <div class="modal-content">
-                            <h4 class="center srv-c-4 fz-20">Ajuda</h4>
-                            <p>Palavras chaves ajudam aos mecanimos de busca do app a encontrar seu anúncio, facilitando ao cliente chegar até você.</p> 
-                            <p>Digíte 7 palavras separadas por virgula e espaço, que mais tem haver com seu anúncio.</p> 
-                            <p><b>Exemplos:</b></p> 
-                            <p><b>Padaria:</b> Padaria, Pães, Pão, Café, Doces, Salgados, Bebidas</p> 
-                            <p><b>Evento:</b> Musicas, Comidas tipicas, Diversão, Alegria, Festa, Bebidas</p> 
-                            <p><b>Loja de calçados:</b> Sapatos, tênis, meias, chinelos, botas, moda, calçados</p> 
-                            </div>
-                        <div class="modal-footer">
-                            <a class="modal-close waves-effect waves-green btn-flat"><i class="material-icons icons-ajuda-fechar">close</i></a>
-                        </div>
+                    <input class="validate" type="hidden" id="g-recaptcha-response" name="g-recaptcha-response" required>
                     </div>
-                    
-                    <a class="waves-effect waves-light btn-ajuda modal-trigger prefix" href="#modal8"><i class="material-icons icon-ajuda" >help_outline</i></a>
-                    <textarea id="textarea1"class="materialize-textarea" aria-modal="500" name="chaves">{{chaves}}</textarea>
-                    <label for="textarea1">7 Palavras chaves</label>
-                </div>
-                </div>
-                <div class="row">
-                    <div class="input-field col s12">
-                        <input class="validate" type="hidden" id="g-recaptcha-response" name="g-recaptcha-response" required>
-                      </div>
-                </div>
-                
-                {{botoes}}
-              <!--Fim do formulario dde endereço-->
+        </div>
+            
+            {{botoes}}
+            <!--Fim do formulario dde endereço-->
 
         </form>
 

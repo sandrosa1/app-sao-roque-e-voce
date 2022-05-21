@@ -51,15 +51,18 @@ class Config extends PageSrv
 
 
         if ($app instanceof EntityApp) {
-         
+
+            $tipoDefinido = $app->segmento. " - ".$app->tipo;
+           
+        
             $content = View::render('srv/modules/configuracao/index', [
                 'botoes'             => self::getButtonEdit(),
                 'h1'                 => 'Atualize ou delete seu dados aqui',
                 'nomeFantasia'       => $app->nomeFantasia,
-                'tipos'              => self::getFieldType($app->tipo,$app->segmento),
-                'tipos'              => self::getFieldType($app->tipo,$app->segmento),
-                'segmentoFormatado'  => Help::helpGetTypeHeader($app)[0],
-                'segmento'           => $app->segmento,
+                'tipoFormatado'      => 'Selecione o tipo',
+                'tipo'               => '',
+                'segmentoFormatado'  => $tipoDefinido ,
+                'segmento'           => $app->segmento  ,
                 'email'              => $app->email,
                 'telefone'           => $app->telefone,
                 'site'               => $app->site,
@@ -82,8 +85,9 @@ class Config extends PageSrv
                 'botoes'             => self::getButtonRegister(),
                 'h1'                 => 'Configurações',
                 'nomeFantasia'       => '',
-                'tipos'              =>  self::getFieldType("",""),
-                'segmentoFormatado'  => 'Selecione um segmento',
+                'tipoFormatado'      =>  'Selecione o tipo',
+                'tipo'               =>  '',
+                'segmentoFormatado'  =>  'Selecione um segmento',
                 'email'              => '',
                 'telefone'           => '',
                 'site'               => '',
@@ -108,30 +112,6 @@ class Config extends PageSrv
         return parent::getPanel('Configuração - SRV', $content, 'configuracao');
     }
 
-    private static function getFieldType($tipo, $segmento){
-
-
-        if($segmento == 'servicos'){
-
-            return View::render('srv/modules/configuracao/tipo/servicos2', [
-                'hospital' => $tipo == 'hospital' ? self::getFieldInput('hospital','checked') : self::getFieldInput('hospital',''),
-                'farmacia' => $tipo == 'farmacia' ? self::getFieldInput('farmacia','checked') : self::getFieldInput('farmacia',''), 
-                'oficina'  => $tipo == 'oficina'  ? self::getFieldInput('oficina','checked')  : self::getFieldInput('oficina',''), 
-                'banco'    => $tipo == 'banco'    ? self::getFieldInput('banco','checked')    : self::getFieldInput('banco',''), 
-              
-            ]);
-
-        }else{
-
-            $content = View::render('srv/modules/configuracao/tipo/outros', [
-                'tipo' => $tipo
-            ]);
-
-        }
-
-        
-
-    }
     private static function getFieldInput($tipo, $status){
 
         return View::render('srv/modules/configuracao/tipo/input', [
@@ -166,17 +146,30 @@ class Config extends PageSrv
             $objApp = new EntityApp();
         }
 
+        $tipo = '';
+        if($postVars['segmento'] == 'servicos'){
+
+            $tipo = $postVars['tipo2'];
+
+        }
+        else{
+            $tipo = $postVars['tipo1'];
+        }
+      
         if($objApp->segmento != '' && $objApp->segmento != $postVars['segmento']){
 
             $validate->setErro('Exclua o anúncio para mudar de segmento');
         }
+
+        
+       
         //Array de campos obrigatorios
         $campos = [];
         //Criando o APP ou Atualizando APP
         $objApp->idApp        = $idCustomer;
 
         $campos['nomeFantasia']            = $objApp->nomeFantasia = $postVars['nomeFantasia'] ? $postVars['nomeFantasia']: $objApp->nomeFantasia;
-        $campos['tipo']                    = $objApp->tipo         = $postVars['tipo']         ? $postVars['tipo']        : $objApp->tipo;
+        $campos['tipo']                    = $objApp->tipo         = $tipo                     ? $tipo                    : $objApp->tipo;
         $campos['segmento']                = $objApp->segmento     = $postVars['segmento']     ? $postVars['segmento']    : $objApp->segmento;
         $campos['email']                   = $objApp->email        = $postVars['email']        ? $postVars['email']       : $objApp->email;
         $campos['celular']                 = $objApp->celular      = $postVars['celular']      ? $postVars['celular']     : $objApp->celular;
@@ -224,7 +217,7 @@ class Config extends PageSrv
 
           
             $mensagem = [];
-
+           
             if($action === 'insert'){
                
                 //Recebe a imagem padrao e configurações adicionais
@@ -352,32 +345,5 @@ class Config extends PageSrv
         return json_encode($arrResponse);
     }
 
-    public static function tipo($request)
-    {
-
-        $postVars = $request->getPostVars();
-
-        if($postVars['segmento'] == 'servicos'){
-            $content = View::render('srv/modules/configuracao/tipo/servicos', [
-
-            ]);
-            $arrResponse = [
-                "retorno" => 'success',
-                "divTipo"  => $content,
-            ];
-        }else{
-            $content = View::render('srv/modules/configuracao/tipo/outros', [
-                'tipo' => ''
-            ]);
-            
-            $arrResponse = [
-                "retorno" => 'success',
-                "divTipo"  => $content,
-            ];
-        }
-       
-        return json_encode($arrResponse);
-
-    }
 
 }
