@@ -31,15 +31,11 @@
 .fwb{font-weight: bold;}
 .fwr{font-weight:bolder;}
 .fw6{font-weight:600;}
-
-hr.hr-racs1 {
-    border-top: 1px solid var(--racs1);
-  }
-hr.hr-racs2 {
-    border-top: 1px solid var(--racs2);
-}
 /*Configurações Gerais*/
-/*Extra-sm
+/*Extra-small*/
+
+hr.hr-racs1 {border-top: 1px solid var(--racs1);}
+hr.hr-racs2 {border-top: 1px solid var(--racs2);}
 
 .backgroundLoginRacs{
     position:absolute; 
