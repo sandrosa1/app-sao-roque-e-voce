@@ -43,6 +43,12 @@ $objRouter->get('/contato',[
         return new Response(200,Pages\Contato::getContato($request));
     }
 ]);
+//Rota de Contato (GET)
+$objRouter->get('/api',[
+    function($request){
+        return new Response(200,Pages\Api::getApi($request));
+    }
+]);
 //Rota de formulario Contato (POST)
 $objRouter->post('/contato',[
     function($request){

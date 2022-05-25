@@ -123,8 +123,8 @@ class Comment extends Api {
         $objApp->avaliacao       = $objApp->avaliacao + 1 ;
         $objApp->totalAvaliacao  = $objApp->totalAvaliacao + $postVars['avaliacao'];
         $objApp->totalCusto      = $objApp->totalCusto + $postVars['custo'];
-        $objApp->custoMedio      =  (float)$objApp->totalCusto / (float)$objApp->avaliacao;
-        $objApp->estrelas        =  (float)$objApp->totalAvaliacao / (float)$objApp->avaliacao;
+        $objApp->custoMedio      =  round((float)$objApp->totalCusto / (float)$objApp->avaliacao,1);
+        $objApp->estrelas        =  round((float)$objApp->totalAvaliacao / (float)$objApp->avaliacao,1);
 
 
         $objApp->updateApp();
@@ -215,8 +215,8 @@ class Comment extends Api {
             $objApp->avaliacao       = $objApp->avaliacao + 1 ;
             $objApp->totalAvaliacao  = $objApp->totalAvaliacao + $postVars['avaliacao'];
             $objApp->totalCusto      = $objApp->totalCusto + $postVars['custo'];
-            $objApp->custoMedio      =  (float)$objApp->totalCusto / (float)$objApp->avaliacao;
-            $objApp->estrelas        =  (float)$objApp->totalAvaliacao / (float)$objApp->avaliacao;
+            $objApp->custoMedio      =  round((float)$objApp->totalCusto / (float)$objApp->avaliacao,1);
+            $objApp->estrelas        =  round((float)$objApp->totalAvaliacao / (float)$objApp->avaliacao,1);
             $objApp->updateApp();
         }
        

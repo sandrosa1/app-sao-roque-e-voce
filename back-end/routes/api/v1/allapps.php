@@ -16,7 +16,7 @@ $objRouter->get('/api/v1/allapps',[
 
 
 //Rota de consulta para um app 
-$objRouter->post('/api/v1/allapps/{segmento}',[
+$objRouter->get('/api/v1/allapps/{segmento}',[
     'middlewares' => [
         'api'
     ],
