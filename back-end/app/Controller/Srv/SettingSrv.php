@@ -177,17 +177,27 @@ class SettingSrv extends PageSrv{
      */
     public static function update($request){
 
+
+
         $session = new PageSrv();
         $conf = new Config();
         $validate = new Validate();
 
         $postVars = $request->getPostVars();
+
+        $semana = $postVars['semana']   ? $postVars['semana'] : $postVars['horarioSemana'];
+        $sabado = $postVars['sabado']   ? $postVars['sabado'] : $postVars['horarioSabado'];
+        $domingo = $postVars['domingo'] ? $postVars['domingo'] : $postVars['horarioDomingo'];
+        $feriado = $postVars['feriado'] ? $postVars['feriado'] : $postVars['horarioFeriado'];
+
+    
+    
         $idApp =  $session->idSession;
         $app =  EntityApp::getAppById($idApp);
-        $validate->validateHora($postVars['semana']);
-        $validate->validateHora($postVars['sabado']);
-        $validate->validateHora($postVars['domingo']);
-        $validate->validateHora($postVars['feriado']);
+        $validate->validateHora($semana);
+        $validate->validateHora($sabado);
+        $validate->validateHora($domingo);
+        $validate->validateHora($feriado);
         $words = Help::helpTextForArray($postVars['descricao']);
         $validate->validateBlockedWord($words);
 
@@ -197,6 +207,8 @@ class SettingSrv extends PageSrv{
             return self::statusUpdate($validate);
         }
 
+       
+        
         switch($app->segmento){
             
             case 'hospedagem':

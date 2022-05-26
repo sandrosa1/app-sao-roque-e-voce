@@ -5587,7 +5587,7 @@ button.btn-floating {
 
 .dropdown-content li > a, .dropdown-content li > span {
   font-size: 16px;
-  color: #26a69a;
+  color: #00b7ff;
   display: block;
   line-height: 22px;
   padding: 14px 16px;
@@ -7575,7 +7575,7 @@ input[type=range]::-ms-thumb {
 }
 
 .sidenav li > a {
-  color: rgba(0, 0, 0, 0.87);
+  color: rgba(0, 176, 255, 0.87);
   display: block;
   font-size: 14px;
   font-weight: 500;

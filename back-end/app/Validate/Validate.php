@@ -406,6 +406,10 @@ class Validate{
 
             return true;
         }
+        if($text == 'Aberto 24 horas'){
+
+            return true;
+        }
         $result = preg_replace('/\D/','',$text);
 
         if(strlen(strval($result)) != 8){

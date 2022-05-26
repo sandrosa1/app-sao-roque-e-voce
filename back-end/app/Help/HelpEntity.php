@@ -73,10 +73,10 @@ class HelpEntity{
 
         $objHospedagem->idApp            = $idApp;
         $objHospedagem->idAppHospedagem  = $objHospedagem->idAppHospedagem;
-        $objHospedagem->semana           = !$postVars["semana"]  || $postVars["semana"]   == "00:00 - 00:00"  ? "00:00 - 00:00" : $postVars["semana"];
-        $objHospedagem->sabado           = !$postVars["sabado"]  || $postVars["sabado"]   == "00:00 - 00:00"  ? "00:00 - 00:00" : $postVars["sabado"];
-        $objHospedagem->domingo          = !$postVars["domingo"] || $postVars["domingo"]  == "00:00 - 00:00"  ? "00:00 - 00:00" : $postVars["domingo"];
-        $objHospedagem->feriado          = !$postVars["feriado"] || $postVars["feriado"]  == "00:00 - 00:00"  ? "00:00 - 00:00" : $postVars["feriado"];
+        $objHospedagem->semana           = $postVars['semana']  ? $postVars['semana']  : $postVars['horarioSemana'];
+        $objHospedagem->sabado           = $postVars['sabado']  ? $postVars['sabado']  : $postVars['horarioSabado'];
+        $objHospedagem->domingo          = $postVars['domingo'] ? $postVars['domingo'] : $postVars['horarioDomingo'];
+        $objHospedagem->feriado          = $postVars['feriado'] ? $postVars['feriado'] : $postVars['horarioFeriado'];
         $objHospedagem->estacionamento   = $postVars["estacionamento"] ? -2 : -1;
         $objHospedagem->brinquedos       = $postVars["brinquedos"]     ? -2 : -1;
         $objHospedagem->restaurante      = $postVars["restaurante"]    ? -2 : -1;
@@ -122,13 +122,14 @@ class HelpEntity{
 
         }
 
+       
 
         $objGastronomia->idApp             = $idApp;
         $objGastronomia->idAppGastronomia  = $objGastronomia->idAppGastronomia;
-        $objGastronomia->semana            = !$postVars["semana"]  || $postVars["semana"]   == "00:00 - 00:00"  ? "00:00 - 00:00" : $postVars["semana"];
-        $objGastronomia->sabado            = !$postVars["sabado"]  || $postVars["sabado"]   == "00:00 - 00:00"  ? "00:00 - 00:00" : $postVars["sabado"];
-        $objGastronomia->domingo           = !$postVars["domingo"] || $postVars["domingo"]  == "00:00 - 00:00"  ? "00:00 - 00:00" : $postVars["domingo"];
-        $objGastronomia->feriado           = !$postVars["feriado"] || $postVars["feriado"]  == "00:00 - 00:00"  ? "00:00 - 00:00" : $postVars["feriado"];
+        $objGastronomia->semana            = $postVars['semana']  ? $postVars['semana']  : $postVars['horarioSemana'];
+        $objGastronomia->sabado            = $postVars['sabado']  ? $postVars['sabado']  : $postVars['horarioSabado'];
+        $objGastronomia->domingo           = $postVars['domingo'] ? $postVars['domingo'] : $postVars['horarioDomingo'];
+        $objGastronomia->feriado           = $postVars['feriado'] ? $postVars['feriado'] : $postVars['horarioFeriado'];
         $objGastronomia->estacionamento    = $postVars["estacionamento"]   ? -2 : -1;
         $objGastronomia->acessibilidade    = $postVars["acessibilidade"]   ? -2 : -1;
         $objGastronomia->wiFi              = $postVars["wiFi"]             ? -2 : -1;
@@ -142,6 +143,7 @@ class HelpEntity{
         $objGastronomia->whatsapp          = $postVars["whatsapp"]         ? -2 : -1;
         $objGastronomia->descricao         = $postVars["descricao"]        ? $postVars["descricao"]        : ""; 
 
+       
         if($postVars["action"] == "atualizar" ){
           $objGastronomia->updateGastronomia();
             
@@ -171,10 +173,10 @@ class HelpEntity{
 
         $objEvento->idApp          = $idApp;
         $objEvento->idEvento       = $objEvento->idEvento;
-        $objEvento->semana         = !$postVars["semana"]  || $postVars["semana"]   == "00:00 - 00:00"  ? "00:00 - 00:00" : $postVars["semana"];
-        $objEvento->sabado         = !$postVars["sabado"]  || $postVars["sabado"]   == "00:00 - 00:00"  ? "00:00 - 00:00" : $postVars["sabado"];
-        $objEvento->domingo        = !$postVars["domingo"] || $postVars["domingo"]  == "00:00 - 00:00"  ? "00:00 - 00:00" : $postVars["domingo"];
-        $objEvento->feriado        = !$postVars["feriado"] || $postVars["feriado"]  == "00:00 - 00:00"  ? "00:00 - 00:00" : $postVars["feriado"];
+        $objEvento->semana         = $postVars['semana']  ? $postVars['semana']  : $postVars['horarioSemana'];
+        $objEvento->sabado         = $postVars['sabado']  ? $postVars['sabado']  : $postVars['horarioSabado'];
+        $objEvento->domingo        = $postVars['domingo'] ? $postVars['domingo'] : $postVars['horarioDomingo'];
+        $objEvento->feriado        = $postVars['feriado'] ? $postVars['feriado'] : $postVars['horarioFeriado'];
         $objEvento->estacionamento = $postVars["estacionamento"] ? -2 : -1;
         $objEvento->acessibilidade = $postVars["acessibilidade"] ? -2 : -1;
         $objEvento->wiFi           = $postVars["wiFi"]           ? -2 : -1;
@@ -214,10 +216,10 @@ class HelpEntity{
         
         $objServico->idApp                = $idApp;
         $objServico->idAppServico         = $objServico->idAppServico;
-        $objServico->semana               = !$postVars["semana"]  || $postVars["semana"]   == "00:00 - 00:00"  ? "00:00 - 00:00" : $postVars["semana"];
-        $objServico->sabado               = !$postVars["sabado"]  || $postVars["sabado"]   == "00:00 - 00:00"  ? "00:00 - 00:00" : $postVars["sabado"];
-        $objServico->domingo              = !$postVars["domingo"] || $postVars["domingo"]  == "00:00 - 00:00"  ? "00:00 - 00:00" : $postVars["domingo"];
-        $objServico->feriado              = !$postVars["feriado"] || $postVars["feriado"]  == "00:00 - 00:00"  ? "00:00 - 00:00" : $postVars["feriado"];
+        $objServico->semana               = $postVars['semana']  ? $postVars['semana']  : $postVars['horarioSemana'];
+        $objServico->sabado               = $postVars['sabado']  ? $postVars['sabado']  : $postVars['horarioSabado'];
+        $objServico->domingo              = $postVars['domingo'] ? $postVars['domingo'] : $postVars['horarioDomingo'];
+        $objServico->feriado              = $postVars['feriado'] ? $postVars['feriado'] : $postVars['horarioFeriado'];
         $objServico->estacionamento       = $postVars["estacionamento"]   ? -2 : -1;
         $objServico->acessibilidade       = $postVars["acessibilidade"]   ? -2 : -1;
         $objServico->entregaDomicilio     = $postVars["entregaDomicilio"] ? -2 : -1;
@@ -254,10 +256,10 @@ class HelpEntity{
 
         $objComercio->idApp            = $idApp;
         $objComercio->idAppComercio    = $objComercio->idAppComercio;
-        $objComercio->semana           = !$postVars["semana"]  || $postVars["semana"]   == "00:00 - 00:00"  ? "00:00 - 00:00" : $postVars["semana"];
-        $objComercio->sabado           = !$postVars["sabado"]  || $postVars["sabado"]   == "00:00 - 00:00"  ? "00:00 - 00:00" : $postVars["sabado"];
-        $objComercio->domingo          = !$postVars["domingo"] || $postVars["domingo"]  == "00:00 - 00:00"  ? "00:00 - 00:00" : $postVars["domingo"];
-        $objComercio->feriado          = !$postVars["feriado"] || $postVars["feriado"]  == "00:00 - 00:00"  ? "00:00 - 00:00" : $postVars["feriado"];
+        $objComercio->semana           = $postVars['semana']  ? $postVars['semana']  : $postVars['horarioSemana'];
+        $objComercio->sabado           = $postVars['sabado']  ? $postVars['sabado']  : $postVars['horarioSabado'];
+        $objComercio->domingo          = $postVars['domingo'] ? $postVars['domingo'] : $postVars['horarioDomingo'];
+        $objComercio->feriado          = $postVars['feriado'] ? $postVars['feriado'] : $postVars['horarioFeriado'];
         $objComercio->estacionamento   = $postVars["estacionamento"]   ? -2 : -1;
         $objComercio->acessibilidade   = $postVars["acessibilidade"]   ? -2 : -1;
         $objComercio->entregaDomicilio = $postVars["entregaDomicilio"] ? -2 : -1;
@@ -292,11 +294,11 @@ class HelpEntity{
         }
 
         $objTurismo->idApp          = $idApp;
-        $objTurismo->idTurismo       = $objTurismo->idTurismo;
-        $objTurismo->semana         = !$postVars["semana"]  || $postVars["semana"]   == "00:00 - 00:00"  ? "00:00 - 00:00" : $postVars["semana"];
-        $objTurismo->sabado         = !$postVars["sabado"]  || $postVars["sabado"]   == "00:00 - 00:00"  ? "00:00 - 00:00" : $postVars["sabado"];
-        $objTurismo->domingo        = !$postVars["domingo"] || $postVars["domingo"]  == "00:00 - 00:00"  ? "00:00 - 00:00" : $postVars["domingo"];
-        $objTurismo->feriado        = !$postVars["feriado"] || $postVars["feriado"]  == "00:00 - 00:00"  ? "00:00 - 00:00" : $postVars["feriado"];
+        $objTurismo->idTurismo      = $objTurismo->idTurismo;
+        $objTurismo->semana         = $postVars['semana']  ? $postVars['semana']  : $postVars['horarioSemana'];
+        $objTurismo->sabado         = $postVars['sabado']  ? $postVars['sabado']  : $postVars['horarioSabado'];
+        $objTurismo->domingo        = $postVars['domingo'] ? $postVars['domingo'] : $postVars['horarioDomingo'];
+        $objTurismo->feriado        = $postVars['feriado'] ? $postVars['feriado'] : $postVars['horarioFeriado'];
         $objTurismo->estacionamento = $postVars["estacionamento"] ? -2 : -1;
         $objTurismo->acessibilidade = $postVars["acessibilidade"] ? -2 : -1;
         $objTurismo->fe             = $postVars["fe"]             ? -2 : -1;
