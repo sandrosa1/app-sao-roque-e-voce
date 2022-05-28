@@ -69,6 +69,7 @@ class Login extends Api {
 
             "retorne"=> true,
             'token'                  => $token,
+            'idUsuario'              => $objUser->idUsuario,
             'nomeUsuario'            => $objUser->nomeUsuario,           
             'sobreNome'              => $objUser->sobreNome,             
             'dataNascimento'         => $objUser->dataNascimento,        

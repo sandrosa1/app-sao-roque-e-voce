@@ -9,7 +9,7 @@ const LoadingApp = () => document.getElementById('loadingApp').innerHTML = '<div
 const ParandoLoadingApp = () => document.getElementById('loadingApp').innerHTML = '';
 //Busca o cep quando sai do foco
 $('#cepApp').on('blur', function (event) {
-    alert('ok')
+    
     if(document.querySelector("#cepApp").value.length == 9){
         event.preventDefault();
        LoadingAppCep();

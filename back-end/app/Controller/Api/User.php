@@ -85,6 +85,7 @@ class User extends Api {
             'retorno'                => 'success',
             'success'                => 'Aguardado confirmação',
             "nomeUsuario"            => $objUser->nomeUsuario, 
+            'idUsuario'              => $objUser->idUsuario,
             "sobreNome"              => $objUser->sobreNome, 
             "dataNascimento"         => $objUser->dataNascimento, 
             "email"                  => $objUser->email, 

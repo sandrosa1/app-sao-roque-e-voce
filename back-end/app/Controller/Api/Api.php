@@ -25,15 +25,7 @@ class Api{
             'missao' => 'Proporcionar aos nossos clientes momentos de lazer, descompressão, aprendizado e entretenimento familiar melhorando a qualidade de vida.',
             'visao' => 'Ser referência em desenvolvimento de sistemas e jogos digitais, cuidando da saúde mental das pessoas, inovando e educando.',
             'valores' => 'Ética e Transparência, Criatividade, Colaboção, Cuidado, Comprometimento e Respeito.',
-            'politica' => 'Nós não fornecemos as informações que coletamos e arquivamos em 
-            nosso aplicativo. Além disso, nós utilizado o cache de seu celular para armazerna 
-            dados de login; endereço de email; token de acesso. Nós poderemos utilizar ferramentas 
-            para medir e coletar informações de navegação, incluindo o tempo de resposta das páginas, 
-            tempo total da visita em determinadas páginas, informações de interação com página e os métodos 
-            tempo utilizado para deixar a página, para melhorar nossos apps. Nós também coletamos informações de identificação pessoal 
-            (incluindo nome, email, senha); detalhes de comentários, feedback, recomendações e 
-            perfil pessoal.Caso você não queira que mais que seja possível para nós coletar as 
-            suas informações pessoais, basta deletar sua conta e todos seus daos seram apagados.',
+            'politica' => 'Nós não fornecemos as informações que coletamos e arquivamos em nosso aplicativo. Além disso, nós utilizado o cache de seu celular para armazerna dados de login; endereço de email; token de acesso. Nós poderemos utilizar ferramentas para medir e coletar informações de navegação, incluindo o tempo de resposta das páginas, tempo total da visita em determinadas páginas, informações de interação com página e os métodos tempo utilizado para deixar a página, para melhorar nossos apps. Nós também coletamos informações de identificação pessoal (incluindo nome, email, senha); detalhes de comentários, feedback, recomendações e perfil pessoal.Caso você não queira que mais que seja possível para nós coletar as suas informações pessoais, basta deletar sua conta e todos seus daos seram apagados.',
         ];
     }
 

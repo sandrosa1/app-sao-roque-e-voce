@@ -5,8 +5,6 @@ namespace App\Controller\RACS;
 use \App\Utils\View;
 use \SandroAmancio\Search\Address;
 use \App\Validate\Validate;
-use \App\Image\Upload;
-use \App\Image\Resize;
 use \App\Help\Help;
 use \App\Help\HelpEntity;
 use \App\Model\Entity\Aplication\App as EntityApp;
@@ -164,11 +162,11 @@ class AppRacs extends PageRacs{
 
     public static function getPostApp($request){
 
-
+        
       
         $validate = new Validate();
         $postVars = $request->getPostVars();
-       
+
         if($postVars['action'] == 'insert'){
 
             $objApp = new EntityApp();
@@ -179,11 +177,17 @@ class AppRacs extends PageRacs{
             $objApp->idApp = $idRacs->insertNewCustomer();
             $appId = self::insertNewApp($postVars, $validate, $objApp);
 
+            
         }elseif($postVars["action"] == "atualizar"){
 
           
+            
             $objApp = EntityApp::getAppById($postVars["idApp"]);
             $appId = self::insertNewApp($postVars, $validate, $objApp);
+
+        }else{
+
+            $validate->setErro("Tamanho da imagem inválido!");
         }
 
         if(count($validate->getErro()) > 0){
@@ -214,7 +218,6 @@ class AppRacs extends PageRacs{
 
     private static function insertNewApp($postVars, $validate, $objApp){
 
-
     
         $campos = []; 
         $campos[0] = $objApp->nomeFantasia = $postVars['nomeFantasia'] ? $postVars['nomeFantasia']: $objApp->nomeFantasia;
@@ -239,6 +242,7 @@ class AppRacs extends PageRacs{
         $objApp->chaves = Help::helpArrayForString($objApp->chaves);
 
       
+       
 
         if(count($validate->getErro()) == 0){
 
@@ -248,23 +252,26 @@ class AppRacs extends PageRacs{
                 $objApp->visualizacao = 0;
                 $objApp->totalCusto = 0;
                 $objApp->totalAvaliacao = 0;
-                $objApp->avaliacao = 0;  
+                $objApp->avaliacao = 0;
+                $update = false;  
                             
                $status = $objApp->insertNewApp();
 
             }elseif($postVars["action"] == "atualizar"){
 
+                $update = true;
                 $status = $objApp->updateApp();
             }
 
-            //Cria uma instancia de novo Apa
-            if( $status){
-              
+            //Cria uma instancia de novo App
+            if($status){
+               
+                   
    
                 if( HelpEntity::helpTurismo($objApp->idApp, $postVars)){
 
-                   
-                    if(self::uploadImageTurismo($objApp->idApp,$objApp,$validate)){
+                  
+                    if(self::uploadImageTurismo($objApp->idApp,$objApp,$validate,$update)){
 
 
                         return $objApp->idApp;
@@ -470,98 +477,30 @@ class AppRacs extends PageRacs{
      *
      * @param [
      * @return void
+     * public static function hellUploadImage($validate, $app, $appSegmento,$update)
+     * uploadImageTurismo($objApp->idApp,$objApp,$validate,$update)
      */
-    public static function uploadImageTurismo($idApp, $objApp, $validate){
+    public static function uploadImageTurismo($idApp, $objApp, $validate, $update){
 
-        
-        if(isset($_FILES['arquivoImagem']) && $_FILES['arquivoImagem']['name'][0] && $_FILES['arquivoImagem']['name'][1] && $_FILES['arquivoImagem']['name'][2]){
 
-           
-            $uploads = Upload::createMultiUpload($_FILES['arquivoImagem']);
-            $tamanho = 250;
-            
-        }else{
-
-            return true;
-        }
-
-    
-        $pathImages = [];
-        $number = 1;
+      
+        $appSegmento = HelpEntity::helpGetEntity($objApp);
+       
+        $uploads = Help::hellUploadImage($validate,$objApp,$appSegmento,$update);
 
         if($uploads){
 
-            foreach ($uploads as $objUpload) {
-                
-               $objUpload->generateNewName($idApp, $number++);
-
-                $sucesso = $objUpload->upload('/var/www/html/app-sao-roque-e-voce/back-end/img/imgApp');
-
-                array_push($pathImages, $objUpload->getBasename());
-              
-                $objResize = new Resize('/var/www/html/app-sao-roque-e-voce/back-end/img/imgApp/'.$objUpload->getBasename());
-
-                $objResize->resize($tamanho);
-
-                $objResize->save('/var/www/html/app-sao-roque-e-voce/back-end/img/imgApp/'.$objUpload->getBasename(),70);
-
-                if($sucesso){
-
-                    
-                    continue;
-                    
-                }else{
-
-                    $validate->setErro('Erro ao enviar o arquivo <br>');
-                }
-
-            }
-            
+           return true;
+    
         }else{
-
-            $validate->setErro('Formato da imagem inválido!');
+    
+            $validate->setErro('Algo de errado ao inseria o caminho das imagems');
             return false;
         }
-
-        if(count($validate->getErro()) > 0){
-          
-            return false;
-            
-        }else{
-
-        
-            if(AppRacs::insertPathImageDataBase($objApp,$pathImages)){
-
-                return true;
-
-            }else{
-
-               $validate->setErro('Algo de errado ao inseria o caminho das imagems');
-                return false;
-            }
-
-        }
-        
+       
     }
 
-    /**
-     * Método responsável por controlar a inserção dos caminhos das imagens no banco de dados
-     *
-     * @param Entity $idApp
-     * @param string $pathImages
-     * @return void
-     */
-    private static function insertPathImageDataBase($objApp, $pathImages){
-
-
-        $appSegmento = HelpEntity::helpGetEntity($objApp); 
-
-        
-            return HelpEntity::helpImgTurismo($objApp, $appSegmento, $pathImages);
-
-           
-    }
-
+   
     public static function getTableAppTurismo(){
 
 

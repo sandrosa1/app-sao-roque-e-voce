@@ -5,8 +5,6 @@ namespace App\Controller\Srv;
 use \App\Utils\View;
 use \App\Help\Help;
 use \App\Help\HelpEntity;
-use \App\Image\Upload;
-use \App\Image\Resize;
 use \App\Validate\Validate;
 use \App\Model\Entity\Aplication\App as EntityApp;
 
@@ -259,104 +257,34 @@ class ScreenSrv extends PageSrv{
      */
     public static function uploadImage(){
 
+
         $app = HelpEntity::helpApp();
+        $appSegmento = HelpEntity::helpGetEntity($app);
         $validate = new Validate();
-        if(isset($_FILES['arquivoImagem']) || isset($_FILES['arquivoLogo']) ){
+        $uploads = Help::hellUploadImage($validate,$app,$appSegmento,true);
 
-            if(isset($_FILES['arquivoImagem'])){
-                $uploads = Upload::createMultiUpload($_FILES['arquivoImagem']);
-                $tamanho = 250;
-            }else{
-                $uploads = Upload::createMultiUpload($_FILES['arquivoLogo']);
-                $tamanho = 50;
-            }
-       
-            $pathImages = [];
-            $number = 1;
+        if($uploads){
 
-           if($uploads){
+            $arrResponse = [
+                "retorno" => "success",
+                "success" => ['Imagens inseridas com sucesso'],
+                "page"    => 'tela'
+            ];
 
-                foreach ($uploads as $objUpload) {
-                    // Move os arquivos de upload
-                    $objUpload->generateNewName($app->idApp, $number++);
+        }else{
 
-                    $sucesso = $objUpload->upload('/var/www/html/app-sao-roque-e-voce/back-end/img/imgApp');
+            $arrResponse = [
+                "retorno" => "erro",
+                "erros"   => $validate->getErro(),
+            ];
 
-                    array_push($pathImages, $objUpload->getBasename());
-                    //Instacia de redimencionamento
-                    $objResize = new Resize('/var/www/html/app-sao-roque-e-voce/back-end/img/imgApp/'.$objUpload->getBasename());
 
-                    $objResize->resize($tamanho);
-
-                    $objResize->save('/var/www/html/app-sao-roque-e-voce/back-end/img/imgApp/'.$objUpload->getBasename(),70);
-
-                    if($sucesso){
-                        continue;
-                        
-                    }else{
-
-                        $validate->setErro('Erro ao enviar o arquivo <br>');
-                    }
-
-                }
-                
-            }else{
-                $validate->setErro('Formato da imagem inválido!');
-            }
-            if(count($validate->getErro()) > 0){
-                $arrResponse = [
-                    "retorno" => "erro",
-                    "erros"   => $validate->getErro(),
-                ];
-                
-            }else{
-
-                ScreenSrv::insertPathImageDataBase($app,$pathImages);
-
-                $arrResponse = [
-                    "retorno" => "success",
-                    "success" => ['Imagens inseridas com sucesso'],
-                    "page"    => 'tela'
-                ];
-            }
-            return json_encode($arrResponse);
-
-        }
-    }
-
-    /**
-     * Método responsável por controlar a inserção dos caminhos das imagens no banco de dados
-     *
-     * @param Entity $app
-     * @param string $pathImages
-     * @return void
-     */
-    private static function insertPathImageDataBase($app, $pathImages){
-
-        $appSegmento = HelpEntity::helpGetEntity($app); 
-        
-
-        switch ($app->segmento) {
-            case 'gastronomia':
-                return HelpEntity::helpImgGastronomia($app, $appSegmento,$pathImages);
-
-            case 'evento':
-                return HelpEntity::helpImgEvento($app, $appSegmento,$pathImages);
-
-            case 'servicos':
-                return HelpEntity::helpImgServico($app, $appSegmento,$pathImages);
-
-            case 'comercio':
-                return HelpEntity::helpImgComercio($app, $appSegmento,$pathImages);
-
-            case 'hospedagem':
-                return HelpEntity::helpImgHospedagem($app, $appSegmento,$pathImages);
-
-            case 'turismo':
-                return HelpEntity::helpImgTurismo($app, $appSegmento,$pathImages);
            
+
         }
+        return json_encode($arrResponse);
 
     }
 
+   
 }
