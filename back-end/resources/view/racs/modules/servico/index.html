@@ -1,0 +1,283 @@
+<div class="container-fluid containerSrv">
+    <h1 class="fzc-20 fwb mb-2 mt-0">{{processo}}</h1>
+
+    <div class="row">
+        <form  name="formAppServico" id="formAppServico" method="post" enctype="multipart/form-data" >
+
+            <div class="row">
+                <div class="input-field col s12">
+                    <input class="validate" type="hidden" id="g-recaptcha-response" name="g-recaptcha-response" required>
+                </div>
+            </div>
+            
+        <div class="col m4 s12">
+
+            {{preview}}
+
+            <div class=" col s12 file-field input-field">
+                <div class="btn btnBlue">
+                    <span>File</span>
+                    <input type="file" name="arquivoLogo[]" Value="">
+                </div>
+                <div class="file-path-wrapper">
+                    <input class="file-path " type="text" placeholder="Imagem principal."/>
+                </div>
+            </div>
+
+           
+        </div>
+
+        <div class="col m8 s12 formApp">
+           
+            <!-- Estrutura do modal e input nome fantasia -->
+            <div class="row mb-0"> 
+                <div class="input-field col s12 m7">
+                    <input  id="nomeFantasia" type="text" name="nomeFantasia" value="{{nomeFantasia}}" maxlength="245" class="validate" required>
+                    <label for="nomeFantasia">Servico<span class="obrigatorio"> *</span></label>
+                </div>
+                <div class="input-field col s12 m1">
+                    <input  id="idApp" type="hidden" name="idApp" value="{{idApp}}" maxlength="10000" >
+
+                    {{permission}}
+
+                </div>
+                <div class="input-field col s12 m4">
+                    
+                    <select name='tipo' id="tipoServicos">
+                        <option value="{{tipo}}" >{{tipoFormatado}}</option>
+                        <option value="hospital">Hospital</option>
+                        <option value="farmacias">Farmacia</option>
+                        <option value="oficinas">Oficinas</option>
+                        <option value="bancos">Bancos</option>
+                        <option value="outros">Outros</option>
+                    </select>
+                    <label>Tipo  <span class="obrigatorio">*</span></label>
+        
+                </div>
+            </div>
+                <!-- Fim de estrutura do modal e input nome fantasia -->
+                <!-- Tipo de negôcio -->
+            <div class="row mb-0">
+                <div class="input-field col s12 m4">
+                    <input id="telefone" type="tel" name="telefone" value="{{telefone}}" maxlength="16" class="validate">
+                    <label for="telefone">Telefone</label>   
+                </div>
+                <div class="input-field col s10 m4">
+                    <input id="cepAppServico" type="text" name="cepApp" value="{{cepApp}}" maxlength="9" class="validate" required>
+                    <label for="cepApp">CEP <span class="obrigatorio"> *</span></label> 
+                    <!-- <input type=submit> -->
+                </div>
+                <div class="input-field col s2 m2" id="loadingAppCep"></div>
+
+                <div class="input-field col s12 m2 ">
+                    <input id="numero" type="text" name="numero" value="{{numero}}" maxlength="20" class="validate" required>
+                    <label for="numero">N° <span class="obrigatorio">*</span></label>
+                </div>
+
+            </div>
+        
+            <div class="row mb-0">
+            
+                <div class="input-field col s12 m12">
+                    <input id="logradouro" type="text" name="logradouro" value="{{logradouro}}" maxlength="255" class="validate" required>
+                    <label for="logradouro">Logradouro <span class="obrigatorio">*</span></label>
+                </div>
+
+                <div class="input-field col s12 m3">
+                    <input id="bairro" type="text" name="bairro" value="{{bairro}}" maxlength="45" class="validate" required>
+                    <label for="bairro">Bairro <span class="obrigatorio">*</span></label>   
+                </div>
+
+                <div class="input-field col s12 m3">
+                    <input id="localidade" type="text" name="localidade" value="{{localidade}}" maxlength="9" class="validate" required>
+                    <label for="localidade">Cidade <span class="obrigatorio">*</span></label>
+                </div>
+
+                <div class="input-field col s12 m6">
+                    <input id="adicionais" type="text" name="adicionais" value="{{adicionais}}" maxlength="255" class="validate">
+                    <label for="adicionais">Complemtos e ponto de referência</label>
+                </div>
+
+            </div>
+                
+            <div class="row mb-0">
+            <div class="input-field col s12">
+                <textarea id="textarea1"class="materialize-textarea" aria-modal="500" name="chaves">{{chaves}}</textarea>
+                <label for="textarea1">7 Palavras chaves</label>
+            </div>
+            </div>
+            
+                <!--Seletores-->
+            <div class="row mb-0">
+                <div class="input-field col s12">
+                    
+                    <div class="col s6 m3 mb-3 ">
+                        <label>
+                          <input name="estacionamento" type="checkbox" class="filled-in" {{estacionamento}} />
+                          <span>Estacionamento</span>
+                        </label>
+                    </div>
+
+                    <div class="col s6 m3 mb-3 ">
+                        <label>
+                          <input name="acessibilidade" type="checkbox" class="filled-in" {{acessibilidade}} />
+                          <span>Acessibilidade</span>
+                        </label>
+                    </div>
+                    <div class="col s6 m3 mb-3 ">
+                        <label>
+                          <input name="entregaDomicilio" type="checkbox" class="filled-in" {{entregaDomicilio}} />
+                          <span>Entrega em domicilio</span>
+                        </label>
+                    </div>
+                    <div class="col s6 m3 mb-3 ">
+                        <label>
+                          <input name="whatsapp" type="checkbox" class="filled-in" {{whatsapp}} />
+                          <span>Whatsapp</span>
+                        </label>
+                    </div>
+                      
+                     
+
+                </div>
+            </div> 
+
+
+            <div class="row mb-0">
+                <div class="col s12 m3">
+                   
+                
+                    <label for="appt">Horário na semana:</label>
+            
+                    <p>
+                        <label>
+                          <input name="semana" value="Fechado" type="radio"  />
+                          <span>Fechado</span>
+                        </label>
+                      </p>
+                      <p>
+                        <label>
+                          <input name="semana" value="Aberto 24 horas" type="radio" />
+                          <span>Aberto 24 horas</span>
+                        </label>
+                      </p>
+                      <p>
+                        <label>
+                            <input name="semana" value="" type="radio" checked/>
+                            <span>Definir horário</span>
+                          </label>
+                      </p>
+                     
+                      
+                    <input type="text" placeholder="08:00-17:00"  id="semana" name="horarioSemana" value="{{semana}}" >
+            
+                </div>
+                <div class="col s12 m3">
+            
+                    <label for="appt">Horário aos Sabádos :</label>
+            
+                    <p>
+                        <label>
+                          <input name="sabado" value="Fechado" type="radio"  />
+                          <span>Fechado</span>
+                        </label>
+                      </p>
+                      <p>
+                        <label>
+                          <input name="sabado" value="Aberto 24 horas" type="radio" />
+                          <span>Aberto 24 horas</span>
+                        </label>
+                    </p>
+                    <p>
+                        <label>
+                            <input name="sabado" value="" type="radio" checked/>
+                            <span>Definir horário</span>
+                          </label>
+                      </p>
+            
+                    <input type="text" placeholder="Digite o horário" id="sabado" name="horarioSabado" value="{{sabado}}"  >
+            
+                </div>
+                <div class="col s12 m3">
+                    <label for="appt">Horário  aos Domingos :</label>
+                    <p>
+                        <label>
+                          <input name="domingo" value="Fechado" type="radio"  />
+                          <span>Fechado</span>
+                        </label>
+                      </p>
+                      <p>
+                        <label>
+                          <input name="domingo" value="Aberto 24 horas" type="radio" />
+                          <span>Aberto 24 horas</span>
+                        </label>
+                    </p>
+                    <p>
+                        <label>
+                            <input name="domingo" value="" type="radio" checked/>
+                            <span>Definir horário</span>
+                          </label>
+                      </p>
+            
+                    <input type="text" placeholder="09:00 - 12:00" id="domingo" name="horarioDomingo" value="{{domingo}}"  >
+            
+                </div>
+                <div class="col s12 m3">
+                    <label for="appt">Horário aos Feriado:</label>
+                    <p>
+                        <label>
+                          <input name="feriado" value="Fechado" type="radio"  />
+                          <span>Fechado</span>
+                        </label>
+                      </p>
+                      <p>
+                        <label>
+                          <input name="feriado" value="Aberto 24 horas" type="radio" />
+                          <span>Aberto 24 horas</span>
+                        </label>
+                    </p>
+                    <p>
+                        <label>
+                            <input name="feriado" value="" type="radio" checked/>
+                            <span>Definir horário</span>
+                          </label>
+                      </p>
+            
+                    <input type="text" placeholder="00:00 - 00:00" id="feriado" name="horarioFeriado" value="{{feriado}}"  >
+            
+                </div>
+                
+            
+            </div>
+            
+            <div class="row">
+                <div class="col s12 ">
+                    <div class="row">
+                        
+                        <div class="input-field col s12">
+                          <textarea id="textarea1" class="materialize-textarea" maxlength="500" placeholder="" name="descricao" >{{descricao}}</textarea>
+                          <label for="textarea1">Descrição do local</label>
+                        </div>
+                      </div>
+                </div>
+            </div>
+
+         
+
+            {{botoes}}
+    
+        </div>
+       
+   
+    </div>
+</form>
+<hr>
+<h3 class="vc fz-20 mb-5">Serviços cadastrados</h3>
+<hr>
+
+{{tableAppServico}}
+
+</div>
+
+
+

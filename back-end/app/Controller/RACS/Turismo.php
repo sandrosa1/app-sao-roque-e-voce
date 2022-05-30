@@ -11,7 +11,7 @@ use \App\Model\Entity\Aplication\App as EntityApp;
 use \App\Model\Entity\Customer\Customer as EntityCustomer;
 use \App\Model\Entity\Aplication\Turismo\Turismo as EntityTurismo;
 
-class AppRacs extends PageRacs{
+class Turismo extends PageRacs{
 
 
     public static function getCepApp($request)
@@ -45,7 +45,7 @@ class AppRacs extends PageRacs{
      * @param Request $request
      * @return String
      */
-    public static function getApps($request){
+    public static function getAppTurismo($request){
 
         $getVars = $request->getQueryParams();
        
@@ -75,7 +75,7 @@ class AppRacs extends PageRacs{
         if($getVars['idApp'] && $entityApp->segmento == 'turismo' && $appTurismo instanceof EntityTurismo){
 
 
-            $content = View::render('racs/modules/app/index',[
+            $content = View::render('racs/modules/turismo/index',[
                 'processo' => 'Editar ou excluír ponto turístico?',
                 'preview'   => self::getPreview($entityApp,$appTurismo),
                 'nomeFantasia' => $entityApp->nomeFantasia,
@@ -113,7 +113,7 @@ class AppRacs extends PageRacs{
           
         }else{
 
-            $content = View::render('racs/modules/app/index',[
+            $content = View::render('racs/modules/turismo/index',[
                 'processo' => 'Criar nova atração turísca',
                 'preview'   => self::getPreview(false,false),
                 'nomeFantasia' => '',
@@ -145,11 +145,11 @@ class AppRacs extends PageRacs{
     }
     public static function getBotaoCadastrar(){
 
-        return View::render('racs/modules/app/botoes/cadastrar',[]);
+        return View::render('racs/modules/turismo/botoes/cadastrar',[]);
     }
     public static function getBotaoEditar($app,$appTurismo){
 
-        return View::render('racs/modules/app/botoes/editar',[
+        return View::render('racs/modules/turismo/botoes/editar',[
 
             'idApp' => $app->idApp,
             'nome'  => $app->nomeFantasia,
@@ -160,7 +160,7 @@ class AppRacs extends PageRacs{
     }
 
 
-    public static function getPostApp($request){
+    public static function getPostAppTurismo($request){
 
         
       
@@ -175,7 +175,7 @@ class AppRacs extends PageRacs{
             $idRacs->permission = 'root'; 
             $idRacs->status = 'active'; 
             $objApp->idApp = $idRacs->insertNewCustomer();
-            $appId = self::insertNewApp($postVars, $validate, $objApp);
+            $appId = self::insertNewAppTurismo($postVars, $validate, $objApp);
 
             
         }elseif($postVars["action"] == "atualizar"){
@@ -183,7 +183,7 @@ class AppRacs extends PageRacs{
           
             
             $objApp = EntityApp::getAppById($postVars["idApp"]);
-            $appId = self::insertNewApp($postVars, $validate, $objApp);
+            $appId = self::insertNewAppTurismo($postVars, $validate, $objApp);
 
         }else{
 
@@ -207,7 +207,7 @@ class AppRacs extends PageRacs{
             $arrResponse = [
                 'retorno' => 'success',
                 'success' => ["$msg com sucesso :)"],
-                'page'    => "apps?idApp=$appId",
+                'page'    => "criar-turismo?idApp=$appId",
             ];
 
         }
@@ -216,7 +216,7 @@ class AppRacs extends PageRacs{
        
     }
 
-    private static function insertNewApp($postVars, $validate, $objApp){
+    private static function insertNewAppTurismo($postVars, $validate, $objApp){
 
     
         $campos = []; 
@@ -311,7 +311,7 @@ class AppRacs extends PageRacs{
 
         if($app && $appTurismo){
 
-            return View::render('racs/modules/app/preview/index',[
+            return View::render('racs/modules/turismo/preview/index',[
                 'display'    => self::getDisplay(),
                 'header'     => self::getHeader($app),
                 'nome'       => self::getNome($app),
@@ -324,7 +324,7 @@ class AppRacs extends PageRacs{
             ]);
         }else{
 
-            return View::render('racs/modules/app/preview/index',[
+            return View::render('racs/modules/turismo/preview/index',[
 
                 'display'    => self::getDisplay(),
                 'header'     => '',
@@ -347,7 +347,7 @@ class AppRacs extends PageRacs{
     * @return string
     */
     private static function getDisplay(){
-        return View::render('racs/modules/app/preview/components/display',[
+        return View::render('racs/modules/turismo/preview/components/display',[
             'hora' => date('h:i'),
         ]);
     }
@@ -360,7 +360,7 @@ class AppRacs extends PageRacs{
 
         $header = Help::helpGetTypeHeader($app);
       
-        return View::render('racs/modules/app/preview/components/header',[
+        return View::render('racs/modules/turismo/preview/components/header',[
             'icon' => $header[1],
             'tipo' => $header[0],
         ]);
@@ -374,7 +374,7 @@ class AppRacs extends PageRacs{
        
         ;
       
-        return View::render('racs/modules/app/preview/components/nome',[
+        return View::render('racs/modules/turismo/preview/components/nome',[
             'nome'=> $app->nomeFantasia,
         ]);
     }
@@ -385,7 +385,7 @@ class AppRacs extends PageRacs{
     */
     private static function getStatus(){
       
-        return View::render('racs/modules/app/preview/components/status',[]);
+        return View::render('racs/modules/turismo/preview/components/status',[]);
     }
     /** 
     * Metódo que retorna o componente de carrocel de imagens do preview do app
@@ -395,7 +395,7 @@ class AppRacs extends PageRacs{
     private static function getCarrocel($app, $appTurismo){
 
        
-        return View::render('racs/modules/app/preview/components/carrocel',[
+        return View::render('racs/modules/turismo/preview/components/carrocel',[
             'img1' => $app->img1,
             'img2' => $appTurismo->img2,
             'img3' => $appTurismo->img3,
@@ -418,14 +418,14 @@ class AppRacs extends PageRacs{
                 if ($value == -2 ){
                     $value = Help::helpOptions($key)[1];
                     $nome = Help::helpOptions($key)[0];
-                    $opcoes .= View::render('racs/modules/app/preview/components/opcao',[
+                    $opcoes .= View::render('racs/modules/turismo/preview/components/opcao',[
                         'value' => $value,
                          'nome'  => $nome,
                     ]);
                 }
             }
 
-        return View::render('racs/modules/app/preview/components/seletores',[
+        return View::render('racs/modules/turismo/preview/components/seletores',[
             'seletores' => $opcoes,
         ]);
     }
@@ -438,7 +438,7 @@ class AppRacs extends PageRacs{
         
         $appTipo = HelpEntity::helpGetEntity($app);
        
-        return View::render('racs/modules/app/preview/components/descricao',[
+        return View::render('racs/modules/turismo/preview/components/descricao',[
             'descricao' => $appTipo->descricao,
         ]);
     }
@@ -451,7 +451,7 @@ class AppRacs extends PageRacs{
     private static function getComentario(){
         
         
-        return View::render('racs/modules/app/preview/components/comentario',[
+        return View::render('racs/modules/turismo/preview/components/comentario',[
             
         ]);
     }
@@ -464,7 +464,7 @@ class AppRacs extends PageRacs{
     private static function getAddress($app){
 
      
-        return View::render('racs/modules/app/preview/components/endereco',[
+        return View::render('racs/modules/turismo/preview/components/endereco',[
             
             'endereco' => "<div class='col  s12'><i class='ml-2 c-pri fz-15 fas fa-map-marked-alt'></i><span class=' c-popi fz-5'> ".$app->logradouro .', Nº '. $app->numero.', '.$app->bairro."</span></div>",
             'telefone' => $app->telefone ? "<div class='col  s12'><i class='ml-2 c-pri fz-15 fas fa-phone-volume'></i><span class=' c-popi fz-5'> ".$app->telefone."</span></div>": '',
@@ -504,7 +504,7 @@ class AppRacs extends PageRacs{
     public static function getTableAppTurismo(){
 
 
-        return View::render('racs/modules/app/table/thead',[
+        return View::render('racs/modules/turismo/table/thead',[
             'tbody' => self::getTbodyAppTurimo(),
         ]);
 
@@ -522,7 +522,7 @@ class AppRacs extends PageRacs{
 
             if($value['segmento'] == 'turismo'){
 
-                $content .= View::render('racs/modules/app/table/tbody',[
+                $content .= View::render('racs/modules/turismo/table/tbody',[
 
                     'idApp'        => $value['idApp'],
                     'nomeFantasia' => $value['nomeFantasia'],

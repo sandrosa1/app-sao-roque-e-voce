@@ -153,6 +153,7 @@ class HelpEntity{
             $objGastronomia->insertNewGastronomia();
 
         }
+        return true;
         
         
     }
@@ -198,6 +199,7 @@ class HelpEntity{
             $objEvento->img3           = 'tres.jpg';
             $objEvento->insertNewEvento();
         }
+        return true;
     }
     /**
      * Metódo responsável por criar um novo Serviço
@@ -205,7 +207,9 @@ class HelpEntity{
      * @param [type] $idApp
      * @return void
      */
-    public static function helpServico($idApp,  $postVars){
+    public static function helpServico($idApp,$postVars){
+
+      
 
         $objServico = EntityServico::getServicoById($idApp);
         
@@ -213,6 +217,8 @@ class HelpEntity{
             $objServico = new EntityServico();
 
         }
+
+        
         
         $objServico->idApp                = $idApp;
         $objServico->idAppServico         = $objServico->idAppServico;
@@ -225,8 +231,8 @@ class HelpEntity{
         $objServico->entregaDomicilio     = $postVars["entregaDomicilio"] ? -2 : -1;
         $objServico->whatsapp             = $postVars["whatsapp"]         ? -2 : -1;
         $objServico->descricao            = $postVars["descricao"]        ? $postVars["descricao"]        : ""; 
-
         
+
         if($postVars["action"] == "atualizar" ){
           $objServico->updateServico();
             
@@ -237,6 +243,9 @@ class HelpEntity{
             $objServico->img3                 = "tres.jpg";
             $objServico->insertNewServico();
         }
+
+        return true;
+
     }
     /**
      * Metódo responsável por criar um novo Comércio
@@ -275,6 +284,7 @@ class HelpEntity{
             $objComercio->insertNewComercio();
     
         }
+        return true;
     }
 
      /**

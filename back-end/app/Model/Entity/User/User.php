@@ -104,11 +104,21 @@ class User{
      * @var string
      */
     public $status;
+
+    /**
+    * 10)
+     * Data de criação
+     *
+     * @var date
+     */
+    public $createDate;
+     
     
 
 
     public function insertNewUser(){
         
+        $this->createDate = date("Y-m-d H:i:s");
        
         //Inserio os dados do cliete no banco de dados
         $this->idUsuario = (new Database('usuario'))->insert([
@@ -126,6 +136,7 @@ class User{
             'ativaLocalizacao'         => $this->ativaLocalizacao,
             'token'                    => $this->token,
             'status'                   => $this->status,
+            'createDate'               => $this->createDate,
         ]);
 
         return true;

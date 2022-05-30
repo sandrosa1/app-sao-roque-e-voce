@@ -122,7 +122,6 @@ class SettingSrv extends PageSrv{
         ]);
     }
    
-
     private static function converteString($var){
 
         switch($var){
@@ -165,7 +164,6 @@ class SettingSrv extends PageSrv{
             case 'musica':
                 return 'Música';
              
-         
         }
     }
   
@@ -178,9 +176,7 @@ class SettingSrv extends PageSrv{
     public static function update($request){
 
 
-
         $session = new PageSrv();
-        $conf = new Config();
         $validate = new Validate();
 
         $postVars = $request->getPostVars();
@@ -189,8 +185,6 @@ class SettingSrv extends PageSrv{
         $sabado = $postVars['sabado']   ? $postVars['sabado'] : $postVars['horarioSabado'];
         $domingo = $postVars['domingo'] ? $postVars['domingo'] : $postVars['horarioDomingo'];
         $feriado = $postVars['feriado'] ? $postVars['feriado'] : $postVars['horarioFeriado'];
-
-    
     
         $idApp =  $session->idSession;
         $app =  EntityApp::getAppById($idApp);
@@ -207,8 +201,6 @@ class SettingSrv extends PageSrv{
             return self::statusUpdate($validate);
         }
 
-       
-        
         switch($app->segmento){
             
             case 'hospedagem':
@@ -253,7 +245,5 @@ class SettingSrv extends PageSrv{
         }
         return json_encode($arrResponse);
     }
-
-  
 
 }

@@ -41,5 +41,24 @@
 }
 .c-success{
     color: var(--success);
+}
+.b-error{
+    background-color: var(--error);
+}
+.b-alert{
+    background-color: var(--alert);
+
+}
+.b-help{
+    background-color: var(--help);
+
+}
+.b-success{
+    background-color: var(--success);
+
+}
+
+.b-hover:hover{
+    background-color: var(--error);
 
 }

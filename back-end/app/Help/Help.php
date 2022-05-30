@@ -173,16 +173,21 @@ class Help{
 
 
        
+       
         if(isset($_FILES['arquivoImagem']) || isset($_FILES['arquivoLogo']) ){
 
-            if(isset($_FILES['arquivoImagem'])){
+            if($_FILES['arquivoImagem']['name'][0]){
                 $uploads = Upload::createMultiUpload($_FILES['arquivoImagem']);
                 $tamanho = 750;
                 $logotipo = false;
-            }else{
+            }elseif($_FILES['arquivoLogo']['name'][0]){
                 $uploads = Upload::createMultiUpload($_FILES['arquivoLogo']);
                 $tamanho = 150;
                 $logotipo = true;
+
+            }else{
+
+                return true;
             }
 
             

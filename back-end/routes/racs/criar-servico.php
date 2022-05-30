@@ -4,35 +4,35 @@ use \App\Http\Response;
 use App\Controller\RACS;
 
 //Rota dos apps get
-$objRouter->get('/racs/apps',[
+$objRouter->get('/racs/criar-servico',[
     'middlewares' => [
         'required-racs-login',
     ],
     function($request){
-        return new Response(200, RACS\AppRacs::getApps($request));
+        return new Response(200, RACS\Servico::getAppServico($request));
     }
     
 ]);
 
 //Rota dos apps post
-$objRouter->post('/racs/apps',[
+$objRouter->post('/racs/criar-servico',[
     'middlewares' => [
         'required-racs-login',
     ],
     function($request){
         
-        return new Response(200, RACS\AppRacs::getPostApp($request));
+        return new Response(200, RACS\Servico::getPostAppServico($request));
     }
     
 ]);
 
 //Rota dos apps post
-$objRouter->post('/racs/apps/cep',[
+$objRouter->post('/racs/criar-servico/cep',[
     'middlewares' => [
         'required-racs-login',
     ],
     function($request){
-        return new Response(200, RACS\AppRacs::getCepApp($request));
+        return new Response(200, RACS\Servico::getCepApp($request));
     }
     
 ]);
