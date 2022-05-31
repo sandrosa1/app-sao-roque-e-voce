@@ -560,7 +560,7 @@ class HomeRacs extends PageRacs{
                 const data6 = {
                    labels: labels6,
                     datasets: [{
-                   label: 'Segmentos mais Visualizados',
+                   label: 'Segmentos mais Avaliados',
                    data: [".$primCont.",".$segCont.",".$terCont.",". $quaCont.",".$quiCont."],
                    backgroundColor: [
                      'rgba(255, 99, 132, 0.2)',

@@ -32,3 +32,6 @@ include __DIR__.'/api/v1/setuser.php';
 
 //Inclui as rotas de login 
 include __DIR__.'/api/v1/commentall.php';
+
+//Inclui as rotas de login 
+include __DIR__.'/api/v1/home.php';
