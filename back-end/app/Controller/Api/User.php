@@ -60,17 +60,18 @@ class User extends Api {
 
         $address = $postVars['email'];
 
-        $subjet = "Codigo de validação São Roque e Você.";
+        $subjet = "Código de validação São Roque e Você.";
 
-        $body = "<h5>Codigo de validação São Roque e Você.</h5>
+        $body = "<h5>Código de validação São Roque e Você.</h5>
         <p>Olá $objUser->nomeUsuario</p>
-        <p>Este e seu Codigo de validação</p>
-        <p>CODIGO: $token</p>
+        <p>Este e seu Código de validação</p>
+        <p>CÓDIGO: $token</p>
         <br><br><br>
         <img src='http://www.racsstudios.com/img/logo-srv-300.png' alt='Logotipo do aplicativo São roque e vocẽ'>";
 
+
         if(!$validate->validateSendEmail($address, $subjet, $body, $objUser->nomeUsuario)){
-            throw new \Exception("Ocorreu um problema na confirmação. Refazer o cadastro.", 404);
+            throw new \Exception("Ocorreu um problema no envio do e-mail. Refazer o cadastro.", 404);
         }
 
 
@@ -130,7 +131,7 @@ class User extends Api {
 
                 if(!$objUser->updateUser()){
 
-                    throw new \Exception("Ops. Algo deu errado na validação do email.", 404);
+                    throw new \Exception("Ops. Algo deu errado na validação do e-mail.", 404);
     
                 }
 
@@ -138,7 +139,7 @@ class User extends Api {
 
             }else{
 
-                throw new \Exception("Ops. Codigo inválido.", 404);
+                throw new \Exception("Ops. Código inválido.", 404);
 
             }
 
@@ -169,7 +170,7 @@ class User extends Api {
             
             if($objUser->idUsuario != $request->user->idUsuario){
         
-                throw new \Exception("As configurções não podem ser alteradas por outro usuário", 404);
+                throw new \Exception("As configurações não podem ser alteradas por outro usuário.", 404);
     
             }
 
@@ -179,6 +180,9 @@ class User extends Api {
 
             }
     
+            $objUser->nomeUsuario           = $postVars['nomeUsuario'];           
+            $objUser->sobreNome             = $postVars['sobreNome'];             
+            $objUser->dataNascimento        = $postVars['dataNascimento']; 
             $objUser->alertaNovidade        = $postVars['alertaNovidade'];
             $objUser->dicasPontosTuristicos = $postVars['dicasPontosTuristicos'];
             $objUser->dicasRestaurantes     = $postVars['dicasRestaurantes'];
