@@ -1,0 +1,26 @@
+ <tr>
+    <td >{{nomeFantasia}}</td>
+    <td >{{segmento}}</td>
+    <td >{{tipo}}</td>
+    <td >{{celular}}</td>
+    <td >{{email}}</td>
+    <td >
+        <a class=" mr-5 " href="{{URL}}/racs/customer?idApp={{idApp}}"><i class="material-icons c-help">visibility</i></a>
+        <a class=" modal-trigger" href="#modal{{modal}}"><i class="material-icons c-error">lock_outline</i></a>
+    </td>
+     <!-- Modal Structure -->
+  <div id="modal{{modal}}" class="modal">
+    <div class="modal-content">
+        <h4 class="center racs-c-1 fz-20">Ajuda</h4>
+        <p>Esta ação libera a página <span class="fwb c-error" >{{nomeFantasia}}</span> para visualização.</p>                  
+        <p>Esta ação deve ser tomada sempre que não haja mais conteúdo malicioso na página.</span></p>                  
+        <p>O cliente será notificado desta ação</span></p>                  
+  
+    <div class="modal-footer">
+      <a  class="modal-close mr-5 c-error">Cancelar</a>
+      <a href="{{URL}}/racs/customer?open={{idApp}}" class="modal-close c-success">Liberar</a>
+    </div>
+  </div>
+          
+</tr>
+

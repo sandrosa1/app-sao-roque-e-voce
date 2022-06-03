@@ -8,6 +8,7 @@ class App{
 
 
     public $idApp;
+    public $status;
     public $nomeFantasia;
     public $segmento;
     public $tipo;
@@ -39,6 +40,7 @@ class App{
    (new Database('app'))->insert([
     
         'idApp'           => $this->idApp, 
+        'status'          => $this->status, 
         'nomeFantasia'    => $this->nomeFantasia,
         'segmento'        => $this->segmento,
         'tipo'            => $this->tipo,
@@ -80,6 +82,7 @@ class App{
         return (new Database('app'))->update('idApp = '.$this->idApp,[
 
             'idApp'           => $this->idApp, 
+            'status'          => $this->status, 
             'nomeFantasia'    => $this->nomeFantasia,
             'segmento'        => $this->segmento,
             'tipo'            => $this->tipo,

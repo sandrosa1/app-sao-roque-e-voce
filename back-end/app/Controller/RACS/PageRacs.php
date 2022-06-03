@@ -91,12 +91,13 @@ class PageRacs{
      * @param  string $currentModule 
      * @return string
      */
-    public static function getPanel($title, $content, $currentModule ){
+    public static function getPanel($title, $content, $currentModule, $mensagem = '' ){
        
         //Renderiza a view do painel
         $contentPanel = View::render('racs/panel' ,[
             'menu'    => self::getMenu($currentModule),
-            'content' => $content
+            'content' => $content,
+            'mensagem' => $mensagem
         ]);
         //Retorna a pagina renderizada
         return self::getPage($title,$contentPanel);
