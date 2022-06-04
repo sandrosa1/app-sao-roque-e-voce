@@ -18,7 +18,6 @@ class CommentAll extends Api {
         //DEPOIMENTOS
         $itens = [];
 
-
         $queryParams = $request->getQueryParams();
         $pagianaAtual = $queryParams['page'] ?? 1;
         $filter = $queryParams['filter'] ?? "data";

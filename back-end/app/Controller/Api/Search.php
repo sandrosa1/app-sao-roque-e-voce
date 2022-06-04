@@ -39,29 +39,35 @@ class Search extends Api {
         while($objApp = $results->fetchObject(EntityApps::class)){
         
         
-            $itens [] = [
-            'idApp'          => (int)$objApp->idApp,
-            'nomeFantasia'   => $objApp->nomeFantasia,
-            'segmento'       => $objApp->segmento,
-            'tipo'           => $objApp->tipo,
-            'email'          => $objApp->email,
-            'telefone'       => $objApp->telefone,
-            'site'           => $objApp->site,
-            'celular'        => $objApp->celular,
-            'cep'            => $objApp->cep,
-            'logradouro'     => $objApp->logradouro,
-            'numero'         => $objApp->numero,
-            'bairro'         => $objApp->bairro,
-            'localidade'     => $objApp->localidade,
-            'chaves'         => $objApp->chaves,
-            'visualizacao'   => $objApp->visualizacao,
-            'avaliacao'      => $objApp->avaliacao,
-            'img1'           => 'http://www.racsstudios.com/img/imgApp/'.$objApp->img1,
-            'adicionais'     => $objApp->adicionais,
-            'estrelas'       => (float)$objApp->estrelas,
-            'custoMedio'     => (float)$objApp->custoMedio     
-            ];
-        }
+            if($objApp->status != 'block'){
+
+                $itens [] = [
+
+                    'idApp'          => (int)$objApp->idApp,
+                    'nomeFantasia'   => $objApp->nomeFantasia,
+                    'segmento'       => $objApp->segmento,
+                    'tipo'           => $objApp->tipo,
+                    'email'          => $objApp->email,
+                    'telefone'       => $objApp->telefone,
+                    'site'           => $objApp->site,
+                    'celular'        => $objApp->celular,
+                    'cep'            => $objApp->cep,
+                    'logradouro'     => $objApp->logradouro,
+                    'numero'         => $objApp->numero,
+                    'bairro'         => $objApp->bairro,
+                    'localidade'     => $objApp->localidade,
+                    'chaves'         => $objApp->chaves,
+                    'visualizacao'   => $objApp->visualizacao,
+                    'avaliacao'      => $objApp->avaliacao,
+                    'img1'           => 'http://www.racsstudios.com/img/imgApp/'.$objApp->img1,
+                    'adicionais'     => $objApp->adicionais,
+                    'estrelas'       => (float)$objApp->estrelas,
+                    'custoMedio'     => (float)$objApp->custoMedio   
+                      
+                    ];
+                }
+            }
+           
 
         //RETORNA OS DEPOIMENTOS
         return $itens;
