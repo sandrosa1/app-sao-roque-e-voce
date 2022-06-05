@@ -90,11 +90,35 @@ class User{
      * @var integer
      */
     public $ativaLocalizacao;
+    /**
+     * 13)
+     * Token
+     *
+     * @var string
+     */
+    public $token;
+     /**
+     * 14)
+     * Status
+     *
+     * @var string
+     */
+    public $status;
+
+    /**
+    * 10)
+     * Data de criação
+     *
+     * @var date
+     */
+    public $createDate;
+     
     
 
 
     public function insertNewUser(){
         
+        $this->createDate = date("Y-m-d H:i:s");
        
         //Inserio os dados do cliete no banco de dados
         $this->idUsuario = (new Database('usuario'))->insert([
@@ -110,6 +134,9 @@ class User{
             'dicasHospedagens'         => $this->dicasHospedagens,
             'alertaEventos'            => $this->alertaEventos,
             'ativaLocalizacao'         => $this->ativaLocalizacao,
+            'token'                    => $this->token,
+            'status'                   => $this->status,
+            'createDate'               => $this->createDate,
         ]);
 
         return true;
@@ -136,6 +163,9 @@ class User{
             'dicasHospedagens'         => $this->dicasHospedagens,
             'alertaEventos'            => $this->alertaEventos,
             'ativaLocalizacao'         => $this->ativaLocalizacao,
+            'token'                    => $this->token,
+            'status'                   => $this->status,
+    
                
         ]);
         

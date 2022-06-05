@@ -55,10 +55,7 @@ class LoginRacs extends PageRacs{
 
             return self:: responseError($validate, $objRACS);
         }
-        if(!$validate->validateIssetEmail($email,"login")){
-
-            return self:: responseError($validate, $objRACS);
-        }
+      
         if(!$validate->validateSenhaRacs($email,$password)){
 
             return self:: responseError($validate, $objRACS);

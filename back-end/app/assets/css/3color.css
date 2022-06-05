@@ -2,7 +2,7 @@
 :root {
     /* cores racs */
     --racs1: #6300ff;
-    --racs2: #2a5768;
+    --racs2: #00b7ff;
     --racs3: #8faadc;
     --racs4: rgb(242, 241, 241);
     --racs5: #000;
@@ -41,5 +41,24 @@
 }
 .c-success{
     color: var(--success);
+}
+.b-error{
+    background-color: var(--error);
+}
+.b-alert{
+    background-color: var(--alert);
+
+}
+.b-help{
+    background-color: var(--help);
+
+}
+.b-success{
+    background-color: var(--success);
+
+}
+
+.b-hover:hover{
+    background-color: var(--error);
 
 }

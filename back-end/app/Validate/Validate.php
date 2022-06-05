@@ -51,12 +51,12 @@ class Validate{
         foreach ($parameters as $key => $value){
             if(empty($value)){
                 $i++;
+                $this->setErro("O campo ".$key. " não esta preenchido.");
             }
         }
         if($i == 0){
             return true;
         }else{
-            $this->setErro("Preencha todos os dados!");
             return false;
         }
     }
@@ -403,6 +403,10 @@ class Validate{
    public function validateHora($text){
 
         if($text == 'Fechado'){
+
+            return true;
+        }
+        if($text == 'Aberto 24 horas'){
 
             return true;
         }

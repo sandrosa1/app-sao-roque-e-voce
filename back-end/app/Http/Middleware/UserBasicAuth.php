@@ -27,8 +27,9 @@ class UserBasicAuth {
             return false;
        }
 
+
        //Valida a senha we retorna o usuário
-        return password_verify($_SERVER['PHP_AUTH_PW'],$objUser->senha) ? $objUser : false;
+        return password_verify($_SERVER['PHP_AUTH_PW'],$objUser->token) ? $objUser : false;
     }
 
     /**

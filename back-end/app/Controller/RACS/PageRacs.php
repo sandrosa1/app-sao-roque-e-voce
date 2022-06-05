@@ -19,7 +19,7 @@ class PageRacs{
         ],
         'apps' =>[
             'label' => 'Create',
-            'link'  => URL.'/racs/apps',
+            'link'  => URL.'/racs/criar-turismo'||URL.'/racs/criar-servico',
             'icon'  => 'stay_current_portrait'
         ],
         'admin' =>[
@@ -55,12 +55,26 @@ class PageRacs{
         $links = '';
         //Itera os links do menu e compara modulo atual
         foreach(self::$modules as $hash=>$module){
-            $links .= View::render('racs/menu/link',[
+
+            if($module['label'] == 'Create'){
+
+            $links .= View::render('racs/menu/dropdown/botao',[
                 'label'   => $module['label'],
-                'link'    => $module['link'],
+                'icon'    => $module['icon'],
                 'current' => $hash == $currentModule ? 'activeRacs' : '',
-                'icon'    => $module['icon']
+                
             ]);
+            }else{
+
+                $links .= View::render('racs/menu/link',[
+                    'label'   => $module['label'],
+                    'link'    => $module['link'],
+                    'current' => $hash == $currentModule ? 'activeRacs' : '',
+                    'icon'    => $module['icon']
+                ]);
+            }
+
+
         
         }
 
@@ -77,12 +91,13 @@ class PageRacs{
      * @param  string $currentModule 
      * @return string
      */
-    public static function getPanel($title, $content, $currentModule ){
+    public static function getPanel($title, $content, $currentModule, $mensagem = '' ){
        
         //Renderiza a view do painel
         $contentPanel = View::render('racs/panel' ,[
             'menu'    => self::getMenu($currentModule),
-            'content' => $content
+            'content' => $content,
+            'mensagem' => $mensagem
         ]);
         //Retorna a pagina renderizada
         return self::getPage($title,$contentPanel);

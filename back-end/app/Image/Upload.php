@@ -83,7 +83,7 @@ class Upload{
      */
     public function generateNewName($idApp,$number){
 
-        $this->name = $idApp.'-'.$number;
+        $this->name = $idApp.'-'.$number.'-'.date("Y-m-d-H-i-s");
 
     }
 
@@ -152,8 +152,11 @@ class Upload{
         $number = 1;
         
         $count = 1;
+
+      
         
         foreach($files['type'] as $key => $value){
+           
             if($value != 'image/jpeg'){
                 return false;
             }

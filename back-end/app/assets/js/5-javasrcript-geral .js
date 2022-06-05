@@ -25,6 +25,7 @@ const CarregandoLoading  = () => document.getElementById('root').innerHTML = `<i
 const ParandoLoading     = () => document.getElementById('root').innerHTML = `<img  src='${logoSrv}' alt="Logomarca da ">`;
 const LoadingRacs        = () => document.getElementById('root').innerHTML = `<img  class="gif" src='${gif}' alt= Loading">`;
 const ParandoLoadingRacs = () => document.getElementById('root').innerHTML = `<img  src='${logoRacs}' alt="Logomarca da RACS" style="width: 70px;">`;
+
 //Mascara de validação para campos númericos
 //https://github.com/vanilla-masker/vanilla-masker
 //Listen the input element masking it to format with pattern.

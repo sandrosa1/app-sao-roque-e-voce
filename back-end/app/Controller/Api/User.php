@@ -6,9 +6,7 @@ use \App\Model\Entity\User\User as EntityUser;
 use \App\Model\Entity\User\Comment as EntityComment;
 use \App\Validate\Validate;
 
-
 class User extends Api {
-
 
     /**
      * Inserí um novo comentário a um estabelecimento
@@ -18,17 +16,15 @@ class User extends Api {
      */
     public static function setNewUserApp($request){
 
-
         $postVars = $request->getPostVars();
 
         if(!isset($postVars['nomeUsuario']) || !isset($postVars['sobreNome']) || !isset($postVars['dataNascimento']) || !isset($postVars['email']) || !isset($postVars['senha']) ){
 
-            throw new \Exception("Os campos todos os campos são obrigatorios", 400);
+            throw new \Exception("Todos os campos são obrigatorios", 400);
             
         }
 
         $validate = new validate();
-
 
         if(!$validate->validateEmail($postVars['email'])){
             throw new \Exception("O email ". $postVars['email']." é inválido.", 404);
@@ -40,7 +36,12 @@ class User extends Api {
             throw new \Exception("Há um usuário utilizado esse email: ".$postVars['email'].".", 404);
         }
 
-        //Novo comentário
+
+        $min = 1000;
+        $max = 9999;
+        $token = rand($min,$max);
+
+        //Novo usuário
         $objUser = new EntityUser();
         $objUser->nomeUsuario           = $postVars['nomeUsuario'];
         $objUser->sobreNome             = $postVars['sobreNome'];
@@ -53,12 +54,39 @@ class User extends Api {
         $objUser->dicasHospedagens      = 0;
         $objUser->alertaEventos         = 0;
         $objUser->ativaLocalizacao      = 0;
-        
-        $objUser->insertNewUser();
+        $objUser->token                 = password_hash($token, PASSWORD_DEFAULT);
+        $objUser->status                = "confirmacao";
+
+
+        $address = $postVars['email'];
+
+        $subjet = "Código de validação São Roque e Você.";
+
+        $body = "<h5>Código de validação São Roque e Você.</h5>
+        <p>Olá $objUser->nomeUsuario</p>
+        <p>Este e seu Código de validação</p>
+        <p>CÓDIGO: $token</p>
+        <br><br><br>
+        <img src='http://www.racsstudios.com/img/logo-srv-300.png' alt='Logotipo do aplicativo São roque e vocẽ'>";
+
+
+        if(!$validate->validateSendEmail($address, $subjet, $body, $objUser->nomeUsuario)){
+            throw new \Exception("Ocorreu um problema no envio do e-mail. Refazer o cadastro.", 404);
+        }
+
+
+        if(!$objUser->insertNewUser()){
+
+            throw new \Exception("Ops. Algo deu errado na inserção dos dados no banco. Tente novamente mais tarde.", 404);
+
+        }
 
         return [
-            
+
+            'retorno'                => 'success',
+            'success'                => 'Aguardado confirmação',
             "nomeUsuario"            => $objUser->nomeUsuario, 
+            'idUsuario'              => $objUser->idUsuario,
             "sobreNome"              => $objUser->sobreNome, 
             "dataNascimento"         => $objUser->dataNascimento, 
             "email"                  => $objUser->email, 
@@ -68,59 +96,124 @@ class User extends Api {
             "dicasHospedagens"       => (int)$objUser->dicasHospedagens, 
             "alertaEventos"          => (int)$objUser->alertaEventos, 
             "ativaLocalizacao"       => (int)$objUser->ativaLocalizacao, 
-       
-        ];
+            "status"                 => $objUser->status,      
 
+        ];
     }
 
-      /**
-     * Atualiza um comentário a um app
+    /**
+     * Atualiza configurações de usuario a um app
      *
      * @param Request $request
      * @return array
      */
     public static function setEditUserApp($request){
 
-
         $postVars = $request->getPostVars();
 
-        $objUser = EntityUser::getUserById($request->user->idUsuario);
+        if(isset($postVars['token'])){
+           
+            $objUser = EntityUser::getUserById($request->user->idUsuario);
 
-        if(!$objUser instanceof EntityUser){
-            throw new \Exception("Não há usuário para o id: ".$request->user->idUsuario.".", 404);
-        }
+            if(!$objUser instanceof EntityUser){
+                throw new \Exception("Não há usuário para o id: ".$request->user->idUsuario.".", 404);
+            }
+            
+            if($objUser->idUsuario != $request->user->idUsuario){
         
-        if($objUser->idUsuario != $request->user->idUsuario){
+                throw new \Exception("As configurções não podem ser alteradas por outro usuário", 404);
     
-            throw new \Exception("O comentário não pode ser editado por outra usuário", 404);
+            }
+
+            if(password_verify($postVars['token'], $objUser->token)){
+
+                $objUser->status    = 'ativo';
+
+                if(!$objUser->updateUser()){
+
+                    throw new \Exception("Ops. Algo deu errado na validação do e-mail.", 404);
+    
+                }
+
+                $msg = "Validado com sucesso.";
+
+            }else{
+
+                throw new \Exception("Ops. Código inválido.", 404);
+
+            }
+
+            return [
+
+                'retorno'                => 'success',
+                'success'                => $msg,
+                'nomeUsuario'            => $objUser->nomeUsuario,           
+                'sobreNome'              => $objUser->sobreNome,             
+                'dataNascimento'         => $objUser->dataNascimento,        
+                'email'                  => $objUser->email,                                
+                "alertaNovidade"         => (int)$objUser->alertaNovidade, 
+                "dicasPontosTuristicos"  => (int)$objUser->dicasPontosTuristicos, 
+                "dicasRestaurantes"      => (int)$objUser->dicasRestaurantes, 
+                "dicasHospedagens"       => (int)$objUser->dicasHospedagens, 
+                "alertaEventos"          => (int)$objUser->alertaEventos, 
+                "ativaLocalizacao"       => (int)$objUser->ativaLocalizacao,      
+                "status"                 => $objUser->status,      
+            ];
+
+        }else{
+
+            $objUser = EntityUser::getUserById($request->user->idUsuario);
+    
+            if(!$objUser instanceof EntityUser){
+                throw new \Exception("Não há usuário para o id: ".$request->user->idUsuario.".", 404);
+            }
+            
+            if($objUser->idUsuario != $request->user->idUsuario){
+        
+                throw new \Exception("As configurações não podem ser alteradas por outro usuário.", 404);
+    
+            }
+
+            if($objUser->status != 'ativo'){
+
+                throw new \Exception("Ops.Aguardado validação pelo email do usuário", 404);
+
+            }
+    
+            $objUser->nomeUsuario           = $postVars['nomeUsuario'];           
+            $objUser->sobreNome             = $postVars['sobreNome'];             
+            $objUser->dataNascimento        = $postVars['dataNascimento']; 
+            $objUser->alertaNovidade        = $postVars['alertaNovidade'];
+            $objUser->dicasPontosTuristicos = $postVars['dicasPontosTuristicos'];
+            $objUser->dicasRestaurantes     = $postVars['dicasRestaurantes'];
+            $objUser->dicasHospedagens      = $postVars['dicasHospedagens'];
+            $objUser->alertaEventos         = $postVars['alertaEventos'];
+            $objUser->ativaLocalizacao      = $postVars['ativaLocalizacao'];
+           
+    
+            if(!$objUser->updateUser()){
+
+                throw new \Exception("Ops. Algo na atualização. Tente novamente mais tarde.", 404);
+
+            }
+            
+    
+            //Retorna o commentario atualizado
+            return [
+                    
+                'nomeUsuario'            => $objUser->nomeUsuario,           
+                'sobreNome'              => $objUser->sobreNome,             
+                'dataNascimento'         => $objUser->dataNascimento,        
+                'email'                  => $objUser->email,                                
+                "alertaNovidade"         => (int)$objUser->alertaNovidade, 
+                "dicasPontosTuristicos"  => (int)$objUser->dicasPontosTuristicos, 
+                "dicasRestaurantes"      => (int)$objUser->dicasRestaurantes, 
+                "dicasHospedagens"       => (int)$objUser->dicasHospedagens, 
+                "alertaEventos"          => (int)$objUser->alertaEventos, 
+                "ativaLocalizacao"       => (int)$objUser->ativaLocalizacao,      
+            ];
 
         }
-
-        $objUser->alertaNovidade        = $postVars['alertaNovidade'];
-        $objUser->dicasPontosTuristicos = $postVars['dicasPontosTuristicos'];
-        $objUser->dicasRestaurantes     = $postVars['dicasRestaurantes'];
-        $objUser->dicasHospedagens      = $postVars['dicasHospedagens'];
-        $objUser->alertaEventos         = $postVars['alertaEventos'];
-        $objUser->ativaLocalizacao      = $postVars['ativaLocalizacao'];
-       
-        //Atualiza o comentári
-        $objUser->updateUser();
-
-        //Retorna o commentario atualizado
-        return [
-                
-            'nomeUsuario'            => $objUser->nomeUsuario,           
-            'sobreNome'              => $objUser->sobreNome,             
-            'dataNascimento'         => $objUser->dataNascimento,        
-            'email'                  => $objUser->email,                                
-            "alertaNovidade"         => (int)$objUser->alertaNovidade, 
-            "dicasPontosTuristicos"  => (int)$objUser->dicasPontosTuristicos, 
-            "dicasRestaurantes"      => (int)$objUser->dicasRestaurantes, 
-            "dicasHospedagens"       => (int)$objUser->dicasHospedagens, 
-            "alertaEventos"          => (int)$objUser->alertaEventos, 
-            "ativaLocalizacao"       => (int)$objUser->ativaLocalizacao,      
-        ];
-
     }
    
     /**

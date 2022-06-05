@@ -4,6 +4,9 @@ namespace App\Help;
 
 use \App\Controller\Srv\PageSrv;
 use \App\Model\Entity\Aplication\App as EntityApp;
+use \App\Validate\Validate;
+use \App\Image\Upload;
+use \App\Image\Resize;
 
 
 
@@ -159,6 +162,131 @@ class Help{
     }
 
 
-  
+
+    /**
+     * Modo responsável peo controlar o upload de imagens
+     *
+     * @param [
+     * @return void
+     */
+    public static function hellUploadImage($validate, $app, $appSegmento,$update){
+
+
+       
+       
+        if(isset($_FILES['arquivoImagem']) || isset($_FILES['arquivoLogo']) ){
+
+            if($_FILES['arquivoImagem']['name'][0]){
+                $uploads = Upload::createMultiUpload($_FILES['arquivoImagem']);
+                $tamanho = 750;
+                $logotipo = false;
+            }elseif($_FILES['arquivoLogo']['name'][0]){
+                $uploads = Upload::createMultiUpload($_FILES['arquivoLogo']);
+                $tamanho = 150;
+                $logotipo = true;
+
+            }else{
+
+                return true;
+            }
+
+            
+       
+            $pathImages = [];
+            $number = 1;
+
+           if($uploads){
+
+                foreach ($uploads as $objUpload) {
+                    // Move os arquivos de upload
+                    $objUpload->generateNewName($app->idApp, $number++);
+
+                    $sucesso = $objUpload->upload('/var/www/html/app-sao-roque-e-voce/back-end/img/imgApp');
+
+                    array_push($pathImages, $objUpload->getBasename());
+                    //Instacia de redimencionamento
+                    $objResize = new Resize('/var/www/html/app-sao-roque-e-voce/back-end/img/imgApp/'.$objUpload->getBasename());
+
+                    $objResize->resize($tamanho);
+
+                    $objResize->save('/var/www/html/app-sao-roque-e-voce/back-end/img/imgApp/'.$objUpload->getBasename(),70);
+
+
+                    if($sucesso){
+                        continue;
+                        
+                    }else{
+
+                        $validate->setErro('Erro ao enviar o arquivo <br>');
+                    }
+
+                }
+                
+            }else{
+                $validate->setErro('Formato da imagem inválido!');
+            }
+            if(count($validate->getErro()) > 0){
+               return false;
+                
+            }
+
+            if($update){
+
+                if($logotipo){
+
+                    unlink('/var/www/html/app-sao-roque-e-voce/back-end/img/imgApp/'.$app->img1);
+                }else{
+    
+                    unlink('/var/www/html/app-sao-roque-e-voce/back-end/img/imgApp/'.$app->img1);
+                    unlink('/var/www/html/app-sao-roque-e-voce/back-end/img/imgApp/'.$appSegmento->img2);
+                    unlink('/var/www/html/app-sao-roque-e-voce/back-end/img/imgApp/'.$appSegmento->img3);
+    
+                }
+            }
+           
+
+            Help::HelpInsertPathImageDataBase($app,$pathImages);
+    
+            return true;
+
+        }
+    }
+
+
+    /**
+     * Método responsável por controlar a inserção dos caminhos das imagens no banco de dados
+     *
+     * @param Entity $app
+     * @param string $pathImages
+     * @return void
+     */
+    private static function helpInsertPathImageDataBase($app, $pathImages){
+
+        $appSegmento = HelpEntity::helpGetEntity($app); 
+        
+
+        switch ($app->segmento) {
+            case 'gastronomia':
+                return HelpEntity::helpImgGastronomia($app, $appSegmento,$pathImages);
+
+            case 'evento':
+                return HelpEntity::helpImgEvento($app, $appSegmento,$pathImages);
+
+            case 'servicos':
+                return HelpEntity::helpImgServico($app, $appSegmento,$pathImages);
+
+            case 'comercio':
+                return HelpEntity::helpImgComercio($app, $appSegmento,$pathImages);
+
+            case 'hospedagem':
+                return HelpEntity::helpImgHospedagem($app, $appSegmento,$pathImages);
+
+            case 'turismo':
+                return HelpEntity::helpImgTurismo($app, $appSegmento,$pathImages);
+           
+        }
+
+    }
+
 
 }

@@ -2,7 +2,6 @@
 
 namespace App\Controller\Api;
 
-use App\Help\Help;
 use \App\Model\Entity\Aplication\App as EntityApps;
 use \App\Help\HelpEntity;
 use \SandroAmancio\PaginationManager\Pagination;
@@ -36,31 +35,36 @@ class Apps extends Api {
         //RENDERIZA ITEM
         while($objApp = $results->fetchObject(EntityApps::class)){
         
-        
-            $itens [] = [
-            'idApp'          => (int)$objApp->idApp,
-            'nomeFantasia'   => $objApp->nomeFantasia,
-            'segmento'       => $objApp->segmento,
-            'tipo'           => $objApp->tipo,
-            'email'          => $objApp->email,
-            'telefone'       => $objApp->telefone,
-            'site'           => $objApp->site,
-            'celular'        => $objApp->celular,
-            'cep'            => $objApp->cep,
-            'logradouro'     => $objApp->logradouro,
-            'numero'         => $objApp->numero,
-            'bairro'         => $objApp->bairro,
-            'localidade'     => $objApp->localidade,
-            'chaves'         => $objApp->chaves,
-            'visualizacao'   => $objApp->visualizacao,
-            'avaliacao'      => $objApp->avaliacao,
-            'img1'           => 'http://www.racsstudios.com/img/imgApp/'.$objApp->img1,
-            'adicionais'     => $objApp->adicionais,
-            'estrelas'       => (float)$objApp->estrelas,
-            'custoMedio'     => (float)$objApp->custoMedio      
-            ];
-        }
+            if($objApp->status != 'block'){
 
+                $itens [] = [
+                    'idApp'          => (int)$objApp->idApp,
+                    'nomeFantasia'   => $objApp->nomeFantasia,
+                    'segmento'       => $objApp->segmento,
+                    'tipo'           => $objApp->tipo,
+                    'email'          => $objApp->email,
+                    'telefone'       => $objApp->telefone,
+                    'site'           => $objApp->site,
+                    'facebook'       => $objApp->facebook,
+                    'instagram'      => $objApp->instagram,
+                    'youtube'        => $objApp->youtube,
+                    'celular'        => $objApp->celular,
+                    'cep'            => $objApp->cep,
+                    'logradouro'     => $objApp->logradouro,
+                    'numero'         => $objApp->numero,
+                    'bairro'         => $objApp->bairro,
+                    'localidade'     => $objApp->localidade,
+                    'chaves'         => $objApp->chaves,
+                    'visualizacao'   => $objApp->visualizacao,
+                    'avaliacao'      => $objApp->avaliacao,
+                    'img1'           => 'http://www.racsstudios.com/img/imgApp/'.$objApp->img1,
+                    'adicionais'     => $objApp->adicionais,
+                    'estrelas'       => (float)$objApp->estrelas,
+                    'custoMedio'     => (float)$objApp->custoMedio      
+                    ];
+                }
+            }
+        
         //RETORNA OS DEPOIMENTOS
         return $itens;
     }
@@ -103,6 +107,11 @@ class Apps extends Api {
             throw new \Exception("O App ".$id." não foi localizado", 404);
         }
 
+        if( $objApp->status == 'block'){
+            throw new \Exception("O App ".$id." esta temporariamente indisponível.", 404);
+
+        }
+
         $objApp->visualizacao = (int)$objApp->visualizacao + 1;
 
         $objApp->updateApp();
@@ -116,6 +125,9 @@ class Apps extends Api {
             'email'          => $objApp->email,
             'telefone'       => $objApp->telefone,
             'site'           => $objApp->site,
+            'facebook'       => $objApp->facebook,
+            'instagram'      => $objApp->instagram,
+            'youtube'        => $objApp->youtube,
             'celular'        => $objApp->celular,
             'cep'            => $objApp->cep,
             'logradouro'     => $objApp->logradouro,

@@ -43,16 +43,61 @@ class CommentUser extends Api {
         while($objComment = $results->fetchObject(EntityComments::class)){
         
             $itens [] = [
-                'idComment'  => (int)$objComment->idComment,
-                'idApp'      => (int)$objComment->idApp,
-                'idUsuario'  => (int)$objComment->idUsuario,
-                'nome'       => $objComment->nome,
-                'comentario' => $objComment->comentario,
-                'utilSim'    => (int)$objComment->utilSim,
-                'utilNao'    => (int)$objComment->utilNao,
-                'data'       => $objComment->data,
-                'avaliacao'  => (int)$objComment->avaliacao,
-                'custo'      => (int)$objComment->custo,
+                'idComment'           => (int)$objComment->idComment,
+                'idApp'               => (int)$objComment->idApp,
+                'idUsuario'           => (int)$objComment->idUsuario,
+                'estabelecimento'     => $objComment->estabelecimento,
+                'nome'                => $objComment->nome,
+                'comentario'          => $objComment->comentario,
+                'utilSim'             => (int)$objComment->utilSim,
+                'utilNao'             => (int)$objComment->utilNao,
+                'data'                => $objComment->data,
+                'avaliacao'           => (int)$objComment->avaliacao,
+                'custo'               => (int)$objComment->custo,
+            ];
+            
+        }
+
+        //RETORNA OS DEPOIMENTOS
+        return $itens;
+    }
+
+     /**
+     * Método responsável por obter a renderização  dos itens de comentário para um usuário
+     * @param Request $request
+     *  @param Pagination $$objPagination
+     * @return string
+     */
+    private static function getAllCommentAppAll($request,$idUsuario,$where){
+        //DEPOIMENTOS
+        $itens = [];
+
+        $queryParams = $request->getQueryParams();
+        $pagianaAtual = $queryParams['page'] ?? 1;
+        $filter = $queryParams['filter'] ?? "data";
+        $order = $queryParams['order'] ?? "DESC";
+
+        //QUANTIDADE TOTAL DE REGISTROS
+        $quatidadeTotal = EntityComments::getComment($where.' = '.$idUsuario, $filter.' '.$order ,null,'COUNT(*) as qtd')->fetchObject()->qtd;
+                //
+        //RESULTADOS DA PÁGINA
+        $results = EntityComments::getComment($where.' = '.$idUsuario,$filter.' '.$order);
+
+        //RENDERIZA ITEM
+        while($objComment = $results->fetchObject(EntityComments::class)){
+        
+            $itens [] = [
+                'idComment'           => (int)$objComment->idComment,
+                'idApp'               => (int)$objComment->idApp,
+                'idUsuario'           => (int)$objComment->idUsuario,
+                'estabelecimento'     => $objComment->estabelecimento,
+                'nome'                => $objComment->nome,
+                'comentario'          => $objComment->comentario,
+                'utilSim'             => (int)$objComment->utilSim,
+                'utilNao'             => (int)$objComment->utilNao,
+                'data'                => $objComment->data,
+                'avaliacao'           => (int)$objComment->avaliacao,
+                'custo'               => (int)$objComment->custo,
             ];
             
         }
@@ -85,6 +130,34 @@ class CommentUser extends Api {
         return [
             'comments'      => self::getAllCommentApp($request,$request->user->idUsuario,$objPagination,'idUsuario'),
             'paginacao' => parent::getPagination($request,$objPagination)
+             
+        ];
+    }
+
+
+     /**
+     * Retorna todos os comentários de um usuário sem paginação 
+     *
+     * @param Request $request
+     * @return array
+     */
+    public static function getCommentAppAll($request){
+
+
+        if(!is_numeric($request->user->idUsuario)){
+            
+            throw new \Exception("O id ".$request->user->idUsuario." não e valido", 400);
+
+        }
+
+        $objComment = EntityComments::getCommentByIdUser($request->user->idUsuario);
+
+        if(!$objComment instanceof EntityComments){
+            throw new \Exception("Não há comentários para o id: ".$request->user->idUsuario.".", 404);
+        }
+
+        return [
+            'comments'      => self::getAllCommentAppAll($request,$request->user->idUsuario,'idUsuario'),
              
         ];
     }
@@ -128,19 +201,19 @@ class CommentUser extends Api {
 
         $objApp = EntityApps::getAppById($postVars['idApp']);
          
-        $objComment->idApp          = $postVars['idApp'];
-        $objComment->idUsuario      = $request->user->idUsuario;
-        $objComment->nome           = $request->user->nomeUsuario;
-        $objComment->comentario     = $postVars['comentario'];
-        $objComment->custo          = $postVars['custo'];
+        $objComment->idApp           = $postVars['idApp'];
+        $objComment->idUsuario       = $request->user->idUsuario;
+        $objComment->nome            = $request->user->nomeUsuario." ". $request->user->sobreNome;
+        $objComment->comentario      = $postVars['comentario'];
+        $objComment->custo           = $postVars['custo'];
 
         if( $objComment->avaliacao != $postVars['avaliacao']){
             $objApp = EntityApps::getAppById($postVars['idApp']);
             $objApp->avaliacao       = $objApp->avaliacao + 1 ;
             $objApp->totalAvaliacao  = $objApp->totalAvaliacao + $postVars['avaliacao'];
             $objApp->totalCusto      = $objApp->totalCusto + $postVars['custo'];
-            $objApp->custoMedio      =  (float)$objApp->totalCusto / (float)$objApp->avaliacao;
-            $objApp->estrelas        =  (float)$objApp->totalAvaliacao / (float)$objApp->avaliacao;
+            $objApp->custoMedio      =  round((float)$objApp->totalCusto / (float)$objApp->avaliacao,1);
+            $objApp->estrelas        =  round((float)$objApp->totalAvaliacao / (float)$objApp->avaliacao,1);
             $objApp->updateApp();
         }
        
@@ -149,16 +222,17 @@ class CommentUser extends Api {
 
         //Retorna o commentario atualizado
         return [
-                'idComment'  => (int)$objComment->idComment,
-                'idApp'      => (int)$objComment->idApp,
-                'idUsuario'  => $objComment->idUsuario,
-                'nome'       => $objComment->nome,
-                'comentario' => $objComment->comentario,
-                'utilSim'    => (int)$objComment->utilSim,
-                'utilNao'    => (int)$objComment->utilNao,
-                'data'       => $objComment->data,
-                'avaliacao'  => (int)$objComment->avaliacao,
-                'custo'      => (int)$objComment->custo,
+                'idComment'        => (int)$objComment->idComment,
+                'idApp'            => (int)$objComment->idApp,
+                'estabelecimento'   => $objComment->estabelecimento,
+                'idUsuario'         => $objComment->idUsuario,
+                'nome'              => $objComment->nome,
+                'comentario'        => $objComment->comentario,
+                'utilSim'           => (int)$objComment->utilSim,
+                'utilNao'           => (int)$objComment->utilNao,
+                'data'              => $objComment->data,
+                'avaliacao'         => (int)$objComment->avaliacao,
+                'custo'             => (int)$objComment->custo,
         ];
 
     }

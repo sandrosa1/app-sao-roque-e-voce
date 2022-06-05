@@ -7,7 +7,7 @@ use \App\Help\HelpEntity;
 use \App\Help\Help;
 use \App\Model\Entity\Aplication\App as EntityApp;
 use \App\Model\Entity\Customer\Customer as EntityCustomer;
-use \App\Model\Entity\Aplication\Turismo\Turismo as EntityTurismo;
+use \App\Validate\Validate;
 
 class CustomerRacs extends PageRacs{
 
@@ -22,8 +22,19 @@ class CustomerRacs extends PageRacs{
 
         $getVars = $request->getQueryParams();
 
+        if($getVars['block']){
+
+           $msg = self::blockApp($getVars['block']);
+        }
+
+        if($getVars['open']){
+
+            $msg = self::openApp($getVars['open']);
+        }
         
         if($getVars['idApp']){
+
+            
 
             $entityApp = EntityApp::getAppById($getVars['idApp']);
             $appTurismo = HelpEntity::helpGetEntity($entityApp);
@@ -71,7 +82,127 @@ class CustomerRacs extends PageRacs{
         }
 
         
-            return parent::getPanel('Customer - RACS', $content,'customer');
+            return parent::getPanel('Customer - RACS', $content,'customer',$msg);
+
+    }
+
+    private static function blockApp($idApp){
+
+        $app = EntityApp::getAppById($idApp);
+
+        if(self::alertblockCustomer($idApp)){
+
+            $app->status = 'block';
+
+            if($app->updateApp()){
+
+                $msg = "Pagina bloqueado com sucesso.";
+    
+                 return $msg;
+            }else{
+
+                $msg = "Erro ao bloquear, email enviado ao cliente.";
+    
+                return $msg;
+
+            }   
+
+        }else{
+
+            $msg = "Ocorreu um problema no envio do e-mail";
+
+            return $msg;
+        }
+
+
+
+    }
+
+    private static function openApp($idApp){
+
+        $app = EntityApp::getAppById($idApp);
+
+        if(self::alertOpenCustomer($idApp)){
+
+            $app->status = 'ativo';
+
+            if($app->updateApp()){
+
+                $msg = "Pagina liberada com sucesso.";
+    
+                 return $msg;
+            }else{
+
+                $msg = "Erro ao liberar, email enviado ao cliente.";
+    
+                return $msg;
+
+            }   
+
+        }else{
+
+            $msg = "Ocorreu um problema no envio do e-mail";
+
+            return $msg;
+        }
+
+        
+    }
+
+    private static function alertblockCustomer($idApp){
+
+        $customer = EntityCustomer::getCustomerById($idApp);
+
+        $validate = new Validate();
+
+        $address = $customer->email;
+
+        $subjet = "Alerta de bloqueio de conteúdo São Roque e Você.";
+
+        $body = "<h5>Atenção pagina bloqueada.</h5>
+        <p>Olá  $customer->name</p>
+        <p>Sua página no sistema São Roque e Você foi bloqueada por conteúdo malicioso, pedimos que a modifique e entre em contato pelo fale conosco, assunto página bloqueada, para habilitá-la novamente.
+        A mensagem deve explicar o que ocasionou esse contéudo.</p>
+       
+        <br><br><br>
+        <p>Atenciosamente:</p>
+        <img src='http://www.racsstudios.com/img/logo-srv-300.png' alt='Logotipo do aplicativo São roque e vocẽ'>";
+
+
+        if(!$validate->validateSendEmail($address, $subjet, $body, $customer->name)){
+
+            return false;
+        }
+
+        return true;
+
+    }
+
+    private static function alertOpenCustomer($idApp){
+
+        $customer = EntityCustomer::getCustomerById($idApp);
+
+        $validate = new Validate();
+
+        $address = $customer->email;
+
+        $subjet = "Alerta de desbloqueio de conteúdo São Roque e Você.";
+
+        $body = "<h5>Parabéns sua página foi desbloqueada.</h5>
+        <p>Olá  $customer->name</p>
+        <p>Sua página no sistema São Roque e Você foi desbloqueada, agradecemos a colaboração.</p>
+       
+        <br><br><br>
+        <p>Atenciosamente:</p>
+        <img src='http://www.racsstudios.com/img/logo-srv-300.png' alt='Logotipo do aplicativo São roque e vocẽ'>";
+
+
+        if(!$validate->validateSendEmail($address, $subjet, $body, $customer->name)){
+
+            return false;
+        }
+
+        return true;
 
     }
 
@@ -93,19 +224,23 @@ class CustomerRacs extends PageRacs{
         $customers = HelpEntity::hellGetAllsCustomers();
 
         $content = '';
+
+        $modal = 0;
  
         foreach ($customers as $key => $value) {
  
             $content .= View::render('racs/modules/customer/components/tabela/tbodyClientes',[
 
-                'nome'       => $value['name'],
-                'email'      => $value['email'],
-                'phone'      => $value['phone'],
-                'createDate' => $value['createDate'],
-                'status'     => $value['status'],
-                'idApp'      => $value['idApp'],
-
+                'nome'         => $value['name'],
+                'email'        => $value['email'],
+                'phone'        => $value['phone'],
+                'createDate'   => $value['createDate'],
+                'status'       => $value['status'],
+                'idApp'        => $value['idApp'],
+                'modal'        =>$modal.''
             ]);
+
+            $modal ++;
             
          
         }
@@ -127,20 +262,40 @@ class CustomerRacs extends PageRacs{
 
         $content = '';
  
+        $modal = 0;
         foreach ($apps as $key => $value) {
  
             if($segmento == $value['segmento'] || $segmento == 'app'){
 
-                $content .= View::render('racs/modules/customer/components/tabela/tbodyApps',[
+                if($value['status'] == 'block'){
+                    $content .= View::render('racs/modules/customer/components/tabela/tbodyAppsBlock',[
 
-                    'nomeFantasia' => $value['nomeFantasia'],
-                    'segmento'     => ucwords($value['segmento']),
-                    'tipo'         => $value['tipo'],
-                    'celular'      => $value['celular'],
-                    'email'        => $value['email'],
-                    'idApp'        => $value['idApp'],
+                        'nomeFantasia' => $value['nomeFantasia'],
+                        'segmento'     => ucwords($value['segmento']),
+                        'tipo'         => $value['tipo'],
+                        'celular'      => $value['celular'],
+                        'email'        => $value['email'],
+                        'idApp'        => $value['idApp'],
+                        'modal'        =>$modal.$segmento
+                    ]);
 
-                ]);
+
+                }else{
+
+                    $content .= View::render('racs/modules/customer/components/tabela/tbodyApps',[
+
+                        'nomeFantasia' => $value['nomeFantasia'],
+                        'segmento'     => ucwords($value['segmento']),
+                        'tipo'         => $value['tipo'],
+                        'celular'      => $value['celular'],
+                        'email'        => $value['email'],
+                        'idApp'        => $value['idApp'],
+                        'modal'        =>$modal.$segmento
+                    ]);
+    
+                }
+
+               $modal ++;
             }
          
         }

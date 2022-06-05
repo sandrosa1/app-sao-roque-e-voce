@@ -2,9 +2,7 @@
 
 namespace App\Controller\Api;
 
-use App\Help\Help;
 use \App\Model\Entity\Aplication\App as EntityApps;
-use \App\Help\HelpEntity;
 use \SandroAmancio\PaginationManager\Pagination;
 
 class Search extends Api {
@@ -29,12 +27,7 @@ class Search extends Api {
             $quatidadeTotal = EntityApps::getApp('chaves LIKE "%'.$like .'%"',null,null,'COUNT(*) as qtd')->fetchObject()->qtd;
             $query = 'chaves LIKE "%'.$like .'%"';
             
-        }else{
-
         }
-
-     
-        //PAGINA ATUAL
         
         //INSTANCIA DE PAGINAÇÃO
          $objPagination = new Pagination($quatidadeTotal,$pagianaAtual, 4);
@@ -46,29 +39,35 @@ class Search extends Api {
         while($objApp = $results->fetchObject(EntityApps::class)){
         
         
-            $itens [] = [
-            'idApp'          => (int)$objApp->idApp,
-            'nomeFantasia'   => $objApp->nomeFantasia,
-            'segmento'       => $objApp->segmento,
-            'tipo'           => $objApp->tipo,
-            'email'          => $objApp->email,
-            'telefone'       => $objApp->telefone,
-            'site'           => $objApp->site,
-            'celular'        => $objApp->celular,
-            'cep'            => $objApp->cep,
-            'logradouro'     => $objApp->logradouro,
-            'numero'         => $objApp->numero,
-            'bairro'         => $objApp->bairro,
-            'localidade'     => $objApp->localidade,
-            'chaves'         => $objApp->chaves,
-            'visualizacao'   => $objApp->visualizacao,
-            'avaliacao'      => $objApp->avaliacao,
-            'img1'           => 'http://www.racsstudios.com/img/imgApp/'.$objApp->img1,
-            'adicionais'     => $objApp->adicionais,
-            'estrelas'       => (float)$objApp->estrelas,
-            'custoMedio'     => (float)$objApp->custoMedio     
-            ];
-        }
+            if($objApp->status != 'block'){
+
+                $itens [] = [
+
+                    'idApp'          => (int)$objApp->idApp,
+                    'nomeFantasia'   => $objApp->nomeFantasia,
+                    'segmento'       => $objApp->segmento,
+                    'tipo'           => $objApp->tipo,
+                    'email'          => $objApp->email,
+                    'telefone'       => $objApp->telefone,
+                    'site'           => $objApp->site,
+                    'celular'        => $objApp->celular,
+                    'cep'            => $objApp->cep,
+                    'logradouro'     => $objApp->logradouro,
+                    'numero'         => $objApp->numero,
+                    'bairro'         => $objApp->bairro,
+                    'localidade'     => $objApp->localidade,
+                    'chaves'         => $objApp->chaves,
+                    'visualizacao'   => $objApp->visualizacao,
+                    'avaliacao'      => $objApp->avaliacao,
+                    'img1'           => 'http://www.racsstudios.com/img/imgApp/'.$objApp->img1,
+                    'adicionais'     => $objApp->adicionais,
+                    'estrelas'       => (float)$objApp->estrelas,
+                    'custoMedio'     => (float)$objApp->custoMedio   
+                      
+                    ];
+                }
+            }
+           
 
         //RETORNA OS DEPOIMENTOS
         return $itens;

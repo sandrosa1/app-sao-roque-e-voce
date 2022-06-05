@@ -8,12 +8,16 @@ class App{
 
 
     public $idApp;
+    public $status;
     public $nomeFantasia;
     public $segmento;
     public $tipo;
     public $email;
     public $telefone;
     public $site;
+    public $facebook;
+    public $instagram;
+    public $youtube;
     public $celular;
     public $cep;
     public $logradouro;
@@ -36,12 +40,16 @@ class App{
    (new Database('app'))->insert([
     
         'idApp'           => $this->idApp, 
+        'status'          => $this->status, 
         'nomeFantasia'    => $this->nomeFantasia,
         'segmento'        => $this->segmento,
         'tipo'            => $this->tipo,
         'email'           => $this->email,
         'telefone'        => $this->telefone,
         'site'            => $this->site,
+        'facebook'        => $this->facebook,
+        'instagram'       => $this->instagram,
+        'youtube'         => $this->youtube,
         'celular'         => $this->celular,
         'cep'             => $this->cep,
         'logradouro'      => $this->logradouro,
@@ -74,12 +82,16 @@ class App{
         return (new Database('app'))->update('idApp = '.$this->idApp,[
 
             'idApp'           => $this->idApp, 
+            'status'          => $this->status, 
             'nomeFantasia'    => $this->nomeFantasia,
             'segmento'        => $this->segmento,
             'tipo'            => $this->tipo,
             'email'           => $this->email,
             'telefone'        => $this->telefone,
-            'site'            => $this->site,    
+            'site'            => $this->site, 
+            'facebook'        => $this->facebook,
+            'instagram'       => $this->instagram,
+            'youtube'         => $this->youtube,   
             'celular'         => $this->celular,
             'cep'             => $this->cep,
             'logradouro'      => $this->logradouro,

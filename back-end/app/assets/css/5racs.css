@@ -34,6 +34,9 @@
 /*Configurações Gerais*/
 /*Extra-small*/
 
+hr.hr-racs1 {border-top: 1px solid var(--racs1);}
+hr.hr-racs2 {border-top: 1px solid var(--racs2);}
+
 .backgroundLoginRacs{
     position:absolute; 
     top: 0; left: 0; 

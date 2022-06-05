@@ -44,9 +44,9 @@ class Password{
      */
     public function verifyHashRacs($email,$password)
     {
-        $objCustomer = RACS::getRacsByEmail($email);
+        $objRacs = RACS::getRacsByEmail($email);
     
-        if(!password_verify($password,$objCustomer->password)){
+        if(!password_verify($password,$objRacs->password)){
           
             return false;
         }

@@ -44,16 +44,17 @@ class Comment extends Api {
         
             $itens [] = [
 
-                'idComment'  => (int)$objComment->idComment,
-                'idApp'      => (int)$objComment->idApp,
-                'idUsuario'  => (int)$objComment->idUsuario,
-                'nome'       => $objComment->nome,
-                'comentario' => $objComment->comentario,
-                'utilSim'    => (int)$objComment->utilSim,
-                'utilNao'    => (int)$objComment->utilNao,
-                'data'       => $objComment->data,
-                'avaliacao'  => (int)$objComment->avaliacao,
-                'custo'      => (int)$objComment->custo,
+                'idComment'        => (int)$objComment->idComment,
+                'idApp'            => (int)$objComment->idApp,
+                'idUsuario'        => (int)$objComment->idUsuario,
+                'estabelecimento'  => $objComment->estabelecimento,
+                'nome'             => $objComment->nome,
+                'comentario'       => $objComment->comentario,
+                'utilSim'          => (int)$objComment->utilSim,
+                'utilNao'          => (int)$objComment->utilNao,
+                'data'             => $objComment->data,
+                'avaliacao'        => (int)$objComment->avaliacao,
+                'custo'            => (int)$objComment->custo,
             ];
             
         }
@@ -122,8 +123,8 @@ class Comment extends Api {
         $objApp->avaliacao       = $objApp->avaliacao + 1 ;
         $objApp->totalAvaliacao  = $objApp->totalAvaliacao + $postVars['avaliacao'];
         $objApp->totalCusto      = $objApp->totalCusto + $postVars['custo'];
-        $objApp->custoMedio      =  (float)$objApp->totalCusto / (float)$objApp->avaliacao;
-        $objApp->estrelas        =  (float)$objApp->totalAvaliacao / (float)$objApp->avaliacao;
+        $objApp->custoMedio      =  round((float)$objApp->totalCusto / (float)$objApp->avaliacao,1);
+        $objApp->estrelas        =  round((float)$objApp->totalAvaliacao / (float)$objApp->avaliacao,1);
 
 
         $objApp->updateApp();
@@ -131,30 +132,33 @@ class Comment extends Api {
         //Novo comentário
         $objComment = new EntityComments();
 
-        $objComment->idApp      = (int)$postVars['idApp'];
-        $objComment->idUsuario  = (int)$request->user->idUsuario;
-        $objComment->nome       = $request->user->nomeUsuario;
-        $objComment->comentario = $postVars['comentario'];
-        $objComment->utilSim    = 0;
-        $objComment->utilNao    = 0;
-        $objComment->avaliacao  = (int)$postVars['avaliacao'];
-        $objComment->custo      = (int)$postVars['custo'];
+        $objComment->idApp           = (int)$postVars['idApp'];
+        $objComment->idUsuario       = (int)$request->user->idUsuario;
+        $objComment->estabelecimento = $objApp->nomeFantasia;
+        $objComment->nome            = $request->user->nomeUsuario." ". $request->user->sobreNome;
+        $objComment->comentario      = $postVars['comentario'];
+        $objComment->utilSim         = 0;
+        $objComment->utilNao         = 0;
+        $objComment->avaliacao       = (int)$postVars['avaliacao'];
+        $objComment->custo           = (int)$postVars['custo'];
 
+       
         
         $objComment->insertNewComment();
 
         return [
             
-            'idComment'  => (int)$objComment->idComment,
-            'idApp'      => (int)$objComment->idApp,
-            'idUsuario'  => (int)$objComment->idUsuario,
-            'nome'       => $objComment->nome,
-            'comentario' => $objComment->comentario,
-            'utilSim'    => (int)$objComment->utilSim,
-            'utilNao'    => (int)$objComment->utilNao,
-            'data'       => $objComment->data,
-            'avaliacao'  => (int)$objComment->avaliacao,
-            'custo'      => (int)$objComment->custo,
+            'idComment'            => (int)$objComment->idComment,
+            'idApp'                => (int)$objComment->idApp,
+            'estabelecimento'      =>  $objComment->estabelecimento,
+            'idUsuario'            => (int)$objComment->idUsuario,
+            'nome'                 => $objComment->nome,
+            'comentario'           => $objComment->comentario,
+            'utilSim'              => (int)$objComment->utilSim,
+            'utilNao'              => (int)$objComment->utilNao,
+            'data'                 => $objComment->data,
+            'avaliacao'            => (int)$objComment->avaliacao,
+            'custo'                => (int)$objComment->custo,
         ];
 
     }
@@ -202,7 +206,7 @@ class Comment extends Api {
        
         $objComment->idApp          = $postVars['idApp'];
         $objComment->idUsuario      = $request->user->idUsuario;
-        $objComment->nome           = $request->user->nomeUsuario;
+        $objComment->nome           = $request->user->nomeUsuario." ". $request->user->sobreNome;
         $objComment->comentario     = $postVars['comentario'];
         $objComment->custo          = $postVars['custo'];
 
@@ -211,8 +215,8 @@ class Comment extends Api {
             $objApp->avaliacao       = $objApp->avaliacao + 1 ;
             $objApp->totalAvaliacao  = $objApp->totalAvaliacao + $postVars['avaliacao'];
             $objApp->totalCusto      = $objApp->totalCusto + $postVars['custo'];
-            $objApp->custoMedio      =  (float)$objApp->totalCusto / (float)$objApp->avaliacao;
-            $objApp->estrelas        =  (float)$objApp->totalAvaliacao / (float)$objApp->avaliacao;
+            $objApp->custoMedio      =  round((float)$objApp->totalCusto / (float)$objApp->avaliacao,1);
+            $objApp->estrelas        =  round((float)$objApp->totalAvaliacao / (float)$objApp->avaliacao,1);
             $objApp->updateApp();
         }
        

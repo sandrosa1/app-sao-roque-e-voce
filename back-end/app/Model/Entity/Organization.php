@@ -7,7 +7,7 @@ class Organization{
 
     public $id = 1;
 
-    public $name = '<span class="text-color-racs1 f-5">RACS</span> <span class="text-color-racs2 f-3">studios</span>';
+    public $name = '<span class="racs-c-1 f-5">RACS</span> <span class="racs-c-2 f-3">studios</span>';
 
     public $site = '<a href="http://racsstudios.com">www.racsstudios.com</a>';
 
@@ -35,6 +35,16 @@ class Organization{
     public $vision = 'Ser referência em desenvolvimento de sistemas e jogos digitais, cuidando da saúde mental das pessoas, inovando e educando.';
 
     public $values = 'Ética e Transparência, Criatividade, Colaboção, Cuidado, Comprometimento e Respeito.';
+
+    public $policy = 'Nós fornecemos as informações que coletamos e arquivamos em 
+    nosso aplicativo. Além disso, nós utilizado o cache de seu celular para amazerna 
+    dados de login; endereço de email; token de acesso. Nós poderemos utilizar ferramentas 
+    para medir e coletar informações de navegação, incluindo o tempo de resposta das páginas, 
+    tempo total da visita em determinadas páginas, informações de interação com página e os métodos 
+    utilizados para deixar a página. Nós também coletamos informações de identificação pessoal 
+    (incluindo nome, email, senha); detalhes de comentários, feedback, recomendações e 
+    perfil pessoal.Caso você não queira que mais que seja possível para nós coletar as 
+    suas informações pessoais, basta deletar sua conta e todos seus daos seram apagados.';
 
 }
 
