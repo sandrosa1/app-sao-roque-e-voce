@@ -178,7 +178,20 @@ class Report{
 
         return(new Database('report'))->select($where, $order, $limit, $fields);
     }
+    
+     /**
+     * Método responsavel por retornar todos os report  
+     *
+     * @param string $where
+     * @param string $order
+     * @param string $limit
+     * @param string $fields
+     * @return PDOStatement
+     */
+    public static function getReportAll($where = null, $order = null, $limit = null, $fields = '*'){
 
+        return(new Database('report'))->select($where, $order, $limit, $fields)->fetchAll();
+    }
   
    
 }

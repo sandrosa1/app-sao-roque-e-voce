@@ -180,15 +180,15 @@ class User extends Api {
 
             }
     
-            $objUser->nomeUsuario           = $postVars['nomeUsuario'];           
-            $objUser->sobreNome             = $postVars['sobreNome'];             
-            $objUser->dataNascimento        = $postVars['dataNascimento']; 
-            $objUser->alertaNovidade        = $postVars['alertaNovidade'];
-            $objUser->dicasPontosTuristicos = $postVars['dicasPontosTuristicos'];
-            $objUser->dicasRestaurantes     = $postVars['dicasRestaurantes'];
-            $objUser->dicasHospedagens      = $postVars['dicasHospedagens'];
-            $objUser->alertaEventos         = $postVars['alertaEventos'];
-            $objUser->ativaLocalizacao      = $postVars['ativaLocalizacao'];
+            $objUser->nomeUsuario           = $postVars['nomeUsuario']           ?? $objUser->nomeUsuario;           
+            $objUser->sobreNome             = $postVars['sobreNome']             ?? $objUser->sobreNome;             
+            $objUser->dataNascimento        = $postVars['dataNascimento']        ?? $objUser->dataNascimento; 
+            $objUser->alertaNovidade        = $postVars['alertaNovidade']        ?? $objUser->alertaNovidade;
+            $objUser->dicasPontosTuristicos = $postVars['dicasPontosTuristicos'] ?? $objUser->dicasPontosTuristicos;
+            $objUser->dicasRestaurantes     = $postVars['dicasRestaurantes']     ?? $objUser->dicasRestaurantes;
+            $objUser->dicasHospedagens      = $postVars['dicasHospedagens']      ?? $objUser->dicasHospedagens;
+            $objUser->alertaEventos         = $postVars['alertaEventos']         ?? $objUser->alertaEventos;
+            $objUser->ativaLocalizacao      = $postVars['ativaLocalizacao']      ?? $objUser->ativaLocalizacao;
            
     
             if(!$objUser->updateUser()){
