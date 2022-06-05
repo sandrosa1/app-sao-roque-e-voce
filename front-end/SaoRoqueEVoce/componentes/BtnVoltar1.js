@@ -1,35 +1,34 @@
 import React from 'react';
-import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
+import {StyleSheet, Text, View, TouchableHighlight} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 
 export default function App() {
   const navigation = useNavigation();
   return (
     <View style={{width: '100%', alignItems: 'center'}}>
-      <TouchableOpacity style={estilos.btn} onPress={() => navigation.goBack()}>
+      <TouchableHighlight
+        onPress={() => navigation.goBack()}
+        style={estilos.btn}>
         <Text
           style={{
             fontSize: 24,
             fontFamily: 'Poppins-Regular',
-            color: '#910046',
-            padding: 5,
+            color: '#CDCDCD',
+            textAlign: 'center',
+            padding: 4,
           }}>
-          Cancelar
+          Voltar
         </Text>
-      </TouchableOpacity>
+      </TouchableHighlight>
     </View>
   );
 }
 
 const estilos = StyleSheet.create({
   btn: {
-    Flex: 1,
-    marginTop: 20,
-    width: '75%',
-    height: 45,
+    width: '90%',
+    height: 42,
     borderRadius: 33,
-    backgroundColor: '#CDCDCD',
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: '#910046',
   },
 });

@@ -14,7 +14,6 @@ import {
 import {useNavigation} from '@react-navigation/native';
 import NavPages from './NavPages';
 import SeparadorComentario from './SeparadorComentario';
-import CardMeusComentarios from './CardMeusComentarios';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import CardComentarios from './CardComentarios';
@@ -22,18 +21,17 @@ import Carousel from 'react-native-snap-carousel';
 import Globais from './Globais';
 import {useIsFocused} from '@react-navigation/native';
 import {Buffer} from 'buffer';
+import { info } from 'console';
 
 export default function App({route}) {
   const navigation = useNavigation();
   const [rank, setRank] = useState(0);
   const [custo, setCusto] = useState(0);
-  const url = `http://www.racsstudios.com/api/v1/apps/${route.params.id}`;
+  // const url = `http://www.racsstudios.com/api/v1/apps/${route.params.id}`;
+  const url = `http://www.racsstudios.com/api/v1/apps/116`;
   const [dados, setDados] = useState([]);
   const [listacomentarios, setlistaComentarios] = useState();
   const [filtro, setFiltro] = useState(listacomentarios);
-  const [comentarioUsuario, setComentarioUsuario] = useState([]);
-  const [mostrarComentarioUsuario, setMostrarComentarioUsuario] =
-    useState(false);
   const [additem, setAdditem] = useState(3);
   const [comentario, setComentario] = useState();
   const [loading, setLoading] = useState(false);
@@ -44,21 +42,14 @@ export default function App({route}) {
   const [mostrarcadastro, setMostrarCadastro] = useState(false);
   const [confirmacao, setConfirmacao] = useState();
   const [mostrarcomentarios, setMostrarcomentarios] = useState(false);
-  const [verificar, setVerificar] = useState(0)
+  const [mostrarsugestao, setMostrarsugestao] = useState(false);
   const [error, setError] = useState();
-  const [img, setImg] = useState();
-  const [msg, setMsg] = useState('');
-  const reload = route.params?.hookReload
-  const {width, height} = Dimensions.get('window');
+  const {width: screenWidth} = Dimensions.get('window');
   const isFocused = useIsFocused();
-  const scrollRef = useRef();
 
   useEffect(() => {
     loadApi();
-    setComentario('');
-    setRank(0); 
-    setCusto(0); 
-  }, [additem, isFocused, reload]);
+  }, [additem, isFocused]);
 
   async function loadApi() {
     if (loading) return;
@@ -67,13 +58,11 @@ export default function App({route}) {
     setDados(response.data);
     try {
       const responseComentario = await axios.get(
-        `http://www.racsstudios.com/api/v1/commentall/${route.params.id}/`,
+        `http://www.racsstudios.com/api/v1/commentall/116`,
       );
       setlistaComentarios(responseComentario.data.comments);
       setMostrarcomentarios(true);
       setLoading2(false);
-      
-      
       setTimeout(() => {
         setLoading(false);
       }, 500);
@@ -84,46 +73,24 @@ export default function App({route}) {
         }, 200);
       }
     }
-    
   }
 
   useEffect(() => {
-    setComentarioUsuario(
-      listacomentarios?.filter((item, indice) => {       
-        if (item.idUsuario == Globais.dados?.useridusuario) { 
-          setMostrarComentarioUsuario(true)
-          setRank(item.avaliacao)
+    setFiltro(
+      listacomentarios?.filter((item, indice) => {
+        if (indice < additem) {
           return true;
-        }        
+        }
       }),
-      ); 
-    }, [listacomentarios]);
-    
-    
-    
-    useEffect(() => {
-      setFiltro(
-        listacomentarios?.filter((item, indice) => {
-          if (indice < additem) {
-            return true;
-          }
-        }),
-        );
-      }, [listacomentarios]);  
-  
-      if(JSON.stringify(comentarioUsuario) == '[]' && mostrarComentarioUsuario == true ){
-        setMostrarComentarioUsuario(false);
-        setRank(0); 
-        setMostrarinput(false)    
-      }   
-      
+    );
+  }, [listacomentarios]);
+
   let ranks = rank;
   let custos = custo;
   let estrelas = dados.estrelas;
   let arrayrank = [];
   let arraycusto = [];
   let arrayestrela = [];
-  let id = route.params.id;
 
   let i = 0;
   for (i = 0; i < 5; i++) {
@@ -182,35 +149,11 @@ export default function App({route}) {
     );
   };
 
-  let tipo = '';
-  let icon = '';
-
-  if (dados.segmento == 'turismo') {
-    tipo = 'Turismo';
-    icon = require('../images/menubar/pontos.png');
-  }
-  if (dados.segmento == 'hospedagem') {
-    tipo = 'Hospedagem';
-    icon = require('../images/menubar/hotel.png');
-  }
-  if (dados.segmento == 'gastronomia') {
-    tipo = 'Gastronomia';
-    icon = require('../images/menubar/gastronomia.png');
-  }
-  if (dados.segmento == 'evento') {
-    tipo = 'Eventos';
-    icon = require('../images/menubar/evento.png');
-  }
-  if (dados.segmento == 'comercio') {
-    tipo = 'Comércio';
-    icon = require('../images/menubar/comercio.png');
-  }
-  if (dados.segmento == 'servicos') {
-    tipo = 'Serviços';
-    icon = require('../images/menubar/pontos.png');
-  }
-
+  let id = ''
+  let icon = ''
+  let tipo = ''
   function inserircomentario() {
+    setMostrarsugestao(false);
     setMostrar(true);
     setLoadingResponse(true);
     let username = Globais.dados.useremail;
@@ -229,8 +172,6 @@ export default function App({route}) {
       .post(baseURL, body, {headers: {Authorization: `Basic ${token}`}})
       .then(response => {
         setConfirmacao(response.data);
-        setImg(require('../images/configuracao/sucesso.png'))
-        setMsg('Comentário inserido com sucesso!')
         setTimeout(() => {
           setLoadingResponse(false);
           setMostrarinput(false);
@@ -238,12 +179,6 @@ export default function App({route}) {
       })
       .catch(error => {
         setError(error.response.data);
-        setImg(require('../images/configuracao/error.png'))
-        setMsg('Não use vocabulário impróprio!')
-        setTimeout(() => {
-          setLoadingResponse(false);
-          setMostrarinput(false);
-        }, 1000);        
         console.log(error.response.data);
       });
   }
@@ -260,14 +195,11 @@ export default function App({route}) {
     setCusto(0);
     setMostrarCadastro(false);
   }, [isFocused]);
-
+  if (informacao) {}
   return (
     <View style={estilos.container}>
       <View style={{}}>
         <FlatList
-          onLayout={event => console.log(event.nativeEvent.layout)}
-          ref={scrollRef}
-          style={{width: width, height: height}}
           showsVerticalScrollIndicator={false}
           data={filtro}
           keyExtractor={item => String(item.idComment)}
@@ -276,41 +208,14 @@ export default function App({route}) {
           ListHeaderComponent={
             <>
               <View style={{flex: 1}}>
-                <NavPages icon={icon} title={tipo} />
-                <View>
-                  <Text
-                    style={{
-                      fontSize: 24,
-                      fontFamily: 'Roboto-Bold',
-                      textAlign: 'center',
-                      color: '#000',
-                    }}>
-                    {dados.nomeFantasia}
+              
+                <View style={{marginHorizontal: 30}}>
+                  <Text style={estilos.h1}>O que você achou desse local?</Text>
+                  <Text style={estilos.txt}>
+                    Escolha de 1 a 5 estrelas para classificar.
                   </Text>
                 </View>
 
-                <View style={estilos.slideView}>
-                  <Carousel
-                    style={estilos.carousel}
-                    ref={carouselRef}
-                    data={lista}
-                    renderItem={renderItem}
-                    sliderWidth={width}
-                    itemWidth={
-                      Dimensions.get('window').width -
-                      Dimensions.get('window').width * 0.2
-                    }
-                    inactiveSlideOpacity={0.5}
-                  />
-                </View>
-                <View style={{marginHorizontal: 30}}>
-                  <Text style={estilos.h1}>O que você achou desse local?</Text>
-                  {!mostrarComentarioUsuario && (
-                    <Text style={estilos.txt}>
-                      Escolha de 1 a 5 estrelas para classificar.
-                    </Text>
-                  )}
-                </View>
                 <View
                   style={{
                     marginHorizontal: 30,
@@ -319,29 +224,19 @@ export default function App({route}) {
                     alignItems: 'center',
                   }}>
                   <View style={{flex: 1, flexDirection: 'row'}}>
-                    <TouchableOpacity
-                      onPress={() => setRank(1)}
-                      disabled={mostrarComentarioUsuario}>
+                    <TouchableOpacity onPress={() => setRank(1)}>
                       <Image style={estilos.star} source={arrayrank[0]} />
                     </TouchableOpacity>
-                    <TouchableOpacity
-                      onPress={() => setRank(2)}
-                      disabled={mostrarComentarioUsuario}>
+                    <TouchableOpacity onPress={() => setRank(2)}>
                       <Image style={estilos.star} source={arrayrank[1]} />
                     </TouchableOpacity>
-                    <TouchableOpacity
-                      onPress={() => setRank(3)}
-                      disabled={mostrarComentarioUsuario}>
+                    <TouchableOpacity onPress={() => setRank(3)}>
                       <Image style={estilos.star} source={arrayrank[2]} />
                     </TouchableOpacity>
-                    <TouchableOpacity
-                      onPress={() => setRank(4)}
-                      disabled={mostrarComentarioUsuario}>
+                    <TouchableOpacity onPress={() => setRank(4)}>
                       <Image style={estilos.star} source={arrayrank[3]} />
                     </TouchableOpacity>
-                    <TouchableOpacity
-                      onPress={() => setRank(5)}
-                      disabled={mostrarComentarioUsuario}>
+                    <TouchableOpacity onPress={() => setRank(5)}>
                       <Image style={estilos.star} source={arrayrank[4]} />
                     </TouchableOpacity>
                   </View>
@@ -349,7 +244,7 @@ export default function App({route}) {
                   <View>
                     <TouchableOpacity
                       onPress={() =>
-                        navigation.navigate('PaginaDetalhes', {id: id})
+                        navigation.navigate('PaginaDetalhes', {hookReload2:'hook'+Math.random()})
                       }
                       style={[
                         estilos.btn,
@@ -371,32 +266,6 @@ export default function App({route}) {
                   </View>
                 </View>
               </View>
-              {mostrarComentarioUsuario && (
-                <View>
-                  <FlatList
-                    ListHeaderComponent={
-                      <Text
-                        style={[
-                          estilos.h1,
-                          {marginTop: 20, marginHorizontal: 20},
-                        ]}>
-                        Seu comentário:
-                      </Text>
-                    }
-                    showsVerticalScrollIndicator={false}
-                    data={comentarioUsuario}
-                    keyExtractor={item => String(item.idComment)}
-                    renderItem={({item}) => (
-                      <CardMeusComentarios
-                        data={item}
-                        props={item}
-                        icon={icon}
-                        tipo={tipo}
-                      />
-                    )}
-                  />
-                </View>
-              )}
               {mostrarcadastro ? (
                 <View style={{marginHorizontal: 30, marginVertical: 20}}>
                   <View style={{flexDirection: 'row', alignItems: 'center'}}>
@@ -450,7 +319,7 @@ export default function App({route}) {
                 <View></View>
               )}
 
-              {mostrarinput && !mostrarComentarioUsuario ? (
+              {mostrarinput ? (
                 <View style={{marginHorizontal: 30, marginVertical: 20}}>
                   <View
                     style={{
@@ -491,12 +360,6 @@ export default function App({route}) {
                       marginTop: 20,
                     }}>
                     <TextInput
-                      onPressIn={() =>
-                        scrollRef.current.scrollToOffset({
-                          offset: Dimensions.get('window').height * 0.40,
-                          animated: true,
-                        })
-                      }
                       value={comentario}
                       multiline={true}
                       onChangeText={setComentario}
@@ -626,7 +489,7 @@ export default function App({route}) {
                 <View
                   style={{
                     marginTop: 100,
-                    marginBottom: 1000,
+                    marginBottom: 400,
                     alignItems: 'center',
                     justifyContent: 'center',
                   }}>
@@ -639,7 +502,7 @@ export default function App({route}) {
           }
           ListEmptyComponent={
             <>
-              {loading ? (
+             {loading ? (
                 <View
                   style={{
                     marginTop: 100,
@@ -650,34 +513,35 @@ export default function App({route}) {
                   <ActivityIndicator size={50} color="#910046" />
                 </View>
               ) : (
-                <View style={{marginHorizontal: 30, marginVertical: 50}}>
+               
+                  <View style={{marginHorizontal: 30, marginVertical: 50}}>
                   <View style={{alignItems: 'center'}}>
                     <Image
                       style={estilos.star}
                       source={require('../images/paginadetalhes/warning-purple.png')}
-                    />
+                      />
                     <Text
                       style={{
-                        fontFamily: 'Poppins-Regular',
-                        fontSize: 16,
-                        color: '#000',
-                        textAlign: 'center',
-                        marginVertical: 10,
-                      }}>
+                          fontFamily: 'Poppins-Regular',
+                          fontSize: 16,
+                          color: '#000',
+                          textAlign: 'center',
+                          marginVertical: 10,
+                        }}>
                       Este estabelecimento ainda não recebeu nenhuma avaliação.
                     </Text>
                     <Text
                       style={{
-                        fontFamily: 'Poppins-Bold',
-                        fontSize: 16,
-                        color: '#000',
-                        textAlign: 'center',
-                      }}>
+                          fontFamily: 'Poppins-Bold',
+                          fontSize: 16,
+                          color: '#000',
+                          textAlign: 'center',
+                        }}>
                       Seja o primeiro a Avaliar!
                     </Text>
                   </View>
-                </View>
-              )}
+                </View>                       
+                )}              
             </>
           }
           onEndReached={() => {
@@ -714,10 +578,7 @@ export default function App({route}) {
               <View style={{alignItems: 'flex-end'}}>
                 <TouchableOpacity
                   onPress={() => {
-                    setMostrar(false), loadApi(), setLoading2(true);                  
-                    setTimeout(() => {
-                      setLoading2(false);
-                    }, 2000);
+                    setMostrar(false), loadApi(), setLoading2(true);
                   }}>
                   <Image source={require('../images/configuracao/close.png')} />
                 </TouchableOpacity>
@@ -741,10 +602,10 @@ export default function App({route}) {
                   <View
                     style={{alignItems: 'center', justifyContent: 'center'}}>
                     <Image
-                      source={img}
+                      source={require('../images/configuracao/sucesso.png')}
                     />
                     <Text style={[estilos.txtModal, {paddingVertical: 15}]}>
-                      {msg}
+                      Comentário inserido com sucesso!
                     </Text>
                   </View>
                 )}
@@ -855,7 +716,7 @@ const estilos = StyleSheet.create({
   },
   containerModal: {
     alignSelf: 'center',
-    width: Dimensions.get('window').width - Dimensions.get('window').width * 0.1,
+    width: 350,
     height: 230,
     padding: 20,
     borderRadius: 30,
