@@ -73,20 +73,21 @@ class ForumSrv extends PageSrv{
                 while($objForum = $results->fetchObject(Comment::class)){
                     $custo= '';
                     for ($i=0; $i <= (int)$objForum->custo ; $i++) { 
-                        $custo .= '<i class="material-icons c-success">monetization_on</i>';
+                        $custo .= '<i class=" tiny material-icons c-success">monetization_on</i>';
                     }
 
                     $avaliacao= '';
                     for ($i=0; $i <= (int)$objForum->avaliacao ; $i++) { 
-                        $avaliacao .= '<i class="material-icons srv-c-2">stars</i>';
+                        $avaliacao .= '<i class="tiny material-icons srv-c-2">stars</i>';
                     }
                     $itens   .= View::render('srv/modules/forum/components/box/item',[
-                    'idForum'  => $objForum->idForum,
+
+                    'idForum'  => $objForum->idComment,
                     'idApp'    => $objForum->idApp,
                     'idUser'   => $objForum->idUser,
                     'nome'     => $objForum->nome,
                     'mensagem' => $objForum->comentario,
-                    'data'     => date('d/m/Y H:i:s',strtotime($objForum->data)),
+                    'data'     => date('d/m/Y',strtotime($objForum->data)),
                     'utilSim'  => $objForum->utilSim,
                     'utilNao'  => $objForum->utilNao,
                     'avaliacao'=> $avaliacao,

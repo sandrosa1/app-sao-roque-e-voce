@@ -190,6 +190,7 @@ class Config extends PageSrv
 
 
         
+        $validate->validateSite($objApp->site);
         $validate->validateFields($campos);
        // $validate->validateCaptcha($captcha);
         $validate->validateEmail($objApp->email);

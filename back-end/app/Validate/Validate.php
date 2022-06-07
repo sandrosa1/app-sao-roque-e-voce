@@ -527,6 +527,25 @@ class Validate{
         return true;
 
     }
+
+    public function validateSite($site){
+
+        $pattern1 = '/^www./'; //
+        $pattern2 = '/^wwws./'; //
+    
+        if(preg_match($pattern1,$site) || preg_match($pattern2,$site)  ){
+
+            return true;
+
+        }else{
+
+            $this->setErro('Não utilize http:// ou https://');
+            $this->setErro('Utilize www. para inciar o endereço');
+            return false;
+        }
+
+
+    }
      
 }
 
