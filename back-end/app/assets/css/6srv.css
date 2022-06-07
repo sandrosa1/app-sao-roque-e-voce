@@ -383,6 +383,8 @@ header-login-src{
         "nav-srv content-srv content-srv content-srv" 92vh
         /0fr 3fr 2fr 1fr
     }
+
+   
     
 }
 /*Small*/
@@ -401,6 +403,9 @@ header-login-src{
         "status-srv status-srv status-srv status-srv" 8vh
         "nav-srv content-srv content-srv content-srv" 92vh
         /0fr 3fr 2fr 1fr
+    }
+    .modal{
+        min-width: 80%;
     }
    
   

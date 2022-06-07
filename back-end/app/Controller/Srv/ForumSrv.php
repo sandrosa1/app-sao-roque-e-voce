@@ -72,12 +72,12 @@ class ForumSrv extends PageSrv{
                 //RENDERIZA ITEM
                 while($objForum = $results->fetchObject(Comment::class)){
                     $custo= '';
-                    for ($i=0; $i <= (int)$objForum->custo ; $i++) { 
+                    for ($i=0; $i < (int)$objForum->custo ; $i++) { 
                         $custo .= '<i class=" tiny material-icons c-success">monetization_on</i>';
                     }
 
                     $avaliacao= '';
-                    for ($i=0; $i <= (int)$objForum->avaliacao ; $i++) { 
+                    for ($i=0; $i < (int)$objForum->avaliacao ; $i++) { 
                         $avaliacao .= '<i class="tiny material-icons srv-c-2">stars</i>';
                     }
                     $itens   .= View::render('srv/modules/forum/components/box/item',[
