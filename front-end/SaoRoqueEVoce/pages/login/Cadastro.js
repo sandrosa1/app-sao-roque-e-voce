@@ -230,7 +230,7 @@ export default function App({navigation, route}) {
 
   function enviarEmail() {
     setEnviado(true);
-    setTempo(10);
+    setTempo(150);
     axios
       .post('http://www.racsstudios.com/api/v1/setuser', {
         newToken: email,
@@ -295,7 +295,12 @@ export default function App({navigation, route}) {
 
   const rota = () => {
     if (route.params?.id) {
-      navigation.goBack({icon: icon, tipo: tipo, id: id});
+      navigation.navigate('PaginaDetalhesComentario', {
+        icon: icon,
+        tipo: tipo,
+        id: id,
+        hookReload2: 'hook' + new Date(),
+      })
     } else {
       navigation.navigate('Index');
     }

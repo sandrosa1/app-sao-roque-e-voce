@@ -14,7 +14,6 @@ import {
 } from 'react-native';
 import Header from '../../componentes/Header';
 import MenuBar from '../../componentes/MenuBar';
-import BuscarBar from '../../componentes/BuscarBar';
 import CardHome from '../../componentes/CardHome';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Globais from '../../componentes/Globais';
@@ -108,7 +107,6 @@ export default function App() {
         Globais.dados = JSON.parse(json);
       }
     };
-    console.log(Globais.dados);
     verificarLogin();
     dadosdousuario();
   }, [isFocused, loading]);

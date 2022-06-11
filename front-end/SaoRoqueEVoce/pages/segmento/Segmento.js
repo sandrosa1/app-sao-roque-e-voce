@@ -8,6 +8,8 @@ import {
   TouchableOpacity,
   ActivityIndicator,
   TextInput,
+  Animated,
+  Dimensions,
 } from 'react-native';
 import NavPages from '../../componentes/NavPages';
 import CardDetalhes from '../../componentes/CardDetalhes';
@@ -32,7 +34,14 @@ export default function App({route}) {
   const [mostrarbusca, setMostrarbusca] = useState(false);
   const [mostrarLoading, setMostrarLoading] = useState(false);
   const input = useRef();
-  const isFocused = useIsFocused();
+  const scrollRef = useRef();
+  const scrollY = new Animated.Value(0);
+  const diffClamp = Animated.diffClamp(scrollY, 0, 130);
+  const translate = diffClamp.interpolate({
+    inputRange: [0, 130, 260],
+    outputRange: [0, -130, -260],
+  });
+
   let icon = route.params?.icon;
   let tipo = route.params?.tipo;
   let pesquisa = route.params?.pesquisa;
@@ -237,179 +246,219 @@ export default function App({route}) {
 
   return (
     <View style={estilos.container}>
+      <Animated.View
+        style={{
+          position: 'absolute',
+          zIndex: 9,
+          backgroundColor: '#f3f3f3',
+          top: 0,
+          transform: [{translateY: translate}],
+        }}>
+        <NavPages icon={icon} title={tipo} />
+        <View
+          style={{
+            paddingHorizontal: 40,
+            flexDirection: 'row',
+            alignItems: 'center',
+            marginTop: 10,
+          }}>
+          <View style={estilos.containerBusca}>
+            <TextInput
+              ref={input}
+              onSubmitEditing={() => {
+                buscar();
+                setMostrarx(true);
+              }}
+              value={busca}
+              onChangeText={value => {
+                setBusca(value);
+                setMostrarbusca(false);
+              }}
+              placeholder={`O que voce procura em ${pesquisa}?`}
+              placeholderTextColor={'#8E8E8E'}
+              style={estilos.input}></TextInput>
+          </View>
+          <TouchableOpacity
+            onPress={() => {
+              buscar();
+              input.current.blur();
+              if (busca) setMostrarx(true);
+              setMostrarLoading(false);
+              setTimeout(() => {
+                setMostrarLoading(true);
+              }, 1500);
+            }}
+            style={{
+              position: 'absolute',
+              alignSelf: 'center',
+              right: 50,
+              padding: 10,
+            }}>
+            <Image
+              style={estilos.imgLupa}
+              source={require('../../images/buscar.png')}
+            />
+          </TouchableOpacity>
+          {mostrarx && (
+            <TouchableOpacity
+              onPress={() => {
+                setMostrarbusca(false);
+                limpaBusca();
+                setBusca('');
+                input.current.blur();
+                setMostrarx(false);
+              }}
+              style={{
+                position: 'absolute',
+                alignSelf: 'center',
+                left: 40,
+                padding: 10,
+              }}>
+              <Image
+                style={estilos.img2}
+                source={require('../../images/close.png')}
+              />
+            </TouchableOpacity>
+          )}
+        </View>
+        <View
+          style={{
+            flexDirection: 'row',
+            marginTop: 10,
+            paddingTop: 10,
+            justifyContent: 'space-around',
+          }}>
+          <TouchableOpacity
+            style={estilos.containerIcon}
+            onPress={() => {
+              btnfiltro('preco');
+              scrollRef.current.scrollToOffset({
+                offset: 0,
+                animated: true,
+              });
+            }}>
+            <Image style={estilos.img} source={iconpreco} />
+            <Text style={estilos.txt}>Preço</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={estilos.containerIcon}
+            onPress={() => {
+              btnfiltro('avaliacao');
+              scrollRef.current.scrollToOffset({
+                offset: 0,
+                animated: true,
+              });
+            }}>
+            <Image style={estilos.img} source={iconestrelas} />
+            <Text style={estilos.txt}>Avaliação</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={estilos.containerIcon}
+            onPress={() => {
+              btnfiltro('distancia');
+              scrollRef.current.scrollToOffset({
+                offset: 0,
+                animated: true,
+              });
+            }}>
+            <Image style={estilos.img} source={icondistancia} />
+            <Text style={estilos.txt}>Distância</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={estilos.containerIcon}
+            onPress={() => {
+              btnfiltro('maisprocurados');
+              scrollRef.current.scrollToOffset({
+                offset: 0,
+                animated: true,
+              });
+            }}>
+            <Image style={estilos.img} source={iconmaisprocurados} />
+            <Text style={estilos.txt}>{'Mais\nProcurados'}</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={estilos.containerIcon}
+            onPress={() => {
+              btnfiltro('filtro');
+              scrollRef.current.scrollToOffset({
+                offset: 0,
+                animated: true,
+              });
+            }}>
+            <Image style={estilos.img} source={iconfiltro} />
+            <Text style={estilos.txt}>Filtro</Text>
+          </TouchableOpacity>
+        </View>
+        <Image
+          source={require('../../images/line.png')}
+          style={{
+            alignSelf: 'center',
+            resizeMode: 'contain',
+            marginTop: 10,
+          }}
+        />
+      </Animated.View>
       <View
         style={{
-          flex: 1,
-          alignItems: 'center',
+          flex: 1,         
         }}>
         <FlatList
+          scrollEventThrottle={16}
+          onScroll={Animated.event(
+            [
+              {
+                nativeEvent: {
+                  contentOffset: {y: scrollY},
+                },
+              },
+            ],
+            {useNativeDriver: false},
+          )}
+          ref={scrollRef}
           data={filtro3}
           keyExtractor={item => String(item.idApp)}
           renderItem={({item}) => <CardDetalhes data={item} />}
           showsVerticalScrollIndicator={false}
           ListHeaderComponent={
             <>
-              <View style={{flex: 1}}>
-                <NavPages icon={icon} title={tipo} />
-                <View
-                  style={{
-                    paddingHorizontal: 40,
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                  }}>
-                  <View style={estilos.containerBusca}>
-                    <TextInput
-                      ref={input}
-                      onSubmitEditing={() => {
-                        buscar();
-                        setMostrarx(true);
-                      }}
-                      value={busca}
-                      onChangeText={value => {
-                        setBusca(value);
-                        setMostrarbusca(false);
-                      }}
-                      placeholder={`O que voce procura em ${pesquisa}?`}
-                      placeholderTextColor={'#8E8E8E'}
-                      style={estilos.input}></TextInput>
+              <View style={{height: 230}}></View>
+              <View
+                style={{                 
+                  paddingHorizontal: 35,
+                  paddingTop: 10,                 
+                }}>
+                {ordenado ? (
+                  <View style={{flexDirection: 'row', height: 25}}>
+                    <Text
+                      style={[estilos.txt, {textAlign: 'left', fontSize: 15}]}>
+                      Ordenado por{' '}
+                    </Text>
+                    <Text
+                      style={[
+                        estilos.txt,
+                        {textAlign: 'left', fontSize: 16, fontWeight: 'bold'},
+                      ]}>
+                      {ordenado}
+                    </Text>
                   </View>
-                  <TouchableOpacity
-                    onPress={() => {
-                      buscar();
-                      input.current.blur();
-                      if (busca) setMostrarx(true);
-                      setMostrarLoading(false);
-                      setTimeout(() => {
-                        setMostrarLoading(true);
-                      }, 1500);
-                    }}
-                    style={{
-                      position: 'absolute',
-                      alignSelf: 'center',
-                      right: 50,
-                      padding: 10,
-                    }}>
-                    <Image
-                      style={estilos.imgLupa}
-                      source={require('../../images/buscar.png')}
-                    />
-                  </TouchableOpacity>
-                  {mostrarx && (
-                    <TouchableOpacity
-                      onPress={() => {
-                        setMostrarbusca(false);
-                        limpaBusca();
-                        setBusca('');
-                        input.current.blur();
-                        setMostrarx(false);
-                      }}
-                      style={{
-                        position: 'absolute',
-                        alignSelf: 'center',
-                        left: 40,
-                        padding: 10,
-                      }}>
-                      <Image
-                        style={estilos.img2}
-                        source={require('../../images/close.png')}
-                      />
-                    </TouchableOpacity>
-                  )}
-                </View>
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    marginTop: 20,
-                    justifyContent: 'space-around',
-                  }}>
-                  <TouchableOpacity
-                    style={estilos.containerIcon}
-                    onPress={() => {
-                      btnfiltro('preco');
-                    }}>
-                    <Image style={estilos.img} source={iconpreco} />
-                    <Text style={estilos.txt}>Preço</Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    style={estilos.containerIcon}
-                    onPress={() => {
-                      btnfiltro('avaliacao');
-                    }}>
-                    <Image style={estilos.img} source={iconestrelas} />
-                    <Text style={estilos.txt}>Avaliação</Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    style={estilos.containerIcon}
-                    onPress={() => {
-                      btnfiltro('distancia');
-                    }}>
-                    <Image style={estilos.img} source={icondistancia} />
-                    <Text style={estilos.txt}>Distância</Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    style={estilos.containerIcon}
-                    onPress={() => {
-                      btnfiltro('maisprocurados');
-                    }}>
-                    <Image style={estilos.img} source={iconmaisprocurados} />
-                    <Text style={estilos.txt}>{'Mais\nProcurados'}</Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    style={estilos.containerIcon}
-                    onPress={() => {
-                      btnfiltro('filtro');
-                    }}>
-                    <Image style={estilos.img} source={iconfiltro} />
-                    <Text style={estilos.txt}>Filtro</Text>
-                  </TouchableOpacity>
-                </View>
-                <Image
-                  source={require('../../images/line.png')}
-                  style={{
-                    alignSelf: 'center',
-                    resizeMode: 'contain',
-                    marginTop: 10,
-                  }}
-                />
-                <View style={{paddingHorizontal: 30, paddingTop: 10}}>
-                  {ordenado ? (
-                    <View style={{flexDirection: 'row', height: 25}}>
+                ) : (
+                  <View style={{height: 25}}></View>
+                )}
+                {mostrarbusca && (
+                  <View style={{marginBottom: -15}}>
+                    <Text style={estilos.h1}>Busca</Text>
+                    <View style={{flexDirection: 'row'}}>
+                      <Text style={estilos.txt2}>Resultado de busca para </Text>
                       <Text
                         style={[
-                          estilos.txt,
-                          {textAlign: 'left', fontSize: 15},
+                          estilos.txt2,
+                          {fontFamily: 'Poppins-Bold', color: '#000'},
                         ]}>
-                        Ordenado por{' '}
-                      </Text>
-                      <Text
-                        style={[
-                          estilos.txt,
-                          {textAlign: 'left', fontSize: 16, fontWeight: 'bold'},
-                        ]}>
-                        {ordenado}
+                        {busca?.toUpperCase()}:
                       </Text>
                     </View>
-                  ) : (
-                    <View style={{height: 25}}></View>
-                  )}
-                  {mostrarbusca && (
-                    <View style={{marginBottom: -15}}>
-                      <Text style={estilos.h1}>Busca</Text>
-                      <View style={{flexDirection: 'row'}}>
-                        <Text style={estilos.txt2}>
-                          Resultado de busca para{' '}
-                        </Text>
-                        <Text
-                          style={[
-                            estilos.txt2,
-                            {fontFamily: 'Poppins-Bold', color: '#000'},
-                          ]}>
-                          {busca?.toUpperCase()}:
-                        </Text>
-                      </View>
-                    </View>
-                  )}
-                </View>
+                  </View>
+                )}
               </View>
             </>
           }

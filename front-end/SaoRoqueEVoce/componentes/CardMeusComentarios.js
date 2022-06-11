@@ -186,14 +186,13 @@ export default function App({data, props}) {
           setLoadingResponse(false);
         }, 1500);
       })
-      .catch(error => {
-        setImg(require('../images/configuracao/dangericon.png'));
-        setMsg(
-          'Houve um problema ao tentar editar seu comentário!\nTente novamente.',
-        );
+      .catch(error => {        
+        setImg(require('../images/configuracao/error.png'))
+        if(error.response.data.error == 'Existe palavras impróprias no coméntario'){
+        setMsg('Não use vocabulário impróprio!')
         setTimeout(() => {
           setLoadingResponse(false);
-        }, 1500);
+        }, 1000);}   
       });
   }
 

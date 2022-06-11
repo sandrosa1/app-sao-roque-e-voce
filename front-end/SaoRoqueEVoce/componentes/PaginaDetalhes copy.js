@@ -545,7 +545,7 @@ export default function App({route}) {
               )}
               {dados.site ? (
                 <TouchableOpacity
-                onPress={()=>{Linking.openURL(`https://${dados?.site}`)}}
+                onPress={()=>{Linking.openURL(`${dados?.site}`)}}
                   style={estilos.conteudoInformacao}>
                   <Image
                     style={estilos.img2}

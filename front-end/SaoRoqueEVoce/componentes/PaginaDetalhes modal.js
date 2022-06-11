@@ -7,32 +7,52 @@ import {
   Image,
   Dimensions,
   TouchableOpacity,
-  Linking
+  Linking,
 } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import NavPages from './NavPages';
 import axios from 'axios';
 import Carousel from 'react-native-snap-carousel';
 import {useIsFocused} from '@react-navigation/native';
+import PaginaDetalhesComentario from './PaginaDetalhesComentario';
 
 export default function App({route}) {
   const navigation = useNavigation();
   const {width: screenWidth, height: screenHeight} = Dimensions.get('window');
-  const url = `http://www.racsstudios.com/api/v1/apps/${route.params.id}`;
+  const url = `http://www.racsstudios.com/api/v1/apps/${route.params?.id}`;
   const [dados, setDados] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [mostrarModal, setMostrarModal] = useState(false);
   const isFocused = useIsFocused();
   const carouselRef = useRef(null);
   const rua = dados?.logradouro + ', ' + dados?.numero;
-  const cidade = dados?.localidade
-  const cep = dados?.cep
+  const cidade = dados?.localidade;
+  const cep = dados?.cep;
+  const reload = route.params?.hookReload
+  const reload2 = route.params?.hookReload2
 
   const abrirLink = () => {
-    Linking.openURL(`https://www.google.com/maps/dir/?api=1&travelmode=driving&dir_action=navigate&destination=Rua,${rua},${cidade}`);
- }
+    Linking.openURL(
+      `https://www.google.com/maps/dir/?api=1&travelmode=driving&dir_action=navigate&destination=Rua,${rua},${cidade}`,
+    );
+  };
   useEffect(() => {
     loadApi();
-  }, [isFocused]);
+    if(reload2){
+    setMostrarModal(false)
+    setTimeout(() => {
+      setMostrarModal(true);
+    }, 1);
+    
+    }
+  }, [isFocused,reload2]);
+console.log(reload2)
+
+  useEffect(() => {
+   if(reload) {
+     setMostrarModal(false)
+   }
+  }, [reload]);
 
   async function loadApi() {
     if (loading) return;
@@ -118,7 +138,7 @@ export default function App({route}) {
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={{flex: 1}}>
           <NavPages icon={icon} title={tipo} />
-          <View>
+          <View style={{marginTop:-5}}>
             <Text
               style={{
                 fontSize: 24,
@@ -343,14 +363,7 @@ export default function App({route}) {
                   marginVertical: 10,
                 }}
               />
-              <TouchableOpacity
-                onPress={() =>
-                  navigation.navigate('PaginaDetalhesComentario', {
-                    icon: icon,
-                    tipo: tipo,
-                    id: dados.idApp,
-                  })
-                }>
+              <TouchableOpacity onPress={() => setMostrarModal(true)}>
                 <View style={{flexDirection: 'row'}}>
                   <Text
                     style={{
@@ -482,10 +495,12 @@ export default function App({route}) {
               style={{paddingHorizontal: 30, marginTop: 15, marginBottom: 30}}>
               {dados.logradouro ? (
                 <TouchableOpacity
-                onPress={()=>{abrirLink()}}
+                  onPress={() => {
+                    abrirLink();
+                  }}
                   style={estilos.conteudoInformacao}>
                   <Image
-                  style={estilos.img2}
+                    style={estilos.img2}
                     source={require('../images/servicos/rota.png')}
                   />
                   <Text
@@ -503,10 +518,12 @@ export default function App({route}) {
               )}
               {dados.telefone ? (
                 <TouchableOpacity
-                 onPress={()=>{Linking.openURL(`tel:${dados?.telefone}`)}}
+                  onPress={() => {
+                    Linking.openURL(`tel:${dados?.telefone}`);
+                  }}
                   style={estilos.conteudoInformacao}>
                   <Image
-                  style={estilos.img2}
+                    style={estilos.img2}
                     source={require('../images/servicos/contato.png')}
                   />
                   <Text
@@ -522,9 +539,13 @@ export default function App({route}) {
               ) : (
                 <View></View>
               )}
-                {dados.whatsapp ? (
+              {dados.whatsapp ? (
                 <TouchableOpacity
-                onPress={()=>{Linking.openURL(`http://api.whatsapp.com/send?phone=${dados?.whatsapp}`)}}
+                  onPress={() => {
+                    Linking.openURL(
+                      `http://api.whatsapp.com/send?phone=${dados?.whatsapp}`,
+                    );
+                  }}
                   style={estilos.conteudoInformacao}>
                   <Image
                     style={estilos.img2}
@@ -545,7 +566,9 @@ export default function App({route}) {
               )}
               {dados.site ? (
                 <TouchableOpacity
-                onPress={()=>{Linking.openURL(`https://${dados?.site}`)}}
+                  onPress={() => {
+                    Linking.openURL(`${dados?.site}`);
+                  }}
                   style={estilos.conteudoInformacao}>
                   <Image
                     style={estilos.img2}
@@ -566,7 +589,11 @@ export default function App({route}) {
               )}
               {dados.facebook ? (
                 <TouchableOpacity
-                onPress={()=>{Linking.openURL(`https://www.facebook.com/${dados?.facebook}`)}}
+                  onPress={() => {
+                    Linking.openURL(
+                      `https://www.facebook.com/${dados?.facebook}`,
+                    );
+                  }}
                   style={estilos.conteudoInformacao}>
                   <Image
                     style={estilos.img2}
@@ -587,7 +614,11 @@ export default function App({route}) {
               )}
               {dados.instagram ? (
                 <TouchableOpacity
-                onPress={()=>{Linking.openURL(`https://www.instagram.com/${dados?.instagram}`)}}
+                  onPress={() => {
+                    Linking.openURL(
+                      `https://www.instagram.com/${dados?.instagram}`,
+                    );
+                  }}
                   style={estilos.conteudoInformacao}>
                   <Image
                     style={estilos.img2}
@@ -608,7 +639,11 @@ export default function App({route}) {
               )}
               {dados.youtube ? (
                 <TouchableOpacity
-                onPress={()=>{Linking.openURL(`https://www.youtube.com/${dados?.youtube}`)}}
+                  onPress={() => {
+                    Linking.openURL(
+                      `https://www.youtube.com/${dados?.youtube}`,
+                    );
+                  }}
                   style={estilos.conteudoInformacao}>
                   <Image
                     style={estilos.img2}
@@ -627,9 +662,10 @@ export default function App({route}) {
               ) : (
                 <View></View>
               )}
-            
             </View>
           </View>
+          {mostrarModal &&           
+          <PaginaDetalhesComentario id={route.params?.id}/>}
         </View>
       </ScrollView>
     </View>
@@ -720,9 +756,9 @@ const estilos = StyleSheet.create({
     color: '#414141',
     paddingLeft: 1.5,
   },
-  conteudoInformacao:{
+  conteudoInformacao: {
     flexDirection: 'row',
     alignItems: 'center',
     marginBottom: 10,
-  }
+  },
 });

@@ -46,11 +46,9 @@ export default function App({route}) {
   const [mostrarcomentarios, setMostrarcomentarios] = useState(false);
   const [verificar, setVerificar] = useState(0)
   const [error, setError] = useState();
-  const [show, setShow] = useState();
   const [img, setImg] = useState();
   const [msg, setMsg] = useState('');
   const reload = route.params?.hookReload
-  const reload2 = route.params?.hookReload2
   const {width, height} = Dimensions.get('window');
   const isFocused = useIsFocused();
   const scrollRef = useRef();
@@ -61,13 +59,6 @@ export default function App({route}) {
     setRank(0); 
     setCusto(0); 
   }, [additem, isFocused, reload]);
-
-  useEffect(() => { 
-    if(reload2) {
-    setShow(false);
-    setTimeout(() =>{setShow(true);},1);
-    }
-  }, [reload2]);
 
   async function loadApi() {
     if (loading) return;
@@ -167,6 +158,14 @@ export default function App({route}) {
     }
   }
 
+  const carouselRef = useRef(null);
+
+  const lista = [
+    {img: dados.img1},
+    {img: dados.complemeto?.img2},
+    {img: dados.complemeto?.img3},
+  ];
+
   useEffect(() => {
     if (rank > 0 && Globais.dados?.usernome != null) {
       setMostrarinput(true);
@@ -175,6 +174,13 @@ export default function App({route}) {
     }
   }, [rank, isFocused]);
 
+  const renderItem = ({item}) => {
+    return (
+      <View>
+        <Image source={{uri: item.img}} style={estilos.carouselImg} />
+      </View>
+    );
+  };
 
   let tipo = '';
   let icon = '';
@@ -233,12 +239,11 @@ export default function App({route}) {
       .catch(error => {
         setError(error.response.data);
         setImg(require('../images/configuracao/error.png'))
-        if(error.response.error == 'Existe palavras impróprias no coméntario'){
         setMsg('Não use vocabulário impróprio!')
         setTimeout(() => {
           setLoadingResponse(false);
           setMostrarinput(false);
-        }, 1000);}        
+        }, 1000);        
         console.log(error.response.data);
       });
   }
@@ -258,37 +263,7 @@ export default function App({route}) {
 
   return (
     <View style={estilos.container}>
-       <NavPages icon={icon} title={tipo} />
-                <View>
-                  <Text
-                    style={{
-                      fontSize: 24,
-                      fontFamily: 'Roboto-Bold',
-                      textAlign: 'center',
-                      color: '#000',
-                      marginTop:-10
-                    }}>
-                    {dados.nomeFantasia}
-                  </Text>
-                </View>    
-        <Modal visible={show} animationType="slide" transparent={true}>
-          <View
-            style={{
-              flex: 1,
-              alignItems: 'center',
-              backgroundColor: 'rgba(0, 0 , 0, 0.8)',
-            }}>
-            <View style={estilos.containerModal2}>
-              <View style={{position:'absolute', alignSelf: 'flex-end', padding:20, zIndex:99}}>
-                <TouchableOpacity
-                  onPress={() => {
-                    navigation.navigate('PaginaDetalhes',{
-                      id: id
-                    })
-                  }}>
-                  <Image source={require('../images/configuracao/close.png')} />
-                </TouchableOpacity>
-              </View>
+      <View style={{}}>
         <FlatList
           onLayout={event => console.log(event.nativeEvent.layout)}
           ref={scrollRef}
@@ -300,7 +275,34 @@ export default function App({route}) {
           ItemSeparatorComponent={SeparadorComentario}
           ListHeaderComponent={
             <>
-              <View style={{flex: 1}}>               
+              <View style={{flex: 1}}>
+                <NavPages icon={icon} title={tipo} />
+                <View>
+                  <Text
+                    style={{
+                      fontSize: 24,
+                      fontFamily: 'Roboto-Bold',
+                      textAlign: 'center',
+                      color: '#000',
+                    }}>
+                    {dados.nomeFantasia}
+                  </Text>
+                </View>
+
+                <View style={estilos.slideView}>
+                  <Carousel
+                    style={estilos.carousel}
+                    ref={carouselRef}
+                    data={lista}
+                    renderItem={renderItem}
+                    sliderWidth={width}
+                    itemWidth={
+                      Dimensions.get('window').width -
+                      Dimensions.get('window').width * 0.2
+                    }
+                    inactiveSlideOpacity={0.5}
+                  />
+                </View>
                 <View style={{marginHorizontal: 30}}>
                   <Text style={estilos.h1}>O que você achou desse local?</Text>
                   {!mostrarComentarioUsuario && (
@@ -341,6 +343,30 @@ export default function App({route}) {
                       onPress={() => setRank(5)}
                       disabled={mostrarComentarioUsuario}>
                       <Image style={estilos.star} source={arrayrank[4]} />
+                    </TouchableOpacity>
+                  </View>
+
+                  <View>
+                    <TouchableOpacity
+                      onPress={() =>
+                        navigation.navigate('PaginaDetalhes', {id: id})
+                      }
+                      style={[
+                        estilos.btn,
+                        {
+                          flex: 1,
+                          height: 25,
+                          backgroundColor: '#920046',
+                          borderColor: '#000',
+                        },
+                      ]}>
+                      <Text
+                        style={[
+                          estilos.txtBtn,
+                          {fontSize: 13, paddingTop: 0, color: 'white'},
+                        ]}>
+                        Informações
+                      </Text>
                     </TouchableOpacity>
                   </View>
                 </View>
@@ -396,14 +422,13 @@ export default function App({route}) {
                     }}>
                     <TouchableOpacity
                       style={estilos.btn}
-                      onPress={() =>{
-                        setShow(false)
+                      onPress={() =>
                         navigation.navigate('Login', {
                           id: id,
                           tipo: tipo,
                           icon: icon,
                         })
-                      }}>
+                      }>
                       <Text style={estilos.txtBtn}>ENTRAR</Text>
                     </TouchableOpacity>
                     <TouchableOpacity
@@ -452,9 +477,6 @@ export default function App({route}) {
                     <TouchableOpacity
                       onPress={() => {
                         setMostrarinput(false);
-                        setRank(0);
-                        setCusto(0);
-                        setComentario('')
                       }}>
                       <Image
                         source={require('../images/configuracao/close.png')}
@@ -469,6 +491,12 @@ export default function App({route}) {
                       marginTop: 20,
                     }}>
                     <TextInput
+                      onPressIn={() =>
+                        scrollRef.current.scrollToOffset({
+                          offset: Dimensions.get('window').height * 0.40,
+                          animated: true,
+                        })
+                      }
                       value={comentario}
                       multiline={true}
                       onChangeText={setComentario}
@@ -725,9 +753,7 @@ export default function App({route}) {
           </View>
         </Modal>
       </View>
-      </View>
-        </Modal>
-      </View>  
+    </View>
   );
 }
 
@@ -754,7 +780,41 @@ const estilos = StyleSheet.create({
     color: '#910046',
     marginLeft: 15,
   },
- 
+
+  slideView: {
+    width: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginVertical: 15,
+  },
+  carousel: {
+    flex: 1,
+    overflow: 'visible',
+  },
+  carouselImg: {
+    alignSelf: 'center',
+    width:
+      Dimensions.get('window').width - Dimensions.get('window').width * 0.2,
+    height:
+      Dimensions.get('window').height - Dimensions.get('window').height * 0.72,
+    borderRadius: 12,
+    backgroundColor: 'rgba(0,0,0,0.5)',
+    resizeMode: 'cover',
+    maxHeight: 225,
+  },
+  carouselText: {
+    padding: 15,
+    color: '#FFF',
+    position: 'absolute',
+    bottom: 10,
+    left: 2,
+    fontWeight: 'bold',
+  },
+  carouselIcon: {
+    position: 'absolute',
+    top: 15,
+    right: 15,
+  },
   star: {
     height: 30,
     width: 30,
@@ -802,18 +862,6 @@ const estilos = StyleSheet.create({
     backgroundColor: '#fff',
     elevation: 5,
     top: '25%',
-  },
-  containerModal2: {
-    alignSelf: 'center',
-    alignItems:'center',
-    width: Dimensions.get('window').width - Dimensions.get('window').width * 0.05,
-    height: Dimensions.get('window').height - Dimensions.get('window').height * 0.12,
-    paddingTop:15,
-    borderTopLeftRadius: 30,
-    borderTopRightRadius: 30,
-    backgroundColor: '#fff',
-    elevation: 5,
-    top: '12%',
   },
   btnBg: {
     width: 100,

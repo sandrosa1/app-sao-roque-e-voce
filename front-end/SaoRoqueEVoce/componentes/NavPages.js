@@ -31,7 +31,7 @@ const estilos = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    marginVertical: 10,
+    marginTop: 10,
   },
   icon: {
     position: 'absolute',

@@ -13,9 +13,7 @@ import {
 import CountDown from 'react-native-countdown-component';
 import {useNavigation} from '@react-navigation/native';
 import axios from 'axios';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Buffer} from 'buffer';
-import Globais from './Globais';
 
 export default function App(props) {
   const navigation = useNavigation();

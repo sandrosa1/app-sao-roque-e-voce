@@ -57,35 +57,35 @@ export default function App() {
             <View style={estilos.contatoContainer}>
               <Image
                 style={estilos.img}
-                source={require('../../images/quemsomos/facebook.png')}
+                source={require('../../images/servicos/facebook.png')}
               />
               <Text style={estilos.txtContato}>{dados.facebook}</Text>
             </View>
             <View style={estilos.contatoContainer}>
               <Image
                 style={estilos.img}
-                source={require('../../images/quemsomos/instagram.png')}
+                source={require('../../images/servicos/instagram.png')}
               />
               <Text style={estilos.txtContato}>{dados.instagran}</Text>
             </View>
             <View style={estilos.contatoContainer}>
               <Image
                 style={estilos.img}
-                source={require('../../images/quemsomos/whatsapp.png')}
+                source={require('../../images/servicos/whatsapp.png')}
               />
               <Text style={estilos.txtContato}>{dados.whatsapp}</Text>
             </View>
             <View style={estilos.contatoContainer}>
               <Image
                 style={estilos.img}
-                source={require('../../images/quemsomos/email.png')}
+                source={require('../../images/servicos/email.png')}
               />
               <Text style={estilos.txtContato}>{dados.email}</Text>
             </View>
             <View style={estilos.contatoContainer}>
               <Image
                 style={estilos.img}
-                source={require('../../images/quemsomos/site.png')}
+                source={require('../../images/servicos/site.png')}
               />
               <Text style={estilos.txtContato}>{dados.site}</Text>
             </View>
@@ -141,7 +141,7 @@ const estilos = StyleSheet.create({
   },
   contatoContainer: {
     flexDirection: 'row',
-    paddingVertical: 10,
+    paddingVertical: 5,
   },
   txtContato: {
     paddingLeft: 15,
