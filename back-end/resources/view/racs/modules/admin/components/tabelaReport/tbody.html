@@ -1,0 +1,37 @@
+
+
+<tr>
+    <td>{{idReport}}</td>
+    <td>{{idUser}}</td>
+    <td class="{{alertReport}}">{{typeReport}}</td>
+    <td class="{{statusReport}}">{{status}}</td>
+    <td>{{reportDate}}</td>
+    <td>{{nome}}</td>
+    <td>{{email}}</td>
+    <td> <a class=" modal-trigger" href="#{{idReport}}"><i class="material-icons {{alertReport}}">remove_red_eye</i></a></td>
+    <td> <a class=" modal-trigger" href="#{{idReport}}-1"><i class="material-icons c-help">create</i></a></td>
+  
+</tr>
+      
+ <!-- Modal Structure -->
+ <div id="{{idReport}}" class="modal">
+    <div class="modal-content">
+        <h4>Mensagem</h4>
+        <p>{{message}}</p>
+    </div>
+    <div class="modal-footer">
+            <a href="#!" class="modal-close waves-effect waves-green btn-flat"><i class="material-icons c-error">close</i></a>
+    </div>
+ </div>
+
+
+ <div id="{{idReport}}-1" class="modal">
+    <div class="modal-content">
+        <h4 class="racs-c-2">Atualização de status</h4>
+    </div>
+    <div class="modal-footer">
+            <a href="{{URL}}/racs/admin?idReport={{idReport}}&status=Aguardando_Solução" class="modal-open mr-3 c-alert2">Aguardando Solução</a>
+            <a href="{{URL}}/racs/admin?idReport={{idReport}}&status=Em_Andamento" class="modal-open mr-3 c-help">Em Andamento</a>
+            <a href="{{URL}}/racs/admin?idReport={{idReport}}&status=Finalizado" class="modal-open mr-3 c-success">Finalizado</a>
+    </div>
+ </div>

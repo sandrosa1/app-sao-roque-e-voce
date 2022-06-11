@@ -376,6 +376,14 @@ header-login-src{
         height: 270px;
         padding: 27px;
     }
+
+    .painelSrv{
+        grid-template:
+        "status-srv status-srv status-srv status-srv" 8vh
+        "nav-srv content-srv content-srv content-srv" 92vh
+        /0fr 3fr 2fr 1fr
+    }
+
    
     
 }
@@ -388,6 +396,16 @@ header-login-src{
         height: 100vh; 
         background: url('http://www.racsstudios.com/img/imgLogin/vinho.jpg') no-repeat; background-size: auto;
         opacity: 0.9;
+    }
+   
+    .painelSrv{
+        grid-template:
+        "status-srv status-srv status-srv status-srv" 8vh
+        "nav-srv content-srv content-srv content-srv" 92vh
+        /0fr 3fr 2fr 1fr
+    }
+    .modal{
+        min-width: 80%;
     }
    
   

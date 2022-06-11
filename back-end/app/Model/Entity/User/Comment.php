@@ -109,7 +109,6 @@ class Comment {
      */
     public function updateComment(){
 
-        $this->data = date("Y-m-d H:i:s");
 
         $this->Comment = ( new Database('comentario'))->update('idComment ='.$this->idComment,[
             

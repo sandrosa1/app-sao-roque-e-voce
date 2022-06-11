@@ -1,7 +1,20 @@
 <tr>
     <td>{{nome}}</td>
-    <td>{{mensagem}}</td>
-    <td>{{data}}</td>
-    <td>{{avaliacao}}</td>
+    <td class="hc"><a class="modal-trigger" href="#{{idForum}}"><i class="material-icons srv-c-1">remove_red_eye</i></a></td>
+    <td><span>{{data}}</span></td>
     <td>{{custo}}</td>
+    <td>{{avaliacao}}</td>
 </tr>
+
+  
+ <!--Modal Structure -->
+ <div id="{{idForum}}" class="modal">
+    <div class="modal-content">
+      <h4>Mensagem</h4>
+      <p>{{mensagem}}</p>
+    </div>
+    <div class="modal-footer">
+      <a href="#!" class="modal-close waves-effect waves-green btn-flat"><i class="material-icons c-error">closed</i></a>
+    </div>
+  </div>
+
