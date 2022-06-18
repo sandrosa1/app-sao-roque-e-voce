@@ -189,8 +189,12 @@ class Config extends PageSrv
         $captcha                           = $postVars['g-recaptcha-response'];
 
 
+        if($objApp->site){
+            
+            $validate->validateSite($objApp->site);
+        }
         
-        $validate->validateSite($objApp->site);
+       
         $validate->validateFields($campos);
        // $validate->validateCaptcha($captcha);
         $validate->validateEmail($objApp->email);
@@ -206,6 +210,16 @@ class Config extends PageSrv
         $validate->validateBlockedWord($objApp->chaves);
 
         $objApp->chaves = Help::helpArrayForString($objApp->chaves);
+
+        $coordenadas = Help::helpGetCoordinates($campos['cep'],$campos['logradouro'],$campos['bairro'],$campos['localidade'],TOKEN_MAPBOX);
+
+
+        if($coordenadas){
+
+            $objApp->latitude =$coordenadas[0] ;
+            $objApp->longitude =$coordenadas[1] ;
+            
+        }
 
         if(count($validate->getErro()) > 0){
 

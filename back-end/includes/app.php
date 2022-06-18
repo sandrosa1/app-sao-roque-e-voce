@@ -29,6 +29,9 @@ define('EMAIL_CHARSET',getenv('EMAIL_CHARSET'));
 define('EMAIL_FORM_EMAIL',getenv('EMAIL_FORM_EMAIL')); 
 define('EMAIL_FROM_NAME',getenv('EMAIL_FROM_NAME'));
 
+//variavel mapbox token
+define('TOKEN_MAPBOX',getenv('TOKEN_MAPBOX'));
+
 //Defini uma url (Será provisoria)
 define('URL', getenv('URL'));
 

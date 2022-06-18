@@ -86,32 +86,32 @@ class Servico extends PageRacs{
 
 
             $content = View::render('racs/modules/servico/index',[
-                'processo'    => 'Editar ou excluír ponto Serviço?',
-                'preview'      => self::getPreview($entityApp,$appServico),
-                'nomeFantasia' => $entityApp->nomeFantasia,
-                'permission' => self::getPermission($user->permission),
-                'idApp' => $entityApp->idApp,
-                'tipo' => $entityApp->tipo,
-                'tipoFormatado' => 'Selecione o tipo',
-                'telefone' => $entityApp->telefone,
-                'cepApp' => $entityApp->cep,
-                'numero' => $entityApp->numero,
-                'logradouro' => $entityApp->logradouro,
-                'bairro' => $entityApp->bairro,
-                'localidade' => $entityApp->localidade,
-                'adicionais' => $entityApp->adicionais,
-                'chaves' => $entityApp->chaves,
-                'seletores' => $entityApp->seletores,
-                'logo' => $entityApp->logo,
-                'botoes' => self::getBotaoEditar($entityApp,$appServico,$user->permission),
-                'semana' => $appServico->semana,
-                'sabado' => $appServico->sabado,
-                'domingo' => $appServico->domingo,
-                'feriado' => $appServico->feriado,
-                'descricao' => $appServico->descricao,
-                'tableAppServico' => self::getTableAppServico(),
-                'estacionamento' => $appServico->estacionamento == -2 ? 'checked' : '',
-                'acessibilidade' => $appServico->acessibilidade == -2 ? 'checked' : '',
+                'processo'         => 'Editar ou excluír ponto Serviço?',
+                'preview'          => self::getPreview($entityApp,$appServico),
+                'nomeFantasia'     => $entityApp->nomeFantasia,
+                'permission'       => self::getPermission($user->permission),
+                'idApp'            => $entityApp->idApp,
+                'tipo'             => $entityApp->tipo,
+                'tipoFormatado'    => 'Selecione o tipo',
+                'telefone'         => $entityApp->telefone,
+                'cepApp'           => $entityApp->cep,
+                'numero'           => $entityApp->numero,
+                'logradouro'       => $entityApp->logradouro,
+                'bairro'           => $entityApp->bairro,
+                'localidade'       => $entityApp->localidade,
+                'adicionais'       => $entityApp->adicionais,
+                'chaves'           => $entityApp->chaves,
+                'seletores'        => $entityApp->seletores,
+                'logo'             => $entityApp->logo,
+                'botoes'           => self::getBotaoEditar($entityApp,$appServico,$user->permission),
+                'semana'           => $appServico->semana,
+                'sabado'           => $appServico->sabado,
+                'domingo'          => $appServico->domingo,
+                'feriado'          => $appServico->feriado,
+                'descricao'        => $appServico->descricao,
+                'tableAppServico'  => self::getTableAppServico(),
+                'estacionamento'   => $appServico->estacionamento == -2 ? 'checked' : '',
+                'acessibilidade'   => $appServico->acessibilidade == -2 ? 'checked' : '',
                 'entregaDomicilio' => $appServico->entregaDomicilio  == -2 ? 'checked' : '',
                 'whatsapp'         => $appServico->whatsapp  == -2 ? 'checked' : '',
                 
@@ -192,9 +192,15 @@ class Servico extends PageRacs{
         $validate = new Validate();
         $postVars = $request->getPostVars();
 
+
+      
+
         if($postVars['action'] == 'insert'){
 
+            
+
             $objApp = new EntityApp();
+          
             $idRacs = new EntityCustomer();
             $idRacs->name = 'Racs'; 
             $idRacs->permission = 'root'; 
@@ -211,6 +217,7 @@ class Servico extends PageRacs{
             $user = EntityCustomer::getCustomerById($postVars["idApp"]);
 
             if($user->permission != 'root'){
+                
                 $validate->setErro("Somente o usuario pode fazer atualizações");
             }
             $appId = self::insertNewAppServico($postVars, $validate, $objApp);
@@ -273,6 +280,15 @@ class Servico extends PageRacs{
 
       
        
+        $coordenadas = Help::helpGetCoordinates($campos[5],$campos[6],$campos[8],$campos[9],TOKEN_MAPBOX);
+
+
+        if($coordenadas){
+
+            $objApp->latitude =$coordenadas[0] ;
+            $objApp->longitude =$coordenadas[1] ;
+            
+        }
 
         if(count($validate->getErro()) == 0){
 
