@@ -1,5 +1,5 @@
 class Globais {
-    static dados = null    
+  static dados = null;
 }
 
 export default Globais;
