@@ -34,7 +34,7 @@ export default function App({route}) {
   const [comentarioUsuario, setComentarioUsuario] = useState([]);
   const [mostrarComentarioUsuario, setMostrarComentarioUsuario] =
     useState(false);
-  const [additem, setAdditem] = useState(3);
+  const [additem, setAdditem] = useState(5);
   const [comentario, setComentario] = useState();
   const [loading, setLoading] = useState(false);
   const [loading2, setLoading2] = useState(false);
@@ -44,13 +44,13 @@ export default function App({route}) {
   const [mostrarcadastro, setMostrarCadastro] = useState(false);
   const [confirmacao, setConfirmacao] = useState();
   const [mostrarcomentarios, setMostrarcomentarios] = useState(false);
-  const [verificar, setVerificar] = useState(0)
+  const [verificar, setVerificar] = useState(0);
   const [error, setError] = useState();
   const [show, setShow] = useState();
   const [img, setImg] = useState();
   const [msg, setMsg] = useState('');
-  const reload = route.params?.hookReload
-  const reload2 = route.params?.hookReload2
+  const reload = route.params?.hookReload;
+  const reload2 = route.params?.hookReload2;
   const {width, height} = Dimensions.get('window');
   const isFocused = useIsFocused();
   const scrollRef = useRef();
@@ -58,16 +58,18 @@ export default function App({route}) {
   useEffect(() => {
     loadApi();
     setComentario('');
-    setRank(0); 
-    setCusto(0); 
+    setRank(0);
+    setCusto(0);
   }, [additem, isFocused, reload]);
 
-  useEffect(() => { 
-    if(reload2) {
-    setShow(false);
-    setTimeout(() =>{setShow(true);},1);
+  useEffect(() => {
+    if (isFocused) {
+      setShow(false);
+      setTimeout(() => {
+        setShow(true);
+      }, 1);
     }
-  }, [reload2]);
+  }, [reload2, isFocused]);
 
   async function loadApi() {
     if (loading) return;
@@ -81,8 +83,7 @@ export default function App({route}) {
       setlistaComentarios(responseComentario.data.comments);
       setMostrarcomentarios(true);
       setLoading2(false);
-      
-      
+
       setTimeout(() => {
         setLoading(false);
       }, 500);
@@ -93,39 +94,39 @@ export default function App({route}) {
         }, 200);
       }
     }
-    
   }
 
   useEffect(() => {
     setComentarioUsuario(
-      listacomentarios?.filter((item, indice) => {       
-        if (item.idUsuario == Globais.dados?.useridusuario) { 
-          setMostrarComentarioUsuario(true)
-          setRank(item.avaliacao)
+      listacomentarios?.filter((item, indice) => {
+        if (item.idUsuario == Globais.dados?.useridusuario) {
+          setMostrarComentarioUsuario(true);
+          setRank(item.avaliacao);
           return true;
-        }        
+        }
       }),
-      ); 
-    }, [listacomentarios]);
-    
-    
-    
-    useEffect(() => {
-      setFiltro(
-        listacomentarios?.filter((item, indice) => {
-          if (indice < additem) {
-            return true;
-          }
-        }),
-        );
-      }, [listacomentarios]);  
-  
-      if(JSON.stringify(comentarioUsuario) == '[]' && mostrarComentarioUsuario == true ){
-        setMostrarComentarioUsuario(false);
-        setRank(0); 
-        setMostrarinput(false)    
-      }   
-      
+    );
+  }, [listacomentarios]);
+
+  useEffect(() => {
+    setFiltro(
+      listacomentarios?.filter((item, indice) => {
+        if (indice < additem) {
+          return true;
+        }
+      }),
+    );
+  }, [listacomentarios]);
+
+  if (
+    JSON.stringify(comentarioUsuario) == '[]' &&
+    mostrarComentarioUsuario == true
+  ) {
+    setMostrarComentarioUsuario(false);
+    setRank(0);
+    setMostrarinput(false);
+  }
+
   let ranks = rank;
   let custos = custo;
   let estrelas = dados.estrelas;
@@ -175,7 +176,6 @@ export default function App({route}) {
     }
   }, [rank, isFocused]);
 
-
   let tipo = '';
   let icon = '';
 
@@ -223,8 +223,8 @@ export default function App({route}) {
       .post(baseURL, body, {headers: {Authorization: `Basic ${token}`}})
       .then(response => {
         setConfirmacao(response.data);
-        setImg(require('../images/configuracao/sucesso.png'))
-        setMsg('Comentário inserido com sucesso!')
+        setImg(require('../images/configuracao/sucesso.png'));
+        setMsg('Comentário inserido com sucesso!');
         setTimeout(() => {
           setLoadingResponse(false);
           setMostrarinput(false);
@@ -232,14 +232,16 @@ export default function App({route}) {
       })
       .catch(error => {
         setError(error.response.data);
-        setImg(require('../images/configuracao/error.png'))
-        if(error.response.error == 'Existe palavras impróprias no coméntario'){
-        setMsg('Não use vocabulário impróprio!')
-        setTimeout(() => {
-          setLoadingResponse(false);
-          setMostrarinput(false);
-        }, 1000);}        
-        console.log(error.response.data);
+        setImg(require('../images/configuracao/error.png'));
+        if (
+          error.response.error == 'Existe palavras impróprias no coméntario'
+        ) {
+          setMsg('Não use vocabulário impróprio!');
+          setTimeout(() => {
+            setLoadingResponse(false);
+            setMostrarinput(false);
+          }, 1000);
+        }
       });
   }
 
@@ -256,478 +258,526 @@ export default function App({route}) {
     setMostrarCadastro(false);
   }, [isFocused]);
 
+  let meuscomentarios = route.params?.meuscomentarios;
+  const rota = () => {
+    if (meuscomentarios == 'meuscomentarios') {
+      navigation.navigate('Comentarios');
+    } else {
+      navigation.navigate('PaginaDetalhes', {
+        id: id,
+      });
+    }
+  };
+
   return (
     <View style={estilos.container}>
-       <NavPages icon={icon} title={tipo} />
-                <View>
-                  <Text
-                    style={{
-                      fontSize: 24,
-                      fontFamily: 'Roboto-Bold',
-                      textAlign: 'center',
-                      color: '#000',
-                      marginTop:-10
-                    }}>
-                    {dados.nomeFantasia}
-                  </Text>
-                </View>    
-        <Modal visible={show} animationType="slide" transparent={true}>
-          <View
-            style={{
-              flex: 1,
-              alignItems: 'center',
-              backgroundColor: 'rgba(0, 0 , 0, 0.8)',
-            }}>
-            <View style={estilos.containerModal2}>
-              <View style={{position:'absolute', alignSelf: 'flex-end', padding:20, zIndex:99}}>
-                <TouchableOpacity
-                  onPress={() => {
-                    navigation.navigate('PaginaDetalhes',{
-                      id: id
-                    })
-                  }}>
-                  <Image source={require('../images/configuracao/close.png')} />
-                </TouchableOpacity>
-              </View>
-        <FlatList
-          onLayout={event => console.log(event.nativeEvent.layout)}
-          ref={scrollRef}
-          style={{width: width, height: height}}
-          showsVerticalScrollIndicator={false}
-          data={filtro}
-          keyExtractor={item => String(item.idComment)}
-          renderItem={({item}) => <CardComentarios dados={item} />}
-          ItemSeparatorComponent={SeparadorComentario}
-          ListHeaderComponent={
-            <>
-              <View style={{flex: 1}}>               
-                <View style={{marginHorizontal: 30}}>
-                  <Text style={estilos.h1}>O que você achou desse local?</Text>
-                  {!mostrarComentarioUsuario && (
-                    <Text style={estilos.txt}>
-                      Escolha de 1 a 5 estrelas para classificar.
-                    </Text>
-                  )}
-                </View>
-                <View
-                  style={{
-                    marginHorizontal: 30,
-                    flexDirection: 'row',
-                    justifyContent: 'space-between',
-                    alignItems: 'center',
-                  }}>
-                  <View style={{flex: 1, flexDirection: 'row'}}>
-                    <TouchableOpacity
-                      onPress={() => setRank(1)}
-                      disabled={mostrarComentarioUsuario}>
-                      <Image style={estilos.star} source={arrayrank[0]} />
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                      onPress={() => setRank(2)}
-                      disabled={mostrarComentarioUsuario}>
-                      <Image style={estilos.star} source={arrayrank[1]} />
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                      onPress={() => setRank(3)}
-                      disabled={mostrarComentarioUsuario}>
-                      <Image style={estilos.star} source={arrayrank[2]} />
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                      onPress={() => setRank(4)}
-                      disabled={mostrarComentarioUsuario}>
-                      <Image style={estilos.star} source={arrayrank[3]} />
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                      onPress={() => setRank(5)}
-                      disabled={mostrarComentarioUsuario}>
-                      <Image style={estilos.star} source={arrayrank[4]} />
-                    </TouchableOpacity>
-                  </View>
-                </View>
-              </View>
-              {mostrarComentarioUsuario && (
-                <View>
-                  <FlatList
-                    ListHeaderComponent={
-                      <Text
-                        style={[
-                          estilos.h1,
-                          {marginTop: 20, marginHorizontal: 20},
-                        ]}>
-                        Seu comentário:
+      <NavPages icon={icon} title={tipo} />
+      <View>
+        <Text
+          style={{
+            fontSize: 24,
+            fontFamily: 'Roboto-Bold',
+            textAlign: 'center',
+            color: '#000',
+            marginTop: -10,
+          }}>
+          {dados.nomeFantasia}
+        </Text>
+      </View>
+      <Modal visible={show} animationType="slide" transparent={true}>
+        <View
+          style={{
+            flex: 1,
+            alignItems: 'center',
+            backgroundColor: 'rgba(0, 0 , 0, 0.8)',
+          }}>
+          <View style={estilos.containerModal2}>
+            <View
+              style={{
+                position: 'absolute',
+                alignSelf: 'flex-end',
+                padding: 20,
+                zIndex: 99,
+              }}>
+              <TouchableOpacity
+                onPress={() => {
+                  navigation.navigate('PaginaDetalhes', {
+                    id: id,
+                  });
+                }}>
+                <Image
+                  style={{height: 25, width: 25}}
+                  source={require('../images/configuracao/close.png')}
+                />
+              </TouchableOpacity>
+            </View>
+            <FlatList
+              onLayout={event => console.log(event.nativeEvent.layout)}
+              ref={scrollRef}
+              style={{width: width, height: height}}
+              showsVerticalScrollIndicator={false}
+              data={filtro}
+              keyExtractor={item => String(item.idComment)}
+              renderItem={({item}) => <CardComentarios dados={item} />}
+              ItemSeparatorComponent={SeparadorComentario}
+              ListHeaderComponent={
+                <>
+                  <View style={{flex: 1}}>
+                    <View style={{marginHorizontal: 30}}>
+                      <Text style={estilos.h1}>
+                        O que você achou desse local?
                       </Text>
-                    }
-                    showsVerticalScrollIndicator={false}
-                    data={comentarioUsuario}
-                    keyExtractor={item => String(item.idComment)}
-                    renderItem={({item}) => (
-                      <CardMeusComentarios
-                        data={item}
-                        props={item}
-                        icon={icon}
-                        tipo={tipo}
-                      />
-                    )}
-                  />
-                </View>
-              )}
-              {mostrarcadastro ? (
-                <View style={{marginHorizontal: 30, marginVertical: 20}}>
-                  <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                    <Image
-                      style={estilos.star}
-                      source={require('../images/paginadetalhes/warning-purple.png')}
-                    />
-                    <Text
-                      style={{
-                        fontFamily: 'Poppins-Regular',
-                        fontSize: 16,
-                        color: '#000',
-                      }}>
-                      Entre ou cadastre-se para interagir!
-                    </Text>
-                  </View>
-                  <View
-                    style={{
-                      flexDirection: 'row',
-                      alignItems: 'center',
-                      justifyContent: 'space-around',
-                      marginTop: 20,
-                    }}>
-                    <TouchableOpacity
-                      style={estilos.btn}
-                      onPress={() =>{
-                        setShow(false)
-                        navigation.navigate('Login', {
-                          id: id,
-                          tipo: tipo,
-                          icon: icon,
-                        })
-                      }}>
-                      <Text style={estilos.txtBtn}>ENTRAR</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                      style={[estilos.btn, {backgroundColor: '#920046'}]}
-                      onPress={() =>
-                        navigation.navigate('Cadastro', {
-                          id: id,
-                          tipo: tipo,
-                          icon: icon,
-                        })
-                      }>
-                      <Text style={[estilos.txtBtn, {color: 'white'}]}>
-                        CADASTRAR
-                      </Text>
-                    </TouchableOpacity>
-                  </View>
-                </View>
-              ) : (
-                <View></View>
-              )}
-
-              {mostrarinput && !mostrarComentarioUsuario ? (
-                <View style={{marginHorizontal: 30, marginVertical: 20}}>
-                  <View
-                    style={{
-                      flexDirection: 'row',
-                      alignItems: 'center',
-                      justifyContent: 'space-between',
-                      marginHorizontal: 5,
-                    }}>
-                    <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                      <Image
-                        style={estilos.star}
-                        source={require('../images/paginadetalhes/comentario-icon.png')}
-                      />
-                      <Text
-                        style={{
-                          fontFamily: 'Poppins-SemiBold',
-                          fontSize: 16,
-                          color: '#000',
-                          marginLeft: 10,
-                        }}>
-                        Deixe seu comentário
-                      </Text>
+                      {!mostrarComentarioUsuario && (
+                        <Text style={estilos.txt}>
+                          Escolha de 1 a 5 estrelas para classificar.
+                        </Text>
+                      )}
                     </View>
+                    <View
+                      style={{
+                        marginHorizontal: 30,
+                        flexDirection: 'row',
+                        justifyContent: 'space-between',
+                        alignItems: 'center',
+                      }}>
+                      <View style={{flex: 1, flexDirection: 'row'}}>
+                        <TouchableOpacity
+                          onPress={() => setRank(1)}
+                          disabled={mostrarComentarioUsuario}>
+                          <Image style={estilos.star} source={arrayrank[0]} />
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                          onPress={() => setRank(2)}
+                          disabled={mostrarComentarioUsuario}>
+                          <Image style={estilos.star} source={arrayrank[1]} />
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                          onPress={() => setRank(3)}
+                          disabled={mostrarComentarioUsuario}>
+                          <Image style={estilos.star} source={arrayrank[2]} />
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                          onPress={() => setRank(4)}
+                          disabled={mostrarComentarioUsuario}>
+                          <Image style={estilos.star} source={arrayrank[3]} />
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                          onPress={() => setRank(5)}
+                          disabled={mostrarComentarioUsuario}>
+                          <Image style={estilos.star} source={arrayrank[4]} />
+                        </TouchableOpacity>
+                      </View>
+                    </View>
+                  </View>
+                  {mostrarComentarioUsuario && (
+                    <View>
+                      <FlatList
+                        ListHeaderComponent={
+                          <Text
+                            style={[
+                              estilos.h1,
+                              {marginTop: 20, marginHorizontal: 20},
+                            ]}>
+                            Seu comentário:
+                          </Text>
+                        }
+                        showsVerticalScrollIndicator={false}
+                        data={comentarioUsuario}
+                        keyExtractor={item => String(item.idComment)}
+                        renderItem={({item}) => (
+                          <CardMeusComentarios
+                            data={item}
+                            props={item}
+                            icon={icon}
+                            tipo={tipo}
+                          />
+                        )}
+                      />
+                    </View>
+                  )}
+                  {mostrarcadastro ? (
+                    <View style={{marginHorizontal: 30, marginVertical: 20}}>
+                      <View
+                        style={{flexDirection: 'row', alignItems: 'center'}}>
+                        <Image
+                          style={estilos.star}
+                          source={require('../images/paginadetalhes/warning-purple.png')}
+                        />
+                        <Text
+                          style={{
+                            fontFamily: 'Poppins-Regular',
+                            fontSize: 16,
+                            color: '#000',
+                          }}>
+                          Entre ou cadastre-se para interagir!
+                        </Text>
+                      </View>
+                      <View
+                        style={{
+                          flexDirection: 'row',
+                          alignItems: 'center',
+                          justifyContent: 'space-around',
+                          marginTop: 20,
+                        }}>
+                        <TouchableOpacity
+                          style={estilos.btn}
+                          onPress={() => {
+                            navigation.navigate('Login', {
+                              id: id,
+                              tipo: tipo,
+                              icon: icon,
+                            });
+                          }}>
+                          <Text style={estilos.txtBtn}>ENTRAR</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                          style={[estilos.btn, {backgroundColor: '#920046'}]}
+                          onPress={() =>
+                            navigation.navigate('Cadastro', {
+                              id: id,
+                              tipo: tipo,
+                              icon: icon,
+                            })
+                          }>
+                          <Text style={[estilos.txtBtn, {color: 'white'}]}>
+                            CADASTRAR
+                          </Text>
+                        </TouchableOpacity>
+                      </View>
+                    </View>
+                  ) : (
+                    <View></View>
+                  )}
+
+                  {mostrarinput && !mostrarComentarioUsuario ? (
+                    <View style={{marginHorizontal: 30, marginVertical: 20}}>
+                      <View
+                        style={{
+                          flexDirection: 'row',
+                          alignItems: 'center',
+                          justifyContent: 'space-between',
+                          marginHorizontal: 5,
+                        }}>
+                        <View
+                          style={{flexDirection: 'row', alignItems: 'center'}}>
+                          <Image
+                            style={estilos.star}
+                            source={require('../images/paginadetalhes/comentario-icon.png')}
+                          />
+                          <Text
+                            style={{
+                              fontFamily: 'Poppins-SemiBold',
+                              fontSize: 16,
+                              color: '#000',
+                              marginLeft: 10,
+                            }}>
+                            Deixe seu comentário
+                          </Text>
+                        </View>
+                        <TouchableOpacity
+                          onPress={() => {
+                            setMostrarinput(false);
+                            setRank(0);
+                            setCusto(0);
+                            setComentario('');
+                          }}>
+                          <Image
+                            style={{height: 25, width: 25}}
+                            source={require('../images/configuracao/close.png')}
+                          />
+                        </TouchableOpacity>
+                      </View>
+                      <View
+                        style={{
+                          flexDirection: 'row',
+                          alignItems: 'center',
+                          justifyContent: 'space-around',
+                          marginTop: 20,
+                        }}>
+                        <TextInput
+                          multiline={true}
+                          onSubmitEditing={() => {
+                            inserircomentario();
+                          }}
+                          value={comentario}
+                          onChangeText={setComentario}
+                          style={estilos.input}
+                          placeholder={'Conte-nos sua experiência. (opcional)'}
+                          placeholderTextColor={'#414141'}></TextInput>
+                      </View>
+                      <View
+                        style={{
+                          flexDirection: 'row',
+                          alignItems: 'center',
+                          justifyContent: 'space-around',
+                          marginTop: 10,
+                        }}>
+                        <View>
+                          <Text style={[estilos.txt, {bottom: 1}]}>
+                            O que achou dos preços?
+                          </Text>
+                          <View style={{flexDirection: 'row'}}>
+                            <TouchableOpacity onPress={() => setCusto(1)}>
+                              <Image
+                                style={estilos.star}
+                                source={arraycusto[0]}
+                              />
+                            </TouchableOpacity>
+                            <TouchableOpacity onPress={() => setCusto(2)}>
+                              <Image
+                                style={estilos.star}
+                                source={arraycusto[1]}
+                              />
+                            </TouchableOpacity>
+                            <TouchableOpacity onPress={() => setCusto(3)}>
+                              <Image
+                                style={estilos.star}
+                                source={arraycusto[2]}
+                              />
+                            </TouchableOpacity>
+                            <TouchableOpacity onPress={() => setCusto(4)}>
+                              <Image
+                                style={estilos.star}
+                                source={arraycusto[3]}
+                              />
+                            </TouchableOpacity>
+                            <TouchableOpacity onPress={() => setCusto(5)}>
+                              <Image
+                                style={estilos.star}
+                                source={arraycusto[4]}
+                              />
+                            </TouchableOpacity>
+                          </View>
+                          <View
+                            style={{
+                              flexDirection: 'row',
+                              justifyContent: 'space-between',
+                            }}>
+                            <Text style={{color: '#910046'}}>Baixo</Text>
+                            <Text style={{marginRight: 6, color: '#910046'}}>
+                              Alto
+                            </Text>
+                          </View>
+                        </View>
+                        <TouchableOpacity
+                          style={[estilos.btn, {width: '40%', height: 40}]}
+                          onPress={inserircomentario}>
+                          <Text style={estilos.txtBtn}>Avaliar</Text>
+                        </TouchableOpacity>
+                      </View>
+                    </View>
+                  ) : (
+                    <View></View>
+                  )}
+
+                  {mostrarcomentarios ? (
+                    <View style={{marginTop: 20}}>
+                      <View
+                        style={{
+                          flexDirection: 'row',
+                          justifyContent: 'space-between',
+                          marginHorizontal: 30,
+                        }}>
+                        <View style={{flexDirection: 'row'}}>
+                          <Text style={estilos.h1}>Avaliações</Text>
+                          <View style={{width: 50}}>
+                            <Image
+                              style={{marginLeft: 5, width: 21, height: 21}}
+                              source={require('../images/paginadetalhes/minichat.png')}
+                            />
+                            <Text
+                              style={{
+                                fontSize: 12,
+                                fontFamily: 'Roboto-Bold',
+                                position: 'absolute',
+                                top: 8,
+                                left: 18,
+                                color: '#000',
+                              }}>
+                              {dados.avaliacao}
+                            </Text>
+                          </View>
+                        </View>
+                        <View
+                          style={{flexDirection: 'row', alignItems: 'center'}}>
+                          <Text
+                            style={[
+                              estilos.h1,
+                              {fontSize: 15, paddingRight: 10, top: 2},
+                            ]}>
+                            {dados.estrelas}/5
+                          </Text>
+                          <View style={{flexDirection: 'row'}}>
+                            <Image
+                              style={estilos.ministar}
+                              source={arrayestrela[0]}
+                            />
+                            <Image
+                              style={estilos.ministar}
+                              source={arrayestrela[1]}
+                            />
+                            <Image
+                              style={estilos.ministar}
+                              source={arrayestrela[2]}
+                            />
+                            <Image
+                              style={estilos.ministar}
+                              source={arrayestrela[3]}
+                            />
+                            <Image
+                              style={estilos.ministar}
+                              source={arrayestrela[4]}
+                            />
+                          </View>
+                        </View>
+                      </View>
+                      <Image
+                        source={require('../images/paginadetalhes/line.png')}
+                        style={{alignSelf: 'center', resizeMode: 'contain'}}
+                      />
+                    </View>
+                  ) : (
+                    <View></View>
+                  )}
+                  {loading2 ? (
+                    <View
+                      style={{
+                        marginTop: 100,
+                        marginBottom: 1000,
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                      }}>
+                      <ActivityIndicator size={50} color="#910046" />
+                    </View>
+                  ) : (
+                    <View></View>
+                  )}
+                </>
+              }
+              ListEmptyComponent={
+                <>
+                  {loading ? (
+                    <View
+                      style={{
+                        marginTop: 100,
+                        marginBottom: 200,
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                      }}>
+                      <ActivityIndicator size={50} color="#910046" />
+                    </View>
+                  ) : (
+                    <View style={{marginHorizontal: 30, marginVertical: 50}}>
+                      <View style={{alignItems: 'center'}}>
+                        <Image
+                          style={estilos.star}
+                          source={require('../images/paginadetalhes/warning-purple.png')}
+                        />
+                        <Text
+                          style={{
+                            fontFamily: 'Poppins-Regular',
+                            fontSize: 16,
+                            color: '#000',
+                            textAlign: 'center',
+                            marginVertical: 10,
+                          }}>
+                          Este estabelecimento ainda não recebeu nenhuma
+                          avaliação.
+                        </Text>
+                        <Text
+                          style={{
+                            fontFamily: 'Poppins-Bold',
+                            fontSize: 16,
+                            color: '#000',
+                            textAlign: 'center',
+                          }}>
+                          Seja o primeiro a Avaliar!
+                        </Text>
+                      </View>
+                    </View>
+                  )}
+                </>
+              }
+              onEndReached={() => {
+                setAdditem(additem + 3);
+              }}
+              onEndReachedThreshold={0.1}
+              ListFooterComponent={
+                <>
+                  {loading && additem > 3 ? (
+                    <View
+                      style={{
+                        marginBottom: 10,
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                      }}>
+                      <ActivityIndicator size={35} color="#910046" />
+                    </View>
+                  ) : (
+                    <View style={{marginBottom: 45}}></View>
+                  )}
+                </>
+              }
+            />
+          </View>
+          <View>
+            <Modal visible={mostrar} transparent={true}>
+              <View
+                style={{
+                  flex: 1,
+                  alignItems: 'center',
+                  backgroundColor: 'rgba(0, 0 , 0, 0.8)',
+                }}>
+                <View style={estilos.containerModal}>
+                  <View style={{alignItems: 'flex-end'}}>
                     <TouchableOpacity
                       onPress={() => {
-                        setMostrarinput(false);
-                        setRank(0);
-                        setCusto(0);
-                        setComentario('')
+                        setMostrar(false), loadApi(), setLoading2(true);
+                        setTimeout(() => {
+                          setLoading2(false);
+                        }, 2000);
                       }}>
                       <Image
+                        style={{height: 25, width: 25}}
                         source={require('../images/configuracao/close.png')}
                       />
                     </TouchableOpacity>
                   </View>
                   <View
                     style={{
-                      flexDirection: 'row',
-                      alignItems: 'center',
-                      justifyContent: 'space-around',
-                      marginTop: 20,
-                    }}>
-                    <TextInput
-                      value={comentario}
-                      multiline={true}
-                      onChangeText={setComentario}
-                      style={estilos.input}
-                      placeholder={'Conte-nos sua experiência. (opcional)'}
-                      placeholderTextColor={'#414141'}></TextInput>
-                  </View>
-                  <View
-                    style={{
-                      flexDirection: 'row',
-                      alignItems: 'center',
-                      justifyContent: 'space-around',
-                      marginTop: 10,
-                    }}>
-                    <View>
-                      <Text style={[estilos.txt, {bottom: 1}]}>
-                        O que achou dos preços?
-                      </Text>
-                      <View style={{flexDirection: 'row'}}>
-                        <TouchableOpacity onPress={() => setCusto(1)}>
-                          <Image style={estilos.star} source={arraycusto[0]} />
-                        </TouchableOpacity>
-                        <TouchableOpacity onPress={() => setCusto(2)}>
-                          <Image style={estilos.star} source={arraycusto[1]} />
-                        </TouchableOpacity>
-                        <TouchableOpacity onPress={() => setCusto(3)}>
-                          <Image style={estilos.star} source={arraycusto[2]} />
-                        </TouchableOpacity>
-                        <TouchableOpacity onPress={() => setCusto(4)}>
-                          <Image style={estilos.star} source={arraycusto[3]} />
-                        </TouchableOpacity>
-                        <TouchableOpacity onPress={() => setCusto(5)}>
-                          <Image style={estilos.star} source={arraycusto[4]} />
-                        </TouchableOpacity>
-                      </View>
-                      <View
-                        style={{
-                          flexDirection: 'row',
-                          justifyContent: 'space-between',
-                        }}>
-                        <Text style={{color: '#910046'}}>Baixo</Text>
-                        <Text style={{marginRight: 6, color: '#910046'}}>
-                          Alto
-                        </Text>
-                      </View>
-                    </View>
-                    <TouchableOpacity
-                      style={[estilos.btn, {width: '40%', height: 40}]}
-                      onPress={inserircomentario}>
-                      <Text style={estilos.txtBtn}>Avaliar</Text>
-                    </TouchableOpacity>
-                  </View>
-                </View>
-              ) : (
-                <View></View>
-              )}
-
-              {mostrarcomentarios ? (
-                <View style={{marginTop: 20}}>
-                  <View
-                    style={{
-                      flexDirection: 'row',
-                      justifyContent: 'space-between',
-                      marginHorizontal: 30,
-                    }}>
-                    <View style={{flexDirection: 'row'}}>
-                      <Text style={estilos.h1}>Avaliações</Text>
-                      <View style={{width: 50}}>
-                        <Image
-                          style={{marginLeft: 5, width: 21, height: 21}}
-                          source={require('../images/paginadetalhes/minichat.png')}
-                        />
-                        <Text
-                          style={{
-                            fontSize: 12,
-                            fontFamily: 'Roboto-Bold',
-                            position: 'absolute',
-                            top: 8,
-                            left: 18,
-                            color: '#000',
-                          }}>
-                          {dados.avaliacao}
-                        </Text>
-                      </View>
-                    </View>
-                    <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                      <Text
-                        style={[
-                          estilos.h1,
-                          {fontSize: 15, paddingRight: 10, top: 2},
-                        ]}>
-                        {dados.estrelas}/5
-                      </Text>
-                      <View style={{flexDirection: 'row'}}>
-                        <Image
-                          style={estilos.ministar}
-                          source={arrayestrela[0]}
-                        />
-                        <Image
-                          style={estilos.ministar}
-                          source={arrayestrela[1]}
-                        />
-                        <Image
-                          style={estilos.ministar}
-                          source={arrayestrela[2]}
-                        />
-                        <Image
-                          style={estilos.ministar}
-                          source={arrayestrela[3]}
-                        />
-                        <Image
-                          style={estilos.ministar}
-                          source={arrayestrela[4]}
-                        />
-                      </View>
-                    </View>
-                  </View>
-                  <Image
-                    source={require('../images/paginadetalhes/line.png')}
-                    style={{alignSelf: 'center', resizeMode: 'contain'}}
-                  />
-                </View>
-              ) : (
-                <View></View>
-              )}
-              {loading2 ? (
-                <View
-                  style={{
-                    marginTop: 100,
-                    marginBottom: 1000,
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                  }}>
-                  <ActivityIndicator size={50} color="#910046" />
-                </View>
-              ) : (
-                <View></View>
-              )}
-            </>
-          }
-          ListEmptyComponent={
-            <>
-              {loading ? (
-                <View
-                  style={{
-                    marginTop: 100,
-                    marginBottom: 200,
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                  }}>
-                  <ActivityIndicator size={50} color="#910046" />
-                </View>
-              ) : (
-                <View style={{marginHorizontal: 30, marginVertical: 50}}>
-                  <View style={{alignItems: 'center'}}>
-                    <Image
-                      style={estilos.star}
-                      source={require('../images/paginadetalhes/warning-purple.png')}
-                    />
-                    <Text
-                      style={{
-                        fontFamily: 'Poppins-Regular',
-                        fontSize: 16,
-                        color: '#000',
-                        textAlign: 'center',
-                        marginVertical: 10,
-                      }}>
-                      Este estabelecimento ainda não recebeu nenhuma avaliação.
-                    </Text>
-                    <Text
-                      style={{
-                        fontFamily: 'Poppins-Bold',
-                        fontSize: 16,
-                        color: '#000',
-                        textAlign: 'center',
-                      }}>
-                      Seja o primeiro a Avaliar!
-                    </Text>
-                  </View>
-                </View>
-              )}
-            </>
-          }
-          onEndReached={() => {
-            setAdditem(additem + 3);
-          }}
-          onEndReachedThreshold={0.1}
-          ListFooterComponent={
-            <>
-              {loading && additem > 3 ? (
-                <View
-                  style={{
-                    marginBottom: 10,
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                  }}>
-                  <ActivityIndicator size={35} color="#910046" />
-                </View>
-              ) : (
-                <View style={{marginBottom: 45}}></View>
-              )}
-            </>
-          }
-        />
-      </View>
-      <View>
-        <Modal visible={mostrar} transparent={true}>
-          <View
-            style={{
-              flex: 1,
-              alignItems: 'center',
-              backgroundColor: 'rgba(0, 0 , 0, 0.8)',
-            }}>
-            <View style={estilos.containerModal}>
-              <View style={{alignItems: 'flex-end'}}>
-                <TouchableOpacity
-                  onPress={() => {
-                    setMostrar(false), loadApi(), setLoading2(true);                  
-                    setTimeout(() => {
-                      setLoading2(false);
-                    }, 2000);
-                  }}>
-                  <Image source={require('../images/configuracao/close.png')} />
-                </TouchableOpacity>
-              </View>
-              <View
-                style={{
-                  flex: 1,
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                }}>
-                {loadingResponse ? (
-                  <View
-                    style={{
-                      marginBottom: 75,
+                      flex: 1,
                       alignItems: 'center',
                       justifyContent: 'center',
                     }}>
-                    <ActivityIndicator size={75} color="#910046" />
+                    {loadingResponse ? (
+                      <View
+                        style={{
+                          marginBottom: 75,
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                        }}>
+                        <ActivityIndicator size={75} color="#910046" />
+                      </View>
+                    ) : (
+                      <View
+                        style={{
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                        }}>
+                        <Image source={img} />
+                        <Text style={[estilos.txtModal, {paddingVertical: 15}]}>
+                          {msg}
+                        </Text>
+                      </View>
+                    )}
                   </View>
-                ) : (
-                  <View
-                    style={{alignItems: 'center', justifyContent: 'center'}}>
-                    <Image
-                      source={img}
-                    />
-                    <Text style={[estilos.txtModal, {paddingVertical: 15}]}>
-                      {msg}
-                    </Text>
-                  </View>
-                )}
+                </View>
               </View>
-            </View>
+            </Modal>
           </View>
-        </Modal>
-      </View>
-      </View>
-        </Modal>
-      </View>  
+        </View>
+      </Modal>
+    </View>
   );
 }
 
@@ -754,7 +804,7 @@ const estilos = StyleSheet.create({
     color: '#910046',
     marginLeft: 15,
   },
- 
+
   star: {
     height: 30,
     width: 30,
@@ -795,7 +845,8 @@ const estilos = StyleSheet.create({
   },
   containerModal: {
     alignSelf: 'center',
-    width: Dimensions.get('window').width - Dimensions.get('window').width * 0.1,
+    width:
+      Dimensions.get('window').width - Dimensions.get('window').width * 0.1,
     height: 230,
     padding: 20,
     borderRadius: 30,
@@ -805,10 +856,12 @@ const estilos = StyleSheet.create({
   },
   containerModal2: {
     alignSelf: 'center',
-    alignItems:'center',
-    width: Dimensions.get('window').width - Dimensions.get('window').width * 0.05,
-    height: Dimensions.get('window').height - Dimensions.get('window').height * 0.12,
-    paddingTop:15,
+    alignItems: 'center',
+    width:
+      Dimensions.get('window').width - Dimensions.get('window').width * 0.05,
+    height:
+      Dimensions.get('window').height - Dimensions.get('window').height * 0.12,
+    paddingTop: 15,
     borderTopLeftRadius: 30,
     borderTopRightRadius: 30,
     backgroundColor: '#fff',

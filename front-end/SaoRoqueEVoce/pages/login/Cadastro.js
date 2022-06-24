@@ -75,13 +75,12 @@ export default function App({navigation, route}) {
   const [avisomsg, setAvisomsg] = useState('');
   const [dados, setDados] = useState([]);
 
-
   useEffect(() => {
     loadApi();
   }, []);
 
   async function loadApi() {
-     const response = await axios.get(`http://www.racsstudios.com/api/v1`);
+    const response = await axios.get(`http://www.racsstudios.com/api/v1`);
     setDados(response.data);
   }
 
@@ -186,7 +185,7 @@ export default function App({navigation, route}) {
       setTimeout(() => {
         if (verificar === true) {
           setMsg(
-            'Não foi possível realizar o seu cadastro.\nVerifique sua conexão com a internet\ne tente novamente.'
+            'Não foi possível realizar o seu cadastro.\nVerifique sua conexão com a internet\ne tente novamente.',
           );
           setTimeout(() => {
             setMostrarindicator(false), setMostrarerro(true);
@@ -300,7 +299,7 @@ export default function App({navigation, route}) {
         tipo: tipo,
         id: id,
         hookReload2: 'hook' + new Date(),
-      })
+      });
     } else {
       navigation.navigate('Index');
     }
@@ -313,7 +312,7 @@ export default function App({navigation, route}) {
   let titlePolitica = 'Política de Privacidade';
   let textTermos =
     'Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime mollitia, molestiae quas vel sint commodi repudiandae consequuntur voluptatum laborum numquam blanditiis harum quisquam eius sed odit fugiat iusto fuga praesentium optio, eaque rerum! Provident similique accusantium nemo autem. Veritatis obcaecati tenetur iure eius earum ut molestias architecto voluptate aliquam nihil, eveniet aliquid culpa officia aut! Impedit sit sunt quaerat, odit, tenetur error, harum nesciunt ipsum debitis quas aliquid. Reprehenderit, quia. Quo neque error repudiandae fuga?';
-  let textPolitica = dados?.politica
+  let textPolitica = dados?.politica;
 
   return (
     <View style={estilos.container}>
@@ -620,6 +619,7 @@ export default function App({navigation, route}) {
               <View style={{alignItems: 'flex-end'}}>
                 <TouchableOpacity onPress={rota}>
                   <Image
+                    style={{height: 25, width: 25}}
                     source={require('../../images/configuracao/close.png')}
                   />
                 </TouchableOpacity>
@@ -675,6 +675,7 @@ export default function App({navigation, route}) {
                     setMostrarerro(false);
                   }}>
                   <Image
+                    style={{height: 25, width: 25}}
                     source={require('../../images/configuracao/close.png')}
                   />
                 </TouchableOpacity>

@@ -115,11 +115,9 @@ export default function App({dados}) {
 const avaliarcomentario = (avaliacao) =>{
   axios
   .get(`http:/www.racsstudios.com/api/v1/util?idComment=${dados.idComment}&util=${avaliacao}`)
-  .then(response => {    
-    console.log(response.data)
+  .then(response => { 
   })
-  .catch(error => {
-   console.log(error.data)
+  .catch(error => {   
   });
   navigation.navigate('PaginaDetalhesComentario', {
     hookReload: 'hook' + new Date(),
@@ -165,7 +163,6 @@ const avaliarcomentario = (avaliacao) =>{
     },
   )
 }}
-console.log(dados)
 
   return (
     <View style={estilos.cardBody}>

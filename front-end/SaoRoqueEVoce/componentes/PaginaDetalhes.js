@@ -7,13 +7,14 @@ import {
   Image,
   Dimensions,
   TouchableOpacity,
-  Linking
+  Linking,
 } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import NavPages from './NavPages';
 import axios from 'axios';
 import Carousel from 'react-native-snap-carousel';
 import {useIsFocused} from '@react-navigation/native';
+import Globais from './Globais';
 
 export default function App({route}) {
   const navigation = useNavigation();
@@ -21,18 +22,36 @@ export default function App({route}) {
   const url = `http://www.racsstudios.com/api/v1/apps/${route.params.id}`;
   const [dados, setDados] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [distancia, setDistancia] = useState();
   const isFocused = useIsFocused();
   const carouselRef = useRef(null);
   const rua = dados?.logradouro + ', ' + dados?.numero;
-  const cidade = dados?.localidade
-  const cep = dados?.cep
+  const cidade = dados?.localidade;
 
   const abrirLink = () => {
-    Linking.openURL(`https://www.google.com/maps/dir/?api=1&travelmode=driving&dir_action=navigate&destination=Rua,${rua},${cidade}`);
- }
+    Linking.openURL(
+      `https://www.google.com/maps/dir/?api=1&travelmode=driving&dir_action=navigate&destination=Rua,${rua},${cidade}`,
+    );
+  };
   useEffect(() => {
     loadApi();
   }, [isFocused]);
+
+  useEffect(() => {
+    if (
+      Globais.distancia != null &&
+      (Globais.dados?.userativalocalizacao == 1 || Globais.dados == null)
+    ) {
+      Globais.distancia.forEach(element => {
+        if (element.idApp == dados.idApp) {
+          setDistancia(element.distancia);
+        }
+      });
+      console.log('entrou');
+    } else {
+      setDistancia(null);
+    }
+  }, [dados]);
 
   async function loadApi() {
     if (loading) return;
@@ -203,9 +222,19 @@ export default function App({route}) {
                 <Image
                   source={require('../images/paginadetalhes/localizacao.png')}
                 />
-                <Text style={[estilos.txtDistancia, {color: '#000'}]}>
-                  Você está a ?? km de distância.
-                </Text>
+                {!distancia ? (
+                  <Text
+                    style={[
+                      estilos.txtDistancia,
+                      {fontSize: 14, color: '#000'},
+                    ]}>
+                    Ative o GPS para obter informações sobre distância.
+                  </Text>
+                ) : (
+                  <Text style={[estilos.txtDistancia, {color: '#000'}]}>
+                    Você está a {distancia} Km de distância.
+                  </Text>
+                )}
               </View>
             </View>
 
@@ -227,6 +256,7 @@ export default function App({route}) {
                 {dados.complemeto?.estacionamento ? (
                   <View style={estilos.miniicon}>
                     <Image
+                      style={estilos.imgIcon}
                       source={require('../images/paginadetalhes/estacionamento.png')}
                     />
                     <Text style={estilos.txticon}>Estacionamento</Text>
@@ -238,6 +268,7 @@ export default function App({route}) {
                 {dados.complemeto?.acessibilidade ? (
                   <View style={estilos.miniicon}>
                     <Image
+                      style={estilos.imgIcon}
                       source={require('../images/paginadetalhes/acessibilidade.png')}
                     />
                     <Text style={estilos.txticon}>Acessibilidade</Text>
@@ -249,6 +280,7 @@ export default function App({route}) {
                 {dados.complemeto?.academia ? (
                   <View style={estilos.miniicon}>
                     <Image
+                      style={estilos.imgIcon}
                       source={require('../images/paginadetalhes/academia.png')}
                     />
                     <Text style={estilos.txticon}>Academia</Text>
@@ -260,6 +292,7 @@ export default function App({route}) {
                 {dados.complemeto?.arCondicionado ? (
                   <View style={estilos.miniicon}>
                     <Image
+                      style={estilos.imgIcon}
                       source={require('../images/paginadetalhes/arcondicionado.png')}
                     />
                     <Text style={estilos.txticon}>Ar-Condicionado</Text>
@@ -271,6 +304,7 @@ export default function App({route}) {
                 {dados.complemeto?.piscina ? (
                   <View style={estilos.miniicon}>
                     <Image
+                      style={estilos.imgIcon}
                       source={require('../images/paginadetalhes/piscina.png')}
                     />
                     <Text style={estilos.txticon}>Piscina</Text>
@@ -282,6 +316,7 @@ export default function App({route}) {
                 {dados.complemeto?.wiFi ? (
                   <View style={estilos.miniicon}>
                     <Image
+                      style={estilos.imgIcon}
                       source={require('../images/paginadetalhes/wifi.png')}
                     />
                     <Text style={estilos.txticon}>Wi-fi</Text>
@@ -293,6 +328,7 @@ export default function App({route}) {
                 {dados.complemeto?.refeicao ? (
                   <View style={estilos.miniicon}>
                     <Image
+                      style={estilos.imgIcon}
                       source={require('../images/paginadetalhes/refeicao.png')}
                     />
                     <Text style={estilos.txticon}>Refeição</Text>
@@ -304,6 +340,7 @@ export default function App({route}) {
                 {dados.complemeto?.trilhas ? (
                   <View style={estilos.miniicon}>
                     <Image
+                      style={estilos.imgIcon}
                       source={require('../images/paginadetalhes/trilhas.png')}
                     />
                     <Text style={estilos.txticon}>Trilhas</Text>
@@ -482,10 +519,12 @@ export default function App({route}) {
               style={{paddingHorizontal: 30, marginTop: 15, marginBottom: 30}}>
               {dados.logradouro ? (
                 <TouchableOpacity
-                onPress={()=>{abrirLink()}}
+                  onPress={() => {
+                    abrirLink();
+                  }}
                   style={estilos.conteudoInformacao}>
                   <Image
-                  style={estilos.img2}
+                    style={estilos.img2}
                     source={require('../images/servicos/rota.png')}
                   />
                   <Text
@@ -503,10 +542,12 @@ export default function App({route}) {
               )}
               {dados.telefone ? (
                 <TouchableOpacity
-                 onPress={()=>{Linking.openURL(`tel:${dados?.telefone}`)}}
+                  onPress={() => {
+                    Linking.openURL(`tel:${dados?.telefone}`);
+                  }}
                   style={estilos.conteudoInformacao}>
                   <Image
-                  style={estilos.img2}
+                    style={estilos.img2}
                     source={require('../images/servicos/contato.png')}
                   />
                   <Text
@@ -522,9 +563,13 @@ export default function App({route}) {
               ) : (
                 <View></View>
               )}
-                {dados.whatsapp ? (
+              {dados.whatsapp ? (
                 <TouchableOpacity
-                onPress={()=>{Linking.openURL(`http://api.whatsapp.com/send?phone=${dados?.whatsapp}`)}}
+                  onPress={() => {
+                    Linking.openURL(
+                      `http://api.whatsapp.com/send?phone=${dados?.whatsapp}`,
+                    );
+                  }}
                   style={estilos.conteudoInformacao}>
                   <Image
                     style={estilos.img2}
@@ -545,7 +590,9 @@ export default function App({route}) {
               )}
               {dados.site ? (
                 <TouchableOpacity
-                onPress={()=>{Linking.openURL(`https://${dados?.site}`)}}
+                  onPress={() => {
+                    Linking.openURL(`http://${dados?.site}`);
+                  }}
                   style={estilos.conteudoInformacao}>
                   <Image
                     style={estilos.img2}
@@ -566,7 +613,11 @@ export default function App({route}) {
               )}
               {dados.facebook ? (
                 <TouchableOpacity
-                onPress={()=>{Linking.openURL(`https://www.facebook.com/${dados?.facebook}`)}}
+                  onPress={() => {
+                    Linking.openURL(
+                      `http://www.facebook.com/${dados?.facebook}`,
+                    );
+                  }}
                   style={estilos.conteudoInformacao}>
                   <Image
                     style={estilos.img2}
@@ -587,7 +638,11 @@ export default function App({route}) {
               )}
               {dados.instagram ? (
                 <TouchableOpacity
-                onPress={()=>{Linking.openURL(`https://www.instagram.com/${dados?.instagram}`)}}
+                  onPress={() => {
+                    Linking.openURL(
+                      `http://www.instagram.com/${dados?.instagram}`,
+                    );
+                  }}
                   style={estilos.conteudoInformacao}>
                   <Image
                     style={estilos.img2}
@@ -608,7 +663,9 @@ export default function App({route}) {
               )}
               {dados.youtube ? (
                 <TouchableOpacity
-                onPress={()=>{Linking.openURL(`https://www.youtube.com/${dados?.youtube}`)}}
+                  onPress={() => {
+                    Linking.openURL(`http://www.youtube.com/${dados?.youtube}`);
+                  }}
                   style={estilos.conteudoInformacao}>
                   <Image
                     style={estilos.img2}
@@ -627,7 +684,6 @@ export default function App({route}) {
               ) : (
                 <View></View>
               )}
-            
             </View>
           </View>
         </View>
@@ -663,14 +719,13 @@ const estilos = StyleSheet.create({
     fontSize: 18,
     fontFamily: 'Roboto-Bold',
     color: '#910046',
-    marginLeft: 15,
+    marginLeft: 5,
   },
 
   slideView: {
     width: '100%',
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: 15,
   },
   carousel: {
     flex: 1,
@@ -715,14 +770,15 @@ const estilos = StyleSheet.create({
     marginVertical: 8,
   },
   txticon: {
-    fontSize: 9.6,
+    fontSize: 10,
     fontFamily: 'Poppins-Regular',
     color: '#414141',
     paddingLeft: 1.5,
   },
-  conteudoInformacao:{
+  conteudoInformacao: {
     flexDirection: 'row',
     alignItems: 'center',
     marginBottom: 10,
-  }
+  },
+  imgIcon: {height: 25, width: 25, resizeMode: 'contain'},
 });

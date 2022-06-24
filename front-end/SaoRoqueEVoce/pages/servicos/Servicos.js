@@ -124,7 +124,18 @@ export default function App({route}) {
   };
 
   const limpaBusca = () => {
-    setFiltro(dados);
+    setFiltro(
+      dados.filter(item => {
+        if (item.segmento == buscaSug) {
+          return true;
+        }
+      }),
+    );
+    setImghospital(require('../../images/servicos/hospital0.png'));
+          setImgmecanico(require('../../images/servicos/mecanico0.png'));
+          setImgbanco(require('../../images/servicos/banco0.png'));
+          setImgfarmacia(require('../../images/servicos/farmacia0.png'));
+          setImgoutros(require('../../images/servicos/outros0.png'));
   };
 
   function mudaricone(tipo){
@@ -211,7 +222,12 @@ export default function App({route}) {
               ref={input}
               onSubmitEditing={() => {
                 buscar();
-                setMostrarx(true);
+              input.current.blur();
+              if (busca) setMostrarx(true);
+              setMostrarLoading(false);
+              setTimeout(() => {
+                setMostrarLoading(true);
+              }, 1500);
               }}
               value={busca}
               onChangeText={value => {
@@ -418,11 +434,8 @@ export default function App({route}) {
                 )}
                 {!mostrarbusca && !ordenado && (
                   <View>
-                    <Text style={estilos.h1}>Destaques</Text>
-                    <Text style={estilos.txt}>Em dúvida para onde ir?</Text>
-                    <Text style={estilos.txt}>
-                      Conheça nossas dicas para a semana.
-                    </Text>
+                    <Text style={estilos.h1}>O que você precisa?</Text>
+                    <Text style={estilos.txt}>Confira os serviços disponiveis!</Text>                  
                   </View>
                 )}
               </View>
@@ -516,12 +529,12 @@ const estilos = StyleSheet.create({
   },
 
   h1: {
-    fontSize: 24,
+    fontSize: 20,
     fontFamily: 'Poppins-Regular',
     color: '#910046',
   },
   txt: {
-    fontSize: 15,
+    fontSize: 13,
     fontFamily: 'Poppins-Regular',
     color: '#414141',
   },

@@ -11,6 +11,9 @@ import {
   Animated,
   TextInput,
   TouchableOpacity,
+  Platform,
+  PermissionsAndroid,
+  Modal,
 } from 'react-native';
 import Header from '../../componentes/Header';
 import MenuBar from '../../componentes/MenuBar';
@@ -19,12 +22,15 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import Globais from '../../componentes/Globais';
 import {useIsFocused} from '@react-navigation/native';
 import axios from 'axios';
+import Geolocation from '@react-native-community/geolocation';
 
 export default function App() {
   const url = 'http://www.racsstudios.com/api/v1/home';
   const urlAll = 'http://www.racsstudios.com/api/v1/allapps';
   const [dados, setDados] = useState([]);
-  const [dadosAll, setDadosAll] = useState([]);
+  const [dadosAll, setDadosAll] = useState(null);
+  const [mostrar, setMostrar] = useState(true);
+  const [reload, setReload] = useState(false);
   const [loading, setLoading] = useState(false);
   const [additem, setAdditem] = useState(5);
   const [filtro, setFiltro] = useState(dados);
@@ -36,6 +42,112 @@ export default function App() {
   const [mostrarLoading, setMostrarLoading] = useState(false);
   const isFocused = useIsFocused();
   const input = useRef();
+
+  const [currentLatitude, setCurrentLatitude] = useState(null);
+  const [currentLongitude, setCurrentLongitude] = useState(null);
+  const [watchID, setWatchID] = useState(0);
+
+  const callLocation = () => {
+    if (Platform.OS == 'ios') {
+      getLocation();
+    } else {
+      const requestLocationPermission = async () => {
+        const granted = await PermissionsAndroid.request(
+          PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+          {
+            title: 'Permissão de acesso a Localização',
+            message:
+              'Deseja permitir que o aplicativo acesse a sua localização?',
+            buttonNeutral: 'Depois',
+            buttonNegative: 'Cancelar',
+            buttonPositive: 'Ok',
+          },
+        );
+        if (granted == PermissionsAndroid.RESULTS.GRANTED) {
+          getLocation();
+        } else {
+          Globais.dados = 0;
+          setMostrarx(false);
+        }
+      };
+      requestLocationPermission();
+    }
+  };
+
+  const getLocation = () => {
+    Geolocation.getCurrentPosition(
+      position => {
+        const currentLatitude = JSON.stringify(position.coords.latitude);
+        const currentLongitude = JSON.stringify(position.coords.longitude);
+        setCurrentLatitude(currentLatitude);
+        setCurrentLongitude(currentLongitude);
+      },
+      error => {},
+      {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000},
+    );
+    const watchID = Geolocation.watchPosition(position => {
+      const currentLatitude = JSON.stringify(position.coords.latitude);
+      const currentLongitude = JSON.stringify(position.coords.longitude);
+      setCurrentLatitude(currentLatitude);
+      setCurrentLongitude(currentLongitude);
+    });
+    setWatchID(watchID);
+  };
+
+  useEffect(() => {
+    if (isFocused) {
+      callLocation();
+    }
+  }, [isFocused]);
+
+  function getDistanceFromLatLonInKm(position1, position2) {
+    'use strict';
+    var deg2rad = function (deg) {
+        return deg * (Math.PI / 180);
+      },
+      R = 6371,
+      dLat = deg2rad(position2.lat - position1.lat),
+      dLng = deg2rad(position2.lng - position1.lng),
+      a =
+        Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+        Math.cos(deg2rad(position1.lat)) *
+          Math.cos(deg2rad(position1.lat)) *
+          Math.sin(dLng / 2) *
+          Math.sin(dLng / 2),
+      c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    return (R * c * 1).toFixed(1);
+  }
+
+  function modificarFiltro() {
+    if (dadosAll != null) {
+      dadosAll.forEach(element => {
+        element.distancia = getDistanceFromLatLonInKm(
+          {lat: currentLatitude, lng: currentLongitude},
+          {lat: element.latitude, lng: element.longitude},
+        );
+      });
+      Globais.distancia = dadosAll;
+      setReload(true);
+    }
+  }
+
+  useEffect(() => {
+    if (currentLatitude) {
+      modificarFiltro();
+      setMostrar(false);
+    }
+  }, [currentLatitude]);
+
+  useEffect(() => {
+    if (dadosAll) {
+      modificarFiltro();
+    }
+  }, [dadosAll, reload]);
+
+  if (reload == true) {
+    modificarFiltro();
+    setReload();
+  }
 
   useEffect(() => {
     setBusca('');
@@ -49,10 +161,13 @@ export default function App() {
     setLoading(true);
     const response = await axios.get(url);
     const responseAll = await axios.get(urlAll);
-    setTimeout(() => {setDados(response.data.appsMostViewed); setDadosAll(responseAll.data.apps)}, 300);
+    setTimeout(() => {
+      setDados(response.data.appsMostViewed);
+      setDadosAll(responseAll.data.apps);
+    }, 200);
     setTimeout(() => {
       setLoading(false);
-    }, 500);
+    }, 350);
   }
 
   useEffect(() => {
@@ -68,26 +183,29 @@ export default function App() {
     );
   }, [dados]);
 
-  function verificarLogin() {
-    if (Globais.dados?.usernome) {
-      setLogado(true);
-      setLoagin(false);
-    } else {
-      setLogado(false);
-      setLoagin(true);
-    }
-  }
   const buscar = () => {
     if (busca == '') {
-      setFiltro(dados);
+      setFiltro(
+        dados.filter((item, indice) => {
+          if (
+            item.segmento !== 'servicos'
+            //  && indice < additem
+          ) {
+            return true;
+          }
+        }),
+      );
     } else {
-      setMostrarbusca(true)
+      setMostrarbusca(true);
       setFiltro(
         dadosAll.filter(item => {
           if (
-            item.nomeFantasia.toLowerCase().indexOf(busca.toLowerCase()) > -1 ||
-            item.chaves.toLowerCase().indexOf(busca.toLowerCase()) > -1 && item.segmento != 'servicos'
+            (item.nomeFantasia.toLowerCase().indexOf(busca.toLowerCase()) >
+              -1 ||
+              item.chaves.toLowerCase().indexOf(busca.toLowerCase()) > -1) &&
+            item.segmento != 'servicos'
           ) {
+            console.log(item.segmento);
             return true;
           } else {
             return false;
@@ -98,8 +216,28 @@ export default function App() {
   };
 
   const limpaBusca = () => {
-    setFiltro(dados);
+    setFiltro(
+      dados.filter((item, indice) => {
+        if (
+          item.segmento !== 'servicos'
+          //  && indice < additem
+        ) {
+          return true;
+        }
+      }),
+    );
   };
+
+  function verificarLogin() {
+    if (Globais.dados?.usernome) {
+      setLogado(true);
+      setLoagin(false);
+    } else {
+      setLogado(false);
+      setLoagin(true);
+    }
+  }
+
   useEffect(() => {
     const dadosdousuario = async () => {
       const json = await AsyncStorage.getItem('usuario');
@@ -109,13 +247,16 @@ export default function App() {
     };
     verificarLogin();
     dadosdousuario();
+    setTimeout(() => {
+      setMostrar(false);
+    }, 3000);
   }, [isFocused, loading]);
 
   const scrollY = new Animated.Value(0);
   const diffClamp = Animated.diffClamp(scrollY, 0, 140);
   const translate = diffClamp.interpolate({
-    inputRange: [0, 140, 300],
-    outputRange: [0, -140, -300],
+    inputRange: [0, 140, 280],
+    outputRange: [0, -140, -280],
   });
 
   return (
@@ -141,11 +282,18 @@ export default function App() {
                 ref={input}
                 onSubmitEditing={() => {
                   buscar();
-                  setMostrarx(true)
+                  input.current.blur();
+                  if (busca) setMostrarx(true);
+                  setMostrarLoading(false);
+                  setTimeout(() => {
+                    setMostrarLoading(true);
+                  }, 1500);
                 }}
                 value={busca}
-                onChangeText={(value)=>{setBusca(value);
-                   setMostrarbusca(false);}}
+                onChangeText={value => {
+                  setBusca(value);
+                  setMostrarbusca(false);
+                }}
                 placeholder={'O que voce procura?'}
                 placeholderTextColor={'#8E8E8E'}
                 style={estilos.input}></TextInput>
@@ -187,7 +335,7 @@ export default function App() {
                   padding: 10,
                 }}>
                 <Image
-                  style={estilos.img2}
+                  style={estilos.img2}                  
                   source={require('../../images/close.png')}
                 />
               </TouchableOpacity>
@@ -271,29 +419,39 @@ export default function App() {
             <>
               <View style={{marginHorizontal: 35}}>
                 <View style={{height: 230}}></View>
+                {/* <View>
+                  <Text>voce esta aqui</Text>
+                  <Text>Latitude: {currentLatitude}</Text>
+                  <Text>Longitude: {currentLongitude}</Text>                 
+                  <TouchableOpacity
+                  onPress={()=>calcularDistancia()}
+                  ><Text>Obter Localização</Text></TouchableOpacity>
+                  <TouchableOpacity
+                  onPress={()=>clearLocation()}
+                  ><Text>Cancelar Monitoração</Text></TouchableOpacity>
+                </View> */}
                 {mostrarbusca ? (
-                     <View>
-                     <Text style={[estilos.h1, {fontSize: 22}]}>Busca</Text>
-                     <View style={{flexDirection: 'row'}}>
-                       <Text style={estilos.txt}>Resultado de busca para </Text>
-                       <Text
-                         style={[
-                           estilos.txt,
-                           {fontFamily: 'Poppins-Bold', color: '#000'},
-                         ]}>
-                         {busca?.toUpperCase()}:
-                       </Text>
-                     </View>
-                   </View>
-                 
+                  <View>
+                    <Text style={[estilos.h1, {fontSize: 22}]}>Busca</Text>
+                    <View style={{flexDirection: 'row'}}>
+                      <Text style={estilos.txt}>Resultado de busca para </Text>
+                      <Text
+                        style={[
+                          estilos.txt,
+                          {fontFamily: 'Poppins-Bold', color: '#000'},
+                        ]}>
+                        {busca?.toUpperCase()}:
+                      </Text>
+                    </View>
+                  </View>
                 ) : (
                   <View>
-                  <Text style={estilos.h1}>Destaques</Text>
-                  <Text style={estilos.txt}>Em dúvida para onde ir?</Text>
-                  <Text style={estilos.txt}>
-                    Conheça nossas dicas para a semana.
-                  </Text>
-                </View>
+                    <Text style={estilos.h1}>Destaques</Text>
+                    <Text style={estilos.txt}>Em dúvida para onde ir?</Text>
+                    <Text style={estilos.txt}>
+                      Conheça nossas dicas para a semana.
+                    </Text>
+                  </View>
                 )}
               </View>
             </>
@@ -364,6 +522,34 @@ export default function App() {
           }
         />
       </View>
+      <View>
+        <Modal visible={mostrar} transparent={true}>
+          <View
+            style={{
+              flex: 1,
+              alignItems: 'center',
+              backgroundColor: 'rgba(0, 0 , 0, 0.8)',
+            }}>
+            <View style={estilos.containerModal}>
+              <View
+                style={{
+                  flex: 1,
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}>
+                <View
+                  style={{
+                    marginBottom: 75,
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}>
+                  <ActivityIndicator size={75} color="#910046" />
+                </View>
+              </View>
+            </View>
+          </View>
+        </Modal>
+      </View>
     </SafeAreaView>
   );
 }
@@ -392,8 +578,8 @@ const estilos = StyleSheet.create({
     width: '75%',
     height: 48,
     fontSize: 14,
-    top:2,
-    paddingLeft:30,
+    top: 2,
+    paddingLeft: 30,
     borderColor: '#E7E7E7',
     backgroundColor: '#E7E7E7',
     fontFamily: 'Poppins-Regular',

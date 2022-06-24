@@ -8,7 +8,7 @@ import {
   TouchableOpacity,
   Modal,
   ActivityIndicator,
-  KeyboardAvoidingView
+  KeyboardAvoidingView,
 } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import Header from '../../componentes/Header';
@@ -30,44 +30,46 @@ export default function App() {
   const [cardToken, setCardToken] = useState(false);
   const [carregando, setCarregando] = useState(false);
 
-
   const validar = () => {
     let error = false;
 
-    if (email == ''){
-      setMsgErro('Insira seu e-mail')
+    if (email == '') {
+      setMsgErro('Insira seu e-mail');
       error = true;
     }
     if (isSelected == false) {
-      setErroSelect(
-        'Selecione a verificação!',
-      );
+      setErroSelect('Selecione a verificação!');
       error = true;
     }
 
     return !error;
   };
 
-  const enviarEmail = ()=> {
+  const enviarEmail = () => {
     let verificar = true;
-    setMsgErro('')
-    if (validar()){
+    setMsgErro('');
+    if (validar()) {
       setCarregando(true);
       axios
-      .post(baseURL, {      
-        redefinirSenha: email,        
-      })
-      .then(response => {
-        verificar = false; 
-        setTimeout(() => {setCarregando(false);setCardToken(true)}, 1500);
-             
-      })
-      .catch(error => {
-        verificar = false;
-        if(error){
-          setTimeout(() => {setCarregando(false);setMsgErro('E-mail não encontrado.')}, 1500);          
-        }
-      });
+        .post(baseURL, {
+          redefinirSenha: email,
+        })
+        .then(response => {
+          verificar = false;
+          setTimeout(() => {
+            setCarregando(false);
+            setCardToken(true);
+          }, 1500);
+        })
+        .catch(error => {
+          verificar = false;
+          if (error) {
+            setTimeout(() => {
+              setCarregando(false);
+              setMsgErro('E-mail não encontrado.');
+            }, 1500);
+          }
+        });
       setTimeout(() => {
         if (verificar === true) {
           setCarregando(false);
@@ -77,8 +79,7 @@ export default function App() {
         }
       }, 6000);
     }
-  }
-
+  };
 
   return (
     <View style={estilos.container}>
@@ -89,60 +90,65 @@ export default function App() {
           Para redefinir a sua senha, digite o seu e-mail cadastrado.
         </Text>
       </View>
-        <KeyboardAvoidingView
-            style={{flex:1}}
-            behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>        
-      <View style={{ paddingHorizontal: 30, marginTop: 20}}>
-        <TextInput
-        value={email}
-        onChangeText={setEmail}
-          placeholder="E-mail"
-          placeholderTextColor={'#910046'}
-          style={estilos.input}></TextInput>
-          {carregando &&
-          <View style={{position:'absolute', top:15, right:30}}>
-          <ActivityIndicator size={25} color="#910046" />
-          </View>}
-          <Text style={{color:'red', height:50, marginVertical:-15}}>{msgerro}</Text>
-        <View style={estilos.conteudoCkecbox}>
-          <View style={estilos.checkbox}>
-            <CheckBox
-              value={isSelected}
-              onValueChange={()=>{setSelection(!isSelected); setErroSelect('')}}
-              style={{transform: [{scaleX: 1.5}, {scaleY: 1.5}]}}
-              tintColors={{true: '#910046', false: '#910046'}}
-            />
-            <Text style={[estilos.txt, {paddingLeft: 10}]}>
-              Não sou um robô
-            </Text>
-          </View>
-          <Image source={require('../../images/captchalogo.png')} />
-        </View>
-        <Text style={{color:'red'}}>{erroSelect}</Text>
-      </View> 
-      <View style={{height:'50%',justifyContent:'flex-end', bottom:'8%'}}>     
-        <TouchableOpacity
-          style={estilos.btn}
-          onPress={() => {
-            enviarEmail();
-          }}>
-          <Text
-            style={{
-              fontSize: 24,
-              fontFamily: 'Poppins-Regular',
-              color: '#CDCDCD',
-              padding: 5,
-              letterSpacing: 2,
-            }}>
-            Enviar
+      <KeyboardAvoidingView
+        style={{flex: 1}}
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+        <View style={{paddingHorizontal: 30, marginTop: 20}}>
+          <TextInput
+            value={email}
+            onChangeText={setEmail}
+            placeholder="E-mail"
+            placeholderTextColor={'#910046'}
+            style={estilos.input}></TextInput>
+          {carregando && (
+            <View style={{position: 'absolute', top: 15, right: 30}}>
+              <ActivityIndicator size={25} color="#910046" />
+            </View>
+          )}
+          <Text style={{color: 'red', height: 50, marginVertical: -15}}>
+            {msgerro}
           </Text>
-        </TouchableOpacity>
-        <BtnCancelar /> 
+          <View style={estilos.conteudoCkecbox}>
+            <View style={estilos.checkbox}>
+              <CheckBox
+                value={isSelected}
+                onValueChange={() => {
+                  setSelection(!isSelected);
+                  setErroSelect('');
+                }}
+                style={{transform: [{scaleX: 1.5}, {scaleY: 1.5}]}}
+                tintColors={{true: '#910046', false: '#910046'}}
+              />
+              <Text style={[estilos.txt, {paddingLeft: 10}]}>
+                Não sou um robô
+              </Text>
+            </View>
+            <Image source={require('../../images/captchalogo.png')} />
+          </View>
+          <Text style={{color: 'red'}}>{erroSelect}</Text>
         </View>
-      </KeyboardAvoidingView>  
-      {cardToken &&
-      <Token email={email}/>}
-      
+        <View style={{height: '50%', justifyContent: 'flex-end', bottom: '8%'}}>
+          <TouchableOpacity
+            style={estilos.btn}
+            onPress={() => {
+              enviarEmail();
+            }}>
+            <Text
+              style={{
+                fontSize: 24,
+                fontFamily: 'Poppins-Regular',
+                color: '#CDCDCD',
+                padding: 5,
+                letterSpacing: 2,
+              }}>
+              Enviar
+            </Text>
+          </TouchableOpacity>
+          <BtnCancelar />
+        </View>
+      </KeyboardAvoidingView>
+      {cardToken && <Token email={email} />}
+
       <View>
         <View>
           <Modal visible={mostrar} transparent={true}>
@@ -157,6 +163,7 @@ export default function App() {
                   <TouchableOpacity
                     onPress={() => navigation.navigate('Login')}>
                     <Image
+                      style={{height: 25, width: 25}}
                       source={require('../../images/configuracao/close.png')}
                     />
                   </TouchableOpacity>
@@ -205,7 +212,6 @@ export default function App() {
           </View>
         </Modal>
       </View>
-
     </View>
   );
 }
@@ -253,14 +259,14 @@ const estilos = StyleSheet.create({
     justifyContent: 'space-between',
   },
   btn: {
-    alignSelf:'center',
+    alignSelf: 'center',
     marginTop: 20,
     width: '75%',
     height: 45,
     borderRadius: 33,
     backgroundColor: '#910046',
     alignItems: 'center',
-    justifyContent:'flex-end',
+    justifyContent: 'flex-end',
   },
   containerModal: {
     alignSelf: 'center',

@@ -10,10 +10,13 @@ import {
   TextInput,
   Animated,
   Dimensions,
+  Modal,
+  ScrollView,
 } from 'react-native';
 import NavPages from '../../componentes/NavPages';
 import CardDetalhes from '../../componentes/CardDetalhes';
-import {useIsFocused} from '@react-navigation/native';
+import Globais from '../../componentes/Globais';
+import CheckBox from '@react-native-community/checkbox';
 import axios from 'axios';
 
 export default function App({route}) {
@@ -31,6 +34,7 @@ export default function App({route}) {
   );
   const [busca, setBusca] = useState('');
   const [mostrarx, setMostrarx] = useState(false);
+  const [mostrarfiltro, setMostrarfiltro] = useState(false);
   const [mostrarbusca, setMostrarbusca] = useState(false);
   const [mostrarLoading, setMostrarLoading] = useState(false);
   const input = useRef();
@@ -65,13 +69,23 @@ export default function App({route}) {
   }, []);
 
   useEffect(() => {
-    setFiltro(
-      dados.filter(item => {
-        if (item.segmento == buscaSug) {
-          return true;
-        }
-      }),
-    );
+    if (Globais.distancia != null) {
+      setFiltro(
+        Globais.distancia?.filter(item => {
+          if (item.segmento == buscaSug) {
+            return true;
+          }
+        }),
+      );
+    } else {
+      setFiltro(
+        dados.filter(item => {
+          if (item.segmento == buscaSug) {
+            return true;
+          }
+        }),
+      );
+    }
   }, [dados]);
 
   useEffect(() => {
@@ -119,17 +133,24 @@ export default function App({route}) {
   };
 
   const limpaBusca = () => {
-    setFiltro(dados);
+    setFiltroLigado(false);
+    setFiltro(
+      dados.filter(item => {
+        if (item.segmento == buscaSug) {
+          return true;
+        }
+      }),
+    );
   };
 
   async function loadApi() {
     if (loading) return;
     setLoading(true);
     const response = await axios.get(`${url}/allapps`);
-    setTimeout(() => setDados(response.data.apps), 300);
+    setTimeout(() => setDados(response.data.apps), 100);
     setTimeout(() => {
       setLoading(false);
-    }, 500);
+    }, 250);
   }
 
   const btnfiltro = tipo => {
@@ -206,7 +227,7 @@ export default function App({route}) {
   };
   const filtroDistancia = () => {
     filtro2.sort((a, b) =>
-      a.custoMedio > b.custoMedio ? -1 : b.custoMedio > a.custoMedio ? 1 : 0,
+      a.distancia > b.distancia ? 1 : b.distancia > a.distancia ? -1 : 0,
     );
     setOrdenado('Mais Próximos de Você');
     setIconpreco(require('../../images/menupages/preco.png'));
@@ -237,11 +258,172 @@ export default function App({route}) {
     setAdditem(3);
   };
   const filtroFiltro = () => {
+    setMostrarfiltro(true);
     setIconfiltro(require('../../images/menupages/filtro0.png'));
     setIconpreco(require('../../images/menupages/preco.png'));
     setIconestrelas(require('../../images/menupages/estrelas.png'));
     setIcondistancia(require('../../images/menupages/distancia.png'));
     setIconmaisprocurados(require('../../images/menupages/maisprocurados.png'));
+  };
+
+  const [selectEstacionamento, setSelectEstacionamento] = useState(false);
+  const selectionEstacionamento = () => {
+    setSelectEstacionamento(!selectEstacionamento);
+  };
+
+  const [selectPiscina, setSelectPiscina] = useState(false);
+  const selectionPiscina = () => {
+    setSelectPiscina(!selectPiscina);
+  };
+
+  const [selectArcondicionado, setSelectArcondicionado] = useState(false);
+  const selectionArcondicionado = () => {
+    setSelectArcondicionado(!selectArcondicionado);
+  };
+
+  const [selectRefeicao, setSelectRefeicao] = useState(false);
+  const selectionRefeicao = () => {
+    setSelectRefeicao(!selectRefeicao);
+  };
+
+  const [selectAcademia, setSelectAcademia] = useState(false);
+  const selectionAcademia = () => {
+    setSelectAcademia(!selectAcademia);
+  };
+
+  const [selectWifi, setSelectWifi] = useState(false);
+  const selectionWifi = () => {
+    setSelectWifi(!selectWifi);
+  };
+
+  const [selectAcessibilidade, setSelectAcessibilidade] = useState(false);
+  const selectionAcessibilidade = () => {
+    setSelectAcessibilidade(!selectAcessibilidade);
+  };
+
+  const [selectTrilhas, setSelectTrilhas] = useState(false);
+  const selectionTrilhas = () => {
+    setSelectTrilhas(!selectTrilhas);
+  };
+
+  const [selectBar, setSelectBar] = useState(false);
+  const selectionBar = () => {
+    setSelectBar(!selectBar);
+  };
+
+  const [selectAnimais, setSelectAnimais] = useState(false);
+  const selectionAnimais = () => {
+    setSelectAnimais(!selectAnimais);
+  };
+
+  const [filtroLigado, setFiltroLigado] = useState(false);
+  const FiltrarDetalhes = () => {
+    setMostrarfiltro(false);
+    setOrdenado(false);
+    let estacionamento = null;
+    let piscina = null;
+    let arcondicionado = null;
+    let refeicao = null;
+    let academia = null;
+    let wifi = null;
+    let acessibilidade = null;
+    let trilhas = null;
+    let bar = null;
+    let animais = null;
+
+    {
+      selectEstacionamento ? (estacionamento = 1) : (estacionamento = 2);
+    }
+    {
+      selectPiscina ? (piscina = 1) : (piscina = 2);
+    }
+    {
+      selectArcondicionado ? (arcondicionado = 1) : (arcondicionado = 2);
+    }
+    {
+      selectRefeicao ? (refeicao = 1) : (refeicao = 2);
+    }
+    {
+      selectAcademia ? (academia = 1) : (academia = 2);
+    }
+    {
+      selectWifi ? (wifi = 1) : (wifi = 2);
+    }
+    {
+      selectAcessibilidade ? (acessibilidade = 1) : (acessibilidade = 2);
+    }
+    {
+      selectTrilhas ? (trilhas = 1) : (trilhas = 2);
+    }
+    {
+      selectBar ? (bar = 1) : (bar = 2);
+    }
+    {
+      selectAnimais ? (animais = 1) : (animais = 2);
+    }
+
+    if (
+      selectEstacionamento == 0 &&
+      selectPiscina == 0 &&
+      selectRefeicao == 0 &&
+      selectAcademia == 0 &&
+      selectWifi == 0 &&
+      selectAcessibilidade == 0 &&
+      selectTrilhas == 0 &&
+      selectBar == 0 &&
+      selectAnimais == 0 &&
+      selectArcondicionado == 0
+    ) {
+      setFiltroLigado(false);
+      limpaBusca();
+    } else {
+      setFiltroLigado(true);
+      setMostrarLoading(false);
+      setTimeout(() => {
+        setMostrarLoading(true);
+      }, 2000);
+      if (Globais.distancia != null) {
+        setFiltro2(
+          Globais.distancia?.filter(item => {
+            if (
+              (item.complemeto.estacionamento == estacionamento ||
+                item.complemeto.piscina == piscina ||
+                item.complemeto.arcondicionado == arcondicionado ||
+                item.complemeto.refeicao == refeicao ||
+                item.complemeto.academia == academia ||
+                item.complemeto.wiFi == wifi ||
+                item.complemeto.acessibilidade == acessibilidade ||
+                item.complemeto.trilhas == trilhas ||
+                item.complemeto.bar == bar ||
+                item.complemeto.animais == animais) &&
+              item.segmento == buscaSug
+            ) {
+              return true;
+            }
+          }),
+        );
+      } else {
+        setFiltro2(
+          dados.filter(item => {
+            if (
+              (item.complemeto.estacionamento == estacionamento ||
+                item.complemeto.piscina == piscina ||
+                item.complemeto.arcondicionado == arcondicionado ||
+                item.complemeto.refeicao == refeicao ||
+                item.complemeto.academia == academia ||
+                item.complemeto.wiFi == wifi ||
+                item.complemeto.acessibilidade == acessibilidade ||
+                item.complemeto.trilhas == trilhas ||
+                item.complemeto.bar == bar ||
+                item.complemeto.animais == animais) &&
+              item.segmento == buscaSug
+            ) {
+              return true;
+            }
+          }),
+        );
+      }
+    }
   };
 
   return (
@@ -267,7 +449,12 @@ export default function App({route}) {
               ref={input}
               onSubmitEditing={() => {
                 buscar();
-                setMostrarx(true);
+                input.current.blur();
+                if (busca) setMostrarx(true);
+                setMostrarLoading(false);
+                setTimeout(() => {
+                  setMostrarLoading(true);
+                }, 1500);
               }}
               value={busca}
               onChangeText={value => {
@@ -400,7 +587,7 @@ export default function App({route}) {
       </Animated.View>
       <View
         style={{
-          flex: 1,         
+          flex: 1,
         }}>
         <FlatList
           scrollEventThrottle={16}
@@ -423,27 +610,33 @@ export default function App({route}) {
             <>
               <View style={{height: 230}}></View>
               <View
-                style={{                 
+                style={{
                   paddingHorizontal: 35,
-                  paddingTop: 10,                 
+                  paddingTop: 10,
                 }}>
-                {ordenado ? (
-                  <View style={{flexDirection: 'row', height: 25}}>
-                    <Text
-                      style={[estilos.txt, {textAlign: 'left', fontSize: 15}]}>
-                      Ordenado por{' '}
-                    </Text>
-                    <Text
-                      style={[
-                        estilos.txt,
-                        {textAlign: 'left', fontSize: 16, fontWeight: 'bold'},
-                      ]}>
-                      {ordenado}
-                    </Text>
-                  </View>
-                ) : (
-                  <View style={{height: 25}}></View>
-                )}
+                {
+                  ordenado && (
+                    <View style={{flexDirection: 'row', height: 25}}>
+                      <Text
+                        style={[
+                          estilos.txt,
+                          {textAlign: 'left', fontSize: 15},
+                        ]}>
+                        Ordenado por{' '}
+                      </Text>
+                      <Text
+                        style={[
+                          estilos.txt,
+                          {textAlign: 'left', fontSize: 16, fontWeight: 'bold'},
+                        ]}>
+                        {ordenado}
+                      </Text>
+                    </View>
+                  )
+                  // : (
+                  //   <View style={{height: 25}}></View>
+                  // )
+                }
                 {mostrarbusca && (
                   <View style={{marginBottom: -15}}>
                     <Text style={estilos.h1}>Busca</Text>
@@ -455,6 +648,16 @@ export default function App({route}) {
                           {fontFamily: 'Poppins-Bold', color: '#000'},
                         ]}>
                         {busca?.toUpperCase()}:
+                      </Text>
+                    </View>
+                  </View>
+                )}
+                {filtroLigado && (
+                  <View style={{marginBottom: -10}}>
+                    <Text style={estilos.h1}>Filtro</Text>
+                    <View>
+                      <Text style={[estilos.txt2, {fontSize: 13}]}>
+                        Resultados encontrados para o filtro selecionado
                       </Text>
                     </View>
                   </View>
@@ -472,6 +675,55 @@ export default function App({route}) {
                     justifyContent: 'center',
                   }}>
                   <ActivityIndicator size={50} color="#910046" />
+                </View>
+              ) : filtroLigado ? (
+                <View>
+                  <View style={{marginHorizontal: 30, marginVertical: 50}}>
+                    <View style={{alignItems: 'center'}}>
+                      <Image
+                        style={{width: 40, height: 40}}
+                        source={require('../../images/paginadetalhes/warning-purple.png')}
+                      />
+                      <Text
+                        style={{
+                          fontFamily: 'Poppins-Regular',
+                          fontSize: 16,
+                          color: '#000',
+                          textAlign: 'center',
+                          marginTop: 5,
+                        }}>
+                        Não foi encontrado resultados para o filtro selecionado.
+                      </Text>
+                      <TouchableOpacity
+                        style={[estilos.btn, {width: '50%'}]}
+                        onPress={() => {
+                          limpaBusca();
+                          setIconfiltro(
+                            require('../../images/menupages/filtro.png'),
+                          );
+                          setSelectAcademia(false);
+                          setSelectEstacionamento(false);
+                          setSelectAcessibilidade(false);
+                          setSelectArcondicionado(false);
+                          setSelectAnimais(false);
+                          setSelectBar(false);
+                          setSelectPiscina(false);
+                          setSelectRefeicao(false);
+                          setSelectWifi(false);
+                          setSelectTrilhas(false);
+                        }}>
+                        <Text
+                          style={{
+                            fontSize: 24,
+                            fontFamily: 'Poppins-Regular',
+                            color: '#fff',
+                            paddingTop: 5,
+                          }}>
+                          ok
+                        </Text>
+                      </TouchableOpacity>
+                    </View>
+                  </View>
                 </View>
               ) : (
                 <View>
@@ -527,6 +779,262 @@ export default function App({route}) {
             </>
           }
         />
+      </View>
+      <View>
+        <Modal
+          visible={mostrarfiltro}
+          transparent={true}
+          animationType={'fade'}>
+          <View style={estilos.containerModal}>
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+              }}>
+              <Text style={estilos.txtFiltro}>
+                Selecione as opções abaixo para filtrar.
+              </Text>
+              <TouchableOpacity
+                onPress={() => {
+                  setMostrarfiltro(false);
+                }}>
+                <Image
+                  style={{height: 25, width: 25}}
+                  source={require('../../images/configuracao/close.png')}
+                />
+              </TouchableOpacity>
+            </View>
+            <View
+              style={{
+                flex: 1,
+                padding: 10,
+                paddingBottom: 0,
+              }}>
+              <ScrollView>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    marginBottom: 15,
+                  }}>
+                  <CheckBox
+                    value={selectEstacionamento}
+                    onValueChange={selectionEstacionamento}
+                    style={{transform: [{scaleX: 1.2}, {scaleY: 1.2}]}}
+                    tintColors={{true: '#910046', false: '#910046'}}
+                  />
+                  <Image
+                    style={estilos.imgFiltro}
+                    source={require('../../images/paginadetalhes/estacionamento.png')}
+                  />
+                  <Text style={[estilos.txtFiltro, {top: 4}]}>
+                    Estacionamento
+                  </Text>
+                </View>
+
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    marginBottom: 15,
+                  }}>
+                  <CheckBox
+                    value={selectPiscina}
+                    onValueChange={selectionPiscina}
+                    style={{transform: [{scaleX: 1.2}, {scaleY: 1.2}]}}
+                    tintColors={{true: '#910046', false: '#910046'}}
+                  />
+                  <Image
+                    style={estilos.imgFiltro}
+                    source={require('../../images/paginadetalhes/piscina.png')}
+                  />
+                  <Text style={[estilos.txtFiltro, {top: 4}]}>Piscina</Text>
+                </View>
+
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    marginBottom: 15,
+                  }}>
+                  <CheckBox
+                    value={selectArcondicionado}
+                    onValueChange={selectionArcondicionado}
+                    style={{transform: [{scaleX: 1.2}, {scaleY: 1.2}]}}
+                    tintColors={{true: '#910046', false: '#910046'}}
+                  />
+                  <Image
+                    style={estilos.imgFiltro}
+                    source={require('../../images/paginadetalhes/arcondicionado.png')}
+                  />
+                  <Text style={[estilos.txtFiltro, {top: 4}]}>
+                    Ar-condicionado
+                  </Text>
+                </View>
+
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    marginBottom: 15,
+                  }}>
+                  <CheckBox
+                    value={selectRefeicao}
+                    onValueChange={selectionRefeicao}
+                    style={{transform: [{scaleX: 1.2}, {scaleY: 1.2}]}}
+                    tintColors={{true: '#910046', false: '#910046'}}
+                  />
+                  <Image
+                    style={estilos.imgFiltro}
+                    source={require('../../images/paginadetalhes/refeicao.png')}
+                  />
+                  <Text style={[estilos.txtFiltro, {top: 4}]}>Refeicao</Text>
+                </View>
+
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    marginBottom: 15,
+                  }}>
+                  <CheckBox
+                    value={selectAcademia}
+                    onValueChange={selectionAcademia}
+                    style={{transform: [{scaleX: 1.2}, {scaleY: 1.2}]}}
+                    tintColors={{true: '#910046', false: '#910046'}}
+                  />
+                  <Image
+                    style={estilos.imgFiltro}
+                    source={require('../../images/paginadetalhes/academia.png')}
+                  />
+                  <Text style={[estilos.txtFiltro, {top: 4}]}>Academia</Text>
+                </View>
+
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    marginBottom: 15,
+                  }}>
+                  <CheckBox
+                    value={selectWifi}
+                    onValueChange={selectionWifi}
+                    style={{transform: [{scaleX: 1.2}, {scaleY: 1.2}]}}
+                    tintColors={{true: '#910046', false: '#910046'}}
+                  />
+                  <Image
+                    style={estilos.imgFiltro}
+                    source={require('../../images/paginadetalhes/wifi.png')}
+                  />
+                  <Text style={[estilos.txtFiltro, {top: 4}]}>Wi-fi</Text>
+                </View>
+
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    marginBottom: 15,
+                  }}>
+                  <CheckBox
+                    value={selectAcessibilidade}
+                    onValueChange={selectionAcessibilidade}
+                    style={{transform: [{scaleX: 1.2}, {scaleY: 1.2}]}}
+                    tintColors={{true: '#910046', false: '#910046'}}
+                  />
+                  <Image
+                    style={estilos.imgFiltro}
+                    source={require('../../images/paginadetalhes/acessibilidade.png')}
+                  />
+                  <Text style={[estilos.txtFiltro, {top: 4}]}>
+                    Acessibilidade
+                  </Text>
+                </View>
+
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    marginBottom: 15,
+                  }}>
+                  <CheckBox
+                    value={selectTrilhas}
+                    onValueChange={selectionTrilhas}
+                    style={{transform: [{scaleX: 1.2}, {scaleY: 1.2}]}}
+                    tintColors={{true: '#910046', false: '#910046'}}
+                  />
+                  <Image
+                    style={estilos.imgFiltro}
+                    source={require('../../images/paginadetalhes/trilhas.png')}
+                  />
+                  <Text style={[estilos.txtFiltro, {top: 4}]}>Trilhas</Text>
+                </View>
+
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    marginBottom: 15,
+                  }}>
+                  <CheckBox
+                    value={selectBar}
+                    onValueChange={selectionBar}
+                    style={{transform: [{scaleX: 1.2}, {scaleY: 1.2}]}}
+                    tintColors={{true: '#910046', false: '#910046'}}
+                  />
+                  <Image
+                    style={estilos.imgFiltro}
+                    source={require('../../images/paginadetalhes/bar.png')}
+                  />
+                  <Text style={[estilos.txtFiltro, {top: 4}]}>Bar</Text>
+                </View>
+
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    marginBottom: 15,
+                  }}>
+                  <CheckBox
+                    value={selectAnimais}
+                    onValueChange={selectionAnimais}
+                    style={{transform: [{scaleX: 1.2}, {scaleY: 1.2}]}}
+                    tintColors={{true: '#910046', false: '#910046'}}
+                  />
+                  <Image
+                    style={estilos.imgFiltro}
+                    source={require('../../images/paginadetalhes/animais.png')}
+                  />
+                  <Text style={[estilos.txtFiltro, {top: 4}]}>
+                    Aceita animais de estimação
+                  </Text>
+                </View>
+
+                <View
+                  style={{
+                    flex: 1,
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    marginBottom: 40,
+                  }}>
+                  <TouchableOpacity
+                    style={estilos.btn}
+                    onPress={FiltrarDetalhes}>
+                    <Text
+                      style={{
+                        fontSize: 24,
+                        fontFamily: 'Poppins-Regular',
+                        color: '#fff',
+                        paddingTop: 5,
+                      }}>
+                      Filtrar
+                    </Text>
+                  </TouchableOpacity>
+                </View>
+              </ScrollView>
+            </View>
+          </View>
+        </Modal>
       </View>
     </View>
   );
@@ -605,5 +1113,55 @@ const estilos = StyleSheet.create({
     height: 15,
     width: 15,
     resizeMode: 'contain',
+  },
+  containerModal: {
+    alignSelf: 'center',
+    width:
+      Dimensions.get('window').width - Dimensions.get('window').width * 0.02,
+    height: Dimensions.get('window').height - 220,
+    padding: 15,
+    paddingBottom: 0,
+    backgroundColor: '#fff',
+    elevation: 5,
+    borderTopLeftRadius: 15,
+    borderTopRightRadius: 15,
+    top: 220,
+  },
+  btnBg: {
+    width: 100,
+    height: 45,
+    backgroundColor: '#CCC',
+    borderRadius: 34,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginHorizontal: 20,
+  },
+  txtModal: {
+    textAlign: 'center',
+    fontSize: 16,
+    fontFamily: 'Poppins-Regular',
+    marginTop: 10,
+    color: '#000',
+  },
+  txtFiltro: {
+    fontFamily: 'Poppins-Regular',
+    fontSize: 14,
+    color: '#111',
+  },
+  imgFiltro: {
+    height: 25,
+    width: 25,
+    marginRight: 14,
+    marginLeft: 7,
+    resizeMode: 'contain',
+  },
+  btn: {
+    marginTop: 20,
+    width: '90%',
+    height: 45,
+    borderRadius: 33,
+    backgroundColor: '#910046',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });

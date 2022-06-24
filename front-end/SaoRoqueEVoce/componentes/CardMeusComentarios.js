@@ -118,8 +118,9 @@ export default function App({data, props}) {
   const rota2 = () => {
     if (nome == undefined) {
       navigation.navigate('PaginaDetalhesComentario', {
-        hookReload: 'hook' + new Date(),
+        hookReload2: 'hook' + new Date(),
         id: data.idApp,
+        meuscomentarios: 'meuscomentarios',
       });
     } else {
       navigation.navigate('Comentarios', {
@@ -186,13 +187,17 @@ export default function App({data, props}) {
           setLoadingResponse(false);
         }, 1500);
       })
-      .catch(error => {        
-        setImg(require('../images/configuracao/error.png'))
-        if(error.response.data.error == 'Existe palavras impróprias no coméntario'){
-        setMsg('Não use vocabulário impróprio!')
-        setTimeout(() => {
-          setLoadingResponse(false);
-        }, 1000);}   
+      .catch(error => {
+        setImg(require('../images/configuracao/error.png'));
+        if (
+          error.response.data.error ==
+          'Existe palavras impróprias no coméntario'
+        ) {
+          setMsg('Não use vocabulário impróprio!');
+          setTimeout(() => {
+            setLoadingResponse(false);
+          }, 1000);
+        }
       });
   }
 
@@ -200,7 +205,9 @@ export default function App({data, props}) {
     <View>
       <TouchableOpacity
         style={{flex: 1}}
-        onPress={() =>{rota2()} }>
+        onPress={() => {
+          rota2();
+        }}>
         <View style={estilos.cardBody}>
           <View
             style={{
@@ -270,21 +277,24 @@ export default function App({data, props}) {
                 </TouchableOpacity>
               </View>
             </View>
-            {data.utilSim != 0 ?
-            <View
-              style={{
-                flexDirection: 'row',
-                height:40,
-                marginTop:5,
-                paddingVertical: 5,
-                paddingTop: 10,
-              }}>
-              <Text style={estilos.txtData}>Seu comentário foi votado</Text>
-              <View style={estilos.miniBtn}>
-                <Text style={estilos.txtMiniBtn}>{data.utilSim}</Text>
+            {data.utilSim != 0 ? (
+              <View
+                style={{
+                  flexDirection: 'row',
+                  height: 40,
+                  marginTop: 5,
+                  paddingVertical: 5,
+                  paddingTop: 10,
+                }}>
+                <Text style={estilos.txtData}>Seu comentário foi votado</Text>
+                <View style={estilos.miniBtn}>
+                  <Text style={estilos.txtMiniBtn}>{data.utilSim}</Text>
+                </View>
+                <Text style={estilos.txtData}>vezes como útil.</Text>
               </View>
-              <Text style={estilos.txtData}>vezes como útil.</Text>
-            </View>:<View style={{height:40}}></View>}
+            ) : (
+              <View style={{height: 40}}></View>
+            )}
           </View>
         </View>
       </TouchableOpacity>
@@ -304,7 +314,10 @@ export default function App({data, props}) {
                   onPress={() => {
                     setMostrarExcluir(false);
                   }}>
-                  <Image source={require('../images/configuracao/close.png')} />
+                  <Image
+                    style={{height: 25, width: 25}}
+                    source={require('../images/configuracao/close.png')}
+                  />
                 </TouchableOpacity>
               </View>
               <View style={{alignItems: 'center'}}>
@@ -428,7 +441,10 @@ export default function App({data, props}) {
                   onPress={() => {
                     setMostrarEditar(false);
                   }}>
-                  <Image source={require('../images/configuracao/close.png')} />
+                  <Image
+                    style={{height: 25, width: 25}}
+                    source={require('../images/configuracao/close.png')}
+                  />
                 </TouchableOpacity>
               </View>
               <View style={{alignItems: 'center'}}>
@@ -569,7 +585,10 @@ export default function App({data, props}) {
                   onPress={() => {
                     rota();
                   }}>
-                  <Image source={require('../images/configuracao/close.png')} />
+                  <Image
+                    style={{height: 25, width: 25}}
+                    source={require('../images/configuracao/close.png')}
+                  />
                 </TouchableOpacity>
               </View>
               <View
@@ -635,7 +654,8 @@ const estilos = StyleSheet.create({
     height: 20,
   },
   containerModal: {
-    width: Dimensions.get('window').width - Dimensions.get('window').width * 0.1,
+    width:
+      Dimensions.get('window').width - Dimensions.get('window').width * 0.1,
     padding: 20,
     borderRadius: 30,
     backgroundColor: '#fff',
@@ -697,7 +717,7 @@ const estilos = StyleSheet.create({
     borderColor: '#920046',
     borderWidth: 1,
     marginHorizontal: 5,
-    height:20
+    height: 20,
   },
   txtMiniBtn: {
     paddingHorizontal: 5,

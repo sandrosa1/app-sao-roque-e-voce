@@ -1,10 +1,11 @@
 import React, {useState, useEffect,useRef} from 'react';
-import {StyleSheet, Text, View, ScrollView, Image, TouchableOpacity, Dimensions} from 'react-native';
+import {StyleSheet, Text, View, ScrollView, Image, TouchableOpacity, Dimensions,Linking,ActivityIndicator} from 'react-native';
 import NavPages from '../../componentes/NavPages';
 import axios from 'axios';
 
 export default function App() {
   const [dados, setDados] = useState([]);
+  const [loading, setLoading] = useState(true);
   const scrollRef = useRef();
   const {width, height} = Dimensions.get('window');
 
@@ -15,6 +16,9 @@ export default function App() {
   async function loadApi() {
      const response = await axios.get(`http://www.racsstudios.com/api/v1`);
     setDados(response.data);
+    setTimeout(() => {
+      setLoading(false)
+    }, 600);
   }
   return (
     <View style={estilos.container}>
@@ -28,7 +32,16 @@ export default function App() {
             icon={require('../../images/menubar/quemsomos.png')}
             title={'Quem Somos'}
           />
-
+          {loading ?
+           <View
+           style={{
+             marginTop: 150,
+             alignItems: 'center',
+             justifyContent: 'center',
+           }}>
+           <ActivityIndicator size={50} color="#910046" />
+         </View>:
+          <View>
           <View style={{paddingHorizontal: 30}}>
             <Text
               style={{
@@ -54,41 +67,51 @@ export default function App() {
           />
           <View style={{paddingHorizontal: 30, marginTop: 10}}>
             <Text style={estilos.h1}>Contato</Text>
-            <View style={estilos.contatoContainer}>
+            <TouchableOpacity
+            onPress={()=>{Linking.openURL(`http://www.facebook.com/${dados?.facebook}`)}}
+            style={estilos.contatoContainer}>
               <Image
                 style={estilos.img}
                 source={require('../../images/servicos/facebook.png')}
               />
               <Text style={estilos.txtContato}>{dados.facebook}</Text>
-            </View>
-            <View style={estilos.contatoContainer}>
+            </TouchableOpacity>
+            <TouchableOpacity
+            onPress={()=>{Linking.openURL(`http://www.instagram.com/${dados?.instagran}`)}}
+            style={estilos.contatoContainer}>
               <Image
                 style={estilos.img}
                 source={require('../../images/servicos/instagram.png')}
               />
               <Text style={estilos.txtContato}>{dados.instagran}</Text>
-            </View>
-            <View style={estilos.contatoContainer}>
+            </TouchableOpacity>
+            <TouchableOpacity
+            onPress={()=>{Linking.openURL(`tel:${dados?.whatsapp}`)}}
+            style={estilos.contatoContainer}>
               <Image
                 style={estilos.img}
                 source={require('../../images/servicos/whatsapp.png')}
               />
               <Text style={estilos.txtContato}>{dados.whatsapp}</Text>
-            </View>
-            <View style={estilos.contatoContainer}>
+            </TouchableOpacity>
+            <TouchableOpacity
+            onPress={()=>{Linking.openURL(`mailto:${dados?.email}`)}}
+            style={estilos.contatoContainer}>
               <Image
                 style={estilos.img}
                 source={require('../../images/servicos/email.png')}
               />
               <Text style={estilos.txtContato}>{dados.email}</Text>
-            </View>
-            <View style={estilos.contatoContainer}>
+            </TouchableOpacity>
+            <TouchableOpacity
+            onPress={()=>{Linking.openURL(`http://${dados?.site}`)}}
+            style={estilos.contatoContainer}>
               <Image
                 style={estilos.img}
                 source={require('../../images/servicos/site.png')}
               />
               <Text style={estilos.txtContato}>{dados.site}</Text>
-            </View>
+            </TouchableOpacity>
           </View>
           <View
             style={{
@@ -112,10 +135,11 @@ export default function App() {
               {dados.versao}
             </Text>
           </View>
+          </View>}
         </View>       
-        <TouchableOpacity onPress={()=> {scrollRef.current.scrollTo({x:0,y:0,animated:true})}}> 
+        {/* <TouchableOpacity onPress={()=> {scrollRef.current.scrollTo({x:0,y:0,animated:true})}}> 
           <Text>ir ao topo</Text>
-      </TouchableOpacity>
+      </TouchableOpacity> */}
       </ScrollView>
     </View>
   );

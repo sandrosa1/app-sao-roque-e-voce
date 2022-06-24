@@ -26,7 +26,6 @@ export default function App({navigate}) {
   const [alertasenha, setAlertasenha] = useState('');
   const [retorno, setRetorno] = useState(false);
   const [loadingResponse, setLoadingResponse] = useState(false);
-  const [confirmacao, setConfirmacao] = useState();
   const [mostrar, setMostrar] = useState(false);
   const [sair, setSair] = useState(false);
   const [opcao, setOpcao] = useState(false);
@@ -87,13 +86,13 @@ export default function App({navigate}) {
     } else {
       axios
         .post(baseURL, {
-          email: Globais.dados.useremail,
+          email: Globais.dados?.useremail,
           senha: senha,
         })
         .then(response => {
           if (response.data.retorne == true) {
             let url = 'http://www.racsstudios.com/api/v1/user/';
-            let username = Globais.dados.useremail;
+            let username = Globais.dados?.useremail;
             let password = response.data.token;
             let token = Buffer.from(`${username}:${password}`, 'utf8').toString(
               'base64',
@@ -134,7 +133,6 @@ export default function App({navigate}) {
         });
     }
   };
-console.log(Globais.dados.userativalocalizacao);
   return (
     <View style={estilos.container}>
       <Header goingback={true} space={true} />
@@ -149,7 +147,10 @@ console.log(Globais.dados.userativalocalizacao);
             <Text style={estilos.txtOption}>Ativar localização</Text>
           </View>
           <View style={{flex: 1, padding: 15}}>
-            <SwitchBtn tipo={'ativaLocalizacao'} valor={Globais.dados.userativalocalizacao}/>
+            <SwitchBtn
+              tipo={'ativaLocalizacao'}
+              valor={Globais.dados?.userativalocalizacao}
+            />
           </View>
         </View>
       </View>
@@ -223,6 +224,7 @@ console.log(Globais.dados.userativalocalizacao);
                     setSair(false);
                   }}>
                   <Image
+                    style={{height: 25, width: 25}}
                     source={require('../../images/configuracao/close.png')}
                   />
                 </TouchableOpacity>
@@ -281,6 +283,7 @@ console.log(Globais.dados.userativalocalizacao);
                     setDeletar(false);
                   }}>
                   <Image
+                    style={{height: 25, width: 25}}
                     source={require('../../images/configuracao/close.png')}
                   />
                 </TouchableOpacity>
@@ -397,6 +400,7 @@ console.log(Globais.dados.userativalocalizacao);
                     logout();
                   }}>
                   <Image
+                    style={{height: 25, width: 25}}
                     source={require('../../images/configuracao/close.png')}
                   />
                 </TouchableOpacity>
@@ -472,7 +476,7 @@ const estilos = StyleSheet.create({
     justifyContent: 'flex-end',
     marginTop: 30,
     alignItems: 'center',
-    bottom:'6%'
+    bottom: '6%',
   },
   containerModal: {
     alignSelf: 'center',

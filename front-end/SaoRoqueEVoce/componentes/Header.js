@@ -5,11 +5,24 @@ import {useNavigation} from '@react-navigation/native';
 export default function App(props) {
   const navigation = useNavigation();
 
-  let goingback = props.goingback;
-  let logado = props.logado;
-  let login = props.login;
-  let space = props.space;
-  let br = props.nobr;
+  let goingback = props?.goingback;
+  let logado = props?.logado;
+  let login = props?.login;
+  let space = props?.space;
+  let br = props?.nobr;
+  let reload = props?.reload;
+  let id = props?.id;
+  let rota = props?.rota;
+
+  const navegacao = () => {   
+    if (rota) {
+      navigation.navigate(rota); 
+    } else {
+      navigation.goBack({
+        hookReload2: 'hook' + new Date(),
+      });
+    }
+  };
 
   return (
     <View>
@@ -19,7 +32,7 @@ export default function App(props) {
             style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
             <TouchableOpacity
               style={{padding: 10, right: 10}}
-              onPress={() => navigation.goBack()}>
+              onPress={() => navegacao()}>
               <Image
                 style={{width: 30, height: 30, resizeMode: 'cover'}}
                 source={require('../images/goingback.png')}
@@ -66,9 +79,9 @@ export default function App(props) {
                   alignSelf: 'baseline',
                   fontSize: 18,
                   color: '#910046',
-                  fontFamily: 'Poppins-SemiBold',
+                  fontFamily: 'Roboto-Bold',
                 }}>
-                Login
+                Entrar
               </Text>
             </TouchableOpacity>
           </View>

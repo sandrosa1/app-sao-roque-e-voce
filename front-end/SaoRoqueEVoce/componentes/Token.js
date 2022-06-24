@@ -1,4 +1,4 @@
-import React, {useState, useRef,useEffect} from 'react';
+import React, {useState, useRef, useEffect} from 'react';
 import {
   StyleSheet,
   Text,
@@ -8,7 +8,7 @@ import {
   Modal,
   TouchableOpacity,
   ActivityIndicator,
-  Dimensions
+  Dimensions,
 } from 'react-native';
 import CountDown from 'react-native-countdown-component';
 import {useNavigation} from '@react-navigation/native';
@@ -19,7 +19,7 @@ import Globais from './Globais';
 
 export default function App(props) {
   const navigation = useNavigation();
- const baseURL = 'http://www.racsstudios.com/api/v1/setuser';
+  const baseURL = 'http://www.racsstudios.com/api/v1/setuser';
   const [mostrar, setMostrar] = useState(false);
   const [loadingResponse, setLoadingResponse] = useState(false);
   const [versenha, setVersenha] = useState(true);
@@ -53,11 +53,9 @@ export default function App(props) {
   const [useralertanovidade, setUseralertanovidade] = useState(null);
   const [useralertaevento, setUseralertaevento] = useState(null);
   const [confirmacao, setConfirmacao] = useState();
-  const [msg, setMsg] = useState('')
-  const [img, setImg] = useState(require('../images/configuracao/sucesso.png'))
-  const email = props.email
-
-
+  const [msg, setMsg] = useState('');
+  const [img, setImg] = useState(require('../images/configuracao/sucesso.png'));
+  const email = props.email;
 
   const rota = () => {
     if (confirmacao?.retorno == 'success') {
@@ -97,7 +95,7 @@ export default function App(props) {
       error = true;
     }
     if (pin1 == '' || pin2 == '' || pin3 == '' || pin4 == '') {
-      setErroToken('Insira o token!')
+      setErroToken('Insira o token!');
       error = true;
     }
 
@@ -107,24 +105,24 @@ export default function App(props) {
   const enviarEmail = () => {
     setEnviado(true);
     setTempo(10);
-      axios.post(baseURL, {redefinirSenha: email})        
-    }
+    axios.post(baseURL, {redefinirSenha: email});
+  };
 
-const alterarSenha = () => {
-  setMsg('')
-  if(validar()){
-    let validarConexao = true;
+  const alterarSenha = () => {
+    setMsg('');
+    if (validar()) {
+      let validarConexao = true;
       setMostrar(true);
       setLoadingResponse(true);
-      let username = email
-      let password = usertoken
+      let username = email;
+      let password = usertoken;
       const auth = Buffer.from(`${username}:${password}`, 'utf8').toString(
         'base64',
       );
       let body = {
         email: email,
         token: usertoken,
-        novaSenha: senha
+        novaSenha: senha,
       };
       axios
         .put(baseURL, body, {headers: {Authorization: `Basic ${auth}`}})
@@ -133,7 +131,7 @@ const alterarSenha = () => {
           console.log(validarConexao);
           setMsg('Sua senha foi alterada com sucesso!');
           setImg(require('../images/configuracao/sucesso.png'));
-          setConfirmacao(response.data);     
+          setConfirmacao(response.data);
           setTimeout(() => {
             setLoadingResponse(false);
           }, 2000);
@@ -141,84 +139,86 @@ const alterarSenha = () => {
         .catch(error => {
           validarConexao = false;
           console.log(validarConexao);
-          if(msg == '' ){
-          setImg(require('../images/configuracao/dangericon.png'));
-          setMsg('Token inválido, tente novamente.');}
+          if (msg == '') {
+            setImg(require('../images/configuracao/dangericon.png'));
+            setMsg('Token inválido, tente novamente.');
+          }
           setTimeout(() => {
             setLoadingResponse(false);
           }, 2000);
         });
-        setTimeout(()=> {if (validarConexao == true) {
+      setTimeout(() => {
+        if (validarConexao == true) {
           console.log(validarConexao);
           setLoadingResponse(false);
-          setImg(require('../images/configuracao/dangericon.png'));        
+          setImg(require('../images/configuracao/dangericon.png'));
           setMsg('Houve um erro.\nVerifique sua internet\ne tente novamente.');
-      }},6000)
-      }
-    if(usernome != undefined){
-      salvar()
+        }
+      }, 6000);
     }
-}
-
-
-const salvar = async () => {
-  console.log('entrou no salvar');
-  const usuario = {
-    usernome,
-    usersobrenome,
-    usernascimento,
-    usertoken,
-    useremail,
-    useridusuario,
-    userdicasrestaurante,
-    userdicasturismo,
-    userdicashospedagem,
-    userativalocalizacao,
-    useralertanovidade,
-    useralertaevento,
+    if (usernome != undefined) {
+      salvar();
+    }
   };
 
-  console.log(usuario);
-  try {
-    const jsonValue = JSON.stringify(usuario);
-    await AsyncStorage.setItem('usuario', jsonValue);
-    console.log(jsonValue);
-  } catch (e) {
-    console.log(e);
+  const salvar = async () => {
+    console.log('entrou no salvar');
+    const usuario = {
+      usernome,
+      usersobrenome,
+      usernascimento,
+      usertoken,
+      useremail,
+      useridusuario,
+      userdicasrestaurante,
+      userdicasturismo,
+      userdicashospedagem,
+      userativalocalizacao,
+      useralertanovidade,
+      useralertaevento,
+    };
+
+    console.log(usuario);
+    try {
+      const jsonValue = JSON.stringify(usuario);
+      await AsyncStorage.setItem('usuario', jsonValue);
+      console.log(jsonValue);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  useEffect(() => {
+    if (usernome != null) {
+      salvar();
+    }
+  }, [usersobrenome]);
+
+  console.log(Globais.dados?.usernome);
+
+  if (
+    confirmacao?.retorno == 'success' &&
+    usernome === null &&
+    usertoken != null
+  ) {
+    console.log('entrou aqui');
+    setUsernome(
+      confirmacao.nomeUsuario[0].toUpperCase() +
+        confirmacao.nomeUsuario.substr(1),
+    );
+    setUsersobrenome(
+      confirmacao.sobreNome[0].toUpperCase() + confirmacao.sobreNome.substr(1),
+    );
+    setUseremail(confirmacao.email);
+    setUseridusuario(confirmacao.idUsuario);
+    setUsernascimento(confirmacao.dataNascimento);
+    setUserdicasrestaurante(confirmacao.dicasRestaurantes);
+    setUserdicasturismo(confirmacao.dicasPontosTuristicos);
+    setUserdicashospedagem(confirmacao.dicasHospedagens);
+    setUserativalocalizacao(confirmacao.ativaLocalizacao);
+    setUseralertanovidade(confirmacao.alertaNovidade);
+    setUseralertaevento(confirmacao.alertaEventos);
   }
-};
-
-useEffect(() => {
-  if (usernome != null) {
-    salvar();
-  }
-}, [usersobrenome]);
-
-console.log(Globais.dados?.usernome);
-
-if (
-  confirmacao?.retorno == 'success' &&
-  usernome === null &&
-  usertoken != null
-) {
-  console.log('entrou aqui');
-  setUsernome(
-    confirmacao.nomeUsuario[0].toUpperCase() +
-      confirmacao.nomeUsuario.substr(1),
-  );
-  setUsersobrenome(
-    confirmacao.sobreNome[0].toUpperCase() + confirmacao.sobreNome.substr(1),
-  );
-  setUseremail(confirmacao.email);
-  setUseridusuario(confirmacao.idUsuario);
-  setUsernascimento(confirmacao.dataNascimento);
-  setUserdicasrestaurante(confirmacao.dicasRestaurantes);
-  setUserdicasturismo(confirmacao.dicasPontosTuristicos);
-  setUserdicashospedagem(confirmacao.dicasHospedagens);
-  setUserativalocalizacao(confirmacao.ativaLocalizacao);
-  setUseralertanovidade(confirmacao.alertaNovidade);
-  setUseralertaevento(confirmacao.alertaEventos);
-}
 
   return (
     <View>
@@ -292,10 +292,10 @@ if (
                     ref={pin1Ref}
                     value={pin1}
                     keyboardType={'number-pad'}
-                    maxLength={1}                  
+                    maxLength={1}
                     onChangeText={pin1 => {
                       setPin1(pin1);
-                      setErroToken('')
+                      setErroToken('');
                       if (pin1 != '') {
                         pin2Ref.current?.focus();
                       }
@@ -314,7 +314,7 @@ if (
                     maxLength={1}
                     onChangeText={pin2 => {
                       setPin2(pin2);
-                      setErroToken('')
+                      setErroToken('');
                       if (pin2 != '') {
                         pin3Ref.current?.focus();
                       }
@@ -332,7 +332,7 @@ if (
                     maxLength={1}
                     onChangeText={pin3 => {
                       setPin3(pin3);
-                      setErroToken('')
+                      setErroToken('');
                       if (pin3 != '') {
                         pin4Ref.current?.focus();
                       }
@@ -349,24 +349,26 @@ if (
                     maxLength={1}
                     onChangeText={pin4 => {
                       setPin4(pin4);
-                      setErroToken('')
+                      setErroToken('');
                       setUsertoken(
                         String(pin1) +
                           String(pin2) +
                           String(pin3) +
-                          String(pin4)
+                          String(pin4),
                       );
                     }}
                   />
                 </View>
-                <Text style={{marginBottom:-15, color:'red'}}>{erroToken}</Text>
+                <Text style={{marginBottom: -15, color: 'red'}}>
+                  {erroToken}
+                </Text>
                 <View style={{flexDirection: 'row', alignItems: 'center'}}>
                   <Text
                     style={[
                       estilos.txtModal,
                       {
                         fontSize: 13,
-                        textAlign: 'center',                       
+                        textAlign: 'center',
                         color: '#414141',
                       },
                     ]}>
@@ -380,7 +382,7 @@ if (
                           {
                             fontSize: 13,
                             fontFamily: 'Poppins-Bold',
-                            textAlign: 'center',                            
+                            textAlign: 'center',
                             color: '#000',
                             padding: 5,
                           },
@@ -402,7 +404,7 @@ if (
                           {
                             fontSize: 13,
                             fontFamily: 'Poppins-Bold',
-                            textAlign: 'center',                         
+                            textAlign: 'center',
                             color: '#999',
                             padding: 5,
                           },
@@ -413,7 +415,7 @@ if (
                   )}
                 </View>
                 {enviado ? (
-                  <View style={{height: 30, marginBottom:10,}}>
+                  <View style={{height: 30, marginBottom: 10}}>
                     <CountDown
                       size={10}
                       until={tempo}
@@ -453,7 +455,7 @@ if (
                     flexDirection: 'row',
                     alignItems: 'center',
                     marginBottom: 10,
-                    marginTop:20
+                    marginTop: 20,
                   }}>
                   <View style={estilos.containerInput}>
                     <TextInput
@@ -465,7 +467,7 @@ if (
                         setSenha(value);
                         setErroSenha('');
                       }}
-                      style={estilos.input}></TextInput>                  
+                      style={estilos.input}></TextInput>
                   </View>
                   <TouchableOpacity
                     style={{
@@ -495,8 +497,8 @@ if (
                       onChangeText={value => {
                         setConfirmaSenha(value);
                         setErroSenha('');
-                    }} 
-                      style={estilos.input}></TextInput>                   
+                      }}
+                      style={estilos.input}></TextInput>
                   </View>
                   <TouchableOpacity
                     style={{
@@ -509,7 +511,9 @@ if (
                     <Image style={estilos.img} source={iconsenha} />
                   </TouchableOpacity>
                 </View>
-                <Text style={{color: 'red', height:35, paddingTop:3}}>{erroSenha}</Text>
+                <Text style={{color: 'red', height: 35, paddingTop: 3}}>
+                  {erroSenha}
+                </Text>
 
                 <View
                   style={{
@@ -551,7 +555,10 @@ if (
             <View style={estilos.containerModal}>
               <View style={{alignItems: 'flex-end'}}>
                 <TouchableOpacity onPress={rota}>
-                  <Image source={require('../images/configuracao/close.png')} />
+                  <Image
+                    style={{height: 25, width: 25}}
+                    source={require('../images/configuracao/close.png')}
+                  />
                 </TouchableOpacity>
               </View>
               <View
@@ -572,9 +579,7 @@ if (
                 ) : (
                   <View
                     style={{alignItems: 'center', justifyContent: 'center'}}>
-                    <Image
-                      source={img}
-                    />
+                    <Image source={img} />
                     <Text
                       style={[
                         estilos.txtModal,
@@ -596,7 +601,8 @@ if (
 const estilos = StyleSheet.create({
   containerModal: {
     alignSelf: 'center',
-    width: Dimensions.get('window').width - Dimensions.get('window').width * 0.1,
+    width:
+      Dimensions.get('window').width - Dimensions.get('window').width * 0.1,
     height: 230,
     padding: 20,
     borderRadius: 30,
@@ -648,7 +654,7 @@ const estilos = StyleSheet.create({
     backgroundColor: '#E7E7E7',
     fontFamily: 'Poppins-Regular',
     borderRadius: 8,
-    paddingLeft:10,
+    paddingLeft: 10,
   },
   img: {
     height: 25,
@@ -656,7 +662,7 @@ const estilos = StyleSheet.create({
     resizeMode: 'contain',
   },
   input: {
-      fontSize:16,
-      color:'#910046',
-  }
+    fontSize: 16,
+    color: '#910046',
+  },
 });

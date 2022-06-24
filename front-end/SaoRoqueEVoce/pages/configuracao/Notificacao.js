@@ -19,7 +19,7 @@ export default function App() {
             <Text style={estilos.txtOption}>Aleta de novidades</Text>
           </View>
           <View style={{flex: 1, padding: 15}}>
-            <SwitchBtn tipo={'alertaNovidade'} valor={Globais.dados.useralertanovidade}/>
+            <SwitchBtn tipo={'alertaNovidade'} valor={Globais.dados?.useralertanovidade}/>
           </View>
         </View>
         <View style={{flexDirection: 'row', justifyContent: 'center'}}>
@@ -27,7 +27,7 @@ export default function App() {
             <Text style={estilos.txtOption}>Dicas de Pontos Turísticos</Text>
           </View>
           <View style={{flex: 1, padding: 15}}>
-            <SwitchBtn tipo={'dicasPontosTuristicos'} valor={Globais.dados.userdicasturismo}/>
+            <SwitchBtn tipo={'dicasPontosTuristicos'} valor={Globais.dados?.userdicasturismo}/>
           </View>
         </View>
         <View style={{flexDirection: 'row', justifyContent: 'center'}}>
@@ -35,7 +35,7 @@ export default function App() {
             <Text style={estilos.txtOption}>Dicas de Restaurantes</Text>
           </View>
           <View style={{flex: 1, padding: 15}}>
-            <SwitchBtn tipo={'dicasRestaurantes'} valor={Globais.dados.userdicasrestaurante}/>
+            <SwitchBtn tipo={'dicasRestaurantes'} valor={Globais.dados?.userdicasrestaurante}/>
           </View>
         </View>
         <View style={{flexDirection: 'row', justifyContent: 'center'}}>
@@ -43,7 +43,7 @@ export default function App() {
             <Text style={estilos.txtOption}>Dicas de Hospedagens</Text>
           </View>
           <View style={{flex: 1, padding: 15}}>
-            <SwitchBtn tipo={'dicasHospedagens'} valor={Globais.dados.userdicashospedagem}/>
+            <SwitchBtn tipo={'dicasHospedagens'} valor={Globais.dados?.userdicashospedagem}/>
           </View>
         </View>
         <View style={{flexDirection: 'row', justifyContent: 'center'}}>
@@ -51,7 +51,7 @@ export default function App() {
             <Text style={estilos.txtOption}>Alerta de Eventos</Text>
           </View>
           <View style={{flex: 1, padding: 15}}>
-            <SwitchBtn tipo={'alertaEventos'} valor={Globais.dados.useralertaevento}/>
+            <SwitchBtn tipo={'alertaEventos'} valor={Globais.dados?.useralertaevento}/>
           </View>
         </View>
       </View>

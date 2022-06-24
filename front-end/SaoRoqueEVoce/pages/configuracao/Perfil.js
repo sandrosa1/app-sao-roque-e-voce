@@ -23,7 +23,9 @@ export default function App({navigation}) {
   const [mostrarAlterarSenha, setMostrarAlterarSenha] = useState(false);
   const [nome, setNome] = useState(Globais.dados?.usernome);
   const [sobrenome, setSobrenome] = useState(Globais.dados?.usersobrenome);
-  const [dataNascimento, setDataNascimento] = useState(Globais.dados?.usernascimento);
+  const [dataNascimento, setDataNascimento] = useState(
+    Globais.dados?.usernascimento,
+  );
   const [confirmacao, setConfirmacao] = useState();
   const [erronome, setErronome] = useState('');
   const [errosobrenome, setErrosobrenome] = useState('');
@@ -32,21 +34,39 @@ export default function App({navigation}) {
   const [retorno, setRetorno] = useState(false);
   const [msg, setMsg] = useState(false);
   const [img, setImg] = useState();
-  const [nomeStorage,setNomeStorage] = useState(Globais.dados?.usernome);
-  const [sobrenomeStorage, setSobrenomeStorage] = useState(Globais.dados?.usersobrenome)
-  const [dataNascimentoStorage, setNascimentoStorage] = useState(Globais.dados?.usernascimento);
+  const [nomeStorage, setNomeStorage] = useState(Globais.dados?.usernome);
+  const [sobrenomeStorage, setSobrenomeStorage] = useState(
+    Globais.dados?.usersobrenome,
+  );
+  const [dataNascimentoStorage, setNascimentoStorage] = useState(
+    Globais.dados?.usernascimento,
+  );
   const [usernome, setUsernome] = useState(null);
   const [usersobrenome, setUsersobrenome] = useState(null);
   const [usernascimento, setUsernascimento] = useState(null);
   const [usertoken, setUsertoken] = useState(Globais.dados?.usertoken);
   const [useremail, setUseremail] = useState(Globais.dados?.useremail);
-  const [useridusuario, setUseridusuario] = useState(Globais.dados?.useridusuario);
-  const [userdicasrestaurante, setUserdicasrestaurante] = useState(Globais.dados?.userdicasrestaurante);
-  const [userdicasturismo, setUserdicasturismo] = useState(Globais.dados?.userdicasturismo);
-  const [userdicashospedagem, setUserdicashospedagem] = useState(Globais.dados?.userdicashospedagem);
-  const [userativalocalizacao, setUserativalocalizacao] = useState(Globais.dados?.userativalocalizacao);
-  const [useralertanovidade, setUseralertanovidade] = useState(Globais.dados?.useralertanovidade);
-  const [useralertaevento, setUseralertaevento] = useState(Globais.dados?.useralertaevento);
+  const [useridusuario, setUseridusuario] = useState(
+    Globais.dados?.useridusuario,
+  );
+  const [userdicasrestaurante, setUserdicasrestaurante] = useState(
+    Globais.dados?.userdicasrestaurante,
+  );
+  const [userdicasturismo, setUserdicasturismo] = useState(
+    Globais.dados?.userdicasturismo,
+  );
+  const [userdicashospedagem, setUserdicashospedagem] = useState(
+    Globais.dados?.userdicashospedagem,
+  );
+  const [userativalocalizacao, setUserativalocalizacao] = useState(
+    Globais.dados?.userativalocalizacao,
+  );
+  const [useralertanovidade, setUseralertanovidade] = useState(
+    Globais.dados?.useralertanovidade,
+  );
+  const [useralertaevento, setUseralertaevento] = useState(
+    Globais.dados?.useralertaevento,
+  );
   const [versenha, setVersenha] = useState(true);
   const [senha, setSenha] = useState('');
   const [novasenha, setNovaSenha] = useState('');
@@ -54,7 +74,7 @@ export default function App({navigation}) {
   const [iconsenha, setIconsenha] = useState(require('../../images/eye1.png'));
   const [alertasenha, setAlertasenha] = useState('');
   const [erroSenha, setErroSenha] = useState('');
-  
+
   const mostrarsenha = () => {
     setVersenha(!versenha);
     if (versenha == true) {
@@ -82,7 +102,7 @@ export default function App({navigation}) {
       .then(response => {
         console.log('entrou sucesso');
         console.log(response.data);
-        setConfirmacao(response.data)
+        setConfirmacao(response.data);
         setImg(require('../../images/configuracao/sucesso.png'));
         setMsg('Perfil atualizado com sucesso!');
         setTimeout(() => {
@@ -104,7 +124,7 @@ export default function App({navigation}) {
       });
   };
 
-  const salvarStorage = () =>{
+  const salvarStorage = () => {
     setUsernome(
       confirmacao?.nomeUsuario[0].toUpperCase() +
         confirmacao?.nomeUsuario.substr(1),
@@ -113,10 +133,15 @@ export default function App({navigation}) {
       confirmacao?.sobreNome[0].toUpperCase() +
         confirmacao?.sobreNome.substr(1),
     );
-    setUsernascimento(confirmacao?.dataNascimento); 
-  }
+    setUsernascimento(confirmacao?.dataNascimento);
+  };
 
-  if (usernome && usernome != null && usersobrenome != null && usernascimento != null) {
+  if (
+    usernome &&
+    usernome != null &&
+    usersobrenome != null &&
+    usernascimento != null
+  ) {
     const usuario = {
       usernome,
       usersobrenome,
@@ -130,14 +155,14 @@ export default function App({navigation}) {
       userativalocalizacao,
       useralertanovidade,
       useralertaevento,
-    };   
+    };
     try {
       const jsonValue = JSON.stringify(usuario);
-       AsyncStorage.setItem('usuario', jsonValue);
+      AsyncStorage.setItem('usuario', jsonValue);
     } catch (e) {
       console.log(e);
     }
-  };
+  }
 
   const validar = () => {
     let error = false;
@@ -168,69 +193,74 @@ export default function App({navigation}) {
 
   const alterarSenha = () => {
     let validarConexao = true;
-    setMsg('')
-    if(validar()){
+    setMsg('');
+    if (validar()) {
       axios
-      .post('http://www.racsstudios.com/api/v1/login', {
-        email: Globais.dados.useremail,
-        senha: senha,
-      })
-      .then(response => {
-        validarConexao = false;
-        if (response.data.retorno == 'error') {
-          setAlertasenha('Senha inválida!');
-        }else{
-        setRetorno(true);
-        setLoadingResponse(true);
-        let url = 'http://www.racsstudios.com/api/v1/setuser'
-        let username = useremail
-        let password = response.data.token
-        const auth = Buffer.from(`${username}:${password}`, 'utf8').toString(
-          'base64',
-        );
-        let body = {
-          email: useremail,
-          token: password,
-          novaSenha: novasenha
-        };
-        console.log(password)
-        axios
-          .put(url, body, {headers: {Authorization: `Basic ${auth}`}})
-          .then(response => {
-            console.log(response.data)            
-            
-            setMsg('Sua senha foi alterada com sucesso!');
-            setImg(require('../../images/configuracao/sucesso.png'));
-            setConfirmacao(response.data);     
-            setTimeout(() => {
-              setLoadingResponse(false);
-            }, 2000);
-            setUsertoken(password);
-          })
-          .catch(error => {
-            console.log(error.data)
-            validarConexao = false;
-            console.log(validarConexao);
-            if(msg == '' ){
-            setImg(require('../../images/configuracao/dangericon.png'));
-            setMsg('Token inválido, tente novamente.');}
-            setTimeout(() => {
-              setLoadingResponse(false);
-            }, 2000);
-          });};
-        
-        }) .catch(error => {
+        .post('http://www.racsstudios.com/api/v1/login', {
+          email: Globais.dados.useremail,
+          senha: senha,
+        })
+        .then(response => {
+          validarConexao = false;
+          if (response.data.retorno == 'error') {
+            setAlertasenha('Senha inválida!');
+          } else {
+            setRetorno(true);
+            setLoadingResponse(true);
+            let url = 'http://www.racsstudios.com/api/v1/setuser';
+            let username = useremail;
+            let password = response.data.token;
+            const auth = Buffer.from(
+              `${username}:${password}`,
+              'utf8',
+            ).toString('base64');
+            let body = {
+              email: useremail,
+              token: password,
+              novaSenha: novasenha,
+            };
+            console.log(password);
+            axios
+              .put(url, body, {headers: {Authorization: `Basic ${auth}`}})
+              .then(response => {
+                console.log(response.data);
+
+                setMsg('Sua senha foi alterada com sucesso!');
+                setImg(require('../../images/configuracao/sucesso.png'));
+                setConfirmacao(response.data);
+                setTimeout(() => {
+                  setLoadingResponse(false);
+                }, 2000);
+                setUsertoken(password);
+              })
+              .catch(error => {
+                console.log(error.data);
+                validarConexao = false;
+                console.log(validarConexao);
+                if (msg == '') {
+                  setImg(require('../../images/configuracao/dangericon.png'));
+                  setMsg('Token inválido, tente novamente.');
+                }
+                setTimeout(() => {
+                  setLoadingResponse(false);
+                }, 2000);
+              });
+          }
+        })
+        .catch(error => {
           //   console.log(error.data)
         });
 
-          setTimeout(()=> {if (validarConexao == true) {
-            console.log(validarConexao);
-            setLoadingResponse(false);
-            setImg(require('../../images/configuracao/dangericon.png'));        
-            setMsg('Houve um erro.\nVerifique sua internet\ne tente novamente.');
-        }},6000)
-      }
-  }
+      setTimeout(() => {
+        if (validarConexao == true) {
+          console.log(validarConexao);
+          setLoadingResponse(false);
+          setImg(require('../../images/configuracao/dangericon.png'));
+          setMsg('Houve um erro.\nVerifique sua internet\ne tente novamente.');
+        }
+      }, 6000);
+    }
+  };
 
   return (
     <View style={estilos.container}>
@@ -368,6 +398,7 @@ export default function App({navigation}) {
                     setMostrarAtualizar(false);
                   }}>
                   <Image
+                    style={{height: 25, width: 25}}
                     source={require('../../images/configuracao/close.png')}
                   />
                 </TouchableOpacity>
@@ -391,8 +422,8 @@ export default function App({navigation}) {
                   <View style={{marginTop: 0}}>
                     <Text style={estilos.miniText}>Nome</Text>
                     <TextInput
-                    value={nome}
-                    onChangeText={setNome}
+                      value={nome}
+                      onChangeText={setNome}
                       placeholder={nomeStorage}
                       placeholderTextColor={'#414141'}
                       style={estilos.input}></TextInput>
@@ -400,8 +431,8 @@ export default function App({navigation}) {
                   <View style={{marginTop: 15}}>
                     <Text style={estilos.miniText}>Sobrenome</Text>
                     <TextInput
-                     value={sobrenome}
-                     onChangeText={setSobrenome}
+                      value={sobrenome}
+                      onChangeText={setSobrenome}
                       placeholder={sobrenomeStorage}
                       placeholderTextColor={'#414141'}
                       style={estilos.input}></TextInput>
@@ -422,7 +453,7 @@ export default function App({navigation}) {
                       style={estilos.input}
                     />
                   </View>
-                </View>               
+                </View>
               </View>
               <View
                 style={{alignItems: 'center', marginTop: 25, marginBottom: 10}}>
@@ -442,7 +473,7 @@ export default function App({navigation}) {
           </View>
         </Modal>
       </View>
-      
+
       <View>
         <Modal visible={mostrarAlterarSenha} transparent={true}>
           <View
@@ -464,6 +495,7 @@ export default function App({navigation}) {
                     setMostrarAlterarSenha(false);
                   }}>
                   <Image
+                    style={{height: 25, width: 25}}
                     source={require('../../images/configuracao/close.png')}
                   />
                 </TouchableOpacity>
@@ -489,7 +521,7 @@ export default function App({navigation}) {
                     flexDirection: 'row',
                     alignItems: 'center',
                     marginBottom: 10,
-                    marginTop:20
+                    marginTop: 20,
                   }}>
                   <View style={estilos.containerInput}>
                     <TextInput
@@ -501,8 +533,8 @@ export default function App({navigation}) {
                         setSenha(value);
                         setAlertasenha('');
                       }}
-                      style={estilos.input2}></TextInput>                  
-                  </View>                
+                      style={estilos.input2}></TextInput>
+                  </View>
                   <TouchableOpacity
                     style={{
                       position: 'absolute',
@@ -514,15 +546,35 @@ export default function App({navigation}) {
                     <Image style={estilos.img} source={iconsenha} />
                   </TouchableOpacity>
                 </View>
-                <View style={{flexDirection: 'row'}}>  
-                
-                  <Text style={{color: 'red', fontSize: 14, bottom:10,marginLeft:20,height:20}}>
-                      {alertasenha}
+                <View style={{flexDirection: 'row'}}>
+                  <Text
+                    style={{
+                      color: 'red',
+                      fontSize: 14,
+                      bottom: 10,
+                      marginLeft: 20,
+                      height: 20,
+                    }}>
+                    {alertasenha}
+                  </Text>
+                  <TouchableOpacity
+                    onPress={() => {
+                      navigation.navigate('EsqueciSenha');
+                      setTimeout(() => {
+                        setMostrarAlterarSenha(false);
+                      }, 1000);
+                    }}>
+                    <Text
+                      style={{
+                        color: 'blue',
+                        fontSize: 14,
+                        bottom: 10,
+                        marginLeft: 5,
+                        height: 20,
+                      }}>
+                      Esqueceu sua senha?
                     </Text>
-                    <TouchableOpacity onPress={()=>{navigation.navigate('EsqueciSenha');setTimeout(()=>{setMostrarAlterarSenha(false);},1000) }}>
-                      <Text style={{color: 'blue', fontSize: 14, bottom:10,marginLeft:5,height:20}}>
-                        Esqueceu sua senha?</Text>
-                    </TouchableOpacity>
+                  </TouchableOpacity>
                 </View>
                 <View
                   style={{
@@ -530,7 +582,7 @@ export default function App({navigation}) {
                     flexDirection: 'row',
                     alignItems: 'center',
                     marginBottom: 10,
-                    marginTop:20
+                    marginTop: 20,
                   }}>
                   <View style={estilos.containerInput}>
                     <TextInput
@@ -542,7 +594,7 @@ export default function App({navigation}) {
                         setNovaSenha(value);
                         setErroSenha('');
                       }}
-                      style={estilos.input2}></TextInput>                  
+                      style={estilos.input2}></TextInput>
                   </View>
                   <TouchableOpacity
                     style={{
@@ -571,8 +623,8 @@ export default function App({navigation}) {
                       onChangeText={value => {
                         setConfirmaSenha(value);
                         setErroSenha('');
-                    }} 
-                      style={estilos.input2}></TextInput>                   
+                      }}
+                      style={estilos.input2}></TextInput>
                   </View>
                   <TouchableOpacity
                     style={{
@@ -585,7 +637,15 @@ export default function App({navigation}) {
                     <Image style={estilos.img} source={iconsenha} />
                   </TouchableOpacity>
                 </View>
-                <Text style={{color: 'red', fontSize: 14,marginLeft:20, height:35}}>{erroSenha}</Text>
+                <Text
+                  style={{
+                    color: 'red',
+                    fontSize: 14,
+                    marginLeft: 20,
+                    height: 35,
+                  }}>
+                  {erroSenha}
+                </Text>
               </View>
               <View
                 style={{alignItems: 'center', marginTop: 25, marginBottom: 10}}>
@@ -609,13 +669,13 @@ export default function App({navigation}) {
       <View>
         <Modal visible={retorno} transparent={true}>
           <View
-            style={{ 
-              flex:1,             
+            style={{
+              flex: 1,
               alignItems: 'center',
               backgroundColor: 'rgba(0, 0 , 0, 0.8)',
               justifyContent: 'center',
             }}>
-            <View style={[estilos.containerModal, {height: 230, bottom:'5%'}]}>
+            <View style={[estilos.containerModal, {height: 230, bottom: '5%'}]}>
               <View style={{alignItems: 'flex-end'}}>
                 <TouchableOpacity
                   onPress={() => {
@@ -624,7 +684,10 @@ export default function App({navigation}) {
                     setMostrarAtualizar(false);
                     setMostrarAlterarSenha(false);
                   }}>
-                  <Image source={require('../../images/configuracao/close.png')} />
+                  <Image
+                    style={{height: 25, width: 25}}
+                    source={require('../../images/configuracao/close.png')}
+                  />
                 </TouchableOpacity>
               </View>
               <View
@@ -780,8 +843,8 @@ const estilos = StyleSheet.create({
     resizeMode: 'contain',
   },
   input2: {
-      fontSize:16,
-      color:'#910046',
+    fontSize: 16,
+    color: '#910046',
   },
   containerInput: {
     width: '100%',
@@ -790,6 +853,6 @@ const estilos = StyleSheet.create({
     backgroundColor: '#E7E7E7',
     fontFamily: 'Poppins-Regular',
     borderRadius: 8,
-    paddingLeft:10,
+    paddingLeft: 10,
   },
 });

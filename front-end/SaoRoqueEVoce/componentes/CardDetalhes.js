@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useState,useEffect} from 'react';
 import {
   StyleSheet,
   Text,
@@ -7,16 +7,44 @@ import {
   ImageBackground,
   Image,
   Dimensions,
+  ActivityIndicator
 } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
+import {useIsFocused} from '@react-navigation/native';
+import Globais from './Globais';
 
 export default function App({data}) {
   const navigation = useNavigation();
-  let distancia = 5;
+  const isFocused = useIsFocused();
+  const[gps,setGps] = useState(false);
+  const[distancia,setDistancia] = useState(false);
   let estrelas = data?.estrelas;
   let custo = data?.custoMedio;
   let arrayestrela = [];
   let arraycusto = [];
+
+  useEffect(() => { 
+  modificarFiltro()
+  }, [isFocused,distancia]);
+
+
+  if(!distancia && gps == false){        
+     setTimeout(() => {
+      setGps(true);
+    }, 1200);
+  }
+
+  function modificarFiltro() {
+    if(Globais.distancia != null && (Globais.dados?.userativalocalizacao == 1 || Globais.dados == null)){
+    Globais.distancia.forEach(element => {
+      if (element.idApp == data.idApp){
+        if (element.distancia > 100){
+        setDistancia(99+'+')
+      }else {
+        setDistancia(element.distancia)
+      } }
+     })     
+   }} 
 
   let i = 0;
   for (i = 0; i < 5; i++) {
@@ -54,7 +82,14 @@ export default function App({data}) {
             style={estilos.cardbody}>
             <View style={estilos.bgCardDistancia}></View>
             <View style={estilos.containerTxtDistancia}>
-              <Text style={estilos.txtDistancia}>{distancia} KM</Text>
+              {!distancia ?
+              <View>
+                {!gps?
+                <ActivityIndicator size={25} color="#910046" />:
+              <Text style={[estilos.txtDistancia,{fontSize:14}]}>GPS Desligado</Text>}
+              </View>:
+              <Text style={estilos.txtDistancia}>{distancia} km</Text>
+                }
             </View>
             <View style={estilos.bgInfo}></View>
             <View style={estilos.containerInfo}>
@@ -137,7 +172,7 @@ const estilos = StyleSheet.create({
     justifyContent: 'center',
   },
   txtDistancia: {
-    fontSize: 20,
+    fontSize: 17.5,
     fontFamily: 'Roboto-Bold',
     color: '#910046',
     textAlign: 'center',

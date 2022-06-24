@@ -21,7 +21,7 @@ import Carousel from 'react-native-snap-carousel';
 import Globais from './Globais';
 import {useIsFocused} from '@react-navigation/native';
 import {Buffer} from 'buffer';
-import { info } from 'console';
+import {info} from 'console';
 
 export default function App({route}) {
   const navigation = useNavigation();
@@ -149,9 +149,9 @@ export default function App({route}) {
     );
   };
 
-  let id = ''
-  let icon = ''
-  let tipo = ''
+  let id = '';
+  let icon = '';
+  let tipo = '';
   function inserircomentario() {
     setMostrarsugestao(false);
     setMostrar(true);
@@ -195,7 +195,8 @@ export default function App({route}) {
     setCusto(0);
     setMostrarCadastro(false);
   }, [isFocused]);
-  if (informacao) {}
+  if (informacao) {
+  }
   return (
     <View style={estilos.container}>
       <View style={{}}>
@@ -208,7 +209,6 @@ export default function App({route}) {
           ListHeaderComponent={
             <>
               <View style={{flex: 1}}>
-              
                 <View style={{marginHorizontal: 30}}>
                   <Text style={estilos.h1}>O que você achou desse local?</Text>
                   <Text style={estilos.txt}>
@@ -244,7 +244,9 @@ export default function App({route}) {
                   <View>
                     <TouchableOpacity
                       onPress={() =>
-                        navigation.navigate('PaginaDetalhes', {hookReload2:'hook'+Math.random()})
+                        navigation.navigate('PaginaDetalhes', {
+                          hookReload2: 'hook' + Math.random(),
+                        })
                       }
                       style={[
                         estilos.btn,
@@ -348,6 +350,7 @@ export default function App({route}) {
                         setMostrarinput(false);
                       }}>
                       <Image
+                        style={{height: 25, width: 25}}
                         source={require('../images/configuracao/close.png')}
                       />
                     </TouchableOpacity>
@@ -502,7 +505,7 @@ export default function App({route}) {
           }
           ListEmptyComponent={
             <>
-             {loading ? (
+              {loading ? (
                 <View
                   style={{
                     marginTop: 100,
@@ -513,35 +516,34 @@ export default function App({route}) {
                   <ActivityIndicator size={50} color="#910046" />
                 </View>
               ) : (
-               
-                  <View style={{marginHorizontal: 30, marginVertical: 50}}>
+                <View style={{marginHorizontal: 30, marginVertical: 50}}>
                   <View style={{alignItems: 'center'}}>
                     <Image
                       style={estilos.star}
                       source={require('../images/paginadetalhes/warning-purple.png')}
-                      />
+                    />
                     <Text
                       style={{
-                          fontFamily: 'Poppins-Regular',
-                          fontSize: 16,
-                          color: '#000',
-                          textAlign: 'center',
-                          marginVertical: 10,
-                        }}>
+                        fontFamily: 'Poppins-Regular',
+                        fontSize: 16,
+                        color: '#000',
+                        textAlign: 'center',
+                        marginVertical: 10,
+                      }}>
                       Este estabelecimento ainda não recebeu nenhuma avaliação.
                     </Text>
                     <Text
                       style={{
-                          fontFamily: 'Poppins-Bold',
-                          fontSize: 16,
-                          color: '#000',
-                          textAlign: 'center',
-                        }}>
+                        fontFamily: 'Poppins-Bold',
+                        fontSize: 16,
+                        color: '#000',
+                        textAlign: 'center',
+                      }}>
                       Seja o primeiro a Avaliar!
                     </Text>
                   </View>
-                </View>                       
-                )}              
+                </View>
+              )}
             </>
           }
           onEndReached={() => {
@@ -580,7 +582,10 @@ export default function App({route}) {
                   onPress={() => {
                     setMostrar(false), loadApi(), setLoading2(true);
                   }}>
-                  <Image source={require('../images/configuracao/close.png')} />
+                  <Image
+                    style={{height: 25, width: 25}}
+                    source={require('../images/configuracao/close.png')}
+                  />
                 </TouchableOpacity>
               </View>
               <View

@@ -27,6 +27,7 @@ export default function App({route, navigation}) {
   const [verificarUser, setVerificarUser] = useState(false);
   const isFocused = useIsFocused();
   const reload = route.params?.hookReload;
+  const reload2 = route.params?.hookReload2;
 
   useEffect(() => {
     loadApi();
@@ -84,7 +85,7 @@ export default function App({route, navigation}) {
           renderItem={({item}) => <CardMeusComentarios data={item} />}
           ListHeaderComponent={
             <>
-              <Header goingback={true} space={true} />
+              <Header goingback={true} space={true} rota={'Configuracao'}/>
               <View style={{paddingHorizontal: 30}}>
                 <Text style={estilos.h1}>Meus Comentários</Text>
                 <Text style={estilos.txt}>
@@ -254,5 +255,15 @@ const estilos = StyleSheet.create({
     borderWidth: 1,
     height: 45,
     width: 140,
+  },
+  txtBtn2: {
+    flex: 1,
+    fontSize: 17,
+    fontFamily: 'Poppins-SemiBold',
+    textAlign: 'center',
+    textAlignVertical: 'center',
+    color: '#920046',
+    paddingTop: 5,
+    letterSpacing: 1,
   },
 });

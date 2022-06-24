@@ -1,4 +1,4 @@
-import React, {useState, useRef,useEffect} from 'react';
+import React, {useState, useRef, useEffect} from 'react';
 import {
   StyleSheet,
   Text,
@@ -8,7 +8,7 @@ import {
   Modal,
   TouchableOpacity,
   ActivityIndicator,
-  Dimensions
+  Dimensions,
 } from 'react-native';
 import CountDown from 'react-native-countdown-component';
 import {useNavigation} from '@react-navigation/native';
@@ -17,7 +17,7 @@ import {Buffer} from 'buffer';
 
 export default function App(props) {
   const navigation = useNavigation();
- const baseURL = 'http://www.racsstudios.com/api/v1/user';
+  const baseURL = 'http://www.racsstudios.com/api/v1/user';
   const [mostrar, setMostrar] = useState(false);
   const [loadingResponse, setLoadingResponse] = useState(false);
   const [versenha, setVersenha] = useState(true);
@@ -51,24 +51,23 @@ export default function App(props) {
   const [useralertanovidade, setUseralertanovidade] = useState(null);
   const [useralertaevento, setUseralertaevento] = useState(null);
   const [confirmacao, setConfirmacao] = useState();
-  const [msg, setMsg] = useState('')
-  const [img, setImg] = useState(require('../images/configuracao/sucesso.png'))
-  const email = props?.email
-  const senhalogin = props?.senha
-
-
+  const [msg, setMsg] = useState('');
+  const [img, setImg] = useState(require('../images/configuracao/sucesso.png'));
+  const email = props?.email;
+  const senhalogin = props?.senha;
 
   const rota = () => {
     if (confirmacao?.email == email) {
       navigation.navigate('Login', {
         hookReload: 'hook' + new Date(),
-        email:email, senha:senhalogin
+        email: email,
+        senha: senhalogin,
       });
     } else {
       setMostrar(false);
     }
   };
-console.log(confirmacao?.email)
+  console.log(confirmacao?.email);
   const mostrarsenha = () => {
     setVersenha(!versenha);
     if (versenha == true) {
@@ -79,9 +78,9 @@ console.log(confirmacao?.email)
   };
 
   const validar = () => {
-    let error = false;  
+    let error = false;
     if (pin1 == '' || pin2 == '' || pin3 == '' || pin4 == '') {
-      setErroToken('Insira o token!')
+      setErroToken('Insira o token!');
       error = true;
     }
 
@@ -103,19 +102,19 @@ console.log(confirmacao?.email)
       });
   }
 
-const validarToken = () => {
-  setMsg('')
-  if(validar()){
-    let validarConexao = true;
+  const validarToken = () => {
+    setMsg('');
+    if (validar()) {
+      let validarConexao = true;
       setMostrar(true);
       setLoadingResponse(true);
-      let username = email
-      let password = usertoken
+      let username = email;
+      let password = usertoken;
       const auth = Buffer.from(`${username}:${password}`, 'utf8').toString(
         'base64',
       );
-      let body = {       
-        token: usertoken,    
+      let body = {
+        token: usertoken,
       };
       axios
         .put(baseURL, body, {headers: {Authorization: `Basic ${auth}`}})
@@ -124,7 +123,7 @@ const validarToken = () => {
           console.log(validarConexao);
           setMsg('Sua conta foi ativada com sucesso!');
           setImg(require('../images/configuracao/sucesso.png'));
-          setConfirmacao(response.data);     
+          setConfirmacao(response.data);
           setTimeout(() => {
             setLoadingResponse(false);
           }, 2000);
@@ -132,21 +131,24 @@ const validarToken = () => {
         .catch(error => {
           validarConexao = false;
           console.log(validarConexao);
-          if(msg == '' ){
-          setImg(require('../images/configuracao/dangericon.png'));
-          setMsg('Token inválido, tente novamente.');}
+          if (msg == '') {
+            setImg(require('../images/configuracao/dangericon.png'));
+            setMsg('Token inválido, tente novamente.');
+          }
           setTimeout(() => {
             setLoadingResponse(false);
           }, 2000);
         });
-        setTimeout(()=> {if (validarConexao == true) {
+      setTimeout(() => {
+        if (validarConexao == true) {
           console.log(validarConexao);
           setLoadingResponse(false);
-          setImg(require('../images/configuracao/dangericon.png'));        
+          setImg(require('../images/configuracao/dangericon.png'));
           setMsg('Houve um erro.\nVerifique sua internet\ne tente novamente.');
-      }},6000)
-      }
-}
+        }
+      }, 6000);
+    }
+  };
 
   return (
     <View>
@@ -158,7 +160,11 @@ const validarToken = () => {
               alignItems: 'center',
               backgroundColor: 'rgba(0, 0 , 0, 0.8)',
             }}>
-            <View style={[estilos.containerModal, {height: 380, marginTop:'-10%'}]}>
+            <View
+              style={[
+                estilos.containerModal,
+                {height: 380, marginTop: '-10%'},
+              ]}>
               <View style={{flex: 1, alignItems: 'center'}}>
                 <Text
                   style={[
@@ -220,10 +226,10 @@ const validarToken = () => {
                     ref={pin1Ref}
                     value={pin1}
                     keyboardType={'number-pad'}
-                    maxLength={1}                  
+                    maxLength={1}
                     onChangeText={pin1 => {
                       setPin1(pin1);
-                      setErroToken('')
+                      setErroToken('');
                       if (pin1 != '') {
                         pin2Ref.current?.focus();
                       }
@@ -242,7 +248,7 @@ const validarToken = () => {
                     maxLength={1}
                     onChangeText={pin2 => {
                       setPin2(pin2);
-                      setErroToken('')
+                      setErroToken('');
                       if (pin2 != '') {
                         pin3Ref.current?.focus();
                       }
@@ -260,7 +266,7 @@ const validarToken = () => {
                     maxLength={1}
                     onChangeText={pin3 => {
                       setPin3(pin3);
-                      setErroToken('')
+                      setErroToken('');
                       if (pin3 != '') {
                         pin4Ref.current?.focus();
                       }
@@ -277,24 +283,26 @@ const validarToken = () => {
                     maxLength={1}
                     onChangeText={pin4 => {
                       setPin4(pin4);
-                      setErroToken('')
+                      setErroToken('');
                       setUsertoken(
                         String(pin1) +
                           String(pin2) +
                           String(pin3) +
-                          String(pin4)
+                          String(pin4),
                       );
                     }}
                   />
                 </View>
-                <Text style={{marginBottom:-15, color:'red'}}>{erroToken}</Text>
+                <Text style={{marginBottom: -15, color: 'red'}}>
+                  {erroToken}
+                </Text>
                 <View style={{flexDirection: 'row', alignItems: 'center'}}>
                   <Text
                     style={[
                       estilos.txtModal,
                       {
                         fontSize: 13,
-                        textAlign: 'center',                       
+                        textAlign: 'center',
                         color: '#414141',
                       },
                     ]}>
@@ -308,7 +316,7 @@ const validarToken = () => {
                           {
                             fontSize: 13,
                             fontFamily: 'Poppins-Bold',
-                            textAlign: 'center',                            
+                            textAlign: 'center',
                             color: '#000',
                             padding: 5,
                           },
@@ -330,7 +338,7 @@ const validarToken = () => {
                           {
                             fontSize: 13,
                             fontFamily: 'Poppins-Bold',
-                            textAlign: 'center',                         
+                            textAlign: 'center',
                             color: '#999',
                             padding: 5,
                           },
@@ -341,7 +349,7 @@ const validarToken = () => {
                   )}
                 </View>
                 {enviado ? (
-                  <View style={{height: 30, marginBottom:10,}}>
+                  <View style={{height: 30, marginBottom: 10}}>
                     <CountDown
                       size={10}
                       until={tempo}
@@ -415,7 +423,10 @@ const validarToken = () => {
             <View style={estilos.containerModal}>
               <View style={{alignItems: 'flex-end'}}>
                 <TouchableOpacity onPress={rota}>
-                  <Image source={require('../images/configuracao/close.png')} />
+                  <Image
+                    style={{height: 25, width: 25}}
+                    source={require('../images/configuracao/close.png')}
+                  />
                 </TouchableOpacity>
               </View>
               <View
@@ -436,9 +447,7 @@ const validarToken = () => {
                 ) : (
                   <View
                     style={{alignItems: 'center', justifyContent: 'center'}}>
-                    <Image
-                      source={img}
-                    />
+                    <Image source={img} />
                     <Text
                       style={[
                         estilos.txtModal,
@@ -460,7 +469,8 @@ const validarToken = () => {
 const estilos = StyleSheet.create({
   containerModal: {
     alignSelf: 'center',
-    width: Dimensions.get('window').width - Dimensions.get('window').width * 0.1,
+    width:
+      Dimensions.get('window').width - Dimensions.get('window').width * 0.1,
     height: 230,
     padding: 20,
     borderRadius: 30,
@@ -512,7 +522,7 @@ const estilos = StyleSheet.create({
     backgroundColor: '#E7E7E7',
     fontFamily: 'Poppins-Regular',
     borderRadius: 8,
-    paddingLeft:10,
+    paddingLeft: 10,
   },
   img: {
     height: 25,
@@ -520,7 +530,7 @@ const estilos = StyleSheet.create({
     resizeMode: 'contain',
   },
   input: {
-      fontSize:16,
-      color:'#910046',
-  }
+    fontSize: 16,
+    color: '#910046',
+  },
 });

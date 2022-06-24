@@ -6,54 +6,70 @@ import {
   TouchableOpacity,
   Image,
   Dimensions,
-  Linking
+  Linking,
 } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import axios from 'axios';
+import Globais from './Globais';
 
 export default function App({dados}) {
   const url = `http://www.racsstudios.com/api/v1/apps/${dados?.idApp}`;
-  const link ='https://www.google.com/maps/dir/';
+  const link = 'https://www.google.com/maps/dir/';
   const navigation = useNavigation();
   const [data, setData] = useState();
   const [tododia, setTododia] = useState(false);
+  const [distancia, setDistancia] = useState();
   const title = dados?.nomeFantasia;
   const rua = dados?.logradouro + ', ' + dados?.numero;
-  const cidade = dados?.localidade
-  const cep = dados?.cep
+  const cidade = dados?.localidade;
+  const cep = dados?.cep;
   const contato = dados?.telefone;
   const celular = dados?.celular;
-  const email = dados?.email;
-  const distancia = 5;
+  const email = dados?.email;  
   const img = dados?.img1;
 
   useEffect(() => {
     loadApi();
-  
   }, []);
 
   async function loadApi() {
     const response = await axios.get(url);
     setData(response.data);
-   
   }
 
   useEffect(() => {
-    if (data){
-    if (
-      data?.complemeto?.semana === data?.complemeto?.sabado &&
-      data?.complemeto?.semana === data?.complemeto?.domingo &&
-      data?.complemeto?.semana === data?.complemeto?.feriado
-    ) {
-      setTododia(true);
-    }}
+    if(data){
+    modificarFiltro();}
+  }, [data]);
 
+ 
+  function modificarFiltro() {
+    if (Globais.distancia != null && (Globais.dados?.userativalocalizacao == 1 || Globais.dados == null)) {
+      Globais.distancia.forEach(element => {
+        if (element.idApp == data.idApp) {
+          setDistancia(element.distancia);
+        }
+      });
+    }
+  }
+
+  useEffect(() => {
+    if (data) {
+      if (
+        data?.complemeto?.semana === data?.complemeto?.sabado &&
+        data?.complemeto?.semana === data?.complemeto?.domingo &&
+        data?.complemeto?.semana === data?.complemeto?.feriado
+      ) {
+        setTododia(true);
+      }
+    }
   }, [data]);
 
   const abrirLink = () => {
-     Linking.openURL(`https://www.google.com/maps/dir/?api=1&travelmode=driving&dir_action=navigate&destination=Rua,${rua},${cidade}`);
-  }
- 
+    Linking.openURL(
+      `https://www.google.com/maps/dir/?api=1&travelmode=driving&dir_action=navigate&destination=Rua,${rua},${cidade}`,
+    );
+  };
 
   return (
     <View style={estilos.container}>
@@ -74,43 +90,50 @@ export default function App({dados}) {
                 source={require('../images/servicos/funcionamento.png')}
               />
               <View style={{flex: 1}}>
-                {tododia ?
-                <View style={[estilos.conteudoFuncionamento, {marginTop: 5}]}>
-                  <Text style={estilos.txtFuncionamento}>Todos os dias</Text>
-                  <Text style={estilos.txtFuncionamento}>
-                    {data?.complemeto?.semana}
-                  </Text>
-                </View>:
-                <View>
-                <View style={[estilos.conteudoFuncionamento, {marginTop: 5}]}>
-                  <Text style={estilos.txtFuncionamento}>Seg a Sex </Text>
-                  <Text style={estilos.txtFuncionamento}>
-                    {data?.complemeto?.semana}
-                  </Text>
-                </View>
-                <View style={estilos.conteudoFuncionamento}>
-                  <Text style={estilos.txtFuncionamento}>Sábado </Text>
-                  <Text style={estilos.txtFuncionamento}>
-                    {data?.complemeto?.sabado}
-                  </Text>
-                </View>
-                <View style={estilos.conteudoFuncionamento}>
-                  <Text style={estilos.txtFuncionamento}>Domingo </Text>
-                  <Text style={estilos.txtFuncionamento}>
-                    {data?.complemeto?.domingo}
-                  </Text>
-                </View>
-                <View style={estilos.conteudoFuncionamento}>
-                  <Text style={estilos.txtFuncionamento}>Feriado </Text>
-                  <Text style={estilos.txtFuncionamento}>
-                    {data?.complemeto?.feriado}
-                  </Text>
-                </View>
-              </View>}
+                {tododia ? (
+                  <View style={[estilos.conteudoFuncionamento, {marginTop: 5}]}>
+                    <Text style={estilos.txtFuncionamento}>Todos os dias</Text>
+                    <Text style={estilos.txtFuncionamento}>
+                      {data?.complemeto?.semana}
+                    </Text>
+                  </View>
+                ) : (
+                  <View>
+                    <View
+                      style={[estilos.conteudoFuncionamento, {marginTop: 5}]}>
+                      <Text style={estilos.txtFuncionamento}>Seg a Sex </Text>
+                      <Text style={estilos.txtFuncionamento}>
+                        {data?.complemeto?.semana}
+                      </Text>
+                    </View>
+                    <View style={estilos.conteudoFuncionamento}>
+                      <Text style={estilos.txtFuncionamento}>Sábado </Text>
+                      <Text style={estilos.txtFuncionamento}>
+                        {data?.complemeto?.sabado}
+                      </Text>
+                    </View>
+                    <View style={estilos.conteudoFuncionamento}>
+                      <Text style={estilos.txtFuncionamento}>Domingo </Text>
+                      <Text style={estilos.txtFuncionamento}>
+                        {data?.complemeto?.domingo}
+                      </Text>
+                    </View>
+                    <View style={estilos.conteudoFuncionamento}>
+                      <Text style={estilos.txtFuncionamento}>Feriado </Text>
+                      <Text style={estilos.txtFuncionamento}>
+                        {data?.complemeto?.feriado}
+                      </Text>
+                    </View>
+                  </View>
+                )}
               </View>
             </View>
             {contato ? (
-              <TouchableOpacity style={estilos.informacao} onPress={()=>{Linking.openURL(`tel:${contato}`)}}>
+              <TouchableOpacity
+                style={estilos.informacao}
+                onPress={() => {
+                  Linking.openURL(`tel:${contato}`);
+                }}>
                 <Image
                   style={estilos.img}
                   source={require('../images/servicos/contato.png')}
@@ -121,7 +144,11 @@ export default function App({dados}) {
               <View></View>
             )}
             {celular ? (
-              <TouchableOpacity style={estilos.informacao} onPress={()=>{Linking.openURL(`tel:${celular}`)}}>
+              <TouchableOpacity
+                style={estilos.informacao}
+                onPress={() => {
+                  Linking.openURL(`tel:${celular}`);
+                }}>
                 <Image
                   style={estilos.img}
                   source={require('../images/servicos/celular.png')}
@@ -132,13 +159,17 @@ export default function App({dados}) {
               <View></View>
             )}
             {email ? (
-              <View >
-                <TouchableOpacity style={estilos.informacao} onPress={()=>{Linking.openURL(`mailto:${email}`)}}>
-                <Image
-                  style={estilos.img}
-                  source={require('../images/servicos/email.png')}
-                />
-                <Text style={estilos.txtConteudo}>{email}</Text>
+              <View>
+                <TouchableOpacity
+                  style={estilos.informacao}
+                  onPress={() => {
+                    Linking.openURL(`mailto:${email}`);
+                  }}>
+                  <Image
+                    style={estilos.img}
+                    source={require('../images/servicos/email.png')}
+                  />
+                  <Text style={estilos.txtConteudo}>{email}</Text>
                 </TouchableOpacity>
               </View>
             ) : (
@@ -181,12 +212,22 @@ export default function App({dados}) {
             justifyContent: 'space-between',
           }}>
           <View style={{alignItems: 'center', justifyContent: 'space-between'}}>
-            <Text style={estilos.title}>{distancia} km</Text>
-            <TouchableOpacity onPress={()=>{abrirLink()}}>
+            {distancia?
+            <Text style={estilos.title}>{distancia} km</Text>:
+            <View>
+            <Text style={estilos.txtGps}>GPS</Text>
+            <Text style={estilos.txtGps}>OFF</Text>
+            </View>}
+            <TouchableOpacity
+            style={{alignItems:'center'}}
+              onPress={() => {
+                abrirLink();
+              }}>
               <Image
                 style={estilos.img2}
                 source={require('../images/servicos/rota.png')}
               />
+              <Text style={estilos.title}>Ir</Text>
             </TouchableOpacity>
           </View>
           <Image style={estilos.img2} source={{uri: img}} />
@@ -256,4 +297,16 @@ const estilos = StyleSheet.create({
     justifyContent: 'space-between',
     marginVertical: -2,
   },
+  txtGps:{
+    fontFamily: 'Poppins-Bold',
+    color: '#000',
+    fontSize: 13,
+    marginTop:-11,
+    color: '#910046',
+    textAlign: 'center',
+    textShadowColor: '#FFF',
+    textShadowOffset: {width: 1, height: 1},
+    textShadowRadius: 2,
+         
+  }
 });

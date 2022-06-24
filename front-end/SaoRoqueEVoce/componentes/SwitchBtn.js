@@ -1,9 +1,10 @@
 import React, {useState, useEffect} from 'react';
-import {Switch} from 'react-native';
+import {Switch,PermissionsAndroid,Alert} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Globais from './Globais';
 import {Buffer} from 'buffer';
 import axios from 'axios';
+import { info } from 'console';
 
 export default function App(props) {
   const [ligado, setLigado] = useState(false);
@@ -35,10 +36,36 @@ export default function App(props) {
     if (valor == 1) {
       setLigado(true);
     }
+    if (Globais.dados == null && tipo == 'ativaLocalizacao') {
+      setLigado(true);
+    }
   }, []);
 
+  const callLocation = async () => {  
+          const granted = await PermissionsAndroid.request(
+          PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+          {
+            title: 'Permissão de acesso a Localização',
+            message:
+              'Deseja permitir que o aplicativo acesse a sua localização?',
+            buttonNeutral: 'Depois',
+            buttonNegative: 'Cancelar',
+            buttonPositive: 'Ok',
+          }
+        );
+        if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+          Alert.alert('Ativar a Localização','Localização ativada com sucesso!')
+          console.log("GPS ATIVADO");
+        } else {
+          Alert.alert('Ativar a Localização','Vá em Configurações>Aplicativos>\nSão Roque e Você>Permissões\ne autorize o uso da Localização')
+          Globais.dados = 0
+          setLigado(false)
+        }   
+  };
+
+
   useEffect(() => {
-    if (useremail === Globais.dados.useremail) {
+    if (useremail === Globais.dados?.useremail) {
       salvar();
     }
   }, [
@@ -86,13 +113,13 @@ export default function App(props) {
     };
   }, [body]);
 
-  if (confirmacao) {
-    setUsernome(Globais.dados.usernome);
-    setUsersobrenome(Globais.dados.usersobrenome);
-    setUseremail(Globais.dados.useremail);
-    setUsertoken(Globais.dados.usertoken);
-    setUseridusuario(Globais.dados.useridusuario);
-    setUsernascimento(Globais.dados.usernascimento);
+  if (confirmacao && Globais?.dados) {
+    setUsernome(Globais.dados?.usernome);
+    setUsersobrenome(Globais.dados?.usersobrenome);
+    setUseremail(Globais.dados?.useremail);
+    setUsertoken(Globais.dados?.usertoken);
+    setUseridusuario(Globais.dados?.useridusuario);
+    setUsernascimento(Globais.dados?.usernascimento);
     setUserdicasrestaurante(confirmacao?.dicasRestaurantes);
     setUserdicasturismo(confirmacao?.dicasPontosTuristicos);
     setUserdicashospedagem(confirmacao?.dicasHospedagens);
@@ -101,7 +128,7 @@ export default function App(props) {
     setUseralertaevento(confirmacao?.alertaEventos);
     setConfirmacao();
   }
-
+console.log(Globais.dados)
   const toggle = () => {
     console.log(ligado);
     if (ligado == false) {
@@ -123,6 +150,10 @@ export default function App(props) {
       }      
       if (tipo == 'ativaLocalizacao') {
         setBody({ativaLocalizacao: '1'});
+        callLocation()
+        if(Globais.dados == 0){
+          Globais.dados = null
+        }
       }      
     } else {
       console.log('desligou');
@@ -143,6 +174,9 @@ export default function App(props) {
       } 
       if (tipo == 'ativaLocalizacao') {
         setBody({ativaLocalizacao: '0'});
+        if(Globais.dados == null){
+          Globais.dados = 0
+        }
       }        
     }
     setLigado(!ligado);

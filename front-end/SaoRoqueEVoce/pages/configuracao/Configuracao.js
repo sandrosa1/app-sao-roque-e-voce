@@ -1,12 +1,12 @@
-import React,{useState,useEffect} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   StyleSheet,
   Text,
   View,
- Modal,
+  Modal,
   Image,
   TouchableOpacity,
-  ActivityIndicator
+  ActivityIndicator,
 } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import Header from '../../componentes/Header';
@@ -73,131 +73,144 @@ export default function App() {
   }, [isFocused]);
   console.log(Globais.dados);
   return (
-    <View style={estilos.container}>      
-        <View style={{flex:3}}>
-          <Header goingback={true} space={true} />
+    <View style={estilos.container}>
+      <View style={{flex: 3}}>
+        <Header goingback={true} space={true} rota={'Home'} />
 
-          <View style={estilos.containerMenu}>
-            <View style={estilos.containerOpcao}>
-              <TouchableOpacity
-                style={estilos.btn}
-                onPress={() => navigation.navigate('Perfil')}>
-                <Image
-                  style={estilos.img}
-                  source={require('../../images/configuracao/perfil.png')}
-                />
-                <Text style={estilos.txt}>Perfil</Text>
-              </TouchableOpacity>
-            </View>
-          </View>
-          <View style={estilos.containerMenu}>
-            <View style={estilos.containerOpcao}>
-              <TouchableOpacity
-                style={estilos.btn}
-                onPress={() => navigation.navigate('Comentarios')}>
-                <Image
-                  style={estilos.img}
-                  source={require('../../images/configuracao/comentarios.png')}
-                />
-                <Text style={estilos.txt}>Comentários</Text>
-              </TouchableOpacity>
-            </View>
-          </View>
-          <View style={estilos.containerMenu}>
-            <View style={estilos.containerOpcao}>
-              <TouchableOpacity
-                style={estilos.btn}
-                onPress={() => navigation.navigate('Ajustes')}>
-                <Image
-                  style={estilos.img}
-                  source={require('../../images/configuracao/configuracao.png')}
-                />
-                <Text style={estilos.txt}>Configurações</Text>
-              </TouchableOpacity>
-            </View>
-          </View>
-          <View style={estilos.containerMenu}>
-            <View style={estilos.containerOpcao}>
-              <TouchableOpacity
-                style={estilos.btn}
-                onPress={() => navigation.navigate('Notificacao')}>
-                <Image
-                  style={estilos.img}
-                  source={require('../../images/configuracao/notificacao.png')}
-                />
-                <Text style={estilos.txt}>Notificações</Text>
-              </TouchableOpacity>
-            </View>
-          </View>
-          <View style={estilos.containerMenu}>
-            <View style={estilos.containerOpcao}>
-              <TouchableOpacity
-                style={estilos.btn}
-                onPress={() => navigation.navigate('QuemSomos')}>
-                <Image
-                  style={estilos.img}
-                  source={require('../../images/configuracao/quemsomos.png')}
-                />
-                <Text style={estilos.txt}>Quem Somos</Text>
-              </TouchableOpacity>
-            </View>
+        <View style={estilos.containerMenu}>
+          <View style={estilos.containerOpcao}>
+            <TouchableOpacity
+              style={estilos.btn}
+              onPress={() => navigation.navigate('Perfil')}>
+              <Image
+                style={estilos.img}
+                source={require('../../images/configuracao/perfil.png')}
+              />
+              <Text style={estilos.txt}>Perfil</Text>
+            </TouchableOpacity>
           </View>
         </View>
+        <View style={estilos.containerMenu}>
+          <View style={estilos.containerOpcao}>
+            <TouchableOpacity
+              style={estilos.btn}
+              onPress={() => navigation.navigate('Comentarios')}>
+              <Image
+                style={estilos.img}
+                source={require('../../images/configuracao/comentarios.png')}
+              />
+              <Text style={estilos.txt}>Comentários</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+        <View style={estilos.containerMenu}>
+          <View style={estilos.containerOpcao}>
+            <TouchableOpacity
+              style={estilos.btn}
+              onPress={() => navigation.navigate('Ajustes')}>
+              <Image
+                style={estilos.img}
+                source={require('../../images/configuracao/configuracao.png')}
+              />
+              <Text style={estilos.txt}>Configurações</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+        <View style={estilos.containerMenu}>
+          <View style={estilos.containerOpcao}>
+            <TouchableOpacity
+              style={estilos.btn}
+              onPress={() => navigation.navigate('Notificacao')}>
+              <Image
+                style={estilos.img}
+                source={require('../../images/configuracao/notificacao.png')}
+              />
+              <Text style={estilos.txt}>Notificações</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+        <View style={estilos.containerMenu}>
+          <View style={estilos.containerOpcao}>
+            <TouchableOpacity
+              style={estilos.btn}
+              onPress={() => navigation.navigate('FaleConosco')}>
+              <Image
+                style={estilos.img}
+                source={require('../../images/configuracao/suporte.png')}
+              />
+              <Text style={estilos.txt}>Fale Conosco</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+        <View style={estilos.containerMenu}>
+          <View style={estilos.containerOpcao}>
+            <TouchableOpacity
+              style={estilos.btn}
+              onPress={() => navigation.navigate('QuemSomos')}>
+              <Image
+                style={estilos.img}
+                source={require('../../images/configuracao/quemsomos.png')}
+              />
+              <Text style={estilos.txt}>Quem Somos</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </View>
 
-        <View style={{flex: 1}}>
+      <View style={{flex: 1}}>
         {Globais?.dados ? (
-        <View style={estilos.containerBtn}>
-          <TouchableOpacity
-            style={estilos.btn2}
-            onPress={() => {
-              optionBtn('sair');
-            }}>
-            <Text
-              style={{
-                fontSize: 24,
-                fontFamily: 'Poppins-Regular',
-                color: '#fff',
-                padding: 5,
+          <View style={estilos.containerBtn}>
+            <TouchableOpacity
+              style={estilos.btn2}
+              onPress={() => {
+                optionBtn('sair');
               }}>
-              Sair da Conta
-            </Text>
-          </TouchableOpacity>
-        </View>
-      ) : (
-        <View style={estilos.containerBtn}>
-          <TouchableOpacity
-            style={[estilos.btn2, {backgroundColor: '#C980A3'}]}
-            onPress={() => {
-              navigation.navigate('Login');
-            }}>
-            <Text
-              style={{
-                fontSize: 24,
-                fontFamily: 'Poppins-Regular',
-                color: '#920049',
-                padding: 5,
+              <Text
+                style={{
+                  fontSize: 24,
+                  fontFamily: 'Poppins-Regular',
+                  color: '#fff',
+                  padding: 5,
+                }}>
+                Sair da Conta
+              </Text>
+            </TouchableOpacity>
+          </View>
+        ) : (
+          <View style={estilos.containerBtn}>
+            <TouchableOpacity
+              style={[estilos.btn2, {backgroundColor: '#C980A3'}]}
+              onPress={() => {
+                navigation.navigate('Login');
               }}>
-              ENTRAR
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={[estilos.btn2, {backgroundColor: '#920049'}]}
-            onPress={() => {
-              navigation.navigate('Cadastro');
-            }}>
-            <Text
-              style={{
-                fontSize: 24,
-                fontFamily: 'Poppins-Regular',
-                color: '#D8D8D8',
-                padding: 5,
-                letterSpacing: 2,
+              <Text
+                style={{
+                  fontSize: 24,
+                  fontFamily: 'Poppins-Regular',
+                  color: '#920049',
+                  padding: 5,
+                }}>
+                ENTRAR
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={[estilos.btn2, {backgroundColor: '#920049'}]}
+              onPress={() => {
+                navigation.navigate('Cadastro');
               }}>
-              CADASTRAR
-            </Text>
-          </TouchableOpacity>
-        </View>
-      )}
+              <Text
+                style={{
+                  fontSize: 24,
+                  fontFamily: 'Poppins-Regular',
+                  color: '#D8D8D8',
+                  padding: 5,
+                  letterSpacing: 2,
+                }}>
+                CADASTRAR
+              </Text>
+            </TouchableOpacity>
+          </View>
+        )}
       </View>
 
       <View>
@@ -215,6 +228,7 @@ export default function App() {
                     setSair(false);
                   }}>
                   <Image
+                    style={{height: 25, width: 25}}
                     source={require('../../images/configuracao/close.png')}
                   />
                 </TouchableOpacity>
@@ -300,6 +314,7 @@ export default function App() {
                     logout();
                   }}>
                   <Image
+                    style={{height: 25, width: 25}}
                     source={require('../../images/configuracao/close.png')}
                   />
                 </TouchableOpacity>
@@ -337,7 +352,6 @@ export default function App() {
           </View>
         </Modal>
       </View>
-
     </View>
   );
 }
@@ -373,10 +387,10 @@ const estilos = StyleSheet.create({
     resizeMode: 'contain',
   },
   containerBtn: {
-    flex:1,
+    flex: 1,
     justifyContent: 'flex-end',
     alignItems: 'center',
-    bottom:'20%',
+    bottom: '20%',
   },
   btn2: {
     marginTop: 25,

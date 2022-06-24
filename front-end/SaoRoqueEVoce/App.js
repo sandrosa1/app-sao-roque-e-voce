@@ -14,6 +14,7 @@ import QuemSomos from './pages/quemsomos/QuemSomos';
 import Configuracao from './pages/configuracao/Configuracao';
 import Perfil from './pages/configuracao/Perfil';
 import Ajustes from './pages/configuracao/Ajustes';
+import FaleConosco from './pages/configuracao/FaleConosco';
 import Notificacao from './pages/configuracao/Notificacao';
 import Comentarios from './pages/configuracao/Comentarios';
 import PaginaDetalhes from './componentes/PaginaDetalhes';
@@ -38,6 +39,7 @@ function App() {
           <Stack.Screen name="Configuracao" component={Configuracao} />
           <Stack.Screen name="Perfil" component={Perfil} />
           <Stack.Screen name="Ajustes" component={Ajustes} />
+          <Stack.Screen name="FaleConosco" component={FaleConosco} />
           <Stack.Screen name="Notificacao" component={Notificacao} />
           <Stack.Screen name="Comentarios" component={Comentarios} />
           <Stack.Screen name="PaginaDetalhes" component={PaginaDetalhes} />

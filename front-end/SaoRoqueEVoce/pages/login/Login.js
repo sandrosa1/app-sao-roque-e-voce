@@ -317,6 +317,7 @@ export default function App({navigation, route}) {
                       setMostrarerro(false);
                     }}>
                     <Image
+                    style={{height:25, width: 25}}
                       source={require('../../images/configuracao/close.png')}
                     />
                   </TouchableOpacity>
@@ -354,6 +355,7 @@ export default function App({navigation, route}) {
                 <View style={{alignItems: 'flex-end'}}>
                   <TouchableOpacity onPress={rota}>
                     <Image
+                    style={{height:25, width: 25}}
                       source={require('../../images/configuracao/close.png')}
                     />
                   </TouchableOpacity>
