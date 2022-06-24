@@ -33,6 +33,8 @@ class App{
     public $estrelas;
     public $img1;
     public $adicionais;
+    public $latitude;
+    public $longitude;
    
   public function insertNewApp(){
              
@@ -65,6 +67,8 @@ class App{
         'estrelas'        => $this->estrelas,
         'img1'            => $this->img1,
         'adicionais'      => $this->adicionais,  
+        'latitude'        => $this->latitude,  
+        'longitude'       => $this->longitude,  
 
          ]); 
 
@@ -106,7 +110,9 @@ class App{
             'custoMedio'      => $this->custoMedio,
             'estrelas'        => $this->estrelas,
             'img1'            => $this->img1,  
-            'adicionais'      => $this->adicionais,  
+            'adicionais'      => $this->adicionais, 
+            'latitude'        => $this->latitude,  
+            'longitude'       => $this->longitude,  
                
              
         ]);

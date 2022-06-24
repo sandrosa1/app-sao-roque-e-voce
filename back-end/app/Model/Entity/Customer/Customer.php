@@ -335,7 +335,7 @@ class Customer{
     }
 
      /**
-     * Método responsavel por retornar depoimentos
+     * Método responsavel por retornar clientes
      *
      * @param string $where
      * @param string $order

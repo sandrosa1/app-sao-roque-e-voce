@@ -242,7 +242,15 @@ class Turismo extends PageRacs{
         $objApp->chaves = Help::helpArrayForString($objApp->chaves);
 
       
-       
+        $coordenadas = Help::helpGetCoordinates($campos[5],$campos[6],$campos[8],$campos[9],TOKEN_MAPBOX);
+
+
+        if($coordenadas){
+
+            $objApp->latitude =$coordenadas[0] ;
+            $objApp->longitude =$coordenadas[1] ;
+            
+        }
 
         if(count($validate->getErro()) == 0){
 

@@ -51,7 +51,9 @@ class AllApps extends Api {
                     'img1'           => 'http://www.racsstudios.com/img/imgApp/'.$objApp->img1,
                     'adicionais'     => $objApp->adicionais,
                     'estrelas'       => (float)$objApp->estrelas,
-                    'custoMedio'     => (float)$objApp->custoMedio  
+                    'custoMedio'     => (float)$objApp->custoMedio,
+                    'latitude'       => $objApp->latitude,
+                    'longitude'      => $objApp->longitude,  
                 ];
             }
     
@@ -117,7 +119,10 @@ class AllApps extends Api {
                 'img1'           => 'http://www.racsstudios.com/img/imgApp/'.$objApp->img1,
                 'adicionais'     => $objApp->adicionais,
                 'estrelas'       => (float)$objApp->estrelas,
-                'custoMedio'     => (float)$objApp->custoMedio    
+                'custoMedio'     => (float)$objApp->custoMedio,
+                'latitude'       => $objApp->latitude,
+                'longitude'      => $objApp->longitude,
+
                 ];
             }
         }

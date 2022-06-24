@@ -4,9 +4,10 @@ namespace App\Help;
 
 use \App\Controller\Srv\PageSrv;
 use \App\Model\Entity\Aplication\App as EntityApp;
-use \App\Validate\Validate;
+use \App\Model\Entity\Address\Address as  EntityAddress;
 use \App\Image\Upload;
 use \App\Image\Resize;
+use \SandroAmancio\Search\Coordinates;
 
 
 
@@ -285,6 +286,55 @@ class Help{
                 return HelpEntity::helpImgTurismo($app, $appSegmento,$pathImages);
            
         }
+
+    }
+
+    /**
+     * Retorna um array com a latitude e a logitude
+     *
+     * @param string $address
+     * @param string $tokenMapbox
+     * @return array
+     */
+    public static function helpGetCoordinates($cep,$logradouro,$bairro, $localidade, $tokenMapbox){
+
+   
+        $where ="  cep =  '$cep' AND logradouro = '$logradouro' AND bairro = '$bairro' AND localidade = '$localidade'";
+
+        $query = EntityAddress::getAddressAll($where);
+
+        $coordenadas = [];
+        if(!empty($query)){
+
+        
+            $coordenadas[0] = $query[0]['latitude'];
+            $coordenadas[1] = $query[0]['longitude'];
+
+            return $coordenadas;
+
+        }else{
+
+        
+            $address = new EntityAddress;
+
+            $resut = new Coordinates();
+
+            $stringAddress = $logradouro.",".$bairro.",".$localidade.", São Paulo, Brasil";
+
+            $newcoordenadas = $resut->getCoordinatesFromAddress($stringAddress, $tokenMapbox);
+
+            $address->cep = $cep;
+            $address->logradouro = $logradouro;
+            $address->bairro = $bairro;
+            $address->localidade = $localidade;
+            $coordenadas[0] = $address->latitude = $newcoordenadas[1];
+            $coordenadas[1] = $address->longitude = $newcoordenadas[0];
+
+            $address->insertAddress();
+
+        }
+
+        return $coordenadas;
 
     }
 
